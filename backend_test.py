@@ -273,20 +273,22 @@ class DonnaAPITester:
         return True
 
     def test_health_functionality(self):
-        """Test health tracking functionality"""
+        """Test health tracking functionality with timezone awareness"""
         print("\n" + "="*50)
-        print("TESTING HEALTH FUNCTIONALITY")
+        print("TESTING HEALTH FUNCTIONALITY WITH TIMEZONE")
         print("="*50)
         
-        # Create health entry
+        # Create health entry with UTC datetime
+        utc_datetime = datetime.now(timezone.utc).isoformat()
         entry_data = {
             "type": "meal",
             "description": "Grilled chicken with vegetables",
-            "date": "2024-12-19"
+            "datetime_utc": utc_datetime,
+            "value": "500 calories"
         }
         
         success, entry = self.run_test(
-            "Create Health Entry",
+            "Create Health Entry (UTC)",
             "POST",
             "health/entries",
             200,
@@ -295,6 +297,32 @@ class DonnaAPITester:
         
         if not success:
             return False
+        
+        # Verify UTC datetime storage
+        if entry.get('datetime_utc'):
+            print("✅ Health entry stored with UTC datetime")
+            try:
+                stored_dt = datetime.fromisoformat(entry['datetime_utc'].replace('Z', '+00:00'))
+                print(f"   Stored datetime: {stored_dt}")
+            except ValueError:
+                print("❌ Invalid datetime format in health entry response")
+        else:
+            print("❌ No datetime_utc field in health entry response")
+        
+        # Test invalid datetime format for health entry
+        invalid_entry_data = {
+            "type": "exercise",
+            "description": "Morning run",
+            "datetime_utc": "not-a-datetime"
+        }
+        
+        success, _ = self.run_test(
+            "Create Health Entry with Invalid Datetime",
+            "POST",
+            "health/entries",
+            400,  # Should return bad request
+            data=invalid_entry_data
+        )
         
         # Create health goal
         goal_data = {
