@@ -545,6 +545,7 @@ const App = () => {
 
         {/* Health Tab */}
         <TabsContent value="health" className="health-container">
+          <TimezoneIndicator className="health-timezone" />
           <div className="health-grid">
             <Card className="health-analytics-card">
               <CardHeader>
@@ -599,12 +600,20 @@ const App = () => {
                   onChange={(e) => setNewHealthEntry({ ...newHealthEntry, description: e.target.value })}
                   className="form-input"
                 />
-                <Input
-                  type="date"
-                  value={newHealthEntry.date}
-                  onChange={(e) => setNewHealthEntry({ ...newHealthEntry, date: e.target.value })}
-                  className="form-input"
-                />
+                <div className="date-time-row">
+                  <Input
+                    type="date"
+                    value={newHealthEntry.date}
+                    onChange={(e) => setNewHealthEntry({ ...newHealthEntry, date: e.target.value })}
+                    className="form-input"
+                  />
+                  <Input
+                    type="time"
+                    value={newHealthEntry.time}
+                    onChange={(e) => setNewHealthEntry({ ...newHealthEntry, time: e.target.value })}
+                    className="form-input"
+                  />
+                </div>
                 <Button onClick={createHealthEntry} className="create-button">
                   <Plus className="button-icon" />
                   Log Entry
@@ -668,17 +677,21 @@ const App = () => {
               </CardHeader>
               <CardContent>
                 <div className="entries-list">
-                  {healthEntries.slice(0, 10).map((entry) => (
-                    <div key={entry.id} className="entry-item">
-                      <Badge variant="secondary" className="entry-type-badge">
-                        {entry.type}
-                      </Badge>
-                      <div className="entry-details">
-                        <p className="entry-description">{entry.description}</p>
-                        <span className="entry-date">{entry.date}</span>
+                  {healthEntries.slice(0, 10).map((entry) => {
+                    const formattedDate = formatInUserTimezone(entry.datetime_utc, 'MMM d, yyyy');
+                    const formattedTime = formatInUserTimezone(entry.datetime_utc, 'h:mm a');
+                    return (
+                      <div key={entry.id} className="entry-item">
+                        <Badge variant="secondary" className="entry-type-badge">
+                          {entry.type}
+                        </Badge>
+                        <div className="entry-details">
+                          <p className="entry-description">{entry.description}</p>
+                          <span className="entry-date">{formattedDate} at {formattedTime}</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                   {healthEntries.length === 0 && (
                     <p className="empty-state">No health entries yet. Start logging above!</p>
                   )}
@@ -688,6 +701,12 @@ const App = () => {
           </div>
         </TabsContent>
       </Tabs>
+      
+      {/* Settings Modal */}
+      <SettingsModal 
+        open={showSettings} 
+        onClose={() => setShowSettings(false)} 
+      />
     </div>
   );
 };
