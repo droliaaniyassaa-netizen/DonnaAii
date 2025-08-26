@@ -145,21 +145,22 @@ class DonnaAPITester:
         return True
 
     def test_calendar_crud(self):
-        """Test calendar CRUD operations"""
+        """Test calendar CRUD operations with timezone awareness"""
         print("\n" + "="*50)
-        print("TESTING CALENDAR CRUD")
+        print("TESTING CALENDAR CRUD WITH TIMEZONE")
         print("="*50)
         
-        # Create event
+        # Test timezone-aware event creation
+        utc_datetime = datetime.now(timezone.utc).isoformat()
         event_data = {
             "title": "Test Meeting",
-            "description": "API test meeting",
-            "date": "2024-12-20",
-            "time": "14:00"
+            "description": "API test meeting with timezone",
+            "datetime_utc": utc_datetime,
+            "reminder": True
         }
         
         success, event = self.run_test(
-            "Create Calendar Event",
+            "Create Calendar Event (UTC)",
             "POST",
             "calendar/events",
             200,
