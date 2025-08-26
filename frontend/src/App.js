@@ -371,6 +371,7 @@ const App = () => {
 
         {/* Calendar Tab */}
         <TabsContent value="calendar" className="calendar-container">
+          <TimezoneIndicator className="calendar-timezone" />
           <div className="calendar-grid">
             <Card className="calendar-card">
               <CardHeader>
@@ -422,26 +423,29 @@ const App = () => {
               </CardHeader>
               <CardContent>
                 <div className="events-list">
-                  {events.map((event) => (
-                    <div key={event.id} className="event-item">
-                      <div className="event-info">
-                        <h4 className="event-title">{event.title}</h4>
-                        {event.description && <p className="event-description">{event.description}</p>}
-                        <div className="event-datetime">
-                          <Badge variant="secondary">{event.date}</Badge>
-                          <Badge variant="outline">{event.time}</Badge>
+                  {events.map((event) => {
+                    const { date, time } = splitUTCDateTime(event.datetime_utc);
+                    return (
+                      <div key={event.id} className="event-item">
+                        <div className="event-info">
+                          <h4 className="event-title">{event.title}</h4>
+                          {event.description && <p className="event-description">{event.description}</p>}
+                          <div className="event-datetime">
+                            <Badge variant="secondary">{date}</Badge>
+                            <Badge variant="outline">{time}</Badge>
+                          </div>
                         </div>
+                        <Button
+                          onClick={() => deleteEvent(event.id)}
+                          variant="ghost"
+                          size="sm"
+                          className="delete-button"
+                        >
+                          <Trash2 className="delete-icon" />
+                        </Button>
                       </div>
-                      <Button
-                        onClick={() => deleteEvent(event.id)}
-                        variant="ghost"
-                        size="sm"
-                        className="delete-button"
-                      >
-                        <Trash2 className="delete-icon" />
-                      </Button>
-                    </div>
-                  ))}
+                    );
+                  })}
                   {events.length === 0 && (
                     <p className="empty-state">No events scheduled. Create your first event above!</p>
                   )}
