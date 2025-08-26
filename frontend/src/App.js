@@ -277,6 +277,14 @@ const App = () => {
           <h1>Donna</h1>
           <p>Your intelligent daily companion</p>
         </div>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="settings-button"
+          onClick={() => setShowSettings(true)}
+        >
+          <Settings className="settings-icon" />
+        </Button>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="main-tabs">
