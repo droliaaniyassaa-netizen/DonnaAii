@@ -176,8 +176,37 @@ async def create_event(event: CalendarEventCreate):
 
 @api_router.get("/calendar/events", response_model=List[CalendarEvent])
 async def get_events():
-    events = await db.calendar_events.find().sort("datetime_utc", 1).to_list(100)
-    return [CalendarEvent(**event) for event in events]
+    events = await db.calendar_events.find().to_list(100)
+    result = []
+    
+    for event in events:
+        # Handle both old and new data formats
+        if 'datetime_utc' not in event:
+            # Old format: convert date + time to datetime_utc
+            if 'date' in event and 'time' in event:
+                try:
+                    # Create datetime from date and time, assume UTC for old data
+                    date_str = event['date']
+                    time_str = event.get('time', '12:00')
+                    datetime_str = f"{date_str}T{time_str}:00"
+                    event['datetime_utc'] = datetime.fromisoformat(datetime_str).replace(tzinfo=timezone.utc)
+                except:
+                    # Skip invalid events
+                    continue
+            else:
+                # Skip events without proper date/time
+                continue
+        
+        try:
+            result.append(CalendarEvent(**event))
+        except Exception as e:
+            # Skip invalid events
+            print(f"Skipping invalid event: {e}")
+            continue
+    
+    # Sort by datetime_utc
+    result.sort(key=lambda x: x.datetime_utc)
+    return result
 
 @api_router.delete("/calendar/events/{event_id}")
 async def delete_event(event_id: str):
