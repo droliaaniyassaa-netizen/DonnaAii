@@ -136,11 +136,26 @@ const App = () => {
     if (!newEvent.title || !newEvent.date || !newEvent.time) return;
     
     try {
-      await axios.post(`${API}/calendar/events`, newEvent);
+      // Convert local date/time to UTC
+      const utcDateTime = handleDSTTransition(newEvent.date, newEvent.time);
+      if (!utcDateTime) {
+        alert('Invalid date/time. Please check your input.');
+        return;
+      }
+      
+      const eventData = {
+        title: newEvent.title,
+        description: newEvent.description,
+        datetime_utc: utcDateTime.toISOString(),
+        reminder: true
+      };
+      
+      await axios.post(`${API}/calendar/events`, eventData);
       setNewEvent({ title: '', description: '', date: '', time: '' });
       loadEvents();
     } catch (error) {
       console.error('Error creating event:', error);
+      alert('Error creating event. Please try again.');
     }
   };
 
