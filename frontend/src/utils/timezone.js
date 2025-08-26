@@ -113,7 +113,7 @@ export const combineDateTimeToUTC = (dateStr, timeStr, timezone = null) => {
     if (!isValid(localDate)) return null;
     
     // Convert to UTC
-    return zonedTimeToUtc(localDate, userTz);
+    return fromZonedTime(localDate, userTz);
   } catch (error) {
     console.warn('Failed to combine date/time:', { dateStr, timeStr }, error);
     return null;
