@@ -1,5 +1,5 @@
 // Timezone utilities for Donna
-import { format, formatInTimeZone, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
+import { formatInTimeZone, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 import { isValid, parseISO } from 'date-fns';
 
 // Get system timezone
