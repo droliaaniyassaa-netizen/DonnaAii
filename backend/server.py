@@ -79,14 +79,14 @@ class HealthEntry(BaseModel):
     type: str  # meal, hydration, sleep, exercise
     description: str
     value: Optional[str] = None
-    date: str
+    datetime_utc: datetime  # Store complete datetime in UTC
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class HealthEntryCreate(BaseModel):
     type: str
     description: str
     value: Optional[str] = None
-    date: str
+    datetime_utc: str  # ISO string datetime in UTC from frontend
 
 class HealthGoal(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
