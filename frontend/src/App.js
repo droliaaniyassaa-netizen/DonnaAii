@@ -41,11 +41,12 @@ const App = () => {
   const [healthEntries, setHealthEntries] = useState([]);
   const [healthGoals, setHealthGoals] = useState([]);
   const [healthAnalytics, setHealthAnalytics] = useState({});
-  const [newHealthEntry, setNewHealthEntry] = useState({ type: 'meal', description: '', date: '' });
+  const [newHealthEntry, setNewHealthEntry] = useState({ type: 'meal', description: '', date: '', time: '12:00' });
   const [newHealthGoal, setNewHealthGoal] = useState({ goal_type: 'weight_loss', target: '', current_progress: '' });
   
-  // Active tab
+  // UI state
   const [activeTab, setActiveTab] = useState('chat');
+  const [showSettings, setShowSettings] = useState(false);
   
   // Refs
   const messagesEndRef = useRef(null);
