@@ -51,16 +51,14 @@ class CalendarEvent(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
     description: Optional[str] = None
-    date: str
-    time: str
+    datetime_utc: datetime  # Store complete datetime in UTC
     reminder: bool = True
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class CalendarEventCreate(BaseModel):
     title: str
     description: Optional[str] = None
-    date: str
-    time: str
+    datetime_utc: str  # ISO string datetime in UTC from frontend
     reminder: bool = True
 
 class CareerGoal(BaseModel):
