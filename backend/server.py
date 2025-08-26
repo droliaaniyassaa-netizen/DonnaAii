@@ -285,16 +285,19 @@ async def get_health_analytics():
 async def process_message_context(message: str, session_id: str):
     """Process message to auto-create calendar events, career goals, or health entries"""
     message_lower = message.lower()
+    current_utc = datetime.now(timezone.utc)
     
     # Simple keyword detection for auto-scheduling
     if any(word in message_lower for word in ['meeting', 'appointment', 'call', 'schedule', 'tomorrow', 'next week']):
         # This is a basic implementation - in a real app, you'd use NLP
         if 'meeting' in message_lower:
+            # Default to next day at 10 AM UTC
+            next_day = current_utc.replace(hour=10, minute=0, second=0, microsecond=0) + timedelta(days=1)
+            
             event = CalendarEvent(
                 title="Auto-scheduled Meeting",
                 description=f"Created from chat: {message}",
-                date="2024-01-15",  # Default date - would be smarter in real implementation
-                time="10:00"
+                datetime_utc=next_day
             )
             await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
     
@@ -311,7 +314,7 @@ async def process_message_context(message: str, session_id: str):
         health_entry = HealthEntry(
             type=entry_type,
             description=message,
-            date=datetime.now(timezone.utc).strftime("%Y-%m-%d")
+            datetime_utc=current_utc
         )
         await db.health_entries.insert_one(prepare_for_mongo(health_entry.dict()))
 
