@@ -26,14 +26,14 @@ export const toUTC = (dateTime, timezone = null) => {
   
   // If it's already a Date object
   if (dateTime instanceof Date) {
-    return zonedTimeToUtc(dateTime, userTz);
+    return fromZonedTime(dateTime, userTz);
   }
   
   // If it's a string, parse it first
   try {
     const parsed = parseISO(dateTime);
     if (isValid(parsed)) {
-      return zonedTimeToUtc(parsed, userTz);
+      return fromZonedTime(parsed, userTz);
     }
   } catch (error) {
     console.warn('Failed to parse datetime:', dateTime, error);
