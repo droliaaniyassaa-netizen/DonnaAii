@@ -723,3 +723,188 @@ body {
     align-items: flex-start;
   }
 }
+
+/* Timezone Indicator Styles */
+.timezone-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(102, 126, 234, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #4a5568;
+}
+
+.timezone-indicator-icon {
+  width: 14px;
+  height: 14px;
+  color: #667eea;
+}
+
+.timezone-indicator-text {
+  font-weight: 500;
+}
+
+.calendar-timezone,
+.health-timezone {
+  max-width: 300px;
+}
+
+/* Settings Modal Styles */
+.settings-modal {
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.settings-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.settings-content {
+  padding: 1.5rem 0;
+}
+
+.setting-section {
+  margin-bottom: 2rem;
+}
+
+.setting-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.label-icon {
+  width: 18px;
+  height: 18px;
+  color: #667eea;
+}
+
+.timezone-info {
+  margin-bottom: 1.5rem;
+}
+
+.timezone-description {
+  color: #718096;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.current-timezone,
+.system-timezone {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.timezone-label {
+  font-weight: 500;
+  color: #4a5568;
+  min-width: 60px;
+}
+
+.timezone-badge {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+}
+
+.timezone-selector {
+  width: 100%;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.selector-icon,
+.chevron-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.chevron-icon {
+  margin-left: 0.5rem;
+  opacity: 0.5;
+}
+
+.timezone-popover {
+  width: 400px;
+  padding: 0;
+}
+
+.timezone-search {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+}
+
+.timezone-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.timezone-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+.check-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+}
+
+.timezone-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.timezone-name {
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.timezone-time {
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.reset-button {
+  flex: 1;
+}
+
+.save-button {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}
+
+.save-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
