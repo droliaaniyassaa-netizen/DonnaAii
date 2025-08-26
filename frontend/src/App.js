@@ -233,12 +233,28 @@ const App = () => {
     if (!newHealthEntry.description || !newHealthEntry.date) return;
     
     try {
-      await axios.post(`${API}/health/entries`, newHealthEntry);
-      setNewHealthEntry({ type: 'meal', description: '', date: '' });
+      // Convert local date/time to UTC
+      const time = newHealthEntry.time || '12:00';
+      const utcDateTime = handleDSTTransition(newHealthEntry.date, time);
+      if (!utcDateTime) {
+        alert('Invalid date/time. Please check your input.');
+        return;
+      }
+      
+      const entryData = {
+        type: newHealthEntry.type,
+        description: newHealthEntry.description,
+        value: newHealthEntry.value,
+        datetime_utc: utcDateTime.toISOString()
+      };
+      
+      await axios.post(`${API}/health/entries`, entryData);
+      setNewHealthEntry({ type: 'meal', description: '', date: '', time: '12:00' });
       loadHealthEntries();
       loadHealthAnalytics();
     } catch (error) {
       console.error('Error creating health entry:', error);
+      alert('Error creating health entry. Please try again.');
     }
   };
 
