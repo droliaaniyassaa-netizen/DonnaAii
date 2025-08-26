@@ -96,7 +96,7 @@ export const formatInUserTimezone = (utcDateTime, formatString = 'yyyy-MM-dd HH:
 // Get current datetime in user's timezone
 export const getCurrentInUserTimezone = (timezone = null) => {
   const userTz = timezone || getUserTimezone();
-  return utcToZonedTime(new Date(), userTz);
+  return toZonedTime(new Date(), userTz);
 };
 
 // Combine date and time inputs into a UTC datetime
