@@ -278,8 +278,36 @@ async def create_health_entry(entry: HealthEntryCreate):
 
 @api_router.get("/health/entries", response_model=List[HealthEntry])
 async def get_health_entries():
-    entries = await db.health_entries.find().sort("datetime_utc", -1).to_list(100)
-    return [HealthEntry(**entry) for entry in entries]
+    entries = await db.health_entries.find().to_list(100)
+    result = []
+    
+    for entry in entries:
+        # Handle both old and new data formats
+        if 'datetime_utc' not in entry:
+            # Old format: convert date to datetime_utc
+            if 'date' in entry:
+                try:
+                    # Create datetime from date, assume 12:00 UTC for old data
+                    date_str = entry['date']
+                    datetime_str = f"{date_str}T12:00:00"
+                    entry['datetime_utc'] = datetime.fromisoformat(datetime_str).replace(tzinfo=timezone.utc)
+                except:
+                    # Skip invalid entries
+                    continue
+            else:
+                # Skip entries without proper date
+                continue
+        
+        try:
+            result.append(HealthEntry(**entry))
+        except Exception as e:
+            # Skip invalid entries
+            print(f"Skipping invalid health entry: {e}")
+            continue
+    
+    # Sort by datetime_utc (newest first)
+    result.sort(key=lambda x: x.datetime_utc, reverse=True)
+    return result
 
 @api_router.post("/health/goals", response_model=HealthGoal)
 async def create_health_goal(goal: HealthGoalCreate):
