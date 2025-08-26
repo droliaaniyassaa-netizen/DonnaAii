@@ -61,7 +61,7 @@ export const fromUTC = (utcDateTime, timezone = null) => {
     
     if (!isValid(date)) return null;
     
-    return utcToZonedTime(date, userTz);
+    return toZonedTime(date, userTz);
   } catch (error) {
     console.warn('Failed to convert from UTC:', utcDateTime, error);
     return null;
