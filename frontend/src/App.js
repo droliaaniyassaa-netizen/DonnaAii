@@ -7,7 +7,16 @@ import { Textarea } from './components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Badge } from './components/ui/badge';
 import { Progress } from './components/ui/progress';
-import { Calendar, MessageCircle, Target, Heart, Send, Mic, MicOff, Plus, Trash2, Clock, Star, TrendingUp } from 'lucide-react';
+import { Calendar, MessageCircle, Target, Heart, Send, Mic, MicOff, Plus, Trash2, Clock, Star, TrendingUp, Settings } from 'lucide-react';
+import SettingsModal from './components/SettingsModal';
+import TimezoneIndicator from './components/TimezoneIndicator';
+import { 
+  combineDateTimeToUTC, 
+  splitUTCDateTime, 
+  formatInUserTimezone, 
+  getCurrentInUserTimezone,
+  handleDSTTransition 
+} from './utils/timezone';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
