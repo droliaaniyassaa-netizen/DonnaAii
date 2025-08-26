@@ -230,13 +230,26 @@ async def update_goal_progress(goal_id: str, progress: int):
 # Health endpoints
 @api_router.post("/health/entries", response_model=HealthEntry)
 async def create_health_entry(entry: HealthEntryCreate):
-    entry_obj = HealthEntry(**entry.dict())
+    # Parse UTC datetime from frontend
+    try:
+        datetime_utc = datetime.fromisoformat(entry.datetime_utc.replace('Z', '+00:00'))
+        if datetime_utc.tzinfo is None:
+            datetime_utc = datetime_utc.replace(tzinfo=timezone.utc)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid datetime format. Use ISO format.")
+    
+    entry_obj = HealthEntry(
+        type=entry.type,
+        description=entry.description,
+        value=entry.value,
+        datetime_utc=datetime_utc
+    )
     await db.health_entries.insert_one(prepare_for_mongo(entry_obj.dict()))
     return entry_obj
 
 @api_router.get("/health/entries", response_model=List[HealthEntry])
 async def get_health_entries():
-    entries = await db.health_entries.find().sort("date", -1).to_list(100)
+    entries = await db.health_entries.find().sort("datetime_utc", -1).to_list(100)
     return [HealthEntry(**entry) for entry in entries]
 
 @api_router.post("/health/goals", response_model=HealthGoal)
