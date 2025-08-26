@@ -157,13 +157,26 @@ async def get_chat_history(session_id: str):
 # Calendar endpoints
 @api_router.post("/calendar/events", response_model=CalendarEvent)
 async def create_event(event: CalendarEventCreate):
-    event_obj = CalendarEvent(**event.dict())
+    # Parse UTC datetime from frontend
+    try:
+        datetime_utc = datetime.fromisoformat(event.datetime_utc.replace('Z', '+00:00'))
+        if datetime_utc.tzinfo is None:
+            datetime_utc = datetime_utc.replace(tzinfo=timezone.utc)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid datetime format. Use ISO format.")
+    
+    event_obj = CalendarEvent(
+        title=event.title,
+        description=event.description,
+        datetime_utc=datetime_utc,
+        reminder=event.reminder
+    )
     await db.calendar_events.insert_one(prepare_for_mongo(event_obj.dict()))
     return event_obj
 
 @api_router.get("/calendar/events", response_model=List[CalendarEvent])
 async def get_events():
-    events = await db.calendar_events.find().sort("date", 1).to_list(100)
+    events = await db.calendar_events.find().sort("datetime_utc", 1).to_list(100)
     return [CalendarEvent(**event) for event in events]
 
 @api_router.delete("/calendar/events/{event_id}")
