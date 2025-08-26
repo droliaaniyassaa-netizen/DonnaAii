@@ -172,6 +172,33 @@ class DonnaAPITester:
             
         event_id = event.get('id')
         
+        # Verify UTC datetime storage
+        if event.get('datetime_utc'):
+            print("✅ Event stored with UTC datetime")
+            # Verify it's a valid ISO datetime
+            try:
+                stored_dt = datetime.fromisoformat(event['datetime_utc'].replace('Z', '+00:00'))
+                print(f"   Stored datetime: {stored_dt}")
+            except ValueError:
+                print("❌ Invalid datetime format in response")
+        else:
+            print("❌ No datetime_utc field in response")
+        
+        # Test invalid datetime format
+        invalid_event_data = {
+            "title": "Invalid Event",
+            "datetime_utc": "invalid-datetime",
+            "reminder": True
+        }
+        
+        success, _ = self.run_test(
+            "Create Event with Invalid Datetime",
+            "POST",
+            "calendar/events",
+            400,  # Should return bad request
+            data=invalid_event_data
+        )
+        
         # Get all events
         success, events = self.run_test(
             "Get All Calendar Events",
