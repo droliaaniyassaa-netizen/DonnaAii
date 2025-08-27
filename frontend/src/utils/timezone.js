@@ -245,3 +245,22 @@ export const getAllTimezones = () => {
     return COMMON_TIMEZONES.sort();
   }
 };
+
+// Check if a date is today in user timezone
+export const isToday = (dateTime) => {
+  try {
+    const userTz = getUserTimezone();
+    const now = getCurrentInUserTimezone();
+    
+    // Convert both to user timezone for comparison
+    const eventInUserTz = toZonedTime(dateTime, userTz);
+    
+    return isSameDay(eventInUserTz, now);
+  } catch (error) {
+    console.warn('Error checking if date is today:', error);
+    return false;
+  }
+};
+
+// Re-export parseISO for convenience  
+export { parseISO } from 'date-fns';
