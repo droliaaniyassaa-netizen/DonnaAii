@@ -757,13 +757,12 @@ body::before {
   transform: rotate(45deg) translateX(100%);
 }
 
-/* UNIFORM ACTIVE STATE - IDENTICAL FOR ALL CARDS */
+/* SMOOTH ACTIVE STATE - NO FLICKERING */
 .event-card-face:active {
-  transform: translateY(12px) translateZ(-20px) rotateX(-3deg) scale(0.995) !important;
+  transform: translateY(10px) !important;
   box-shadow: 
-    0 6px 18px rgba(0, 0, 0, 0.7),
-    0 3px 9px rgba(0, 0, 0, 0.5),
-    inset 0 6px 18px rgba(0, 0, 0, 0.15),
+    0 8px 20px rgba(0, 0, 0, 0.5),
+    0 4px 10px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
