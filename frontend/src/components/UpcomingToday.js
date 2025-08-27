@@ -102,6 +102,7 @@ const UpcomingToday = ({ events, className = "" }) => {
                   
                   <Badge 
                     className="event-category-tag"
+                    data-category={event.category?.toLowerCase() || 'personal'}
                   >
                     {category.name}
                   </Badge>
