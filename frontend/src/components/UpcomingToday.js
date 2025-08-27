@@ -76,7 +76,7 @@ const UpcomingToday = ({ events, className = "" }) => {
         </div>
         
         <div className="today-events-container">
-          {todayEvents.map((event, index) => {
+          {nextEvent && (
             const category = EVENT_CATEGORIES[event.category?.toUpperCase()] || EVENT_CATEGORIES.PERSONAL;
             const eventTime = formatInUserTimezone(event.datetime_utc, 'h:mm a');
             const isNext = event.id === nextEvent?.id; // Mark the next upcoming event
