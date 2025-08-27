@@ -1,6 +1,6 @@
-// Advanced event processing for Donna's intelligent calendar
+// Import required date functions
 import { combineDateTimeToUTC, getCurrentInUserTimezone } from './timezone';
-import { parseISO, addDays, addWeeks, isValid, format } from 'date-fns';
+import { parseISO, addDays, addWeeks, addHours, addMinutes, isValid, format } from 'date-fns';
 
 // SINGLE SOURCE OF TRUTH: Event categories with EXACT color mapping
 // This is the authoritative definition used everywhere in the application
