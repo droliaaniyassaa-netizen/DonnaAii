@@ -37,6 +37,7 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
     try {
       await onUpdate(event.id, editData);
       setIsEditing(false);
+      setIsFlipped(false); // Close the card after saving
     } catch (error) {
       console.error('Error updating event:', error);
     }
@@ -50,6 +51,7 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
       category: event.category || 'personal'
     });
     setIsEditing(false);
+    setIsFlipped(false); // Close the card
   };
 
   const handleDelete = (e) => {
@@ -58,7 +60,7 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
   };
 
   return (
-    <div className={`event-card-container ${className}`}>
+    <div className={`event-card-container ${isFlipped ? 'flipped' : ''} ${className}`}>
       <div className={`event-card ${isFlipped ? 'flipped' : ''}`}>
         {/* Front Face */}
         <Card 
@@ -67,8 +69,6 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
           style={{
             backgroundColor: category.color,
             borderColor: category.borderColor,
-            borderWidth: '1px',
-            borderStyle: 'solid'
           }}
         >
           <CardContent className="event-card-content">
@@ -78,7 +78,6 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
                 <div className="event-date">{formattedDate}</div>
               </div>
               <Badge 
-                variant="secondary" 
                 className="event-category-badge"
                 style={{
                   backgroundColor: category.color,
@@ -119,8 +118,6 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
           style={{
             backgroundColor: category.color,
             borderColor: category.borderColor,
-            borderWidth: '1px',
-            borderStyle: 'solid'
           }}
         >
           <CardContent className="event-card-content">
@@ -129,7 +126,7 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={handleFlip}
+                onClick={handleCancel}
                 className="close-edit-button"
               >
                 <X className="close-icon" />
