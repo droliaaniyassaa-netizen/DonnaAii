@@ -83,7 +83,7 @@ const TIME_PATTERNS = {
   'midnight': '00:00'
 };
 
-// Advanced natural language processing for event extraction
+// Advanced natural language processing for event extraction - ENHANCED
 export const extractEventFromMessage = (message) => {
   const text = message.toLowerCase().trim();
   
@@ -103,18 +103,28 @@ export const extractEventFromMessage = (message) => {
     let title = extractEventTitle(text);
     eventData.title = title || 'Event';
     
-    // Extract and parse date
-    const dateInfo = extractDate(text);
+    // Extract and parse date with enhanced logic
+    const dateInfo = extractDateAdvanced(text);
     if (dateInfo.date) {
       eventData.date = dateInfo.date;
       eventData.confidence += 0.4;
+    } else {
+      // DEFAULT TO TODAY if no date specified
+      const now = getCurrentInUserTimezone();
+      eventData.date = format(now, 'yyyy-MM-dd');
+      eventData.confidence += 0.2; // Lower confidence for default
     }
     
-    // Extract time
-    const timeInfo = extractTime(text);
+    // Extract time with enhanced logic
+    const timeInfo = extractTimeAdvanced(text, eventData.date);
     if (timeInfo.time) {
       eventData.time = timeInfo.time;
       eventData.confidence += 0.3;
+      // If time has passed today and no explicit date, move to tomorrow
+      if (timeInfo.movedToTomorrow) {
+        const tomorrow = addDays(getCurrentInUserTimezone(), 1);
+        eventData.date = format(tomorrow, 'yyyy-MM-dd');
+      }
     }
     
     // Categorize event
