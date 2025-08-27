@@ -494,6 +494,10 @@ body::before {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
+  /* ENSURE CONTAINER ALLOWS INTERACTION */
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 100 !important;
 }
 
 .chat-input {
