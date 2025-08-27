@@ -725,12 +725,12 @@ body::before {
   pointer-events: none;
 }
 
-/* UNIFORM HOVER EFFECT - IDENTICAL FOR ALL CARDS */
+/* SMOOTH HOVER EFFECT - NO FLICKERING, MATCHES TODAY CARDS BEHAVIOR */
 .event-card-face:hover {
-  /* UNIFORM depression effect */
-  transform: translateY(8px) translateZ(-15px) rotateX(-2deg) scale(0.997) !important;
+  /* SIMPLE SMOOTH DEPRESSION - Same as Today cards but deeper */
+  transform: translateY(6px) !important;
   
-  /* UNIFORM enhanced glassmorphism on hover */
+  /* ENHANCED glassmorphism on hover - CORRECT BRIGHTNESS */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.12) 0%,
     rgba(255, 255, 255, 0.04) 25%,
@@ -741,15 +741,11 @@ body::before {
   
   backdrop-filter: blur(150px) saturate(200%) brightness(1.15) !important;
   
-  /* UNIFORM depressed shadow system */
+  /* SMOOTH shadow system - NO complex 3D shadows that cause flicker */
   box-shadow: 
-    0 12px 30px rgba(0, 0, 0, 0.6),
-    0 6px 15px rgba(0, 0, 0, 0.4),
-    inset 0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 2px 4px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 0 0 0.5px rgba(255, 255, 255, 0.06),
-    0 0 80px rgba(255, 255, 255, 0.03) !important;
+    0 15px 40px rgba(0, 0, 0, 0.4),
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
 }
 
 .event-card-face:hover::before {
