@@ -184,7 +184,8 @@ async def create_event(event: CalendarEventCreate):
 
 @api_router.get("/calendar/events", response_model=List[CalendarEvent])
 async def get_events():
-    events = await db.calendar_events.find().to_list(100)
+    # Fetch events and sort by datetime_utc in ascending order (earliest first)
+    events = await db.calendar_events.find().sort("datetime_utc", 1).to_list(100)
     result = []
     
     for event in events:
