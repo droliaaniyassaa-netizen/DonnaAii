@@ -60,6 +60,7 @@ class CalendarEventCreate(BaseModel):
     title: str
     description: Optional[str] = None
     datetime_utc: str  # ISO string datetime in UTC from frontend
+    category: Optional[str] = "personal"  # Default category
     reminder: bool = True
 
 class CalendarEventUpdate(BaseModel):
