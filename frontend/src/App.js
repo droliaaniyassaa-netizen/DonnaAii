@@ -459,7 +459,12 @@ const App = () => {
                   placeholder="Ask Donna anything..."
                   className="chat-input"
                   rows={2}
-                  disabled={isLoading}
+                  disabled={false}
+                  style={{ 
+                    pointerEvents: 'auto',
+                    zIndex: 1000,
+                    position: 'relative'
+                  }}
                 />
                 <div className="input-actions">
                   <Button
