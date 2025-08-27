@@ -59,17 +59,21 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
     onDelete(event.id);
   };
 
+  // Check if event is in the past
+  const eventDateTime = new Date(event.datetime_utc);
+  const now = new Date();
+  const isPastEvent = eventDateTime < now;
+
   return (
-    <div className={`event-card-container ${isFlipped ? 'flipped' : ''} ${className}`}>
-      <div className={`event-card ${isFlipped ? 'flipped' : ''}`}>
+    <div 
+      className={`event-card-container ${isFlipped ? 'flipped' : ''} ${className}`}
+      data-category={event.category?.toLowerCase() || 'personal'}
+    >
+      <div className={`event-card ${isFlipped ? 'flipped' : ''} ${isPastEvent ? 'past' : ''}`}>
         {/* Front Face */}
         <Card 
           className="event-card-face event-card-front"
           onClick={handleFlip}
-          style={{
-            backgroundColor: category.color,
-            borderColor: category.borderColor,
-          }}
         >
           <CardContent className="event-card-content">
             <div className="event-card-header">
