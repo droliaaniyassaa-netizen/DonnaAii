@@ -638,9 +638,9 @@ body::before {
   transform: translateY(-12px) translateZ(20px) rotateX(3deg);
 }
 
-/* Flipped state */
+/* Flipped state - ENHANCED */
 .event-card.flipped {
-  transform: rotateY(180deg) translateY(-8px) translateZ(15px) rotateX(2deg);
+  transform: rotateY(180deg) translateY(-12px) translateZ(20px) rotateX(3deg);
 }
 
 /* Card Face Base - Ultra Premium Glassmorphism */
