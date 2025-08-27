@@ -177,13 +177,11 @@ const App = () => {
   };
         reminder: true
       };
+      return false;
       
-      await axios.post(`${API}/calendar/events`, newEvent);
-      await loadEvents(); // Refresh calendar
-      
-      console.log('Event created from chat:', newEvent);
     } catch (error) {
       console.error('Error creating event from chat:', error);
+      return false;
     }
   };
 
