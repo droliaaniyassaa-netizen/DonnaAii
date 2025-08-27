@@ -2,41 +2,63 @@
 import { combineDateTimeToUTC, getCurrentInUserTimezone } from './timezone';
 import { parseISO, addDays, addWeeks, isValid, format } from 'date-fns';
 
-// Event categories with color schemes
+// SINGLE SOURCE OF TRUTH: Event categories with EXACT color mapping
+// This is the authoritative definition used everywhere in the application
 export const EVENT_CATEGORIES = {
   PERSONAL: {
     id: 'personal',
     name: 'Personal',
-    color: 'rgba(139, 95, 191, 0.15)',
-    borderColor: 'rgba(139, 95, 191, 0.3)',
-    textColor: 'rgba(139, 95, 191, 0.9)',
-    keywords: ['birthday', 'anniversary', 'family', 'personal', 'celebration', 'party', 'dinner', 'lunch', 'date', 'vacation', 'holiday']
+    color: 'rgba(168, 85, 247, 1)', // Purple - Solid for left border
+    backgroundColor: 'rgba(168, 85, 247, 0.15)', // Purple - Transparent for badge
+    borderColor: 'rgba(168, 85, 247, 0.3)',
+    textColor: 'rgba(196, 181, 253, 1)',
+    glowColor: 'rgba(168, 85, 247, 0.3)',
+    keywords: ['birthday', 'anniversary', 'family', 'personal', 'celebration', 'party', 'dinner', 'lunch', 'date', 'vacation', 'holiday', 'social', 'friend', 'visit']
   },
   WORK: {
-    id: 'work',
+    id: 'work', 
     name: 'Work',
-    color: 'rgba(184, 134, 11, 0.15)',
-    borderColor: 'rgba(184, 134, 11, 0.3)',
-    textColor: 'rgba(184, 134, 11, 0.9)',
-    keywords: ['meeting', 'conference', 'project', 'deadline', 'presentation', 'interview', 'work', 'office', 'client', 'team', 'standup', 'review']
+    color: 'rgba(59, 130, 246, 1)', // Blue - Solid for left border
+    backgroundColor: 'rgba(59, 130, 246, 0.15)', // Blue - Transparent for badge
+    borderColor: 'rgba(59, 130, 246, 0.3)',
+    textColor: 'rgba(147, 197, 253, 1)',
+    glowColor: 'rgba(59, 130, 246, 0.3)',
+    keywords: ['meeting', 'conference', 'project', 'deadline', 'presentation', 'interview', 'work', 'office', 'client', 'team', 'standup', 'review', 'boss', 'call', 'zoom']
   },
   APPOINTMENTS: {
     id: 'appointments',
-    name: 'Appointments',
-    color: 'rgba(32, 178, 170, 0.15)',
-    borderColor: 'rgba(32, 178, 170, 0.3)',
-    textColor: 'rgba(32, 178, 170, 0.9)',
-    keywords: ['doctor', 'dentist', 'appointment', 'checkup', 'medical', 'hospital', 'clinic', 'therapy', 'consultation', 'salon', 'haircut', 'massage']
+    name: 'Appointments', 
+    color: 'rgba(20, 184, 166, 1)', // Teal - Solid for left border
+    backgroundColor: 'rgba(20, 184, 166, 0.15)', // Teal - Transparent for badge
+    borderColor: 'rgba(20, 184, 166, 0.3)',
+    textColor: 'rgba(153, 246, 228, 1)',
+    glowColor: 'rgba(20, 184, 166, 0.3)',
+    keywords: ['doctor', 'dentist', 'appointment', 'checkup', 'medical', 'hospital', 'clinic', 'therapy', 'consultation', 'salon', 'haircut', 'massage', 'dermat', 'dermatologist']
   },
-  ACTIVITIES: {
-    id: 'activities',
+  REGULAR_ACTIVITIES: {
+    id: 'regular_activities',
     name: 'Activities',
-    color: 'rgba(102, 205, 170, 0.15)',
-    borderColor: 'rgba(102, 205, 170, 0.3)',
-    textColor: 'rgba(102, 205, 170, 0.9)',
-    keywords: ['gym', 'workout', 'exercise', 'yoga', 'run', 'fitness', 'sport', 'training', 'class', 'lesson', 'practice', 'activity']
+    color: 'rgba(245, 158, 11, 1)', // Amber - Solid for left border  
+    backgroundColor: 'rgba(245, 158, 11, 0.15)', // Amber - Transparent for badge
+    borderColor: 'rgba(245, 158, 11, 0.3)',
+    textColor: 'rgba(253, 230, 138, 1)',
+    glowColor: 'rgba(245, 158, 11, 0.3)',
+    keywords: ['gym', 'workout', 'exercise', 'yoga', 'run', 'fitness', 'sport', 'training', 'class', 'lesson', 'practice', 'activity', 'swimming', 'cycling']
+  },
+  REMINDERS: {
+    id: 'reminders',
+    name: 'Reminders',
+    color: 'rgba(34, 197, 94, 1)', // Green - Solid for left border
+    backgroundColor: 'rgba(34, 197, 94, 0.15)', // Green - Transparent for badge
+    borderColor: 'rgba(34, 197, 94, 0.3)', 
+    textColor: 'rgba(134, 239, 172, 1)',
+    glowColor: 'rgba(34, 197, 94, 0.3)',
+    keywords: ['reminder', 'meds', 'medication', 'call', 'email', 'pay', 'bill', 'pickup', 'buy', 'remember', 'task', 'todo']
   }
 };
+
+// Fallback category - always use PERSONAL (purple) instead of grey
+export const DEFAULT_CATEGORY = EVENT_CATEGORIES.PERSONAL;
 
 // Time-related keywords and their mappings
 const TIME_PATTERNS = {
