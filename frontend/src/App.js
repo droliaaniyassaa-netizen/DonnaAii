@@ -98,6 +98,16 @@ const App = () => {
     setIsLoading(true);
     
     try {
+      // Check if message is an event scheduling request
+      if (isEventMessage(inputMessage)) {
+        const eventData = extractEventFromMessage(inputMessage);
+        
+        if (eventData && eventData.confidence > 0.5) {
+          // Auto-create event from chat
+          await createEventFromChat(eventData);
+        }
+      }
+      
       const response = await axios.post(`${API}/chat`, {
         message: inputMessage,
         session_id: 'default'
@@ -114,6 +124,38 @@ const App = () => {
       console.error('Error sending message:', error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Create event from chat message
+  const createEventFromChat = async (eventData) => {
+    try {
+      if (!eventData.date) {
+        // Use current date if no date specified
+        const now = getCurrentInUserTimezone();
+        eventData.date = formatInUserTimezone(now, 'yyyy-MM-dd');
+      }
+      
+      const utcDateTime = handleDSTTransition(eventData.date, eventData.time);
+      if (!utcDateTime) {
+        console.warn('Could not create event from chat - invalid date/time');
+        return;
+      }
+      
+      const newEvent = {
+        title: eventData.title,
+        description: eventData.description,
+        category: eventData.category,
+        datetime_utc: utcDateTime.toISOString(),
+        reminder: true
+      };
+      
+      await axios.post(`${API}/calendar/events`, newEvent);
+      await loadEvents(); // Refresh calendar
+      
+      console.log('Event created from chat:', newEvent);
+    } catch (error) {
+      console.error('Error creating event from chat:', error);
     }
   };
 
