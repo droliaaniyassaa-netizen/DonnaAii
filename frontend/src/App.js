@@ -433,8 +433,12 @@ const App = () => {
         {/* Calendar Tab */}
         <TabsContent value="calendar" className="calendar-container">
           <TimezoneIndicator className="calendar-timezone" />
+          
+          {/* Upcoming Today Section */}
+          <UpcomingToday events={events} />
+          
           <div className="calendar-grid">
-            <Card className="calendar-card">
+            <Card className="calendar-creation-card">
               <CardHeader>
                 <CardTitle className="section-title">
                   <Calendar className="header-icon" />
@@ -454,6 +458,17 @@ const App = () => {
                   onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
                   className="form-input"
                 />
+                <select
+                  value={newEvent.category || 'personal'}
+                  onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
+                  className="form-select"
+                >
+                  {Object.entries(EVENT_CATEGORIES).map(([key, category]) => (
+                    <option key={key} value={key.toLowerCase()}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
                 <div className="date-time-row">
                   <Input
                     type="date"
@@ -475,44 +490,27 @@ const App = () => {
               </CardContent>
             </Card>
 
-            <Card className="events-card">
-              <CardHeader>
-                <CardTitle className="section-title">
-                  <Clock className="header-icon" />
-                  Upcoming Events
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="events-list">
-                  {events.map((event) => {
-                    const { date, time } = splitUTCDateTime(event.datetime_utc);
-                    return (
-                      <div key={event.id} className="event-item">
-                        <div className="event-info">
-                          <h4 className="event-title">{event.title}</h4>
-                          {event.description && <p className="event-description">{event.description}</p>}
-                          <div className="event-datetime">
-                            <Badge variant="secondary">{date}</Badge>
-                            <Badge variant="outline">{time}</Badge>
-                          </div>
-                        </div>
-                        <Button
-                          onClick={() => deleteEvent(event.id)}
-                          variant="ghost"
-                          size="sm"
-                          className="delete-button"
-                        >
-                          <Trash2 className="delete-icon" />
-                        </Button>
-                      </div>
-                    );
-                  })}
-                  {events.length === 0 && (
-                    <p className="empty-state">No events scheduled. Create your first event above!</p>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+            {/* Events List */}
+            <div className="events-grid">
+              {events
+                .filter(event => !isEventToday(event)) // Filter out today's events (shown above)
+                .map((event) => (
+                  <EventCard
+                    key={event.id}
+                    event={event}
+                    onDelete={deleteEvent}
+                    onUpdate={updateEvent}
+                  />
+                ))}
+              {events.filter(event => !isEventToday(event)).length === 0 && (
+                <Card className="empty-card">
+                  <CardContent className="empty-content">
+                    <Clock className="empty-icon" />
+                    <p>No upcoming events. Create your first event above!</p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
         </TabsContent>
 
