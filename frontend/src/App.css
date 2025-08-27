@@ -643,7 +643,11 @@ body::before {
   transform: rotateY(180deg) translateY(-12px) translateZ(20px) rotateX(3deg);
 }
 
-/* Card Face Base - Ultra Premium Glassmorphism */
+/* ========================================================================
+   GLOBAL UNIFORM BASE STYLE - IDENTICAL FOR ALL EVENT CARDS
+   ======================================================================== */
+
+/* Base Event Card Face - IDENTICAL TREATMENT FOR ALL CATEGORIES */
 .event-card-face {
   position: absolute;
   width: 100%;
@@ -652,43 +656,37 @@ body::before {
   border-radius: 24px;
   overflow: hidden;
   
-  /* Ultra Premium Glassmorphic Background - MORE INTENSE FROSTED GLASS */
+  /* UNIFORM GLASSMORPHIC BACKGROUND - IDENTICAL FOR ALL CARDS */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.08) 0%,
     rgba(255, 255, 255, 0.025) 25%,
     rgba(255, 255, 255, 0.045) 50%,
     rgba(255, 255, 255, 0.022) 75%,
     rgba(255, 255, 255, 0.015) 100%
-  );
+  ) !important;
   
-  /* Premium Frosted Glass Effect - MUCH MORE INTENSE */
-  backdrop-filter: blur(120px) saturate(180%) brightness(1.1);
-  -webkit-backdrop-filter: blur(120px) saturate(180%) brightness(1.1);
+  /* UNIFORM FROSTED GLASS EFFECT - IDENTICAL FOR ALL CARDS */
+  backdrop-filter: blur(120px) saturate(180%) brightness(1.1) !important;
+  -webkit-backdrop-filter: blur(120px) saturate(180%) brightness(1.1) !important;
   
-  /* Sophisticated Border with LEFT COLOR ACCENT - THICKER FOR VISIBILITY */
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-left: 6px solid rgba(255, 255, 255, 0.4); /* Thicker default, will be overridden by category */
+  /* UNIFORM BORDER - Only left border color varies by category */
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-left: 6px solid rgba(255, 255, 255, 0.4) !important; /* Default, overridden by category */
   
-  /* Ultra Premium Floating Shadow System - MORE PROMINENT */
+  /* UNIFORM SHADOW SYSTEM - IDENTICAL FOR ALL CARDS */
   box-shadow: 
-    /* Main floating shadow - ENHANCED */
     0 35px 70px rgba(0, 0, 0, 0.5),
-    /* Secondary depth shadow */
     0 20px 40px rgba(0, 0, 0, 0.35),
-    /* Surface contact shadow */
     0 12px 25px rgba(0, 0, 0, 0.25),
-    /* Inner highlight */
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    /* Outer rim glow */
     0 0 0 0.5px rgba(255, 255, 255, 0.04),
-    /* Subtle ambient glow - ENHANCED */
-    0 0 80px rgba(255, 255, 255, 0.03);
+    0 0 80px rgba(255, 255, 255, 0.03) !important;
   
   transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
 }
 
-/* Premium Glassmorphic Overlay - MORE VISIBLE */
+/* UNIFORM GLASSMORPHIC OVERLAY - IDENTICAL FOR ALL CARDS */
 .event-card-face::before {
   content: '';
   position: absolute;
@@ -701,14 +699,14 @@ body::before {
     rgba(255, 255, 255, 0.02) 30%,
     transparent 60%,
     rgba(255, 255, 255, 0.025) 100%
-  );
-  opacity: 0.3; /* MORE VISIBLE BY DEFAULT */
+  ) !important;
+  opacity: 0.3 !important; /* UNIFORM OPACITY */
   transition: opacity 0.5s ease;
   pointer-events: none;
   border-radius: inherit;
 }
 
-/* Subtle Shine Effect */
+/* UNIFORM SHINE EFFECT - IDENTICAL FOR ALL CARDS */
 .event-card-face::after {
   content: '';
   position: absolute;
@@ -720,60 +718,57 @@ body::before {
     transparent 30%,
     rgba(255, 255, 255, 0.04) 50%,
     transparent 70%
-  );
+  ) !important;
   transform: rotate(45deg);
   opacity: 0;
   transition: all 0.8s ease;
   pointer-events: none;
 }
 
-/* PREMIUM DEPRESSION HOVER EFFECT - ENHANCED */
+/* UNIFORM HOVER EFFECT - IDENTICAL FOR ALL CARDS */
 .event-card-face:hover {
-  /* Sophisticated depression INTO surface - MORE PRONOUNCED */
-  transform: translateY(8px) translateZ(-15px) rotateX(-2deg) scale(0.997);
+  /* UNIFORM depression effect */
+  transform: translateY(8px) translateZ(-15px) rotateX(-2deg) scale(0.997) !important;
   
-  /* Enhanced glassmorphism on hover - MORE INTENSE FROSTED GLASS */
+  /* UNIFORM enhanced glassmorphism on hover */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.12) 0%,
     rgba(255, 255, 255, 0.04) 25%,
     rgba(255, 255, 255, 0.08) 50%,
     rgba(255, 255, 255, 0.035) 75%,
     rgba(255, 255, 255, 0.025) 100%
-  );
+  ) !important;
   
-  backdrop-filter: blur(150px) saturate(200%) brightness(1.15);
+  backdrop-filter: blur(150px) saturate(200%) brightness(1.15) !important;
   
-  /* Sophisticated depressed shadow system - ENHANCED */
+  /* UNIFORM depressed shadow system */
   box-shadow: 
-    /* Reduced floating shadows */
     0 12px 30px rgba(0, 0, 0, 0.6),
     0 6px 15px rgba(0, 0, 0, 0.4),
-    /* Inner depression shadows */
     inset 0 4px 12px rgba(0, 0, 0, 0.1),
     inset 0 2px 4px rgba(0, 0, 0, 0.08),
-    /* Enhanced inner highlight */
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    /* Subtle rim enhancement */
-    0 0 0 0.5px rgba(255, 255, 255, 0.06);
+    0 0 0 0.5px rgba(255, 255, 255, 0.06),
+    0 0 80px rgba(255, 255, 255, 0.03) !important;
 }
 
 .event-card-face:hover::before {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 .event-card-face:hover::after {
-  opacity: 1;
+  opacity: 1 !important;
   transform: rotate(45deg) translateX(100%);
 }
 
-/* Active/Click State - MORE PRONOUNCED */
+/* UNIFORM ACTIVE STATE - IDENTICAL FOR ALL CARDS */
 .event-card-face:active {
-  transform: translateY(12px) translateZ(-20px) rotateX(-3deg) scale(0.995);
+  transform: translateY(12px) translateZ(-20px) rotateX(-3deg) scale(0.995) !important;
   box-shadow: 
     0 6px 18px rgba(0, 0, 0, 0.7),
     0 3px 9px rgba(0, 0, 0, 0.5),
     inset 0 6px 18px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
 /* Back Face */
