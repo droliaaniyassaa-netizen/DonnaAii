@@ -732,16 +732,16 @@ body::before {
   /* Sophisticated depression INTO surface - MORE PRONOUNCED */
   transform: translateY(8px) translateZ(-15px) rotateX(-2deg) scale(0.997);
   
-  /* Enhanced glassmorphism on hover - MORE PROMINENT */
+  /* Enhanced glassmorphism on hover - MORE INTENSE FROSTED GLASS */
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.025) 25%,
-    rgba(255, 255, 255, 0.04) 50%,
-    rgba(255, 255, 255, 0.018) 75%,
-    rgba(255, 255, 255, 0.012) 100%
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.035) 75%,
+    rgba(255, 255, 255, 0.025) 100%
   );
   
-  backdrop-filter: blur(100px) saturate(160%);
+  backdrop-filter: blur(150px) saturate(200%) brightness(1.15);
   
   /* Sophisticated depressed shadow system - ENHANCED */
   box-shadow: 
