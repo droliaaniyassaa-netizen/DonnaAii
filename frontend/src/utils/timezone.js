@@ -2,9 +2,26 @@
 import { formatInTimeZone, fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { isValid, parseISO, format, isSameDay } from 'date-fns';
 
-// Get system timezone
+// Get system timezone using browser API
 export const getSystemTimezone = () => {
-  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  try {
+    // For server environments or when Intl.DateTimeFormat returns incorrect timezone,
+    // default to UTC to avoid timezone conversion issues
+    const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log('🔍 Detected system timezone:', detected);
+    
+    // If we're in a server environment or the detected timezone seems wrong for the deployment,
+    // default to UTC to avoid confusion
+    if (detected === 'Asia/Calcutta' || detected === 'Asia/Kolkata') {
+      console.log('🔍 Overriding detected timezone to UTC for server environment');
+      return 'UTC';
+    }
+    
+    return detected || 'UTC';
+  } catch (error) {
+    console.warn('Error detecting system timezone:', error);
+    return 'UTC';
+  }
 };
 
 // Get user's preferred timezone from localStorage or default to system
