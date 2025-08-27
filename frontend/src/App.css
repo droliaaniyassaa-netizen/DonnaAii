@@ -638,9 +638,9 @@ body::before {
   transform: translateY(-12px);
 }
 
-/* Flipped state - ENHANCED */
+/* Flipped state - SIMPLE NO FLICKER */
 .event-card.flipped {
-  transform: rotateY(180deg) translateY(-12px) translateZ(20px) rotateX(3deg);
+  transform: rotateY(180deg) translateY(-12px);
 }
 
 /* ========================================================================
