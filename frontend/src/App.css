@@ -1659,6 +1659,17 @@ body::before {
     0 16px 40px rgba(0, 0, 0, 0.2);
 }
 
+.past-event {
+  opacity: 0.6;
+  filter: grayscale(20%);
+}
+
+.past-event .event-time-text,
+.past-event .event-name {
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
 .event-time-display {
   min-width: 100px;
   text-align: center;
