@@ -644,19 +644,51 @@ body::before {
 }
 
 /* ========================================================================
-   GLOBAL UNIFORM BASE STYLE - IDENTICAL FOR ALL EVENT CARDS
+   BRIGHTNESS PRIORITY SYSTEM - FIRST 3 EVENTS ARE BRIGHTER
    ======================================================================== */
 
-/* Base Event Card Face - IDENTICAL TREATMENT FOR ALL CATEGORIES */
-.event-card-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 24px;
-  overflow: hidden;
+/* PRIORITY EVENTS (First 3) - ENHANCED BRIGHTNESS */
+.priority-event .event-card-face {
+  /* BRIGHTER glassmorphic background */
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.035) 75%,
+    rgba(255, 255, 255, 0.025) 100%
+  ) !important;
   
-  /* UNIFORM GLASSMORPHIC BACKGROUND - IDENTICAL FOR ALL CARDS */
+  /* ENHANCED frosted glass effect */
+  backdrop-filter: blur(140px) saturate(200%) brightness(1.25) !important;
+  -webkit-backdrop-filter: blur(140px) saturate(200%) brightness(1.25) !important;
+  
+  /* BRIGHTER border */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  
+  /* ENHANCED shadows for prominence */
+  box-shadow: 
+    0 40px 80px rgba(0, 0, 0, 0.6),
+    0 25px 50px rgba(0, 0, 0, 0.4),
+    0 15px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 0.5px rgba(255, 255, 255, 0.06),
+    0 0 100px rgba(255, 255, 255, 0.04) !important;
+}
+
+.priority-event .event-card-face::before {
+  /* BRIGHTER overlay */
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.03) 30%,
+    transparent 60%,
+    rgba(255, 255, 255, 0.04) 100%
+  ) !important;
+  opacity: 0.5 !important; /* More visible overlay */
+}
+
+/* STANDARD EVENTS (4th and beyond) - NORMAL BRIGHTNESS */
+.standard-event .event-card-face {
+  /* STANDARD glassmorphic background */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.08) 0%,
     rgba(255, 255, 255, 0.025) 25%,
@@ -665,15 +697,14 @@ body::before {
     rgba(255, 255, 255, 0.015) 100%
   ) !important;
   
-  /* UNIFORM FROSTED GLASS EFFECT - IDENTICAL FOR ALL CARDS */
+  /* STANDARD frosted glass effect */
   backdrop-filter: blur(120px) saturate(180%) brightness(1.1) !important;
   -webkit-backdrop-filter: blur(120px) saturate(180%) brightness(1.1) !important;
   
-  /* UNIFORM BORDER - Only left border color varies by category */
+  /* STANDARD border */
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-left: 6px solid rgba(255, 255, 255, 0.4) !important; /* Default, overridden by category */
   
-  /* UNIFORM SHADOW SYSTEM - IDENTICAL FOR ALL CARDS */
+  /* STANDARD shadows */
   box-shadow: 
     0 35px 70px rgba(0, 0, 0, 0.5),
     0 20px 40px rgba(0, 0, 0, 0.35),
@@ -681,29 +712,17 @@ body::before {
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 0 0 0.5px rgba(255, 255, 255, 0.04),
     0 0 80px rgba(255, 255, 255, 0.03) !important;
-  
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
 }
 
-/* UNIFORM GLASSMORPHIC OVERLAY - IDENTICAL FOR ALL CARDS */
-.event-card-face::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.standard-event .event-card-face::before {
+  /* STANDARD overlay */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.08) 0%,
     rgba(255, 255, 255, 0.02) 30%,
     transparent 60%,
     rgba(255, 255, 255, 0.025) 100%
   ) !important;
-  opacity: 0.3 !important; /* UNIFORM OPACITY */
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-  border-radius: inherit;
+  opacity: 0.3 !important; /* Standard visibility */
 }
 
 /* UNIFORM SHINE EFFECT - IDENTICAL FOR ALL CARDS */
