@@ -461,10 +461,11 @@ const App = () => {
             <div className="events-grid">
               {events
                 .filter(event => !isEventToday(event)) // Filter out today's events (shown above)
-                .map((event) => (
+                .map((event, index) => (
                   <EventCard
                     key={event.id}
                     event={event}
+                    className={`event-card-item ${index < 3 ? 'priority-event' : 'standard-event'}`}
                     onDelete={deleteEvent}
                     onUpdate={updateEvent}
                   />
