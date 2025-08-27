@@ -196,16 +196,27 @@ const App = () => {
       const eventData = {
         title: newEvent.title,
         description: newEvent.description,
+        category: newEvent.category || 'personal', // Default category
         datetime_utc: utcDateTime.toISOString(),
         reminder: true
       };
       
       await axios.post(`${API}/calendar/events`, eventData);
-      setNewEvent({ title: '', description: '', date: '', time: '' });
+      setNewEvent({ title: '', description: '', date: '', time: '', category: 'personal' });
       loadEvents();
     } catch (error) {
       console.error('Error creating event:', error);
       alert('Error creating event. Please try again.');
+    }
+  };
+
+  const updateEvent = async (eventId, updateData) => {
+    try {
+      await axios.put(`${API}/calendar/events/${eventId}`, updateData);
+      loadEvents();
+    } catch (error) {
+      console.error('Error updating event:', error);
+      alert('Error updating event. Please try again.');
     }
   };
 
