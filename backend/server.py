@@ -176,6 +176,7 @@ async def create_event(event: CalendarEventCreate):
         title=event.title,
         description=event.description,
         datetime_utc=datetime_utc,
+        category=event.category or "personal",
         reminder=event.reminder
     )
     await db.calendar_events.insert_one(prepare_for_mongo(event_obj.dict()))
