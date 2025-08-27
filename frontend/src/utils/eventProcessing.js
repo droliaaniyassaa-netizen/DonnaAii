@@ -1,4 +1,4 @@
-// Import required date functions
+// Advanced event processing for Donna's intelligent calendar
 import { combineDateTimeToUTC, getCurrentInUserTimezone } from './timezone';
 import { parseISO, addDays, addWeeks, addHours, addMinutes, isValid, format } from 'date-fns';
 
@@ -53,35 +53,12 @@ export const EVENT_CATEGORIES = {
     borderColor: 'rgba(34, 197, 94, 0.3)', 
     textColor: 'rgba(134, 239, 172, 1)',
     glowColor: 'rgba(34, 197, 94, 0.3)',
-    keywords: ['reminder', 'meds', 'medication', 'call', 'email', 'pay', 'bill', 'pickup', 'buy', 'remember', 'task', 'todo']
+    keywords: ['reminder', 'meds', 'medication', 'call', 'email', 'pay', 'bill', 'pickup', 'buy', 'remember', 'task', 'todo', 'remind me']
   }
 };
 
 // Fallback category - always use PERSONAL (purple) instead of grey
 export const DEFAULT_CATEGORY = EVENT_CATEGORIES.PERSONAL;
-
-// Time-related keywords and their mappings
-const TIME_PATTERNS = {
-  // Relative days
-  'today': 0,
-  'tomorrow': 1,
-  'next week': 7,
-  'next monday': 'next_monday',
-  'next tuesday': 'next_tuesday',
-  'next wednesday': 'next_wednesday',
-  'next thursday': 'next_thursday',
-  'next friday': 'next_friday',
-  'next saturday': 'next_saturday',
-  'next sunday': 'next_sunday',
-  
-  // Times
-  'morning': '09:00',
-  'afternoon': '14:00',
-  'evening': '18:00',
-  'night': '20:00',
-  'noon': '12:00',
-  'midnight': '00:00'
-};
 
 // Advanced natural language processing for event extraction - ENHANCED
 export const extractEventFromMessage = (message) => {
@@ -146,16 +123,15 @@ const extractEventTitle = (text) => {
   
   // Remove time patterns
   cleanText = cleanText.replace(/\b(\d{1,2}):(\d{2})\s?(am|pm)?\b/gi, '');
-  cleanText = cleanText.replace(/\b(morning|afternoon|evening|night|noon|midnight)\b/gi, '');
+  cleanText = cleanText.replace(/\b(morning|afternoon|evening|night|noon|midnight|tonight|today|tomorrow)\b/gi, '');
   
   // Remove date patterns
-  cleanText = cleanText.replace(/\b(today|tomorrow|next week)\b/gi, '');
-  cleanText = cleanText.replace(/\b(next\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday))\b/gi, '');
+  cleanText = cleanText.replace(/\b(next week|this week|next\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday))\b/gi, '');
   cleanText = cleanText.replace(/\b(\d{1,2}\/\d{1,2}\/?\d{0,4})\b/g, '');
   cleanText = cleanText.replace(/\b(\d{1,2}\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))\b/gi, '');
   
   // Remove common scheduling words
-  cleanText = cleanText.replace(/\b(i have|i have a|schedule|book|appointment|meeting)\b/gi, '');
+  cleanText = cleanText.replace(/\b(i have|schedule|book|appointment|meeting|remind me to)\b/gi, '');
   cleanText = cleanText.replace(/\b(at|on|for)\s*$/gi, '');
   
   // Clean up and capitalize
@@ -244,7 +220,7 @@ const extractDateAdvanced = (text) => {
   }
   
   // MONTH DAY format (Aug 27, 27 Aug, December 15, etc.)
-  const monthDayMatch = text.match(/\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|january|february|march|april|may|june|july|august|september|october|november|december)/i);
+  const monthDayMatch = text.match(/\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|january|february|march|april|may|june|july|august|september|october|november|december)\b/i);
   if (monthDayMatch) {
     try {
       const day = parseInt(monthDayMatch[1]);
@@ -323,102 +299,6 @@ const extractTimeAdvanced = (text, eventDate) => {
   
   return { time: null, confidence: 0, movedToTomorrow: false };
 };
-  const now = getCurrentInUserTimezone();
-  
-  // Check for relative dates
-  if (text.includes('today')) {
-    return { date: format(now, 'yyyy-MM-dd'), confidence: 0.9 };
-  }
-  
-  if (text.includes('tomorrow')) {
-    return { date: format(addDays(now, 1), 'yyyy-MM-dd'), confidence: 0.9 };
-  }
-  
-  if (text.includes('next week')) {
-    return { date: format(addWeeks(now, 1), 'yyyy-MM-dd'), confidence: 0.7 };
-  }
-  
-  // Check for specific weekdays
-  const weekdayMatch = text.match(/next\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday)/i);
-  if (weekdayMatch) {
-    const targetDay = weekdayMatch[1].toLowerCase();
-    const targetDate = getNextWeekday(now, targetDay);
-    return { date: format(targetDate, 'yyyy-MM-dd'), confidence: 0.8 };
-  }
-  
-  // Check for date formats (MM/DD, MM/DD/YYYY)
-  const dateMatch = text.match(/\b(\d{1,2})\/(\d{1,2})\/?\d{0,4}\b/);
-  if (dateMatch) {
-    try {
-      const month = parseInt(dateMatch[1]);
-      const day = parseInt(dateMatch[2]);
-      const year = now.getFullYear();
-      
-      if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-        const dateStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-        return { date: dateStr, confidence: 0.8 };
-      }
-    } catch (error) {
-      console.warn('Error parsing date:', error);
-    }
-  }
-  
-  // Check for month day format (Aug 27, 27 Aug)
-  const monthDayMatch = text.match(/\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i);
-  if (monthDayMatch) {
-    try {
-      const day = parseInt(monthDayMatch[1]);
-      const month = getMonthNumber(monthDayMatch[2].toLowerCase());
-      const year = now.getFullYear();
-      
-      const dateStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-      return { date: dateStr, confidence: 0.8 };
-    } catch (error) {
-      console.warn('Error parsing month/day:', error);
-    }
-  }
-  
-  return { date: null, confidence: 0 };
-};
-
-// Extract time from message
-const extractTime = (text) => {
-  // Check for specific time formats (3:30 PM, 15:30, 3pm)
-  const timeMatch = text.match(/\b(\d{1,2}):?(\d{2})?\s?(am|pm)\b/i);
-  if (timeMatch) {
-    let hours = parseInt(timeMatch[1]);
-    const minutes = timeMatch[2] ? parseInt(timeMatch[2]) : 0;
-    const ampm = timeMatch[3] ? timeMatch[3].toLowerCase() : null;
-    
-    if (ampm === 'pm' && hours !== 12) hours += 12;
-    if (ampm === 'am' && hours === 12) hours = 0;
-    
-    const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-    return { time: timeStr, confidence: 0.9 };
-  }
-  
-  // Check for hour-only format (3pm, 15h)
-  const hourMatch = text.match(/\b(\d{1,2})\s?(pm|am)\b/i);
-  if (hourMatch) {
-    let hours = parseInt(hourMatch[1]);
-    const ampm = hourMatch[2].toLowerCase();
-    
-    if (ampm === 'pm' && hours !== 12) hours += 12;
-    if (ampm === 'am' && hours === 12) hours = 0;
-    
-    const timeStr = `${hours.toString().padStart(2, '0')}:00`;
-    return { time: timeStr, confidence: 0.8 };
-  }
-  
-  // Check for relative times
-  for (const [keyword, time] of Object.entries(TIME_PATTERNS)) {
-    if (text.includes(keyword) && time.includes(':')) {
-      return { time, confidence: 0.6 };
-    }
-  }
-  
-  return { time: null, confidence: 0 };
-};
 
 // Categorize event based on keywords - ALWAYS returns valid category, never null/grey
 const categorizeEvent = (text) => {
@@ -443,6 +323,18 @@ const categorizeEvent = (text) => {
   return bestMatch;
 };
 
+// Helper function to get this week's occurrence of a weekday
+const getThisWeekday = (date, targetDay) => {
+  const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const currentDay = date.getDay();
+  const targetIndex = days.indexOf(targetDay.toLowerCase());
+  
+  let daysToAdd = targetIndex - currentDay;
+  if (daysToAdd < 0) daysToAdd += 7; // This week or next week if day has passed
+  
+  return addDays(date, daysToAdd);
+};
+
 // Helper function to get next occurrence of a weekday
 const getNextWeekday = (date, targetDay) => {
   const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -464,16 +356,24 @@ const getMonthNumber = (monthName) => {
   return months[monthName.toLowerCase()] || 1;
 };
 
-// Check if message is likely an event scheduling request
+// Helper function to check if a time has already passed today
+const checkIfTimePassed = (timeStr) => {
+  const now = getCurrentInUserTimezone();
+  const currentTime = format(now, 'HH:mm');
+  return timeStr < currentTime;
+};
+
+// Enhanced event message detection with more keywords
 export const isEventMessage = (message) => {
   const text = message.toLowerCase();
   
-  // Event indicators
+  // Enhanced event indicators
   const eventIndicators = [
     'meeting', 'appointment', 'schedule', 'book', 'i have',
-    'tomorrow', 'today', 'next week', 'next', 'at', 'pm', 'am',
+    'tomorrow', 'today', 'tonight', 'next week', 'next', 'at', 'pm', 'am',
     'doctor', 'dentist', 'gym', 'workout', 'lunch', 'dinner',
-    'birthday', 'anniversary'
+    'birthday', 'anniversary', 'remind me', 'reminder',
+    'call', 'visit', 'party', 'celebration', 'conference'
   ];
   
   return eventIndicators.some(indicator => text.includes(indicator));
@@ -498,7 +398,7 @@ export const getDefaultReminders = (category) => {
         { time: 60, label: '1 hour before' },
         { time: 15, label: '15 minutes before' }
       ];
-    case 'activities':
+    case 'regular_activities':
       return [
         { time: 4 * 60, label: '4 hours before' },
         { time: 30, label: '30 minutes before' }
