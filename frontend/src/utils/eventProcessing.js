@@ -257,9 +257,9 @@ const extractTime = (text) => {
   return { time: null, confidence: 0 };
 };
 
-// Categorize event based on keywords
+// Categorize event based on keywords - ALWAYS returns valid category, never null/grey
 const categorizeEvent = (text) => {
-  let bestMatch = 'personal';
+  let bestMatch = DEFAULT_CATEGORY.id; // Fallback to Personal (purple) instead of grey
   let bestScore = 0;
   
   for (const [categoryId, category] of Object.entries(EVENT_CATEGORIES)) {
@@ -273,7 +273,7 @@ const categorizeEvent = (text) => {
     
     if (score > bestScore) {
       bestScore = score;
-      bestMatch = categoryId;
+      bestMatch = category.id;
     }
   }
   
