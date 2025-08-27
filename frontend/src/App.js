@@ -477,8 +477,13 @@ const App = () => {
                   </Button>
                   <Button 
                     onClick={sendMessage} 
-                    disabled={isLoading || !inputMessage.trim()}
+                    disabled={false}
                     className="send-button"
+                    style={{
+                      pointerEvents: 'auto',
+                      cursor: 'pointer',
+                      zIndex: 1001
+                    }}
                   >
                     <Send className="send-icon" />
                   </Button>
