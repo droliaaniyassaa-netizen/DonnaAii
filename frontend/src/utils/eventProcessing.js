@@ -238,27 +238,63 @@ const extractDateAdvanced = (text) => {
   return { date: null, confidence: 0 };
 };
 
-// ENHANCED time extraction with sophistication
+// ENHANCED time extraction with sophistication - FIXED
 const extractTimeAdvanced = (text, eventDate) => {
   const now = getCurrentInUserTimezone();
   const isToday = eventDate === format(now, 'yyyy-MM-dd');
   
-  // SPECIFIC TIME FORMATS (3:30 PM, 15:30, 3pm, etc.)
-  const timeMatch = text.match(/\b(\d{1,2})(?::(\d{2}))?\s?(am|pm|AM|PM)\b/);
+  console.log('🔍 Time parsing debug:', { text, eventDate, isToday });
+  
+  // SPECIFIC TIME FORMATS - IMPROVED REGEX (3:30 PM, 15:30, 3pm, 9pm, etc.)
+  const timeMatch = text.match(/\b(\d{1,2})(?::(\d{2}))?\s*?(am|pm|AM|PM)\b/i);
   if (timeMatch) {
     let hours = parseInt(timeMatch[1]);
     const minutes = timeMatch[2] ? parseInt(timeMatch[2]) : 0;
     const ampm = timeMatch[3] ? timeMatch[3].toLowerCase() : null;
     
-    if (ampm === 'pm' && hours !== 12) hours += 12;
-    if (ampm === 'am' && hours === 12) hours = 0;
+    console.log('🔍 Time match found:', { hours, minutes, ampm, rawMatch: timeMatch[0] });
+    
+    // Convert to 24-hour format
+    if (ampm === 'pm' && hours !== 12) {
+      hours += 12;
+    }
+    if (ampm === 'am' && hours === 12) {
+      hours = 0;
+    }
     
     const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    console.log('🔍 Converted time:', timeStr);
     
     // Check if time has passed today
     const movedToTomorrow = isToday && checkIfTimePassed(timeStr);
     
     return { time: timeStr, confidence: 0.9, movedToTomorrow };
+  }
+  
+  // ALTERNATIVE: Look for time with "at" keyword specifically (at 9pm, at 3:30, etc.)
+  const atTimeMatch = text.match(/\bat\s+(\d{1,2})(?::(\d{2}))?\s*?(am|pm|AM|PM)\b/i);
+  if (atTimeMatch) {
+    let hours = parseInt(atTimeMatch[1]);
+    const minutes = atTimeMatch[2] ? parseInt(atTimeMatch[2]) : 0;
+    const ampm = atTimeMatch[3] ? atTimeMatch[3].toLowerCase() : null;
+    
+    console.log('🔍 "At" time match found:', { hours, minutes, ampm, rawMatch: atTimeMatch[0] });
+    
+    // Convert to 24-hour format
+    if (ampm === 'pm' && hours !== 12) {
+      hours += 12;
+    }
+    if (ampm === 'am' && hours === 12) {
+      hours = 0;
+    }
+    
+    const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    console.log('🔍 Converted "at" time:', timeStr);
+    
+    // Check if time has passed today
+    const movedToTomorrow = isToday && checkIfTimePassed(timeStr);
+    
+    return { time: timeStr, confidence: 0.95, movedToTomorrow };
   }
   
   // 24-hour format (15:30, 09:45)
@@ -270,6 +306,8 @@ const extractTimeAdvanced = (text, eventDate) => {
     if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
       const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       const movedToTomorrow = isToday && checkIfTimePassed(timeStr);
+      
+      console.log('🔍 24-hour time found:', timeStr);
       
       return { time: timeStr, confidence: 0.8, movedToTomorrow };
     }
@@ -293,10 +331,12 @@ const extractTimeAdvanced = (text, eventDate) => {
   for (const [keyword, time] of Object.entries(timeKeywords)) {
     if (text.includes(keyword)) {
       const movedToTomorrow = isToday && checkIfTimePassed(time);
+      console.log('🔍 Keyword time found:', { keyword, time });
       return { time, confidence: 0.6, movedToTomorrow };
     }
   }
   
+  console.log('🔍 No time found, using default 12:00');
   return { time: null, confidence: 0, movedToTomorrow: false };
 };
 
