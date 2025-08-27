@@ -1286,46 +1286,56 @@ body::before {
   color: rgba(196, 181, 253, 1) !important;
 }
 
-/* Today Component Category Colors */
-.event-category-tag[data-category="work"] {
-  background: rgba(59, 130, 246, 0.12);
-  border-color: rgba(59, 130, 246, 0.25);
-  color: rgba(147, 197, 253, 0.9);
+/* Today Component Category Colors - MATCHING MAIN SYSTEM */
+.event-category-tag[data-category="personal"] {
+  background: rgba(168, 85, 247, 0.15) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+  color: rgba(196, 181, 253, 1) !important;
 }
 
-.event-category-tag[data-category="personal"] {
-  background: rgba(34, 197, 94, 0.12);
-  border-color: rgba(34, 197, 94, 0.25);
-  color: rgba(134, 239, 172, 0.9);
+.event-category-tag[data-category="work"] {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  color: rgba(147, 197, 253, 1) !important;
 }
 
 .event-category-tag[data-category="appointments"] {
-  background: rgba(168, 85, 247, 0.12);
-  border-color: rgba(168, 85, 247, 0.25);
-  color: rgba(196, 181, 253, 0.9);
+  background: rgba(20, 184, 166, 0.15) !important;
+  border-color: rgba(20, 184, 166, 0.3) !important;
+  color: rgba(153, 246, 228, 1) !important;
 }
 
 .event-category-tag[data-category="regular_activities"] {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: rgba(245, 158, 11, 0.25);
-  color: rgba(253, 230, 138, 0.9);
+  background: rgba(245, 158, 11, 0.15) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  color: rgba(253, 230, 138, 1) !important;
 }
 
-/* Accent Bar Colors */
-.event-accent-bar[data-category="work"] {
-  background: rgba(59, 130, 246, 0.7);
+.event-category-tag[data-category="reminders"] {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: rgba(34, 197, 94, 0.3) !important;
+  color: rgba(134, 239, 172, 1) !important;
 }
 
+/* Accent Bar Colors - MATCHING MAIN SYSTEM */
 .event-accent-bar[data-category="personal"] {
-  background: rgba(34, 197, 94, 0.7);
+  background: rgba(168, 85, 247, 0.8) !important;
+}
+
+.event-accent-bar[data-category="work"] {
+  background: rgba(59, 130, 246, 0.8) !important;
 }
 
 .event-accent-bar[data-category="appointments"] {
-  background: rgba(168, 85, 247, 0.7);
+  background: rgba(20, 184, 166, 0.8) !important;
 }
 
 .event-accent-bar[data-category="regular_activities"] {
-  background: rgba(245, 158, 11, 0.7);
+  background: rgba(245, 158, 11, 0.8) !important;
+}
+
+.event-accent-bar[data-category="reminders"] {
+  background: rgba(34, 197, 94, 0.8) !important;
 }
 
 /* Past Event Styling - ENHANCED BUT STILL PROMINENT */
