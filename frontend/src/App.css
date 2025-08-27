@@ -1166,45 +1166,45 @@ body::before {
   color: rgba(239, 68, 68, 1);
 }
 
-/* Smart Color Accents for Categories - ENHANCED WITH LEFT BORDERS */
+/* Smart Color Accents for Categories - ENHANCED WITH PROMINENT LEFT BORDERS */
 .event-card[data-category="work"] .event-card-face {
-  border-left-color: rgba(59, 130, 246, 0.8);
+  border-left-color: rgba(59, 130, 246, 1) !important; /* BLUE - More prominent */
 }
 
 .event-card[data-category="work"] .event-category-badge {
-  background: rgba(59, 130, 246, 0.12);
-  border-color: rgba(59, 130, 246, 0.25);
-  color: rgba(147, 197, 253, 0.9);
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: rgba(147, 197, 253, 1);
 }
 
 .event-card[data-category="personal"] .event-card-face {
-  border-left-color: rgba(34, 197, 94, 0.8);
+  border-left-color: rgba(34, 197, 94, 1) !important; /* GREEN - More prominent */
 }
 
 .event-card[data-category="personal"] .event-category-badge {
-  background: rgba(34, 197, 94, 0.12);
-  border-color: rgba(34, 197, 94, 0.25);
-  color: rgba(134, 239, 172, 0.9);
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: rgba(134, 239, 172, 1);
 }
 
 .event-card[data-category="appointments"] .event-card-face {
-  border-left-color: rgba(168, 85, 247, 0.8);
+  border-left-color: rgba(168, 85, 247, 1) !important; /* PURPLE - More prominent */
 }
 
 .event-card[data-category="appointments"] .event-category-badge {
-  background: rgba(168, 85, 247, 0.12);
-  border-color: rgba(168, 85, 247, 0.25);
-  color: rgba(196, 181, 253, 0.9);
+  background: rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.3);
+  color: rgba(196, 181, 253, 1);
 }
 
 .event-card[data-category="regular_activities"] .event-card-face {
-  border-left-color: rgba(245, 158, 11, 0.8);
+  border-left-color: rgba(245, 158, 11, 1) !important; /* AMBER - More prominent */
 }
 
 .event-card[data-category="regular_activities"] .event-category-badge {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: rgba(245, 158, 11, 0.25);
-  color: rgba(253, 230, 138, 0.9);
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: rgba(253, 230, 138, 1);
 }
 
 /* Today Component Category Colors */
