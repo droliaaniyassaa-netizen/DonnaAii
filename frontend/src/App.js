@@ -12,6 +12,7 @@ import SettingsModal from './components/SettingsModal';
 import TimezoneIndicator from './components/TimezoneIndicator';
 import EventCard from './components/EventCard';
 import UpcomingToday from './components/UpcomingToday';
+import EventCreationButton from './components/EventCreationButton';
 import { 
   combineDateTimeToUTC, 
   splitUTCDateTime, 
