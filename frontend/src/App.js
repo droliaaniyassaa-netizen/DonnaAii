@@ -78,7 +78,7 @@ const App = () => {
     // Initialize default date/time for new entries
     const now = getCurrentInUserTimezone();
     const { date, time } = splitUTCDateTime(now);
-    setNewEvent(prev => ({ ...prev, date, time: time || '10:00' }));
+    setNewEvent(prev => ({ ...prev, date, time: time || '10:00', category: 'personal' }));
     setNewHealthEntry(prev => ({ ...prev, date, time: time || '12:00' }));
   }, []);
 
