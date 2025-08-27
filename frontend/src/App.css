@@ -1323,7 +1323,7 @@ body::before {
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-/* Enhanced Calendar Styles - True 2095 Glassmorphic Design */
+/* Calendar Container */
 .calendar-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -1332,7 +1332,272 @@ body::before {
 .calendar-grid {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+}
+
+/* Today Card - Separate Sophisticated Box */
+.today-card {
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(80px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 32px;
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.01);
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.today-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005)),
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.01), transparent 50%);
+  pointer-events: none;
+}
+
+.today-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 40px 80px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.today-content {
+  padding: 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.today-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.today-title-section {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.today-main-icon {
+  width: 24px;
+  height: 24px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.today-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.today-subtitle {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.today-accent {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+/* Today Events */
+.today-events-container {
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
+}
+
+.today-event {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 2.5rem;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 24px;
+  backdrop-filter: blur(40px);
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+}
+
+.today-event::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.today-event:hover {
+  transform: translateX(8px) translateY(-4px);
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.today-event:hover::before {
+  opacity: 1;
+}
+
+.next-event {
+  border-left: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 0 40px rgba(255, 255, 255, 0.08),
+    0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+.event-time-display {
+  min-width: 100px;
+  text-align: center;
+}
+
+.event-time-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+}
+
+.event-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.event-main-info {
+  flex: 1;
+}
+
+.event-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.5px;
+}
+
+.event-note {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.event-category-tag {
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid;
+  backdrop-filter: blur(20px);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.next-badge {
+  position: absolute;
+  top: -8px;
+  right: 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+  color: #ffffff;
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.event-accent-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  opacity: 0.6;
+}
+
+/* Empty Today State */
+.empty-today .today-content {
+  text-align: center;
+  padding: 3rem 2.5rem;
+}
+
+.empty-today-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.empty-illustration {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 70%);
+  border-radius: 50%;
+}
+
+.empty-star {
+  width: 32px;
+  height: 32px;
+  color: rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+.empty-message {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 /* Event Creation Button Component */
