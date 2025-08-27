@@ -168,8 +168,161 @@ const extractEventTitle = (text) => {
   return 'Event';
 };
 
-// Extract date from message
-const extractDate = (text) => {
+// ENHANCED date extraction with sophisticated natural language processing
+const extractDateAdvanced = (text) => {
+  const now = getCurrentInUserTimezone();
+  
+  // TODAY variations
+  if (text.match(/\b(today|this morning|this afternoon|this evening|tonight|later today)\b/i)) {
+    return { date: format(now, 'yyyy-MM-dd'), confidence: 0.9 };
+  }
+  
+  // TOMORROW variations  
+  if (text.match(/\b(tomorrow|tomorrow morning|tomorrow afternoon|tomorrow evening|tomorrow night)\b/i)) {
+    return { date: format(addDays(now, 1), 'yyyy-MM-dd'), confidence: 0.9 };
+  }
+  
+  // DAY AFTER TOMORROW
+  if (text.match(/\b(day after tomorrow|the day after tomorrow)\b/i)) {
+    return { date: format(addDays(now, 2), 'yyyy-MM-dd'), confidence: 0.9 };
+  }
+  
+  // THIS WEEK + weekday (this Friday, this Monday, etc.)
+  const thisWeekdayMatch = text.match(/\bthis\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/i);
+  if (thisWeekdayMatch) {
+    const targetDay = thisWeekdayMatch[1].toLowerCase();
+    const targetDate = getThisWeekday(now, targetDay);
+    return { date: format(targetDate, 'yyyy-MM-dd'), confidence: 0.85 };
+  }
+  
+  // NEXT WEEK + weekday (next Friday, next Monday, etc.)
+  const nextWeekdayMatch = text.match(/\bnext\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/i);
+  if (nextWeekdayMatch) {
+    const targetDay = nextWeekdayMatch[1].toLowerCase();
+    const targetDate = getNextWeekday(now, targetDay);
+    return { date: format(targetDate, 'yyyy-MM-dd'), confidence: 0.85 };
+  }
+  
+  // NEXT WEEK (general)
+  if (text.match(/\bnext week\b/i)) {
+    return { date: format(addWeeks(now, 1), 'yyyy-MM-dd'), confidence: 0.7 };
+  }
+  
+  // IN X HOURS/MINUTES (calculate from current time)
+  const inHoursMatch = text.match(/\bin\s+(\d+)\s+hours?\b/i);
+  if (inHoursMatch) {
+    const hours = parseInt(inHoursMatch[1]);
+    const futureTime = addHours(now, hours);
+    return { date: format(futureTime, 'yyyy-MM-dd'), confidence: 0.8 };
+  }
+  
+  const inMinutesMatch = text.match(/\bin\s+(\d+)\s+minutes?\b/i);
+  if (inMinutesMatch) {
+    const minutes = parseInt(inMinutesMatch[1]);
+    const futureTime = addMinutes(now, minutes);
+    return { date: format(futureTime, 'yyyy-MM-dd'), confidence: 0.8 };
+  }
+  
+  // SPECIFIC DATE FORMATS (MM/DD, MM/DD/YYYY, Dec 25, etc.)
+  const dateMatch = text.match(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/);
+  if (dateMatch) {
+    try {
+      const month = parseInt(dateMatch[1]);
+      const day = parseInt(dateMatch[2]);
+      const year = dateMatch[3] ? parseInt(dateMatch[3]) : now.getFullYear();
+      
+      // Handle 2-digit years
+      const fullYear = year < 100 ? (year < 50 ? 2000 + year : 1900 + year) : year;
+      
+      if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+        const dateStr = `${fullYear}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        return { date: dateStr, confidence: 0.8 };
+      }
+    } catch (error) {
+      console.warn('Error parsing date:', error);
+    }
+  }
+  
+  // MONTH DAY format (Aug 27, 27 Aug, December 15, etc.)
+  const monthDayMatch = text.match(/\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|january|february|march|april|may|june|july|august|september|october|november|december)/i);
+  if (monthDayMatch) {
+    try {
+      const day = parseInt(monthDayMatch[1]);
+      const monthStr = monthDayMatch[2].toLowerCase();
+      const month = getMonthNumber(monthStr.substring(0, 3));
+      const year = now.getFullYear();
+      
+      const dateStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      return { date: dateStr, confidence: 0.8 };
+    } catch (error) {
+      console.warn('Error parsing month/day:', error);
+    }
+  }
+  
+  return { date: null, confidence: 0 };
+};
+
+// ENHANCED time extraction with sophistication
+const extractTimeAdvanced = (text, eventDate) => {
+  const now = getCurrentInUserTimezone();
+  const isToday = eventDate === format(now, 'yyyy-MM-dd');
+  
+  // SPECIFIC TIME FORMATS (3:30 PM, 15:30, 3pm, etc.)
+  const timeMatch = text.match(/\b(\d{1,2})(?::(\d{2}))?\s?(am|pm|AM|PM)\b/);
+  if (timeMatch) {
+    let hours = parseInt(timeMatch[1]);
+    const minutes = timeMatch[2] ? parseInt(timeMatch[2]) : 0;
+    const ampm = timeMatch[3] ? timeMatch[3].toLowerCase() : null;
+    
+    if (ampm === 'pm' && hours !== 12) hours += 12;
+    if (ampm === 'am' && hours === 12) hours = 0;
+    
+    const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    
+    // Check if time has passed today
+    const movedToTomorrow = isToday && checkIfTimePassed(timeStr);
+    
+    return { time: timeStr, confidence: 0.9, movedToTomorrow };
+  }
+  
+  // 24-hour format (15:30, 09:45)
+  const time24Match = text.match(/\b(\d{1,2}):(\d{2})\b/);
+  if (time24Match) {
+    const hours = parseInt(time24Match[1]);
+    const minutes = parseInt(time24Match[2]);
+    
+    if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
+      const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      const movedToTomorrow = isToday && checkIfTimePassed(timeStr);
+      
+      return { time: timeStr, confidence: 0.8, movedToTomorrow };
+    }
+  }
+  
+  // RELATIVE TIME PHRASES
+  const timeKeywords = {
+    'morning': '09:00',
+    'this morning': '09:00', 
+    'noon': '12:00',
+    'lunch': '12:00',
+    'afternoon': '14:00',
+    'this afternoon': '14:00',
+    'evening': '18:00', 
+    'this evening': '18:00',
+    'tonight': '19:00',
+    'night': '20:00',
+    'midnight': '00:00'
+  };
+  
+  for (const [keyword, time] of Object.entries(timeKeywords)) {
+    if (text.includes(keyword)) {
+      const movedToTomorrow = isToday && checkIfTimePassed(time);
+      return { time, confidence: 0.6, movedToTomorrow };
+    }
+  }
+  
+  return { time: null, confidence: 0, movedToTomorrow: false };
+};
   const now = getCurrentInUserTimezone();
   
   // Check for relative dates
