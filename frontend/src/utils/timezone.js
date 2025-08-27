@@ -103,17 +103,22 @@ export const getCurrentInUserTimezone = (timezone = null) => {
 export const combineDateTimeToUTC = (dateStr, timeStr, timezone = null) => {
   const userTz = timezone || getUserTimezone();
   
+  console.log('🔍 Timezone conversion debug:', { dateStr, timeStr, userTz });
+  
   if (!dateStr || !timeStr) return null;
   
   try {
     // Create datetime string in local timezone
     const dateTimeStr = `${dateStr}T${timeStr}`;
+    console.log('🔍 Local datetime string:', dateTimeStr);
     const localDate = parseISO(dateTimeStr);
     
     if (!isValid(localDate)) return null;
     
     // Convert to UTC
-    return fromZonedTime(localDate, userTz);
+    const utcDateTime = fromZonedTime(localDate, userTz);
+    console.log('🔍 Converted to UTC:', utcDateTime);
+    return utcDateTime;
   } catch (error) {
     console.warn('Failed to combine date/time:', { dateStr, timeStr }, error);
     return null;
