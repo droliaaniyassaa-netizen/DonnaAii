@@ -175,15 +175,6 @@ const App = () => {
       return false;
     }
   };
-        reminder: true
-      };
-      return false;
-      
-    } catch (error) {
-      console.error('Error creating event from chat:', error);
-      return false;
-    }
-  };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
