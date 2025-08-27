@@ -99,19 +99,25 @@ const App = () => {
     setIsLoading(true);
     
     try {
-      // Check if message is an event scheduling request
-      if (isEventMessage(inputMessage)) {
+      // Enhanced event detection and creation
+      const isEvent = isEventMessage(inputMessage);
+      let eventCreated = false;
+      
+      if (isEvent) {
         const eventData = extractEventFromMessage(inputMessage);
         
-        if (eventData && eventData.confidence > 0.5) {
+        if (eventData && eventData.confidence > 0.3) { // Lower threshold for more inclusive detection
           // Auto-create event from chat
-          await createEventFromChat(eventData);
+          const success = await createEventFromChat(eventData);
+          eventCreated = success;
         }
       }
       
+      // Send message to Donna with context about event creation
       const response = await axios.post(`${API}/chat`, {
         message: inputMessage,
-        session_id: 'default'
+        session_id: 'default',
+        event_created: eventCreated // Let Donna know if an event was created
       });
       
       setInputMessage('');
