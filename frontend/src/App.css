@@ -401,15 +401,18 @@ body::before {
   height: 16px;
 }
 
-/* Chat Styles */
+/* Chat container - ENSURE NO BLOCKING OVERLAYS */
 .chat-container {
   max-width: 800px;
   margin: 0 auto;
+  pointer-events: auto !important;
+  position: relative !important;
 }
 
 .chat-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1.5rem;
+  pointer-events: auto !important;
 }
 
 .chat-content {
@@ -417,6 +420,8 @@ body::before {
   height: 600px;
   display: flex;
   flex-direction: column;
+  pointer-events: auto !important;
+  position: relative !important;
 }
 
 .messages-container {
