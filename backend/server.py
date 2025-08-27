@@ -216,6 +216,36 @@ async def get_events():
     result.sort(key=lambda x: x.datetime_utc)
     return result
 
+@api_router.put("/calendar/events/{event_id}", response_model=CalendarEvent)
+async def update_event(event_id: str, update_data: CalendarEventUpdate):
+    # Build update document
+    update_fields = {}
+    if update_data.title is not None:
+        update_fields["title"] = update_data.title
+    if update_data.description is not None:
+        update_fields["description"] = update_data.description
+    if update_data.category is not None:
+        update_fields["category"] = update_data.category
+    
+    if not update_fields:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    
+    # Update event in database
+    result = await db.calendar_events.update_one(
+        {"id": event_id},
+        {"$set": update_fields}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Event not found")
+    
+    # Return updated event
+    updated_event = await db.calendar_events.find_one({"id": event_id})
+    if not updated_event:
+        raise HTTPException(status_code=404, detail="Event not found after update")
+    
+    return CalendarEvent(**updated_event)
+
 @api_router.delete("/calendar/events/{event_id}")
 async def delete_event(event_id: str):
     result = await db.calendar_events.delete_one({"id": event_id})
