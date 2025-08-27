@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
 
 * {
   box-sizing: border-box;
@@ -8,16 +8,22 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: #0a0a0f;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.15), transparent),
+    radial-gradient(ellipse 80% 80% at 80% 50%, rgba(120, 119, 198, 0.08), transparent),
+    radial-gradient(ellipse 100% 80% at 20% 80%, rgba(120, 119, 198, 0.05), transparent);
   min-height: 100vh;
-  color: #1a202c;
+  color: #ffffff;
+  overflow-x: hidden;
 }
 
 .app-container {
   min-height: 100vh;
-  padding: 1.5rem;
+  padding: 1rem;
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
 }
 
 /* Header */
