@@ -83,11 +83,6 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
               </div>
               <Badge 
                 className="event-category-badge"
-                style={{
-                  backgroundColor: category.color,
-                  color: category.textColor,
-                  borderColor: category.borderColor
-                }}
               >
                 {category.name}
               </Badge>
