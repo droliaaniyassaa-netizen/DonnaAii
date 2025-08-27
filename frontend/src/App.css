@@ -665,9 +665,9 @@ body::before {
   backdrop-filter: blur(120px) saturate(180%) brightness(1.1);
   -webkit-backdrop-filter: blur(120px) saturate(180%) brightness(1.1);
   
-  /* Sophisticated Border with LEFT COLOR ACCENT */
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-left: 4px solid rgba(255, 255, 255, 0.3); /* Default, will be overridden by category */
+  /* Sophisticated Border with LEFT COLOR ACCENT - THICKER FOR VISIBILITY */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: 6px solid rgba(255, 255, 255, 0.4); /* Thicker default, will be overridden by category */
   
   /* Ultra Premium Floating Shadow System - MORE PROMINENT */
   box-shadow: 
