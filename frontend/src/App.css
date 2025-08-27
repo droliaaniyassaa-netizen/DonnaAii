@@ -782,9 +782,9 @@ body::before {
   height: 300px;
 }
 
-/* Card Content */
+/* Card Content - FIXED PADDING TO PREVENT TEXT TOUCHING BORDERS */
 .event-card-content {
-  padding: 2rem;
+  padding: 2.2rem 2.5rem 2rem 2.5rem; /* Extra padding on sides and bottom to prevent text touching borders */
   height: 100%;
   display: flex;
   flex-direction: column;
