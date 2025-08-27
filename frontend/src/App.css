@@ -1166,9 +1166,24 @@ body::before {
   color: rgba(239, 68, 68, 1);
 }
 
-/* Smart Color Accents for Categories - ENHANCED WITH PROMINENT LEFT BORDERS */
+/* Smart Color Accents for Categories - ENHANCED WITH PROMINENT LEFT BORDERS AND GLOW */
 .event-card[data-category="work"] .event-card-face {
-  border-left-color: rgba(59, 130, 246, 1) !important; /* BLUE - More prominent */
+  border-left-color: rgba(59, 130, 246, 1) !important; /* BLUE */
+  box-shadow: 
+    /* Main floating shadow - ENHANCED */
+    0 35px 70px rgba(0, 0, 0, 0.5),
+    /* Secondary depth shadow */
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    /* Surface contact shadow */
+    0 12px 25px rgba(0, 0, 0, 0.25),
+    /* Inner highlight */
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    /* Outer rim glow */
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    /* Subtle ambient glow - ENHANCED */
+    0 0 80px rgba(255, 255, 255, 0.03),
+    /* COLORED LEFT BORDER GLOW */
+    -6px 0 20px rgba(59, 130, 246, 0.3);
 }
 
 .event-card[data-category="work"] .event-category-badge {
@@ -1178,7 +1193,22 @@ body::before {
 }
 
 .event-card[data-category="personal"] .event-card-face {
-  border-left-color: rgba(34, 197, 94, 1) !important; /* GREEN - More prominent */
+  border-left-color: rgba(34, 197, 94, 1) !important; /* GREEN */
+  box-shadow: 
+    /* Main floating shadow - ENHANCED */
+    0 35px 70px rgba(0, 0, 0, 0.5),
+    /* Secondary depth shadow */
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    /* Surface contact shadow */
+    0 12px 25px rgba(0, 0, 0, 0.25),
+    /* Inner highlight */
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    /* Outer rim glow */
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    /* Subtle ambient glow - ENHANCED */
+    0 0 80px rgba(255, 255, 255, 0.03),
+    /* COLORED LEFT BORDER GLOW */
+    -6px 0 20px rgba(34, 197, 94, 0.3);
 }
 
 .event-card[data-category="personal"] .event-category-badge {
@@ -1188,7 +1218,22 @@ body::before {
 }
 
 .event-card[data-category="appointments"] .event-card-face {
-  border-left-color: rgba(168, 85, 247, 1) !important; /* PURPLE - More prominent */
+  border-left-color: rgba(168, 85, 247, 1) !important; /* PURPLE */
+  box-shadow: 
+    /* Main floating shadow - ENHANCED */
+    0 35px 70px rgba(0, 0, 0, 0.5),
+    /* Secondary depth shadow */
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    /* Surface contact shadow */
+    0 12px 25px rgba(0, 0, 0, 0.25),
+    /* Inner highlight */
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    /* Outer rim glow */
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    /* Subtle ambient glow - ENHANCED */
+    0 0 80px rgba(255, 255, 255, 0.03),
+    /* COLORED LEFT BORDER GLOW */
+    -6px 0 20px rgba(168, 85, 247, 0.3);
 }
 
 .event-card[data-category="appointments"] .event-category-badge {
@@ -1198,7 +1243,22 @@ body::before {
 }
 
 .event-card[data-category="regular_activities"] .event-card-face {
-  border-left-color: rgba(245, 158, 11, 1) !important; /* AMBER - More prominent */
+  border-left-color: rgba(245, 158, 11, 1) !important; /* AMBER */
+  box-shadow: 
+    /* Main floating shadow - ENHANCED */
+    0 35px 70px rgba(0, 0, 0, 0.5),
+    /* Secondary depth shadow */
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    /* Surface contact shadow */
+    0 12px 25px rgba(0, 0, 0, 0.25),
+    /* Inner highlight */
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    /* Outer rim glow */
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    /* Subtle ambient glow - ENHANCED */
+    0 0 80px rgba(255, 255, 255, 0.03),
+    /* COLORED LEFT BORDER GLOW */
+    -6px 0 20px rgba(245, 158, 11, 0.3);
 }
 
 .event-card[data-category="regular_activities"] .event-category-badge {
