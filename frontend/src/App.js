@@ -450,57 +450,12 @@ const App = () => {
           <UpcomingToday events={events} />
           
           <div className="calendar-grid">
-            <Card className="calendar-creation-card">
-              <CardHeader>
-                <CardTitle className="section-title">
-                  <Calendar className="header-icon" />
-                  Schedule New Event
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="create-form">
-                <Input
-                  placeholder="Event title"
-                  value={newEvent.title}
-                  onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-                  className="form-input"
-                />
-                <Textarea
-                  placeholder="Description (optional)"
-                  value={newEvent.description}
-                  onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
-                  className="form-input"
-                />
-                <select
-                  value={newEvent.category || 'personal'}
-                  onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
-                  className="form-select"
-                >
-                  {Object.entries(EVENT_CATEGORIES).map(([key, category]) => (
-                    <option key={key} value={key.toLowerCase()}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="date-time-row">
-                  <Input
-                    type="date"
-                    value={newEvent.date}
-                    onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
-                    className="form-input"
-                  />
-                  <Input
-                    type="time"
-                    value={newEvent.time}
-                    onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
-                    className="form-input"
-                  />
-                </div>
-                <Button onClick={createEvent} className="create-button">
-                  <Plus className="button-icon" />
-                  Create Event
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Small Event Creation Button */}
+            <EventCreationButton
+              newEvent={newEvent}
+              setNewEvent={setNewEvent}
+              onCreateEvent={createEvent}
+            />
 
             {/* Events List */}
             <div className="events-grid">
