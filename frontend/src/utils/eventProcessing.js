@@ -64,6 +64,8 @@ export const DEFAULT_CATEGORY = EVENT_CATEGORIES.PERSONAL;
 export const extractEventFromMessage = (message) => {
   const text = message.toLowerCase().trim();
   
+  console.log('🔍 Extracting event from:', message);
+  
   // Initialize event object
   const eventData = {
     title: '',
@@ -79,6 +81,7 @@ export const extractEventFromMessage = (message) => {
     // Extract title (first part before date/time indicators)
     let title = extractEventTitle(text);
     eventData.title = title || 'Event';
+    console.log('🔍 Extracted title:', eventData.title);
     
     // Extract and parse date with enhanced logic
     const dateInfo = extractDateAdvanced(text);
@@ -91,6 +94,7 @@ export const extractEventFromMessage = (message) => {
       eventData.date = format(now, 'yyyy-MM-dd');
       eventData.confidence += 0.2; // Lower confidence for default
     }
+    console.log('🔍 Extracted date:', eventData.date);
     
     // Extract time with enhanced logic
     const timeInfo = extractTimeAdvanced(text, eventData.date);
@@ -103,12 +107,15 @@ export const extractEventFromMessage = (message) => {
         eventData.date = format(tomorrow, 'yyyy-MM-dd');
       }
     }
+    console.log('🔍 Extracted time:', eventData.time);
     
     // Categorize event
     const category = categorizeEvent(text);
     eventData.category = category;
     eventData.confidence += 0.3;
+    console.log('🔍 Extracted category:', eventData.category);
     
+    console.log('🔍 Final event data:', eventData);
     return eventData;
   } catch (error) {
     console.warn('Error processing event message:', error);
