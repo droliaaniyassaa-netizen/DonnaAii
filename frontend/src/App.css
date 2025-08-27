@@ -626,7 +626,7 @@ body::before {
   height: 300px;
 }
 
-/* Event Card - Premium 3D Transform - MORE PROMINENT */
+/* Event Card - SIMPLE 3D Transform - NO FLICKERING */
 .event-card {
   position: relative;
   width: 100%;
@@ -634,8 +634,8 @@ body::before {
   transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform-style: preserve-3d;
   cursor: pointer;
-  /* Enhanced inherent floating elevation - MORE PROMINENT */
-  transform: translateY(-12px) translateZ(20px) rotateX(3deg);
+  /* SIMPLE floating elevation - NO COMPLEX 3D THAT CAUSES FLICKER */
+  transform: translateY(-12px);
 }
 
 /* Flipped state - ENHANCED */
