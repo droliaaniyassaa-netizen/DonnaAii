@@ -4,12 +4,12 @@ import { Badge } from './ui/badge';
 import { Clock, Sunrise, Star } from 'lucide-react';
 import { EVENT_CATEGORIES } from '../utils/eventProcessing';
 import { formatInUserTimezone, getCurrentInUserTimezone } from '../utils/timezone';
-import { isToday, parseISO } from 'date-fns';
+import { isToday, parseISO, isFuture, isPast } from 'date-fns';
 
 const UpcomingToday = ({ events, className = "" }) => {
   const now = getCurrentInUserTimezone();
   
-  // Filter events for today
+  // Filter events for today and get the NEXT upcoming event
   const todayEvents = events.filter(event => {
     try {
       const eventDate = parseISO(event.datetime_utc);
@@ -23,6 +23,16 @@ const UpcomingToday = ({ events, className = "" }) => {
     const timeB = new Date(b.datetime_utc).getTime();
     return timeA - timeB;
   });
+
+  // Find the NEXT upcoming event (closest to current time, but in the future)
+  const nextEvent = todayEvents.find(event => {
+    try {
+      const eventDateTime = parseISO(event.datetime_utc);
+      return isFuture(eventDateTime);
+    } catch {
+      return false;
+    }
+  }) || todayEvents[0]; // Fallback to first event if no future events
 
   if (todayEvents.length === 0) {
     return (
@@ -59,7 +69,7 @@ const UpcomingToday = ({ events, className = "" }) => {
             <Clock className="today-main-icon" />
             <div className="today-title-text">
               <h3 className="today-title">Today</h3>
-              <p className="today-subtitle">{todayEvents.length} {todayEvents.length === 1 ? 'event' : 'events'}</p>
+              <p className="today-subtitle">Next: {nextEvent ? formatInUserTimezone(nextEvent.datetime_utc, 'h:mm a') : 'No upcoming events'}</p>
             </div>
           </div>
           <div className="today-accent"></div>
@@ -69,12 +79,14 @@ const UpcomingToday = ({ events, className = "" }) => {
           {todayEvents.map((event, index) => {
             const category = EVENT_CATEGORIES[event.category?.toUpperCase()] || EVENT_CATEGORIES.PERSONAL;
             const eventTime = formatInUserTimezone(event.datetime_utc, 'h:mm a');
-            const isNext = index === 0; // First event is "next"
+            const isNext = event.id === nextEvent?.id; // Mark the next upcoming event
+            const eventDateTime = parseISO(event.datetime_utc);
+            const hasHappened = isPast(eventDateTime);
             
             return (
               <div 
                 key={event.id} 
-                className={`today-event ${isNext ? 'next-event' : ''}`}
+                className={`today-event ${isNext ? 'next-event' : ''} ${hasHappened ? 'past-event' : ''}`}
               >
                 <div className="event-time-display">
                   <span className="event-time-text">{eventTime}</span>
@@ -100,7 +112,7 @@ const UpcomingToday = ({ events, className = "" }) => {
                   </Badge>
                 </div>
                 
-                {isNext && (
+                {isNext && !hasHappened && (
                   <div className="next-badge">
                     <span>Next</span>
                   </div>
