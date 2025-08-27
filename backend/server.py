@@ -61,6 +61,11 @@ class CalendarEventCreate(BaseModel):
     datetime_utc: str  # ISO string datetime in UTC from frontend
     reminder: bool = True
 
+class CalendarEventUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    category: Optional[str] = None
+
 class CareerGoal(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     goal: str
