@@ -102,11 +102,6 @@ const UpcomingToday = ({ events, className = "" }) => {
                   
                   <Badge 
                     className="event-category-tag"
-                    style={{
-                      backgroundColor: category.color,
-                      borderColor: category.borderColor,
-                      color: category.textColor,
-                    }}
                   >
                     {category.name}
                   </Badge>
