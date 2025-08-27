@@ -115,7 +115,7 @@ const UpcomingToday = ({ events, className = "" }) => {
                 
                 <div 
                   className="event-accent-bar"
-                  style={{ backgroundColor: category.borderColor }}
+                  data-category={event.category?.toLowerCase() || 'personal'}
                 ></div>
               </div>
             );
