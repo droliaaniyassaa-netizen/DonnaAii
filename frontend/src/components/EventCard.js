@@ -114,10 +114,6 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
         {/* Back Face */}
         <Card 
           className="event-card-face event-card-back"
-          style={{
-            backgroundColor: category.color,
-            borderColor: category.borderColor,
-          }}
         >
           <CardContent className="event-card-content">
             <div className="event-edit-header">
