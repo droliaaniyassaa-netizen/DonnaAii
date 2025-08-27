@@ -42,6 +42,7 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     message: str
     session_id: Optional[str] = "default"
+    event_created: Optional[bool] = False  # Context for Donna's response
 
 class ChatResponse(BaseModel):
     response: str
