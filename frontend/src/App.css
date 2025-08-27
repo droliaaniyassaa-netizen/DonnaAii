@@ -649,21 +649,21 @@ body::before {
 
 /* PRIORITY EVENTS (First 3) - ENHANCED BRIGHTNESS */
 .priority-event .event-card-face {
-  /* BRIGHTER glassmorphic background - INCREASED VISIBILITY */
+  /* BRIGHTER glassmorphic background - EXACT SPECS */
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.06) 25%,
-    rgba(255, 255, 255, 0.12) 50%,
-    rgba(255, 255, 255, 0.055) 75%,
-    rgba(255, 255, 255, 0.04) 100%
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.08) 25%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.07) 75%,
+    rgba(255, 255, 255, 0.05) 100%
   ) !important;
   
-  /* ENHANCED frosted glass effect - BRIGHTER */
-  backdrop-filter: blur(140px) saturate(200%) brightness(1.35) !important;
-  -webkit-backdrop-filter: blur(140px) saturate(200%) brightness(1.35) !important;
+  /* ENHANCED frosted glass effect - EXACT SPECS */
+  backdrop-filter: blur(140px) saturate(200%) brightness(1.45) !important;
+  -webkit-backdrop-filter: blur(140px) saturate(200%) brightness(1.45) !important;
   
-  /* BRIGHTER border */
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  /* BRIGHTER border - EXACT SPECS */
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
   
   /* ENHANCED shadows for prominence */
   box-shadow: 
@@ -676,33 +676,33 @@ body::before {
 }
 
 .priority-event .event-card-face::before {
-  /* BRIGHTER overlay */
+  /* BRIGHTER overlay - EXACT SPECS */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.15) 0%,
     rgba(255, 255, 255, 0.04) 30%,
     transparent 60%,
     rgba(255, 255, 255, 0.06) 100%
   ) !important;
-  opacity: 0.6 !important; /* More visible overlay */
+  opacity: 0.8 !important; /* EXACT SPECS */
 }
 
 /* STANDARD EVENTS (4th and beyond) - INCREASED BRIGHTNESS */
 .standard-event .event-card-face {
-  /* BRIGHTER glassmorphic background - INCREASED FROM PREVIOUS */
+  /* BRIGHTER glassmorphic background - EXACT SPECS */
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.04) 25%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(255, 255, 255, 0.035) 75%,
-    rgba(255, 255, 255, 0.025) 100%
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.045) 25%,
+    rgba(255, 255, 255, 0.09) 50%,
+    rgba(255, 255, 255, 0.04) 75%,
+    rgba(255, 255, 255, 0.03) 100%
   ) !important;
   
-  /* BRIGHTER frosted glass effect */
-  backdrop-filter: blur(120px) saturate(180%) brightness(1.2) !important;
-  -webkit-backdrop-filter: blur(120px) saturate(180%) brightness(1.2) !important;
+  /* BRIGHTER frosted glass effect - EXACT SPECS */
+  backdrop-filter: blur(120px) saturate(180%) brightness(1.8) !important;
+  -webkit-backdrop-filter: blur(120px) saturate(180%) brightness(1.8) !important;
   
-  /* BRIGHTER border */
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  /* BRIGHTER border - EXACT SPECS */
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
   
   /* BRIGHTER shadows */
   box-shadow: 
@@ -715,14 +715,14 @@ body::before {
 }
 
 .standard-event .event-card-face::before {
-  /* BRIGHTER overlay */
+  /* BRIGHTER overlay - EXACT SPECS */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.1) 0%,
     rgba(255, 255, 255, 0.03) 30%,
     transparent 60%,
     rgba(255, 255, 255, 0.04) 100%
   ) !important;
-  opacity: 0.4 !important; /* Increased visibility */
+  opacity: 0.5 !important; /* EXACT SPECS */
 }
 
 /* BASE SHINE EFFECT - APPLIES TO ALL CARDS */
