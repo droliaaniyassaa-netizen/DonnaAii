@@ -546,6 +546,11 @@ body::before {
   color: white;
   font-weight: 500;
   transition: all 0.3s ease;
+  /* ENSURE BUTTON IS CLICKABLE */
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 1001 !important;
+  position: relative !important;
 }
 
 .send-button:hover:not(:disabled) {
