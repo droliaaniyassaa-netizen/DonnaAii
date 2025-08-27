@@ -626,7 +626,7 @@ body::before {
   height: 300px;
 }
 
-/* Event Card - Premium 3D Transform */
+/* Event Card - Premium 3D Transform - MORE PROMINENT */
 .event-card {
   position: relative;
   width: 100%;
@@ -634,8 +634,8 @@ body::before {
   transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform-style: preserve-3d;
   cursor: pointer;
-  /* Inherent floating elevation */
-  transform: translateY(-8px) translateZ(15px) rotateX(2deg);
+  /* Enhanced inherent floating elevation - MORE PROMINENT */
+  transform: translateY(-12px) translateZ(20px) rotateX(3deg);
 }
 
 /* Flipped state */
