@@ -652,18 +652,18 @@ body::before {
   border-radius: 24px;
   overflow: hidden;
   
-  /* Ultra Premium Glassmorphic Background - MORE PROMINENT */
+  /* Ultra Premium Glassmorphic Background - MORE INTENSE FROSTED GLASS */
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.045) 0%,
-    rgba(255, 255, 255, 0.015) 25%,
-    rgba(255, 255, 255, 0.025) 50%,
-    rgba(255, 255, 255, 0.012) 75%,
-    rgba(255, 255, 255, 0.008) 100%
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.025) 25%,
+    rgba(255, 255, 255, 0.045) 50%,
+    rgba(255, 255, 255, 0.022) 75%,
+    rgba(255, 255, 255, 0.015) 100%
   );
   
-  /* Premium Frosted Glass Effect - ENHANCED */
-  backdrop-filter: blur(80px) saturate(140%);
-  -webkit-backdrop-filter: blur(80px) saturate(140%);
+  /* Premium Frosted Glass Effect - MUCH MORE INTENSE */
+  backdrop-filter: blur(120px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(120px) saturate(180%) brightness(1.1);
   
   /* Sophisticated Border with LEFT COLOR ACCENT */
   border: 1px solid rgba(255, 255, 255, 0.12);
