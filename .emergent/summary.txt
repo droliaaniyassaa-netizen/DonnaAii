@@ -1,0 +1,89 @@
+<analysis>
+The trajectory details the development of Donna, an AI assistant, from initial setup to a partially complete calendar feature. The AI engineer initiated the project by installing dependencies, handling OpenAI API key configuration (which later became a recurring quota issue), and creating the base application structure.
+
+The first major feature tackled was **Timezone Awareness**. This involved implementing automatic detection, user-controlled settings, UTC data storage, local display conversion, and persistence via . Despite initial compilation errors, the AI successfully integrated  and refactored frontend/backend logic to ensure timezone accuracy across the app.
+
+The second, more iterative phase, focused on the **Calendar Tab**. User feedback was exceptionally stringent regarding the aesthetic, demanding a museum-worthy, futuristic, and frosty glassmorphic design. The AI underwent multiple redesign cycles, creating new components like , , and , and heavily modifying  to achieve the desired visual style. Despite several rounds of iteration and perceived success by the AI, the user continued to provide critical feedback on the design's authenticity, 3D effects, card depression, and flip functionality, highlighting a persistent gap between the AI's output and the user's exacting visual requirements. The AI is currently in the process of addressing these specific design and usability concerns for the calendar event cards.
+</analysis>
+
+<product_requirements>
+The overarching goal is to build Donna, a highly intelligent, tech-forward AI assistant designed as a daily life companion to manage health, career, scheduling, and personal life. The app aims for 800+ million users worldwide, embodying a confident, intelligent, slightly witty, and caring personality. It should have a futuristic, minimalist, sleek aesthetic, akin to Apple from the year 7000 or Vogue magazine, with high-end typography (e.g., Cormorant Garamond for headings, clean sans-serif for body), smooth micro-animations, 3D glassmorphic elements, and a deep charcoal black background.
+
+Core features include:
+1.  **Calendar & Scheduling Soft Tab**: Proactive scheduling, auto-scheduling from chat, default reminders, smart suggestions, color-coded events (Personal, Appointments, Regular Activities, Work), modern interactive design with 3D glassmorphic cards that depress on hover, and full timezone awareness (implemented). It should show the next upcoming event in a dedicated Today box, and events should be editable via a flip card UI.
+2.  **Career Soft Tab**: Helps set goals, generates action plans, provides curated resources, meeting prep, and a brag sheet. (Minimal implementation so far, AI-powered aspects pending API fix).
+3.  **Health Soft Tab**: Tracks meals, hydration, sleep; sets/tracks health goals; offers smart suggestions, weekly analytics, and tailored plans. (Basic logging and display implemented, AI-powered aspects pending API fix).
+4.  **Voice Input Toggle**: Main chat interface with voice transcription, similar to ChatGPT (Not yet implemented).
+5.  **Main Chat Interface**: Core interaction, seamlessly connected to all tabs, context-aware saving to relevant tabs, powered by OpenAI GPT-3.5 API (blocked by API quota).
+</product_requirements>
+
+<key_technical_concepts>
+-   **Full-stack Architecture**: React (Frontend), FastAPI (Backend), MongoDB (Database).
+-   **UI/UX Framework**: Shadcn UI, Tailwind CSS for advanced styling and glassmorphism.
+-   **State Management**:  for frontend persistence (e.g., timezone).
+-   **Timezone Handling**:  for UTC storage and local display.
+-   **API Interaction**: Axios for frontend-backend communication.
+-   **Data Modeling**: Pydantic models for FastAPI, UUIDs for IDs,  for consistent timestamps.
+-   **Design Principles**: Glassmorphism, 3D transformations, micro-interactions, responsive design.
+</key_technical_concepts>
+
+<code_architecture>
+The application has a standard full-stack structure:
+
+
+-   : The main FastAPI application file.
+    -   **Summary**: Handles all backend API endpoints for Calendar, Health, and Career features. It interacts with MongoDB.
+    -   **Changes**: Initially created with basic CRUD for all features. Modified to store  objects in UTC format (e.g., ), and updated endpoints to use  and  for proper serialization. Event update logic was refined.
+-   : Lists Python dependencies.
+    -   **Changes**:  was added for async MongoDB.
+-   : The main React application component.
+    -   **Summary**: Orchestrates the main layout, tab navigation, and integrates various components.
+    -   **Changes**: Extensively modified to include , , , , and . Contains state management for tabs, timezone, and event data. Logic for event creation, display, and updates.
+-   : Global application styles.
+    -   **Summary**: Defines global styles, animations, and the core glassmorphic aesthetic.
+    -   **Changes**: Heavily modified across multiple iterations to implement deep charcoal background, glassmorphic effects, 3D transformations, typography (, ), and responsive design for various components (tabs, cards, buttons). Recent changes focused on fixing card depression and flip animations, and adding past event styling.
+-   :
+    -   **Summary**: Utility functions for detecting, storing, and converting timezones.
+    -   **Changes**: Created to encapsulate timezone logic, using  functions like , , . Revised multiple times to fix import errors and correct function names.
+-   :
+    -   **Summary**: A modal component for users to select and save their preferred timezone.
+    -   **Changes**: Created to integrate with  and , providing a searchable dropdown of timezones.
+-   :
+    -   **Summary**: Displays the currently active timezone to the user.
+    -   **Changes**: Created to show a subtle All times shown in [Time Zone] tag.
+-   :
+    -   **Summary**: Contains helper functions for processing calendar events, including category detection, date parsing, and time manipulation.
+    -   **Changes**: Created to support advanced calendar features and natural language processing readiness.
+-   :
+    -   **Summary**: A small, flip-able card for creating new calendar events.
+    -   **Changes**: Created as a compact, glassmorphic button that flips to reveal an event creation form, replacing a larger, less aesthetic input area.
+-   :
+    -   **Summary**: Represents an individual calendar event with a 3D glassmorphic design. It can flip to reveal edit options.
+    -   **Changes**: Created and extensively redesigned to achieve the floating, depressing, and frosty glassmorphic aesthetic. Modified to include event details, color-coding, and handle flip animations for editing without overlapping other cards.
+-   :
+    -   **Summary**: Displays upcoming events for the current day.
+    -   **Changes**: Created as a distinct frosty glassmorphic box to highlight the next immediate event, addressing user feedback for a dedicated Today section.
+</code_architecture>
+
+<pending_tasks>
+-   Resolve OpenAI API quota issue for chat, career goal action plans, and auto-context processing.
+-   Implement actual browser notifications/push notifications for calendar events and health nudges.
+-   Develop advanced NLP for chat-to-calendar integration (extracting person, location).
+-   Implement time-based career goals, deadlines, and milestones.
+-   Integrate time-based health reminders (medication, meals, workouts).
+-   Further refine the design of individual color-coded event tabs as per user feedback (floating, prominent glassmorphism, classier colors).
+-   Ensure the calendar event cards properly depress on hover and the flip functionality works without breaking the layout.
+</pending_tasks>
+
+<current_work>
+The AI engineer is currently addressing critical design and usability feedback for the calendar tab. Specifically, the user reported that the individual color-coded event cards look childish, flat, have mismatched fonts, uneven spacing, and a terrible design. They lack prominent glassmorphism, do not truly depress on hover, and the flip-to-edit functionality is broken, causing cards to overlap. The user also specified that the Today box should show the *next upcoming event*.
+
+The AI's last action was modifying  to add styling for past events:
+
+This change aims to visually distinguish past events within the calendar, contributing to the overall design refinement and usability. This directly supports the user's implicit request for a sophisticated and functional calendar display, especially by making the visual state of events clearer. The work immediately preceding this involved updating  to fix the overlap issue and improve flip functionality (Message 230), and redesigning event cards to be more sophisticated and mobile-friendly (Message 228).
+</current_work>
+
+<optional_next_step>
+The next step is to complete the redesign of the event cards, focusing on the sophisticated frosty glassmorphic look, depression on hover, and fixing the flip functionality to be visually seamless and non-overlapping.
+</optional_next_step>
+
