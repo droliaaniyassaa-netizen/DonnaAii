@@ -77,7 +77,7 @@ const UpcomingToday = ({ events, className = "" }) => {
         
         <div className="today-events-container">
           {nextEvent && (() => {
-            const category = EVENT_CATEGORIES[nextEvent.category?.toUpperCase()] || EVENT_CATEGORIES.PERSONAL;
+            const category = EVENT_CATEGORIES[nextEvent.category?.toUpperCase()] || EVENT_CATEGORIES.PERSONAL; // Always fallback to Personal (purple)
             const eventTime = formatInUserTimezone(nextEvent.datetime_utc, 'h:mm a');
             const eventDateTime = parseISO(nextEvent.datetime_utc);
             const hasHappened = isPast(eventDateTime);
