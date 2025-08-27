@@ -455,10 +455,11 @@ const App = () => {
                 <Textarea
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   placeholder="Ask Donna anything..."
                   className="chat-input"
                   rows={2}
+                  disabled={isLoading}
                 />
                 <div className="input-actions">
                   <Button
