@@ -220,6 +220,17 @@ const App = () => {
     }
   };
 
+  // Helper function to check if event is today
+  const isEventToday = (event) => {
+    try {
+      const eventDate = new Date(event.datetime_utc);
+      const today = new Date();
+      return eventDate.toDateString() === today.toDateString();
+    } catch {
+      return false;
+    }
+  };
+
   const deleteEvent = async (eventId) => {
     try {
       await axios.delete(`${API}/calendar/events/${eventId}`);
