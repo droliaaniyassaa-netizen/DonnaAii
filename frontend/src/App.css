@@ -1166,105 +1166,124 @@ body::before {
   color: rgba(239, 68, 68, 1);
 }
 
-/* Smart Color Accents for Categories - FIXED CSS SELECTORS */
-.event-card-container[data-category="work"] .event-card-face {
-  border-left-color: rgba(59, 130, 246, 1) !important; /* BLUE */
+/* ========================================================================
+   SINGLE SOURCE OF TRUTH: CATEGORY COLORS WITH PERFECT UNIFORMITY
+   ======================================================================== */
+
+/* PERSONAL (Purple) - Birthdays, anniversaries, social events */
+.event-card-container[data-category="personal"] .event-card-face {
+  border-left-color: rgba(168, 85, 247, 1) !important;
   box-shadow: 
-    /* Main floating shadow - ENHANCED */
     0 35px 70px rgba(0, 0, 0, 0.5),
-    /* Secondary depth shadow */
     0 20px 40px rgba(0, 0, 0, 0.35),
-    /* Surface contact shadow */
     0 12px 25px rgba(0, 0, 0, 0.25),
-    /* Inner highlight */
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    /* Outer rim glow */
     0 0 0 0.5px rgba(255, 255, 255, 0.04),
-    /* Subtle ambient glow - ENHANCED */
     0 0 80px rgba(255, 255, 255, 0.03),
-    /* COLORED LEFT BORDER GLOW */
+    -6px 0 20px rgba(168, 85, 247, 0.3);
+}
+
+.event-card-container[data-category="personal"] .event-category-badge {
+  background: rgba(168, 85, 247, 0.15) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+  color: rgba(196, 181, 253, 1) !important;
+}
+
+/* WORK (Blue) - Meetings, work calls, boss meetings */
+.event-card-container[data-category="work"] .event-card-face {
+  border-left-color: rgba(59, 130, 246, 1) !important;
+  box-shadow: 
+    0 35px 70px rgba(0, 0, 0, 0.5),
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    0 12px 25px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    0 0 80px rgba(255, 255, 255, 0.03),
     -6px 0 20px rgba(59, 130, 246, 0.3);
 }
 
 .event-card-container[data-category="work"] .event-category-badge {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: rgba(59, 130, 246, 0.3);
-  color: rgba(147, 197, 253, 1);
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  color: rgba(147, 197, 253, 1) !important;
 }
 
-.event-card-container[data-category="personal"] .event-card-face {
-  border-left-color: rgba(34, 197, 94, 1) !important; /* GREEN */
-  box-shadow: 
-    /* Main floating shadow - ENHANCED */
-    0 35px 70px rgba(0, 0, 0, 0.5),
-    /* Secondary depth shadow */
-    0 20px 40px rgba(0, 0, 0, 0.35),
-    /* Surface contact shadow */
-    0 12px 25px rgba(0, 0, 0, 0.25),
-    /* Inner highlight */
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    /* Outer rim glow */
-    0 0 0 0.5px rgba(255, 255, 255, 0.04),
-    /* Subtle ambient glow - ENHANCED */
-    0 0 80px rgba(255, 255, 255, 0.03),
-    /* COLORED LEFT BORDER GLOW */
-    -6px 0 20px rgba(34, 197, 94, 0.3);
-}
-
-.event-card-container[data-category="personal"] .event-category-badge {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: rgba(34, 197, 94, 0.3);
-  color: rgba(134, 239, 172, 1);
-}
-
+/* APPOINTMENTS (Teal) - Doctor, salon, dermat, etc */
 .event-card-container[data-category="appointments"] .event-card-face {
-  border-left-color: rgba(168, 85, 247, 1) !important; /* PURPLE */
+  border-left-color: rgba(20, 184, 166, 1) !important;
   box-shadow: 
-    /* Main floating shadow - ENHANCED */
     0 35px 70px rgba(0, 0, 0, 0.5),
-    /* Secondary depth shadow */
     0 20px 40px rgba(0, 0, 0, 0.35),
-    /* Surface contact shadow */
     0 12px 25px rgba(0, 0, 0, 0.25),
-    /* Inner highlight */
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    /* Outer rim glow */
     0 0 0 0.5px rgba(255, 255, 255, 0.04),
-    /* Subtle ambient glow - ENHANCED */
     0 0 80px rgba(255, 255, 255, 0.03),
-    /* COLORED LEFT BORDER GLOW */
-    -6px 0 20px rgba(168, 85, 247, 0.3);
+    -6px 0 20px rgba(20, 184, 166, 0.3);
 }
 
 .event-card-container[data-category="appointments"] .event-category-badge {
-  background: rgba(168, 85, 247, 0.15);
-  border-color: rgba(168, 85, 247, 0.3);
-  color: rgba(196, 181, 253, 1);
+  background: rgba(20, 184, 166, 0.15) !important;
+  border-color: rgba(20, 184, 166, 0.3) !important;
+  color: rgba(153, 246, 228, 1) !important;
 }
 
+/* REGULAR ACTIVITIES (Amber) - Gym, workouts, etc */
 .event-card-container[data-category="regular_activities"] .event-card-face {
-  border-left-color: rgba(245, 158, 11, 1) !important; /* AMBER */
+  border-left-color: rgba(245, 158, 11, 1) !important;
   box-shadow: 
-    /* Main floating shadow - ENHANCED */
     0 35px 70px rgba(0, 0, 0, 0.5),
-    /* Secondary depth shadow */
     0 20px 40px rgba(0, 0, 0, 0.35),
-    /* Surface contact shadow */
     0 12px 25px rgba(0, 0, 0, 0.25),
-    /* Inner highlight */
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    /* Outer rim glow */
     0 0 0 0.5px rgba(255, 255, 255, 0.04),
-    /* Subtle ambient glow - ENHANCED */
     0 0 80px rgba(255, 255, 255, 0.03),
-    /* COLORED LEFT BORDER GLOW */
     -6px 0 20px rgba(245, 158, 11, 0.3);
 }
 
 .event-card-container[data-category="regular_activities"] .event-category-badge {
-  background: rgba(245, 158, 11, 0.15);
-  border-color: rgba(245, 158, 11, 0.3);
-  color: rgba(253, 230, 138, 1);
+  background: rgba(245, 158, 11, 0.15) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  color: rgba(253, 230, 138, 1) !important;
+}
+
+/* REMINDERS (Green) - Have meds, call friend, basic reminders */
+.event-card-container[data-category="reminders"] .event-card-face {
+  border-left-color: rgba(34, 197, 94, 1) !important;
+  box-shadow: 
+    0 35px 70px rgba(0, 0, 0, 0.5),
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    0 12px 25px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    0 0 80px rgba(255, 255, 255, 0.03),
+    -6px 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.event-card-container[data-category="reminders"] .event-category-badge {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: rgba(34, 197, 94, 0.3) !important;
+  color: rgba(134, 239, 172, 1) !important;
+}
+
+/* FALLBACK - No grey, always use Personal (Purple) styling */
+.event-card-container:not([data-category]) .event-card-face,
+.event-card-container[data-category=""] .event-card-face {
+  border-left-color: rgba(168, 85, 247, 1) !important; /* Default to Personal purple */
+  box-shadow: 
+    0 35px 70px rgba(0, 0, 0, 0.5),
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    0 12px 25px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    0 0 80px rgba(255, 255, 255, 0.03),
+    -6px 0 20px rgba(168, 85, 247, 0.3);
+}
+
+.event-card-container:not([data-category]) .event-category-badge,
+.event-card-container[data-category=""] .event-category-badge {
+  background: rgba(168, 85, 247, 0.15) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+  color: rgba(196, 181, 253, 1) !important;
 }
 
 /* Today Component Category Colors */
