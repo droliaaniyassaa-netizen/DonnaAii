@@ -52,6 +52,7 @@ class CalendarEvent(BaseModel):
     title: str
     description: Optional[str] = None
     datetime_utc: datetime  # Store complete datetime in UTC
+    category: Optional[str] = "personal"  # Default category
     reminder: bool = True
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
