@@ -150,12 +150,13 @@ class DonnaAPITester:
         print("TESTING CALENDAR CRUD WITH TIMEZONE")
         print("="*50)
         
-        # Test timezone-aware event creation
+        # Test timezone-aware event creation with category
         utc_datetime = datetime.now(timezone.utc).isoformat()
         event_data = {
             "title": "Test Meeting",
             "description": "API test meeting with timezone",
             "datetime_utc": utc_datetime,
+            "category": "work",
             "reminder": True
         }
         
@@ -172,7 +173,7 @@ class DonnaAPITester:
             
         event_id = event.get('id')
         
-        # Verify UTC datetime storage
+        # Verify UTC datetime storage and category
         if event.get('datetime_utc'):
             print("✅ Event stored with UTC datetime")
             # Verify it's a valid ISO datetime
@@ -183,6 +184,39 @@ class DonnaAPITester:
                 print("❌ Invalid datetime format in response")
         else:
             print("❌ No datetime_utc field in response")
+        
+        # Verify category
+        if event.get('category') == 'work':
+            print("✅ Event category stored correctly")
+        else:
+            print(f"❌ Event category incorrect: {event.get('category')}")
+        
+        # Test event update functionality
+        if event_id:
+            update_data = {
+                "title": "Updated Test Meeting",
+                "description": "Updated description",
+                "category": "personal"
+            }
+            
+            success, updated_event = self.run_test(
+                "Update Calendar Event",
+                "PUT",
+                f"calendar/events/{event_id}",
+                200,
+                data=update_data
+            )
+            
+            if success:
+                if updated_event.get('title') == 'Updated Test Meeting':
+                    print("✅ Event title updated successfully")
+                else:
+                    print("❌ Event title not updated")
+                
+                if updated_event.get('category') == 'personal':
+                    print("✅ Event category updated successfully")
+                else:
+                    print("❌ Event category not updated")
         
         # Test invalid datetime format
         invalid_event_data = {
@@ -209,6 +243,11 @@ class DonnaAPITester:
         
         if success and len(events) > 0:
             print(f"✅ Found {len(events)} calendar events")
+            
+            # Check if events have proper categories
+            categories = [event.get('category', 'unknown') for event in events]
+            unique_categories = set(categories)
+            print(f"📊 Event categories found: {list(unique_categories)}")
         
         # Delete event
         if event_id:
