@@ -76,17 +76,16 @@ const UpcomingToday = ({ events, className = "" }) => {
         </div>
         
         <div className="today-events-container">
-          {nextEvent && (
-            const category = EVENT_CATEGORIES[event.category?.toUpperCase()] || EVENT_CATEGORIES.PERSONAL;
-            const eventTime = formatInUserTimezone(event.datetime_utc, 'h:mm a');
-            const isNext = event.id === nextEvent?.id; // Mark the next upcoming event
-            const eventDateTime = parseISO(event.datetime_utc);
+          {nextEvent && (() => {
+            const category = EVENT_CATEGORIES[nextEvent.category?.toUpperCase()] || EVENT_CATEGORIES.PERSONAL;
+            const eventTime = formatInUserTimezone(nextEvent.datetime_utc, 'h:mm a');
+            const eventDateTime = parseISO(nextEvent.datetime_utc);
             const hasHappened = isPast(eventDateTime);
             
             return (
               <div 
-                key={event.id} 
-                className={`today-event ${isNext ? 'next-event' : ''} ${hasHappened ? 'past-event' : ''}`}
+                key={nextEvent.id} 
+                className={`today-event next-event ${hasHappened ? 'past-event' : ''}`}
               >
                 <div className="event-time-display">
                   <span className="event-time-text">{eventTime}</span>
@@ -94,21 +93,21 @@ const UpcomingToday = ({ events, className = "" }) => {
                 
                 <div className="event-content">
                   <div className="event-main-info">
-                    <h4 className="event-name">{event.title}</h4>
-                    {event.description && (
-                      <p className="event-note">{event.description}</p>
+                    <h4 className="event-name">{nextEvent.title}</h4>
+                    {nextEvent.description && (
+                      <p className="event-note">{nextEvent.description}</p>
                     )}
                   </div>
                   
                   <Badge 
                     className="event-category-tag"
-                    data-category={event.category?.toLowerCase() || 'personal'}
+                    data-category={nextEvent.category?.toLowerCase() || 'personal'}
                   >
                     {category.name}
                   </Badge>
                 </div>
                 
-                {isNext && !hasHappened && (
+                {!hasHappened && (
                   <div className="next-badge">
                     <span>Next</span>
                   </div>
@@ -116,11 +115,11 @@ const UpcomingToday = ({ events, className = "" }) => {
                 
                 <div 
                   className="event-accent-bar"
-                  data-category={event.category?.toLowerCase() || 'personal'}
+                  data-category={nextEvent.category?.toLowerCase() || 'personal'}
                 ></div>
               </div>
             );
-          })}
+          })()}
         </div>
       </CardContent>
     </Card>
