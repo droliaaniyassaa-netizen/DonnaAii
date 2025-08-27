@@ -652,47 +652,43 @@ body::before {
   border-radius: 24px;
   overflow: hidden;
   
-  /* Ultra Premium Glassmorphic Background */
+  /* Ultra Premium Glassmorphic Background - MORE PROMINENT */
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.025) 0%,
-    rgba(255, 255, 255, 0.008) 25%,
-    rgba(255, 255, 255, 0.015) 50%,
-    rgba(255, 255, 255, 0.005) 75%,
-    rgba(255, 255, 255, 0.002) 100%
+    rgba(255, 255, 255, 0.045) 0%,
+    rgba(255, 255, 255, 0.015) 25%,
+    rgba(255, 255, 255, 0.025) 50%,
+    rgba(255, 255, 255, 0.012) 75%,
+    rgba(255, 255, 255, 0.008) 100%
   );
   
-  /* Premium Frosted Glass Effect */
-  backdrop-filter: blur(60px) saturate(120%);
-  -webkit-backdrop-filter: blur(60px) saturate(120%);
+  /* Premium Frosted Glass Effect - ENHANCED */
+  backdrop-filter: blur(80px) saturate(140%);
+  -webkit-backdrop-filter: blur(80px) saturate(140%);
   
-  /* Sophisticated Border */
-  border: 1px solid;
-  border-image: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(255, 255, 255, 0.02) 50%,
-    rgba(255, 255, 255, 0.06) 100%
-  ) 1;
+  /* Sophisticated Border with LEFT COLOR ACCENT */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 4px solid rgba(255, 255, 255, 0.3); /* Default, will be overridden by category */
   
-  /* Ultra Premium Floating Shadow System */
+  /* Ultra Premium Floating Shadow System - MORE PROMINENT */
   box-shadow: 
-    /* Main floating shadow */
-    0 25px 50px rgba(0, 0, 0, 0.4),
+    /* Main floating shadow - ENHANCED */
+    0 35px 70px rgba(0, 0, 0, 0.5),
     /* Secondary depth shadow */
-    0 15px 25px rgba(0, 0, 0, 0.25),
+    0 20px 40px rgba(0, 0, 0, 0.35),
     /* Surface contact shadow */
-    0 8px 15px rgba(0, 0, 0, 0.15),
+    0 12px 25px rgba(0, 0, 0, 0.25),
     /* Inner highlight */
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
     /* Outer rim glow */
-    0 0 0 0.5px rgba(255, 255, 255, 0.03),
-    /* Subtle ambient glow */
-    0 0 60px rgba(255, 255, 255, 0.02);
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    /* Subtle ambient glow - ENHANCED */
+    0 0 80px rgba(255, 255, 255, 0.03);
   
   transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
 }
 
-/* Premium Glassmorphic Overlay */
+/* Premium Glassmorphic Overlay - MORE VISIBLE */
 .event-card-face::before {
   content: '';
   position: absolute;
@@ -701,12 +697,12 @@ body::before {
   right: 0;
   bottom: 0;
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.01) 30%,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 30%,
     transparent 60%,
-    rgba(255, 255, 255, 0.015) 100%
+    rgba(255, 255, 255, 0.025) 100%
   );
-  opacity: 0;
+  opacity: 0.3; /* MORE VISIBLE BY DEFAULT */
   transition: opacity 0.5s ease;
   pointer-events: none;
   border-radius: inherit;
@@ -722,7 +718,7 @@ body::before {
   height: 200%;
   background: linear-gradient(45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.04) 50%,
     transparent 70%
   );
   transform: rotate(45deg);
@@ -731,34 +727,34 @@ body::before {
   pointer-events: none;
 }
 
-/* PREMIUM DEPRESSION HOVER EFFECT - Key Feature */
+/* PREMIUM DEPRESSION HOVER EFFECT - ENHANCED */
 .event-card-face:hover {
-  /* Sophisticated depression INTO surface */
-  transform: translateY(6px) translateZ(-12px) rotateX(-1deg) scale(0.998);
+  /* Sophisticated depression INTO surface - MORE PRONOUNCED */
+  transform: translateY(8px) translateZ(-15px) rotateX(-2deg) scale(0.997);
   
-  /* Enhanced glassmorphism on hover */
+  /* Enhanced glassmorphism on hover - MORE PROMINENT */
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.015) 25%,
-    rgba(255, 255, 255, 0.025) 50%,
-    rgba(255, 255, 255, 0.008) 75%,
-    rgba(255, 255, 255, 0.003) 100%
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.025) 25%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(255, 255, 255, 0.018) 75%,
+    rgba(255, 255, 255, 0.012) 100%
   );
   
-  backdrop-filter: blur(80px) saturate(140%);
+  backdrop-filter: blur(100px) saturate(160%);
   
-  /* Sophisticated depressed shadow system */
+  /* Sophisticated depressed shadow system - ENHANCED */
   box-shadow: 
     /* Reduced floating shadows */
-    0 8px 20px rgba(0, 0, 0, 0.5),
-    0 4px 10px rgba(0, 0, 0, 0.3),
+    0 12px 30px rgba(0, 0, 0, 0.6),
+    0 6px 15px rgba(0, 0, 0, 0.4),
     /* Inner depression shadows */
-    inset 0 3px 8px rgba(0, 0, 0, 0.08),
-    inset 0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 4px 12px rgba(0, 0, 0, 0.1),
+    inset 0 2px 4px rgba(0, 0, 0, 0.08),
     /* Enhanced inner highlight */
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
     /* Subtle rim enhancement */
-    0 0 0 0.5px rgba(255, 255, 255, 0.04);
+    0 0 0 0.5px rgba(255, 255, 255, 0.06);
 }
 
 .event-card-face:hover::before {
@@ -770,14 +766,14 @@ body::before {
   transform: rotate(45deg) translateX(100%);
 }
 
-/* Active/Click State */
+/* Active/Click State - MORE PRONOUNCED */
 .event-card-face:active {
-  transform: translateY(8px) translateZ(-15px) rotateX(-2deg) scale(0.996);
+  transform: translateY(12px) translateZ(-20px) rotateX(-3deg) scale(0.995);
   box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.6),
-    0 2px 6px rgba(0, 0, 0, 0.4),
-    inset 0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 6px 18px rgba(0, 0, 0, 0.7),
+    0 3px 9px rgba(0, 0, 0, 0.5),
+    inset 0 6px 18px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 /* Back Face */
