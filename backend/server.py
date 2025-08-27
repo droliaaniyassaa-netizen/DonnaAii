@@ -135,8 +135,12 @@ async def chat_with_donna(request: ChatRequest):
             system_message=DONNA_SYSTEM_MESSAGE
         ).with_model("openai", "gpt-4o-mini")
         
-        # Create user message for LLM
-        user_msg = UserMessage(text=request.message)
+        # Create user message for LLM with event creation context
+        user_text = request.message
+        if request.event_created:
+            user_text += "\n\n[CONTEXT: I just automatically created a calendar event from your message with default reminders (12 hours and 2 hours before). Acknowledge this briefly and naturally.]"
+        
+        user_msg = UserMessage(text=user_text)
         
         # Get response from Donna
         donna_response = await chat.send_message(user_msg)
