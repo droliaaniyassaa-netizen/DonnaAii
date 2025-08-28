@@ -696,20 +696,18 @@ body::before {
   }
 }
 
-/* Event Card - Simple in-place flip */
+/* Event Card - Simple card styling */
 .event-card {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transform-style: preserve-3d;
   cursor: pointer;
   transform: translateY(-12px);
+  transition: transform 0.3s ease;
 }
 
-/* Flipped state - Simple Y rotation */
-.event-card.flipped {
-  transform: rotateY(180deg) translateY(-12px);
+.event-card:hover {
+  transform: translateY(-16px);
 }
 
 /* ========================================================================
