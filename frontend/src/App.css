@@ -1114,9 +1114,7 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: auto; /* Push footer to bottom */
-  flex-shrink: 0; /* Prevent footer from shrinking */
-  padding-top: 0.4rem; /* Small padding to separate from content */
+  margin-top: auto;
 }
 
 .event-day {
