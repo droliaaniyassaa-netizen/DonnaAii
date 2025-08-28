@@ -935,7 +935,7 @@ body::before {
   transform: translateX(8px);
 }
 
-.event-card:hover .event-quick-actions {
+.event-card-container:hover .event-quick-actions {
   opacity: 1;
   transform: translateX(0);
 }
