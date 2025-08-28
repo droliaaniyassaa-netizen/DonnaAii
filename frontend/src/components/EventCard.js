@@ -87,11 +87,33 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
                 <div className="event-time">{formattedTime}</div>
                 <div className="event-date">{formattedDate}</div>
               </div>
-              <Badge 
-                className="event-category-badge"
-              >
-                {category.name}
-              </Badge>
+              <div className="event-header-actions">
+                <Badge 
+                  className="event-category-badge"
+                >
+                  {category.name}
+                </Badge>
+                <div className="event-quick-actions">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleComplete}
+                    className="quick-action-button complete-button"
+                    title="Mark as completed"
+                  >
+                    <Check className="quick-action-icon" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleDelete}
+                    className="quick-action-button delete-button"
+                    title="Delete event"
+                  >
+                    <Trash2 className="quick-action-icon" />
+                  </Button>
+                </div>
+              </div>
             </div>
             
             <div className="event-main-content">
