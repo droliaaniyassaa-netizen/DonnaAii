@@ -437,29 +437,66 @@ async def setup_event_notes_context(session_id: str, event_id: str):
     )
     await db.conversation_context.insert_one(prepare_for_mongo(context.dict()))
 
-# Context processing function
+# Context processing function - ENHANCED to return event ID
 async def process_message_context(message: str, session_id: str):
     """Process message to auto-create calendar events, career goals, or health entries"""
     message_lower = message.lower()
     current_utc = datetime.now(timezone.utc)
     created_event_id = None
     
-    # Simple keyword detection for auto-scheduling
-    if any(word in message_lower for word in ['meeting', 'appointment', 'call', 'schedule', 'tomorrow', 'next week']):
+    # Enhanced event detection using the frontend event processing logic
+    from utils.eventProcessing import isEventMessage, extractEventFromMessage
+    
+    # Check if this looks like an event message
+    if isEventMessage(message):
+        try:
+            # Extract event data using the same logic as frontend
+            event_data = extractEventFromMessage(message)
+            
+            if event_data and event_data.get('confidence', 0) > 0.3:
+                # Convert date/time to UTC datetime 
+                if event_data.get('date') and event_data.get('time'):
+                    # Create datetime string and convert to UTC
+                    datetime_str = f"{event_data['date']}T{event_data['time']}:00"
+                    event_datetime = datetime.fromisoformat(datetime_str).replace(tzinfo=timezone.utc)
+                    
+                    # Create the event
+                    event = CalendarEvent(
+                        title=event_data.get('title', 'Event'),
+                        description=message,  # Store original message as description
+                        category=event_data.get('category', 'personal'),
+                        datetime_utc=event_datetime,
+                        reminder=True
+                    )
+                    
+                    await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
+                    created_event_id = event.id
+                    
+                    print(f"✅ Created event from chat: {event.title} at {event_datetime}")
+                    
+        except Exception as e:
+            print(f"Error creating event from message: {e}")
+            # Fallback to simple keyword detection
+            pass
+    
+    # Fallback: Simple keyword detection for basic auto-scheduling
+    if not created_event_id and any(word in message_lower for word in ['meeting', 'appointment', 'call', 'schedule', 'tomorrow', 'next week']):
         # This is a basic implementation - in a real app, you'd use NLP
         if 'meeting' in message_lower:
             # Default to next day at 10 AM UTC
             next_day = current_utc.replace(hour=10, minute=0, second=0, microsecond=0) + timedelta(days=1)
             
             event = CalendarEvent(
-                title="Auto-scheduled Meeting",
-                description=f"Created from chat: {message}",
-                datetime_utc=next_day
+                title="Meeting",
+                description=message,
+                datetime_utc=next_day,
+                category='work',
+                reminder=True
             )
             await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
             created_event_id = event.id
     
-    # Health context detection
+    # Health context detection (unchanged)
     if any(word in message_lower for word in ['ate', 'drank', 'water', 'meal', 'sleep', 'workout']):
         entry_type = 'meal' if 'ate' in message_lower or 'meal' in message_lower else 'hydration'
         if 'water' in message_lower:
