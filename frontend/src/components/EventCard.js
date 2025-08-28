@@ -59,6 +59,12 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
     onDelete(event.id);
   };
 
+  const handleComplete = (e) => {
+    e.stopPropagation();
+    // Complete action - also removes the event from display
+    onDelete(event.id);
+  };
+
   // Check if event is in the past
   const eventDateTime = new Date(event.datetime_utc);
   const now = new Date();
