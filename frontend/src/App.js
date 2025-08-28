@@ -498,7 +498,7 @@ const App = () => {
           <TimezoneIndicator className="calendar-timezone" />
           
           {/* Upcoming Today Section */}
-          <UpcomingToday events={events} />
+          <UpcomingToday events={events} onDelete={deleteEvent} />
           
           <div className="calendar-grid">
             {/* Small Event Creation Button */}
