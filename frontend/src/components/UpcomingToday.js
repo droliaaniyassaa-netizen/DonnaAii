@@ -82,6 +82,16 @@ const UpcomingToday = ({ events, onDelete, className = "" }) => {
             const eventDateTime = parseISO(nextEvent.datetime_utc);
             const hasHappened = isPast(eventDateTime);
             
+            const handleDelete = (e) => {
+              e.stopPropagation();
+              onDelete && onDelete(nextEvent.id);
+            };
+
+            const handleComplete = (e) => {
+              e.stopPropagation();
+              onDelete && onDelete(nextEvent.id);
+            };
+            
             return (
               <div 
                 key={nextEvent.id} 
@@ -99,12 +109,33 @@ const UpcomingToday = ({ events, onDelete, className = "" }) => {
                     )}
                   </div>
                   
-                  <Badge 
-                    className="event-category-tag"
-                    data-category={nextEvent.category?.toLowerCase() || 'personal'}
-                  >
-                    {category.name}
-                  </Badge>
+                  <div className="event-content-actions">
+                    <Badge 
+                      className="event-category-tag"
+                      data-category={nextEvent.category?.toLowerCase() || 'personal'}
+                    >
+                      {category.name}
+                    </Badge>
+                    
+                    {onDelete && (
+                      <div className="today-quick-actions">
+                        <button
+                          onClick={handleComplete}
+                          className="today-quick-action complete-action"
+                          title="Mark as completed"
+                        >
+                          <Check className="today-action-icon" />
+                        </button>
+                        <button
+                          onClick={handleDelete}
+                          className="today-quick-action delete-action"
+                          title="Delete event"
+                        >
+                          <Trash2 className="today-action-icon" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 
                 {!hasHappened && (
