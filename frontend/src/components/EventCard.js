@@ -71,12 +71,11 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
   const isPastEvent = eventDateTime < now;
 
   return (
-    <div 
-      className={`event-card-container ${isFlipped ? 'flipped' : ''} ${className}`}
-      data-category={event.category?.toLowerCase() || 'personal'}
-    >
-      <div className={`event-card ${isFlipped ? 'flipped' : ''} ${isPastEvent ? 'past' : ''}`}>
-        {/* Front Face */}
+    <>
+      <div 
+        className={`event-card-container ${className}`}
+        data-category={event.category?.toLowerCase() || 'personal'}
+      >
         <Card 
           className="event-card-face event-card-front"
           onClick={handleFlip}
@@ -138,129 +137,133 @@ const EventCard = ({ event, onDelete, onUpdate, className = "" }) => {
             </div>
           </CardContent>
         </Card>
+      </div>
 
-        {/* Back Face */}
-        <Card 
-          className="event-card-face event-card-back"
-        >
-          <CardContent className="event-card-content">
-            <div className="event-edit-header">
-              <h4 className="edit-title">Edit Event</h4>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleCancel}
-                className="close-edit-button"
-              >
-                <X className="close-icon" />
-              </Button>
-            </div>
-
-            {isEditing ? (
-              <div className="event-edit-form">
-                <Input
-                  value={editData.title}
-                  onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-                  placeholder="Event title"
-                  className="edit-input"
-                />
-                
-                <textarea
-                  value={editData.description}
-                  onChange={(e) => setEditData({ ...editData, description: e.target.value })}
-                  placeholder="Description (optional)"
-                  className="edit-textarea"
-                  rows={3}
-                />
-                
-                <select
-                  value={editData.category}
-                  onChange={(e) => setEditData({ ...editData, category: e.target.value })}
-                  className="edit-select"
-                >
-                  {Object.entries(EVENT_CATEGORIES).map(([key, cat]) => (
-                    <option key={key} value={key.toLowerCase()}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
-
-                <div className="edit-actions">
+      {/* Modal Overlay - Clean popup approach */}
+      {isFlipped && (
+        <div className="event-modal-overlay" onClick={handleCancel}>
+          <div className="event-modal-content" onClick={(e) => e.stopPropagation()}>
+            <Card className="event-modal-card">
+              <CardContent className="event-card-content">
+                <div className="event-edit-header">
+                  <h4 className="edit-title">Edit Event</h4>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
                     onClick={handleCancel}
-                    className="cancel-button"
+                    className="close-edit-button"
                   >
-                    <X className="action-icon" />
-                    Cancel
+                    <X className="close-icon" />
                   </Button>
-                  <Button
-                    size="sm"
-                    onClick={handleSave}
-                    className="save-button"
-                  >
-                    <Save className="action-icon" />
-                    Save
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <div className="event-details">
-                <div className="detail-section">
-                  <CalendarIcon className="detail-icon" />
-                  <div className="detail-content">
-                    <div className="detail-label">When</div>
-                    <div className="detail-value">{formattedDate} at {formattedTime}</div>
-                  </div>
                 </div>
 
-                <div className="detail-section">
-                  <Clock className="detail-icon" />
-                  <div className="detail-content">
-                    <div className="detail-label">Reminders</div>
-                    <div className="detail-value">
-                      {event.reminder ? '12h & 2h before' : 'None'}
+                {isEditing ? (
+                  <div className="event-edit-form">
+                    <Input
+                      value={editData.title}
+                      onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                      placeholder="Event title"
+                      className="edit-input"
+                    />
+                    
+                    <textarea
+                      value={editData.description}
+                      onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+                      placeholder="Description (optional)"
+                      className="edit-textarea"
+                      rows={3}
+                    />
+                    
+                    <select
+                      value={editData.category}
+                      onChange={(e) => setEditData({ ...editData, category: e.target.value })}
+                      className="edit-select"
+                    >
+                      {Object.entries(EVENT_CATEGORIES).map(([key, cat]) => (
+                        <option key={key} value={key.toLowerCase()}>
+                          {cat.name}
+                        </option>
+                      ))}
+                    </select>
+
+                    <div className="edit-actions">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleCancel}
+                        className="cancel-button"
+                      >
+                        <X className="action-icon" />
+                        Cancel
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={handleSave}
+                        className="save-button"
+                      >
+                        <Save className="action-icon" />
+                        Save
+                      </Button>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="event-details">
+                    <div className="detail-section">
+                      <CalendarIcon className="detail-icon" />
+                      <div className="detail-content">
+                        <div className="detail-label">When</div>
+                        <div className="detail-value">{formattedDate} at {formattedTime}</div>
+                      </div>
+                    </div>
 
-                {event.description && (
-                  <div className="detail-section">
-                    <Edit3 className="detail-icon" />
-                    <div className="detail-content">
-                      <div className="detail-label">Notes</div>
-                      <div className="detail-value">{event.description}</div>
+                    <div className="detail-section">
+                      <Clock className="detail-icon" />
+                      <div className="detail-content">
+                        <div className="detail-label">Reminders</div>
+                        <div className="detail-value">
+                          {event.reminder ? '12h & 2h before' : 'None'}
+                        </div>
+                      </div>
+                    </div>
+
+                    {event.description && (
+                      <div className="detail-section">
+                        <Edit3 className="detail-icon" />
+                        <div className="detail-content">
+                          <div className="detail-label">Notes</div>
+                          <div className="detail-value">{event.description}</div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="event-actions">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleEdit}
+                        className="edit-button"
+                      >
+                        <Edit3 className="action-icon" />
+                        Edit
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={handleDelete}
+                        className="delete-button"
+                      >
+                        <Trash2 className="action-icon" />
+                        Delete
+                      </Button>
                     </div>
                   </div>
                 )}
-
-                <div className="event-actions">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleEdit}
-                    className="edit-button"
-                  >
-                    <Edit3 className="action-icon" />
-                    Edit
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={handleDelete}
-                    className="delete-button"
-                  >
-                    <Trash2 className="action-icon" />
-                    Delete
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
