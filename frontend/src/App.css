@@ -630,19 +630,70 @@ body::before {
   gap: 2rem;
 }
 
-/* Event Card Container - Simple in-place flip */
+/* Event Card Container - Simple, no flip */
 .event-card-container {
-  perspective: 2500px;
   height: 140px;
   position: relative;
   z-index: 1;
-  transform-style: preserve-3d;
 }
 
-/* Flipped container - expand height only */
-.event-card-container.flipped {
-  z-index: 1000;
-  height: 300px;
+/* Event Modal Overlay - Clean popup */
+.event-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+.event-modal-content {
+  width: 500px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.event-modal-card {
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0.01) 100%
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(40px) !important;
+  border-radius: 20px !important;
+  box-shadow: 
+    0 35px 80px rgba(0, 0, 0, 0.7),
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Event Card - Simple in-place flip */
