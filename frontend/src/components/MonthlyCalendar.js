@@ -196,7 +196,7 @@ const MonthlyCalendar = ({ events, onDeleteEvent, onUpdateEvent }) => {
               event={selectedEvent}
               onDelete={onDeleteEvent}
               onUpdate={onUpdateEvent}
-              isModalView={true}
+              className="modal-event-card"
             />
           </div>
         </div>
