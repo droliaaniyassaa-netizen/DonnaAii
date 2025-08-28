@@ -900,25 +900,23 @@ body::before {
 
 
 
-/* Card Content - FIXED LAYOUT to keep title visible */
+/* Card Content - Simple layout */
 .event-card-content {
-  padding: 1.8rem 2.2rem 1.5rem 2.2rem; /* Reduced padding to give more space for content */
+  padding: 2.0rem 2.2rem 1.8rem 2.2rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 3;
-  justify-content: flex-start; /* Keep everything at top */
-  overflow: hidden; /* Prevent content from bleeding outside */
 }
 
-/* Event Card Front Layout - Compact header */
+/* Event Card Front Layout */
 .event-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.5rem; /* Reduced to save space */
-  flex-shrink: 0; /* Prevent header from shrinking */
+  margin-bottom: 0.3rem;
+  flex-shrink: 0;
 }
 
 .event-header-actions {
