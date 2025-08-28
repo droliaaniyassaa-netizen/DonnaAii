@@ -419,6 +419,7 @@ async def process_message_context(message: str, session_id: str):
     """Process message to auto-create calendar events, career goals, or health entries"""
     message_lower = message.lower()
     current_utc = datetime.now(timezone.utc)
+    created_event_id = None
     
     # Simple keyword detection for auto-scheduling
     if any(word in message_lower for word in ['meeting', 'appointment', 'call', 'schedule', 'tomorrow', 'next week']):
@@ -433,6 +434,7 @@ async def process_message_context(message: str, session_id: str):
                 datetime_utc=next_day
             )
             await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
+            created_event_id = event.id
     
     # Health context detection
     if any(word in message_lower for word in ['ate', 'drank', 'water', 'meal', 'sleep', 'workout']):
@@ -450,6 +452,8 @@ async def process_message_context(message: str, session_id: str):
             datetime_utc=current_utc
         )
         await db.health_entries.insert_one(prepare_for_mongo(health_entry.dict()))
+    
+    return created_event_id
 
 # Include the router in the main app
 app.include_router(api_router)
