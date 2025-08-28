@@ -1080,39 +1080,42 @@ body::before {
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* Monthly Calendar - Futuristic Glassmorphic Design */
+/* Monthly Calendar - Compact mobile-optimized design */
 .monthly-calendar-container {
-  padding: 2rem 0;
+  padding: 1rem 0;
   max-width: 1200px;
   margin: 0 auto;
+  height: 600px; /* Fixed height for mobile optimization */
+  overflow: hidden;
 }
 
-/* Calendar Header - High-tech Navigation */
+/* Calendar Header - Compact navigation (40-50px height) */
 .monthly-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
-  padding: 1.5rem 2rem;
+  margin-bottom: 1rem; /* Reduced margin */
+  padding: 0.75rem 1.5rem; /* Reduced padding */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.06) 0%,
     rgba(255, 255, 255, 0.02) 100%
   );
-  border-radius: 20px;
+  border-radius: 12px; /* Smaller border radius */
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(40px);
+  height: 50px; /* Fixed compact height */
 }
 
 .month-navigation {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem; /* Reduced gap */
 }
 
 .nav-button {
-  width: 48px !important;
-  height: 48px !important;
-  border-radius: 12px !important;
+  width: 36px !important; /* Smaller buttons */
+  height: 36px !important;
+  border-radius: 8px !important;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.04) 0%,
     rgba(255, 255, 255, 0.01) 100%
@@ -1129,48 +1132,46 @@ body::before {
   ) !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
   transform: scale(1.05) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
 }
 
 .nav-icon {
-  width: 20px;
-  height: 20px;
+  width: 16px; /* Smaller icons */
+  height: 16px;
   color: rgba(255, 255, 255, 0.8);
 }
 
 .current-month {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem; /* Reduced gap */
 }
 
 .month-icon {
-  width: 24px;
-  height: 24px;
+  width: 18px; /* Smaller icon */
+  height: 18px;
   color: rgba(255, 255, 255, 0.6);
 }
 
 .month-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
+  font-size: 1.25rem; /* Smaller font */
   font-weight: 400;
   color: #ffffff;
   margin: 0;
   letter-spacing: -0.02em;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Futuristic Stats Bar */
+/* Compact Stats Bar */
 .calendar-stats {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1rem 1.5rem;
+  gap: 1rem; /* Reduced gap */
+  padding: 0.5rem 1rem; /* Smaller padding */
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.03) 0%,
     rgba(255, 255, 255, 0.01) 100%
   );
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -1178,26 +1179,25 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.1rem; /* Tighter spacing */
 }
 
 .stat-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem; /* Smaller text */
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .stat-value {
-  font-size: 1.25rem;
+  font-size: 1rem; /* Smaller numbers */
   font-weight: 600;
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .stat-divider {
   width: 1px;
-  height: 40px;
+  height: 30px; /* Shorter divider */
   background: linear-gradient(to bottom, 
     transparent,
     rgba(255, 255, 255, 0.1),
