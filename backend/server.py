@@ -393,6 +393,27 @@ async def get_health_analytics():
         "average_sleep": len(sleep_entries)
     }
 
+# Helper functions for event notes handling
+async def handle_event_notes_response(message: str, context: dict, session_id: str):
+    """Handle user's response to event notes question"""
+    event_id = context.get("last_event_id")
+    if event_id:
+        # Update the event with the user's notes
+        await db.calendar_events.update_one(
+            {"id": event_id},
+            {"$set": {"description": message}}
+        )
+
+async def setup_event_notes_context(session_id: str, event_id: str):
+    """Set up conversation context for collecting event notes"""
+    context = ConversationContext(
+        session_id=session_id,
+        last_event_id=event_id,
+        waiting_for_notes=True,
+        context_type="event_notes"
+    )
+    await db.conversation_context.insert_one(prepare_for_mongo(context.dict()))
+
 # Context processing function
 async def process_message_context(message: str, session_id: str):
     """Process message to auto-create calendar events, career goals, or health entries"""
