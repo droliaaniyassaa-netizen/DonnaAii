@@ -1084,23 +1084,25 @@ body::before {
 
 .event-main-content {
   flex: 1;
-  margin-top: 0.8rem; /* Fixed spacing from header */
-  margin-bottom: 0.8rem; /* Reduced to prevent title sliding */
+  margin-top: 0.4rem; /* Reduced from 0.8rem to bring title up */
+  margin-bottom: 0.4rem; /* Reduced to prevent title from sliding */
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Ensure title stays at top */
+  min-height: 0; /* Allow content to shrink if needed */
 }
 
 .event-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.25rem;
   font-weight: 400;
-  color: #ffffff;
-  margin: 0 0 0.4rem 0; /* Fixed margin to prevent sliding */
+  color: #ffffff !important; /* Force white color */
+  margin: 0 0 0.2rem 0; /* Reduced bottom margin */
   line-height: 1.2;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex-shrink: 0; /* Prevent title from shrinking */
+  overflow: visible !important; /* Ensure title is not clipped */
 }
 
 .event-description {
