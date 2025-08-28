@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
-import { Clock, Sunrise, Star } from 'lucide-react';
+import { Clock, Sunrise, Star, Check, Trash2 } from 'lucide-react';
 import { EVENT_CATEGORIES } from '../utils/eventProcessing';
 import { formatInUserTimezone, getCurrentInUserTimezone } from '../utils/timezone';
 import { isToday, parseISO, isFuture, isPast } from 'date-fns';
