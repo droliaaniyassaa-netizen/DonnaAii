@@ -900,23 +900,24 @@ body::before {
 
 
 
-/* Card Content - FIXED LAYOUT to prevent title sliding */
+/* Card Content - FIXED LAYOUT to keep title visible */
 .event-card-content {
-  padding: 2.2rem 2.5rem 2rem 2.5rem; /* Extra padding on sides and bottom to prevent text touching borders */
+  padding: 1.8rem 2.2rem 1.5rem 2.2rem; /* Reduced padding to give more space for content */
   height: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 3;
-  justify-content: space-between; /* Distribute space properly */
+  justify-content: flex-start; /* Keep everything at top */
+  overflow: hidden; /* Prevent content from bleeding outside */
 }
 
-/* Event Card Front Layout - Fixed title positioning */
+/* Event Card Front Layout - Compact header */
 .event-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.8rem; /* Reduced to prevent title from sliding down */
+  margin-bottom: 0.5rem; /* Reduced to save space */
   flex-shrink: 0; /* Prevent header from shrinking */
 }
 
