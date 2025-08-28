@@ -3,7 +3,7 @@ import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
-import { Trash2, Clock, Bell, Edit3, Save, X, Calendar as CalendarIcon } from 'lucide-react';
+import { Trash2, Clock, Bell, Edit3, Save, X, Calendar as CalendarIcon, Check } from 'lucide-react';
 import { EVENT_CATEGORIES } from '../utils/eventProcessing';
 import { formatInUserTimezone, splitUTCDateTime } from '../utils/timezone';
 
