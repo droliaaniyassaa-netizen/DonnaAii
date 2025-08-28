@@ -639,10 +639,19 @@ body::before {
   transform-style: preserve-3d;
 }
 
-/* Expand container when flipped to prevent overlap */
+/* Modal-style flip container to prevent layout issues */
 .event-card-container.flipped {
-  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: 500px;
   height: 300px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
 }
 
 /* Event Card - SIMPLE 3D Transform - NO FLICKERING */
