@@ -437,64 +437,53 @@ async def setup_event_notes_context(session_id: str, event_id: str):
     )
     await db.conversation_context.insert_one(prepare_for_mongo(context.dict()))
 
-# Context processing function - ENHANCED to return event ID
+# Context processing function - ENHANCED to return event ID and use frontend logic
 async def process_message_context(message: str, session_id: str):
     """Process message to auto-create calendar events, career goals, or health entries"""
     message_lower = message.lower()
     current_utc = datetime.now(timezone.utc)
     created_event_id = None
     
-    # Enhanced event detection using the frontend event processing logic
-    from utils.eventProcessing import isEventMessage, extractEventFromMessage
+    # Enhanced event detection patterns (simplified version of frontend logic)
+    event_indicators = [
+        'meeting', 'appointment', 'schedule', 'book', 'i have',
+        'tomorrow', 'today', 'tonight', 'next week', 'next', 'at', 'pm', 'am',
+        'doctor', 'dentist', 'gym', 'workout', 'lunch', 'dinner',
+        'birthday', 'anniversary', 'remind me', 'reminder',
+        'call', 'visit', 'party', 'celebration', 'conference'
+    ]
     
     # Check if this looks like an event message
-    if isEventMessage(message):
+    if any(indicator in message_lower for indicator in event_indicators):
         try:
-            # Extract event data using the same logic as frontend
-            event_data = extractEventFromMessage(message)
+            # Simple title extraction (clean version)
+            title = extract_simple_title(message)
             
-            if event_data and event_data.get('confidence', 0) > 0.3:
-                # Convert date/time to UTC datetime 
-                if event_data.get('date') and event_data.get('time'):
-                    # Create datetime string and convert to UTC
-                    datetime_str = f"{event_data['date']}T{event_data['time']}:00"
-                    event_datetime = datetime.fromisoformat(datetime_str).replace(tzinfo=timezone.utc)
-                    
-                    # Create the event
-                    event = CalendarEvent(
-                        title=event_data.get('title', 'Event'),
-                        description=message,  # Store original message as description
-                        category=event_data.get('category', 'personal'),
-                        datetime_utc=event_datetime,
-                        reminder=True
-                    )
-                    
-                    await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
-                    created_event_id = event.id
-                    
-                    print(f"✅ Created event from chat: {event.title} at {event_datetime}")
+            # Simple time extraction
+            event_time = extract_simple_time(message)
+            
+            # Simple date calculation
+            event_date = extract_simple_date(message, current_utc)
+            
+            # Simple category detection
+            category = detect_simple_category(message_lower)
+            
+            # Create the event
+            event = CalendarEvent(
+                title=title,
+                description=message,  # Store original message as description initially
+                category=category,
+                datetime_utc=event_date,
+                reminder=True
+            )
+            
+            await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
+            created_event_id = event.id
+            
+            print(f"✅ Created event from chat: {event.title} at {event_date}")
                     
         except Exception as e:
             print(f"Error creating event from message: {e}")
-            # Fallback to simple keyword detection
-            pass
-    
-    # Fallback: Simple keyword detection for basic auto-scheduling
-    if not created_event_id and any(word in message_lower for word in ['meeting', 'appointment', 'call', 'schedule', 'tomorrow', 'next week']):
-        # This is a basic implementation - in a real app, you'd use NLP
-        if 'meeting' in message_lower:
-            # Default to next day at 10 AM UTC
-            next_day = current_utc.replace(hour=10, minute=0, second=0, microsecond=0) + timedelta(days=1)
-            
-            event = CalendarEvent(
-                title="Meeting",
-                description=message,
-                datetime_utc=next_day,
-                category='work',
-                reminder=True
-            )
-            await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
-            created_event_id = event.id
     
     # Health context detection (unchanged)
     if any(word in message_lower for word in ['ate', 'drank', 'water', 'meal', 'sleep', 'workout']):
@@ -514,6 +503,111 @@ async def process_message_context(message: str, session_id: str):
         await db.health_entries.insert_one(prepare_for_mongo(health_entry.dict()))
     
     return created_event_id
+
+# Helper functions for simple event extraction
+def extract_simple_title(message):
+    """Extract a clean title from the message"""
+    import re
+    
+    text = message.lower()
+    
+    # Remove common filler phrases
+    text = re.sub(r'\b(i have a?|i need to|remind me to|i want to|i should|my|the)\b', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\b(at|on|for|tomorrow|today|tonight|next week)\s.*$', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\b\d{1,2}:?\d{0,2}\s?(am|pm|AM|PM)\b', '', text)
+    
+    # Clean up
+    text = re.sub(r'\s+', ' ', text).strip()
+    
+    # Handle specific cases
+    if 'birthday' in text:
+        return text.replace('birthday', '').strip() + ' Birthday'
+    elif 'meeting' in text:
+        return 'Meeting'
+    elif 'appointment' in text:
+        return 'Appointment'
+    elif 'gym' in text or 'workout' in text:
+        return 'Gym'
+    elif 'doctor' in text:
+        return 'Doctor'
+    elif 'dentist' in text:
+        return 'Dentist'
+    elif 'meds' in text or 'medication' in text or 'vitamins' in text:
+        return text.strip().title()
+    
+    # Default cleanup and capitalization
+    if text:
+        return text.strip().title()
+    
+    return 'Event'
+
+def extract_simple_time(message):
+    """Extract time from message, default to reasonable times"""
+    import re
+    
+    # Look for explicit time patterns
+    time_match = re.search(r'\b(\d{1,2}):?(\d{0,2})\s?(am|pm|AM|PM)\b', message)
+    if time_match:
+        hours = int(time_match.group(1))
+        minutes = int(time_match.group(2)) if time_match.group(2) else 0
+        ampm = time_match.group(3).lower() if time_match.group(3) else ''
+        
+        # Convert to 24-hour format
+        if ampm == 'pm' and hours != 12:
+            hours += 12
+        elif ampm == 'am' and hours == 12:
+            hours = 0
+            
+        return datetime.now(timezone.utc).replace(hour=hours, minute=minutes, second=0, microsecond=0)
+    
+    # Default times based on content
+    message_lower = message.lower()
+    current = datetime.now(timezone.utc)
+    
+    if any(word in message_lower for word in ['morning', 'breakfast']):
+        return current.replace(hour=9, minute=0, second=0, microsecond=0)
+    elif any(word in message_lower for word in ['lunch', 'noon']):
+        return current.replace(hour=12, minute=0, second=0, microsecond=0)
+    elif any(word in message_lower for word in ['afternoon']):
+        return current.replace(hour=15, minute=0, second=0, microsecond=0)
+    elif any(word in message_lower for word in ['evening', 'dinner']):
+        return current.replace(hour=18, minute=0, second=0, microsecond=0)
+    elif any(word in message_lower for word in ['night', 'tonight']):
+        return current.replace(hour=20, minute=0, second=0, microsecond=0)
+    else:
+        return current.replace(hour=10, minute=0, second=0, microsecond=0)
+
+def extract_simple_date(message, current_utc):
+    """Extract date from message, combining with time"""
+    message_lower = message.lower()
+    
+    # Get time component
+    time_component = extract_simple_time(message)
+    
+    if 'tomorrow' in message_lower:
+        target_date = current_utc + timedelta(days=1)
+        return target_date.replace(hour=time_component.hour, minute=time_component.minute, second=0, microsecond=0)
+    elif 'next week' in message_lower:
+        target_date = current_utc + timedelta(weeks=1)
+        return target_date.replace(hour=time_component.hour, minute=time_component.minute, second=0, microsecond=0)
+    else:
+        # Default to today
+        return time_component
+
+def detect_simple_category(message_lower):
+    """Detect event category from message content"""
+    if any(word in message_lower for word in ['meeting', 'work', 'office', 'conference', 'project']):
+        return 'work'
+    elif any(word in message_lower for word in ['doctor', 'dentist', 'appointment', 'medical', 'checkup']):
+        return 'appointments'
+    elif any(word in message_lower for word in ['gym', 'workout', 'exercise', 'fitness', 'training']):
+        return 'regular_activities'
+    elif any(word in message_lower for word in ['birthday', 'anniversary', 'party', 'celebration', 'dinner', 'lunch']):
+        return 'personal'
+    elif any(word in message_lower for word in ['reminder', 'meds', 'medication', 'vitamins', 'remind me']):
+        return 'reminders'
+    else:
+        return 'personal'
 
 # Include the router in the main app
 app.include_router(api_router)
