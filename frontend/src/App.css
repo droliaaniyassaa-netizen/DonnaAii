@@ -849,36 +849,10 @@ body::before {
     inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Back Face - Modal style for better UX */
+/* Back Face - Simple flip */
 .event-card-back {
   transform: rotateY(180deg);
-  height: 100%;
-  width: 100%;
-}
-
-/* Modal backdrop for flipped cards - FIXED */
-.event-card-container.flipped::before {
-  content: '';
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  background: rgba(0, 0, 0, 0.5) !important;
-  backdrop-filter: blur(8px) !important;
-  z-index: 9999 !important;
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  height: 300px;
 }
 
 /* Card Content - FIXED LAYOUT to prevent title sliding */
