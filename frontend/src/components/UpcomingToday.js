@@ -6,7 +6,7 @@ import { EVENT_CATEGORIES } from '../utils/eventProcessing';
 import { formatInUserTimezone, getCurrentInUserTimezone } from '../utils/timezone';
 import { isToday, parseISO, isFuture, isPast } from 'date-fns';
 
-const UpcomingToday = ({ events, className = "" }) => {
+const UpcomingToday = ({ events, onDelete, className = "" }) => {
   const now = getCurrentInUserTimezone();
   
   // Filter events for today and get the NEXT upcoming event
