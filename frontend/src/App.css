@@ -881,7 +881,7 @@ body::before {
   z-index: -1;
 }
 
-/* Card Content - FIXED PADDING TO PREVENT TEXT TOUCHING BORDERS */
+/* Card Content - FIXED LAYOUT to prevent title sliding */
 .event-card-content {
   padding: 2.2rem 2.5rem 2rem 2.5rem; /* Extra padding on sides and bottom to prevent text touching borders */
   height: 100%;
@@ -889,14 +889,16 @@ body::before {
   flex-direction: column;
   position: relative;
   z-index: 3;
+  justify-content: space-between; /* Distribute space properly */
 }
 
-/* Event Card Front Layout - Premium Typography */
+/* Event Card Front Layout - Fixed title positioning */
 .event-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem; /* Reduced to prevent title from sliding down */
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 .event-header-actions {
