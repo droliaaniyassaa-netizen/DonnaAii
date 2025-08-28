@@ -898,11 +898,7 @@ body::before {
     inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Back Face - Simple flip */
-.event-card-back {
-  transform: rotateY(180deg);
-  height: 300px;
-}
+
 
 /* Card Content - FIXED LAYOUT to prevent title sliding */
 .event-card-content {
