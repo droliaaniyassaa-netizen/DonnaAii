@@ -123,27 +123,71 @@ export const extractEventFromMessage = (message) => {
   }
 };
 
-// Extract event title from message
+// Extract event title from message - ENHANCED for cleaner, sharper titles
 const extractEventTitle = (text) => {
   // Remove time and date patterns to get clean title
   let cleanText = text;
   
-  // Remove time patterns
+  // Remove time patterns (more comprehensive)
   cleanText = cleanText.replace(/\b(\d{1,2}):(\d{2})\s?(am|pm)?\b/gi, '');
+  cleanText = cleanText.replace(/\b(at\s+)?\d{1,2}\s?(am|pm)\b/gi, '');
   cleanText = cleanText.replace(/\b(morning|afternoon|evening|night|noon|midnight|tonight|today|tomorrow)\b/gi, '');
   
-  // Remove date patterns
+  // Remove date patterns (more comprehensive)
   cleanText = cleanText.replace(/\b(next week|this week|next\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday))\b/gi, '');
   cleanText = cleanText.replace(/\b(\d{1,2}\/\d{1,2}\/?\d{0,4})\b/g, '');
-  cleanText = cleanText.replace(/\b(\d{1,2}\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))\b/gi, '');
+  cleanText = cleanText.replace(/\b(\d{1,2}\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|january|february|march|april|may|june|july|august|september|october|november|december))\b/gi, '');
   
-  // Remove common scheduling words
-  cleanText = cleanText.replace(/\b(i have|schedule|book|appointment|meeting|remind me to)\b/gi, '');
-  cleanText = cleanText.replace(/\b(at|on|for)\s*$/gi, '');
+  // ENHANCED: Remove filler phrases and unnecessary words for sharper titles
+  cleanText = cleanText.replace(/\b(i have a?|i need to|i want to|i should|i must|i'm going to)\b/gi, '');
+  cleanText = cleanText.replace(/\b(remind me to|please remind me to|don't forget to|remember to)\b/gi, '');
+  cleanText = cleanText.replace(/\b(schedule|book|set up|arrange|plan)\s+(a|an|the)?\s?/gi, '');
+  cleanText = cleanText.replace(/\b(there is a?|there's a?|we have a?|i've got a?)\b/gi, '');
+  cleanText = cleanText.replace(/\b(appointment for|meeting with|call with|visit to)\b/gi, '');
   
-  // Clean up and capitalize
+  // Remove unnecessary prepositions and articles at the end
+  cleanText = cleanText.replace(/\b(at|on|for|with|to|in|of|the|a|an)\s*$/gi, '');
+  
+  // Clean up extra spaces and punctuation
+  cleanText = cleanText.trim().replace(/\s+/g, ' ');
+  cleanText = cleanText.replace(/^(the|a|an)\s+/gi, ''); // Remove leading articles
+  
+  // Handle specific common cases for even cleaner titles
+  const cleaningRules = [
+    // Medication/Health
+    { pattern: /^(take|taking)\s+/gi, replacement: '' }, // "take meds" → "meds"
+    { pattern: /^(go to|going to)\s+(the\s+)?/gi, replacement: '' }, // "go to gym" → "gym"
+    { pattern: /^(call|calling)\s+(the\s+)?/gi, replacement: 'Call ' }, // "call doctor" → "Call doctor"
+    { pattern: /^(meet|meeting)\s+(with\s+)?/gi, replacement: 'Meet ' }, // "meeting with john" → "Meet john"
+    { pattern: /^(visit|visiting)\s+(the\s+)?/gi, replacement: 'Visit ' }, // "visit dentist" → "Visit dentist"
+    { pattern: /^(buy|buying|get|getting)\s+/gi, replacement: 'Buy ' }, // "buy groceries" → "Buy groceries"
+    { pattern: /^(pick up|pickup)\s+/gi, replacement: 'Pick up ' }, // "pick up kids" → "Pick up kids"
+    { pattern: /^(drop off|dropoff)\s+/gi, replacement: 'Drop off ' }, // "drop off kids" → "Drop off kids"
+    { pattern: /^(finish|complete|do)\s+/gi, replacement: '' }, // "finish report" → "report"
+    { pattern: /^(work on|working on)\s+/gi, replacement: '' }, // "work on project" → "project"
+    
+    // Common event types - make them more concise
+    { pattern: /^(doctor|dentist|medical|health)\s+(appointment|visit|checkup)/gi, replacement: '$1' },
+    { pattern: /^(team|staff|daily|weekly|monthly)\s+(meeting|standup|sync)/gi, replacement: '$1 $2' },
+    { pattern: /^(gym|workout|exercise)\s+(session|time|class)/gi, replacement: '$1' },
+    { pattern: /^(lunch|dinner|breakfast)\s+(meeting|appointment|date)/gi, replacement: '$1' },
+    
+    // Simplify common words
+    { pattern: /\b(medication|medicine)\b/gi, replacement: 'meds' },
+    { pattern: /\b(appointment)\b/gi, replacement: 'appt' },
+    { pattern: /\b(meeting)\b/gi, replacement: 'meeting' }, // Keep as is for clarity
+    { pattern: /\b(exercise|workout|gym session)\b/gi, replacement: 'workout' },
+  ];
+  
+  // Apply cleaning rules
+  for (const rule of cleaningRules) {
+    cleanText = cleanText.replace(rule.pattern, rule.replacement);
+  }
+  
+  // Final cleanup
   cleanText = cleanText.trim().replace(/\s+/g, ' ');
   
+  // Capitalize first letter and return
   if (cleanText.length > 0) {
     return cleanText.charAt(0).toUpperCase() + cleanText.slice(1);
   }
