@@ -557,13 +557,11 @@ const App = () => {
 
           {/* Monthly View */}
           {activeCalendarView === 'monthly' && (
-            <div className="monthly-view-container">
-              {/* Monthly Calendar will be implemented here */}
-              <div className="monthly-placeholder">
-                <h3>🚀 Futuristic Monthly View Coming Soon!</h3>
-                <p>Building the glassmorphic monthly calendar...</p>
-              </div>
-            </div>
+            <MonthlyCalendar 
+              events={events}
+              onDeleteEvent={deleteEvent}
+              onUpdateEvent={updateEvent}
+            />
           )}
         </TabsContent>
 
