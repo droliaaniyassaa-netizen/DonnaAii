@@ -1100,11 +1100,9 @@ body::before {
 .event-card-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-top: 0.8rem;
-  padding-bottom: 0.3rem; /* ADDED: Prevent text from touching bottom border */
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  margin-top: auto; /* ADDED: Push footer to bottom but keep padding */
+  align-items: flex-end;
+  margin-top: auto; /* Push footer to bottom */
+  flex-shrink: 0; /* Prevent footer from shrinking */
 }
 
 .event-day {
