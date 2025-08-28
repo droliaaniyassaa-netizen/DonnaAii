@@ -639,20 +639,19 @@ body::before {
   transform-style: preserve-3d;
 }
 
-/* Modal-style flip container to prevent layout issues */
+/* Modal-style flip container - FIXED positioning */
 .event-card-container.flipped {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  width: 450px;
-  height: 280px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 0;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  position: fixed !important;
+  top: 50vh !important;
+  left: 50vw !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 10000 !important;
+  width: 450px !important;
+  height: 280px !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  pointer-events: all !important;
 }
 
 /* Event Card - SMOOTH 3D Transform with modal flip */
