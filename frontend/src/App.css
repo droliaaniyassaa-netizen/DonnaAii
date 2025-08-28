@@ -978,20 +978,20 @@ body::before {
   color: #ef4444 !important; /* Red for deletion */
 }
 
-/* Calendar Sub-tabs - Futuristic glassmorphic design */
+/* Calendar Sub-tabs - Compact mobile-friendly pills */
 .calendar-sub-tabs {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 3rem;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
   justify-content: center;
-  padding: 0.5rem;
+  padding: 0.25rem;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.02) 0%,
     rgba(255, 255, 255, 0.005) 50%,
     rgba(255, 255, 255, 0.001) 100%
   );
   backdrop-filter: blur(20px);
-  border-radius: 20px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -1001,17 +1001,20 @@ body::before {
     rgba(255, 255, 255, 0.01) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 1rem 2rem;
+  border-radius: 10px;
+  padding: 0.5rem 1rem; /* Much smaller padding */
   color: rgba(255, 255, 255, 0.7);
   font-weight: 400;
-  font-size: 0.875rem;
-  letter-spacing: 0.5px;
+  font-size: 0.8rem; /* Smaller font */
+  letter-spacing: 0.3px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(40px);
   position: relative;
   overflow: hidden;
+  height: 40px; /* Fixed compact height */
+  display: flex;
+  align-items: center;
 }
 
 .calendar-sub-tab::before {
@@ -1032,10 +1035,8 @@ body::before {
   );
   border-color: rgba(255, 255, 255, 0.15);
   color: rgba(255, 255, 255, 0.9);
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .calendar-sub-tab:hover::before {
@@ -1049,11 +1050,7 @@ body::before {
   );
   border-color: rgba(255, 255, 255, 0.25);
   color: #ffffff;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 0 20px rgba(255, 255, 255, 0.05);
-  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* Monthly View Container */
