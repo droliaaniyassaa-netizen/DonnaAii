@@ -498,40 +498,72 @@ const App = () => {
         <TabsContent value="calendar" className="calendar-container">
           <TimezoneIndicator className="calendar-timezone" />
           
-          {/* Upcoming Today Section */}
-          <UpcomingToday events={events} onDelete={deleteEvent} />
-          
-          <div className="calendar-grid">
-            {/* Small Event Creation Button */}
-            <EventCreationButton
-              newEvent={newEvent}
-              setNewEvent={setNewEvent}
-              onCreateEvent={createEvent}
-            />
-
-            {/* Events List */}
-            <div className="events-grid">
-              {events
-                .filter(event => !isEventToday(event)) // Filter out today's events (shown above)
-                .map((event, index) => (
-                  <EventCard
-                    key={event.id}
-                    event={event}
-                    className={`event-card-item ${index < 3 ? 'priority-event' : 'standard-event'}`}
-                    onDelete={deleteEvent}
-                    onUpdate={updateEvent}
-                  />
-                ))}
-              {events.filter(event => !isEventToday(event)).length === 0 && (
-                <Card className="empty-card">
-                  <CardContent className="empty-content">
-                    <Clock className="empty-icon" />
-                    <p>No upcoming events. Create your first event above!</p>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+          {/* Calendar Sub-tabs */}
+          <div className="calendar-sub-tabs">
+            <button
+              className={`calendar-sub-tab ${activeCalendarView === 'upcoming' ? 'active' : ''}`}
+              onClick={() => setActiveCalendarView('upcoming')}
+            >
+              Upcoming Events
+            </button>
+            <button
+              className={`calendar-sub-tab ${activeCalendarView === 'monthly' ? 'active' : ''}`}
+              onClick={() => setActiveCalendarView('monthly')}
+            >
+              Monthly View
+            </button>
           </div>
+
+          {/* Upcoming Events View */}
+          {activeCalendarView === 'upcoming' && (
+            <>
+              {/* Upcoming Today Section */}
+              <UpcomingToday events={events} onDelete={deleteEvent} />
+              
+              <div className="calendar-grid">
+                {/* Small Event Creation Button */}
+                <EventCreationButton
+                  newEvent={newEvent}
+                  setNewEvent={setNewEvent}
+                  onCreateEvent={createEvent}
+                />
+
+                {/* Events List */}
+                <div className="events-grid">
+                  {events
+                    .filter(event => !isEventToday(event)) // Filter out today's events (shown above)
+                    .map((event, index) => (
+                      <EventCard
+                        key={event.id}
+                        event={event}
+                        className={`event-card-item ${index < 3 ? 'priority-event' : 'standard-event'}`}
+                        onDelete={deleteEvent}
+                        onUpdate={updateEvent}
+                      />
+                    ))}
+                  {events.filter(event => !isEventToday(event)).length === 0 && (
+                    <Card className="empty-card">
+                      <CardContent className="empty-content">
+                        <Clock className="empty-icon" />
+                        <p>No upcoming events. Create your first event above!</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Monthly View */}
+          {activeCalendarView === 'monthly' && (
+            <div className="monthly-view-container">
+              {/* Monthly Calendar will be implemented here */}
+              <div className="monthly-placeholder">
+                <h3>🚀 Futuristic Monthly View Coming Soon!</h3>
+                <p>Building the glassmorphic monthly calendar...</p>
+              </div>
+            </div>
+          )}
         </TabsContent>
 
         {/* Career Tab */}
