@@ -50,6 +50,15 @@ class ChatResponse(BaseModel):
     response: str
     session_id: str
 
+# New model for tracking conversation context
+class ConversationContext(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str
+    last_event_id: Optional[str] = None  # ID of the last created event
+    waiting_for_notes: bool = False  # True if waiting for user to provide notes
+    context_type: Optional[str] = None  # "event_notes", "reminder_setup", etc.
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
 class CalendarEvent(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
