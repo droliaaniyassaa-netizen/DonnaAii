@@ -630,7 +630,7 @@ body::before {
   gap: 2rem;
 }
 
-/* Event Card Container - Perspective for 3D */
+/* Event Card Container - Simple in-place flip */
 .event-card-container {
   perspective: 2500px;
   height: 140px;
@@ -639,19 +639,10 @@ body::before {
   transform-style: preserve-3d;
 }
 
-/* Modal-style flip container - FIXED positioning */
+/* Flipped container - expand height only */
 .event-card-container.flipped {
-  position: fixed !important;
-  top: 50vh !important;
-  left: 50vw !important;
-  transform: translate(-50%, -50%) !important;
-  z-index: 10000 !important;
-  width: 450px !important;
-  height: 280px !important;
-  background: transparent !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  pointer-events: all !important;
+  z-index: 1000;
+  height: 300px;
 }
 
 /* Event Card - FIXED modal flip positioning */
