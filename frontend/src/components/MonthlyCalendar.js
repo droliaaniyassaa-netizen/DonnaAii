@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
-import { EVENT_CATEGORIES } from '../utils/eventCategories';
 import EventCard from './EventCard';
 
 // Monthly Calendar Component - Futuristic Glassmorphic Design
