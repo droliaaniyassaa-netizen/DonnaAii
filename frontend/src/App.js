@@ -103,17 +103,17 @@ const App = () => {
     setIsLoading(true);
     
     try {
-      // Enhanced event detection and creation
-      const isEvent = isEventMessage(inputMessage);
+      // Check if message looks like an event for better context to Donna
       let eventCreated = false;
+      const isEvent = isEventMessage(inputMessage);
+      
+      // Note: Event creation is now handled by the backend via chat processing
+      // The frontend just detects events to provide better context to Donna
       
       if (isEvent) {
         const eventData = extractEventFromMessage(inputMessage);
-        
-        if (eventData && eventData.confidence > 0.3) { // Lower threshold for more inclusive detection
-          // Auto-create event from chat
-          const success = await createEventFromChat(eventData);
-          eventCreated = success;
+        if (eventData && eventData.confidence > 0.3) {
+          eventCreated = true; // Mark as event for Donna context
         }
       }
       
