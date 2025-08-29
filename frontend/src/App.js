@@ -457,7 +457,6 @@ const App = () => {
 
         {/* Calendar Tab */}
         <TabsContent value="calendar" className="calendar-container">
-          <TimezoneIndicator className="calendar-timezone" />
           
           {/* Calendar Sub-tabs */}
           <div className="calendar-sub-tabs">
