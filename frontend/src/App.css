@@ -1364,7 +1364,7 @@ body::before {
   display: none; /* Hide text, show only dots */
 }
 
-/* Event Category Colors for Dot Events */
+/* Event Category Colors for Dot Events - MATCH UPCOMING EVENTS TAB */
 .mini-event[data-category="work"] {
   background: linear-gradient(135deg, #3b82f6, #1e40af);
   box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
@@ -1386,8 +1386,8 @@ body::before {
 }
 
 .mini-event[data-category="reminders"] {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
 }
 
 .more-events {
