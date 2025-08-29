@@ -532,7 +532,18 @@ const App = () => {
                 {/* Events List */}
                 <div className="events-grid">
                   {events
-                    .filter(event => !isEventToday(event)) // Filter out today's events (shown above)
+                    .filter(event => {
+                      // Show all non-today events, plus today events that aren't the next upcoming one
+                      if (!isEventToday(event)) return true;
+                      
+                      // For today's events, show them if they're not the next upcoming event
+                      const todayEvents = events.filter(e => isEventToday(e));
+                      const nextEvent = todayEvents
+                        .filter(e => new Date(e.datetime_utc) >= new Date())
+                        .sort((a, b) => new Date(a.datetime_utc) - new Date(b.datetime_utc))[0];
+                      
+                      return event.id !== nextEvent?.id;
+                    })
                     .map((event, index) => (
                       <EventCard
                         key={event.id}
@@ -542,7 +553,15 @@ const App = () => {
                         onUpdate={updateEvent}
                       />
                     ))}
-                  {events.filter(event => !isEventToday(event)).length === 0 && (
+                  {events.filter(event => {
+                    // Count events that would be shown (same logic as above)
+                    if (!isEventToday(event)) return true;
+                    const todayEvents = events.filter(e => isEventToday(e));
+                    const nextEvent = todayEvents
+                      .filter(e => new Date(e.datetime_utc) >= new Date())
+                      .sort((a, b) => new Date(a.datetime_utc) - new Date(b.datetime_utc))[0];
+                    return event.id !== nextEvent?.id;
+                  }).length === 0 && (
                     <Card className="empty-card">
                       <CardContent className="empty-content">
                         <Clock className="empty-icon" />
