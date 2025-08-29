@@ -481,6 +481,13 @@ const App = () => {
               {/* Upcoming Today Section */}
               <UpcomingToday events={events} onDelete={deleteEvent} />
               
+              {/* Smart Suggestions - Donna's Intelligent Assistant */}
+              <SmartSuggestions 
+                events={events}
+                onRescheduleEvent={updateEvent}
+                onDeleteEvent={deleteEvent}
+              />
+              
               <div className="calendar-grid">
                 {/* Small Event Creation Button */}
                 <EventCreationButton
