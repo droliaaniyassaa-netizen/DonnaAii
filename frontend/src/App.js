@@ -541,6 +541,9 @@ const App = () => {
               onUpdateEvent={updateEvent}
             />
           )}
+          
+          {/* Timezone Indicator moved to bottom */}
+          <TimezoneIndicator className="calendar-timezone-bottom" />
         </TabsContent>
 
         {/* Career Tab */}
