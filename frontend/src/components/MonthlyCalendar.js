@@ -160,8 +160,7 @@ const MonthlyCalendar = ({ events, onDeleteEvent, onUpdateEvent }) => {
 
                   {/* Events Container */}
                   <div className="day-events">
-                    {day.events.slice(0, 3).map((event, eventIndex) => {
-                      const category = EVENT_CATEGORIES[event.category?.toUpperCase()] || EVENT_CATEGORIES.PERSONAL;
+                    {day.events.slice(0, 6).map((event, eventIndex) => {
                       return (
                         <div
                           key={event.id}
@@ -170,14 +169,13 @@ const MonthlyCalendar = ({ events, onDeleteEvent, onUpdateEvent }) => {
                           onClick={(e) => handleEventClick(event, e)}
                           title={`${event.title} - ${new Date(event.datetime_utc).toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'})}`}
                         >
-                          <div className="event-indicator"></div>
-                          <span className="event-title-mini">{event.title}</span>
+                          {/* Just the colored dot - no text */}
                         </div>
                       );
                     })}
-                    {day.events.length > 3 && (
+                    {day.events.length > 6 && (
                       <div className="more-events">
-                        +{day.events.length - 3} more
+                        +{day.events.length - 6}
                       </div>
                     )}
                   </div>
