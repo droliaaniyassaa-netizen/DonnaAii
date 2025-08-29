@@ -1053,6 +1053,15 @@ body::before {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
+/* Timezone Indicator - Moved to bottom and smaller */
+.calendar-timezone-bottom {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.7rem; /* Smaller font */
+  opacity: 0.5; /* More subtle */
+  color: rgba(255, 255, 255, 0.4);
+}
+
 /* Monthly View Container */
 .monthly-view-container {
   padding: 2rem 0;
