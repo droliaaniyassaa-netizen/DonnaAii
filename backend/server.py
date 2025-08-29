@@ -490,15 +490,19 @@ async def process_message_context(message: str, session_id: str):
         try:
             # Simple title extraction (clean version)
             title = extract_simple_title(message)
+            print(f"🔍 Extracted title: '{title}' from message: '{message}'")
             
             # Simple time extraction
             event_time = extract_simple_time(message)
+            print(f"🔍 Extracted time: {event_time}")
             
             # Simple date calculation
             event_date = extract_simple_date(message, current_utc)
+            print(f"🔍 Final event date: {event_date}")
             
             # Simple category detection
             category = detect_simple_category(message_lower)
+            print(f"🔍 Detected category: {category}")
             
             # Create the event
             event = CalendarEvent(
@@ -509,13 +513,22 @@ async def process_message_context(message: str, session_id: str):
                 reminder=True
             )
             
-            await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
+            print(f"🔍 About to insert event: {event.dict()}")
+            
+            result = await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
             created_event_id = event.id
             
-            print(f"✅ Created event from chat: {event.title} at {event_date}")
+            print(f"✅ Successfully created event with ID: {created_event_id}")
+            print(f"✅ Database insert result: {result.inserted_id}")
                     
         except Exception as e:
-            print(f"Error creating event from message: {e}")
+            print(f"❌ Error creating event from message '{message}': {e}")
+            import traceback
+            print(f"❌ Full traceback: {traceback.format_exc()}")
+    else:
+        print(f"🔍 No event indicators found in message: '{message}'")
+        print(f"🔍 Available indicators: {event_indicators}")
+        print(f"🔍 Message contains: {[word for word in event_indicators if word in message_lower]}")
     
     # Health context detection (unchanged)
     if any(word in message_lower for word in ['ate', 'drank', 'water', 'meal', 'sleep', 'workout']):
