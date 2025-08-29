@@ -641,6 +641,27 @@ def detect_simple_category(message_lower):
     else:
         return 'personal'
 
+# Helper functions for notes context
+async def setup_event_notes_context(session_id: str, event_id: str):
+    """Set up conversation context for waiting for event notes"""
+    context = ConversationContext(
+        session_id=session_id,
+        last_event_id=event_id,
+        waiting_for_notes=True,
+        context_type="event_notes"
+    )
+    await db.conversation_context.insert_one(prepare_for_mongo(context.dict()))
+
+async def handle_event_notes_response(message: str, context: dict, session_id: str):
+    """Handle user's response to the notes question and add to event"""
+    event_id = context.get("last_event_id")
+    if event_id:
+        # Update the event with the notes
+        await db.calendar_events.update_one(
+            {"id": event_id},
+            {"$set": {"description": message}}
+        )
+
 # Include the router in the main app
 app.include_router(api_router)
 
