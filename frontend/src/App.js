@@ -138,47 +138,7 @@ const App = () => {
     }
   };
 
-  // Enhanced create event from chat message
-  const createEventFromChat = async (eventData) => {
-    try {
-      // Use current date/time if not specified, with timezone awareness
-      if (!eventData.date) {
-        const now = getCurrentInUserTimezone();
-        eventData.date = formatInUserTimezone(now, 'yyyy-MM-dd');
-      }
-      
-      // Handle timezone conversion properly
-      const utcDateTime = handleDSTTransition(eventData.date, eventData.time);
-      if (!utcDateTime) {
-        console.warn('Could not create event from chat - invalid date/time');
-        return false;
-      }
-      
-      // Create event with default reminders
-      const newEvent = {
-        title: eventData.title,
-        description: eventData.description || eventData.rawMessage,
-        category: eventData.category,
-        datetime_utc: utcDateTime.toISOString(),
-        reminder: true // Always enable reminders for chat-created events
-      };
-      
-      console.log('Creating event from chat:', newEvent);
-      
-      const response = await axios.post(`${API}/calendar/events`, newEvent);
-      
-      if (response.status === 200 || response.status === 201) {
-        console.log('✅ Event created successfully from chat');
-        return true;
-      }
-      
-      return false;
-      
-    } catch (error) {
-      console.error('Error creating event from chat:', error);
-      return false;
-    }
-  };
+
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
