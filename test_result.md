@@ -321,8 +321,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Add telemetry logging endpoints for Smart Suggestions"
-    - "Add user preferences/settings endpoint for weekend mode"
     - "Add telemetry logging to SmartSuggestions component"
     - "Add weekend_mode setting to SettingsModal"
   stuck_tasks: []
