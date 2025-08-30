@@ -162,24 +162,51 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
       }))
       .sort((a, b) => a.start - b.start);
     
-    // Check for 3+ events within 5 hours
+    // Check for 3+ events within any rolling 5-hour window
     for (let i = 0; i <= sortedEvents.length - 3; i++) {
-      const firstEvent = sortedEvents[i];
-      const thirdEvent = sortedEvents[i + 2];
-      const timeSpan = (thirdEvent.end - firstEvent.start) / (1000 * 60 * 60); // hours
-      
-      if (timeSpan <= 5) {
-        const blockEvents = sortedEvents.slice(i, i + 3);
-        return {
-          events: blockEvents,
-          timeSpan: `${Math.round(timeSpan * 10) / 10}h`,
-          startTime: firstEvent.start,
-          endTime: thirdEvent.end
-        };
+      for (let j = i + 2; j < sortedEvents.length; j++) {
+        const firstEvent = sortedEvents[i];
+        const lastEvent = sortedEvents[j];
+        const timeSpan = (lastEvent.end - firstEvent.start) / (1000 * 60 * 60); // hours
+        
+        if (timeSpan <= 5) {
+          // Count how many events are in this window
+          const eventsInWindow = sortedEvents.filter(event => 
+            event.start >= firstEvent.start && event.end <= lastEvent.end
+          );
+          
+          if (eventsInWindow.length >= 3) {
+            return {
+              events: eventsInWindow,
+              eventCount: eventsInWindow.length,
+              timeSpan: `${Math.round(timeSpan * 10) / 10}h`,
+              startTime: firstEvent.start,
+              endTime: lastEvent.end
+            };
+          }
+        }
       }
     }
     
     return null;
+  };
+
+  // Get Donna's sassy nudge messages for dense blocks
+  const getDenseBlockMessage = (eventCount, timeSpan) => {
+    const messages = [
+      "Three back-to-backs? Carry a small snack! A protein bar, a sandwich and an energy drink. You'll thank me later.",
+      `${eventCount} events in ${timeSpan}? That's ambitious. Pack some water and maybe a phone charger.`,
+      "Packed schedule today. Quick tip: use bathroom breaks strategically.",
+      "Dense day ahead. Consider prepping snacks and staying hydrated between meetings.",
+      `${eventCount} events back-to-back? Bold move. Don't forget to eat something.`
+    ];
+    
+    // Return a message based on event count or random selection
+    if (eventCount === 3) {
+      return messages[0]; // Signature "Three back-to-backs" message
+    }
+    
+    return messages[Math.min(eventCount - 2, messages.length - 1)] || messages[1];
   };
 
   // Detect overbooked days and dense blocks, generate suggestions
