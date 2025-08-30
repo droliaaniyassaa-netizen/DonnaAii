@@ -486,6 +486,7 @@ const App = () => {
                 events={events}
                 onRescheduleEvent={updateEvent}
                 onDeleteEvent={deleteEvent}
+                onRefreshEvents={loadEvents}
               />
               
               <div className="calendar-grid">
