@@ -187,7 +187,7 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
     const suggestionsMap = new Map();
     const today = new Date();
     
-    // Check next 3 days (72 hours ahead)
+    // Check next 3 days (72 hours ahead) for overbooked
     for (let i = 0; i < 3; i++) {
       const checkDate = new Date(today);
       checkDate.setDate(today.getDate() + i);
@@ -202,7 +202,28 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
         return eventDate.toDateString() === dateStr && isRealEvent(event);
       });
       
-      // Check if overbooked (6+ real events)
+      // Check for dense blocks (3+ events in 5 hours) - only on day of, after 6am
+      const isToday = checkDate.toDateString() === today.toDateString();
+      const isAfter6AM = today.getHours() >= 6;
+      
+      if (isToday && isAfter6AM && dayEvents.length >= 3) {
+        const denseBlock = detectDenseBlock(dayEvents, checkDate);
+        if (denseBlock && !dismissedSuggestions.has(`dense_${dateStr}`)) {
+          const displayDayName = 'Today';
+          
+          suggestionsMap.set(`dense_${dateStr}`, {
+            id: `dense_suggestion_${dateStr}`,
+            type: 'dense_block',
+            date: checkDate,
+            dayName: displayDayName,
+            eventCount: denseBlock.events.length,
+            timeSpan: denseBlock.timeSpan,
+            suggestionType: 'dense_nudge'
+          });
+        }
+      }
+      
+      // Check if overbooked (6+ real events) for rescheduling suggestions
       if (dayEvents.length >= 6) {
         // Find flexible events (prefer non-gym first)
         const flexibleEvents = dayEvents.filter(isFlexibleEvent);
@@ -230,6 +251,7 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
         
         suggestionsMap.set(dateStr, {
           id: `suggestion_${dateStr}`,
+          type: 'overbooked',
           date: checkDate,
           dayName: displayDayName,
           eventCount: dayEvents.length,
