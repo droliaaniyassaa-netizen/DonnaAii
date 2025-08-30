@@ -214,20 +214,41 @@ backend:
         comment: "✅ Backend fully supports glassmorphic frontend redesign. All event data properly serialized as JSON, categories support color coding, datetime handling supports Today box filtering, CRUD operations support flip-to-edit functionality. 96.9% test success rate (62/64 tests passed)."
 
 frontend:
-  - task: "Redesign EventCard component with sophisticated glassmorphic floating effect"
+  - task: "Dense Block Smart Suggestion implementation"
     implemented: true
     working: true
-    file: "/app/frontend/src/components/EventCard.js"
+    file: "/app/frontend/src/components/SmartSuggestions.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
-      - working: false
-        agent: "main"
-        comment: "Current cards lack sophisticated floating effect and proper glassmorphism as shown in reference image"
       - working: true
         agent: "main"
-        comment: "✅ FIXED: Implemented ultra-premium floating glassmorphic design with enhanced 3D effects, prominent shadows, and sophisticated typography matching reference image"
+        comment: "✅ Dense Block detection already fully implemented - detects 3+ events in 5-hour rolling window, shows compact pill card with dismiss functionality"
+
+  - task: "Add telemetry logging to SmartSuggestions component"
+    implemented: false
+    working: false
+    file: "/app/frontend/src/components/SmartSuggestions.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Need to add telemetry logging for suggestion impressions, dismiss clicks, and action results"
+
+  - task: "Add weekend_mode setting to SettingsModal"
+    implemented: false
+    working: false
+    file: "/app/frontend/src/components/SettingsModal.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Need to add weekend_mode toggle (relaxed vs active) to settings UI"
 
   - task: "Fix card depression effect on hover (depress INTO surface)"
     implemented: true
