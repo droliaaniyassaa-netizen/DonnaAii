@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Clock, X, Calendar, Sparkles, Eye, EyeOff } from 'lucide-react';
 
 // Smart Suggestions - Donna's Intelligent Calendar Assistant
-const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className = "" }) => {
+const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshEvents, className = "" }) => {
   const [showInsights, setShowInsights] = useState(true);
   const [dismissedSuggestions, setDismissedSuggestions] = useState(new Set());
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
