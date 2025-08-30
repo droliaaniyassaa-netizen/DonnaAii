@@ -504,8 +504,18 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
 
   return (
     <div className={`smart-suggestions-container ${className}`}>
-      {/* Insights Toggle */}
+      {/* Insights Header with Schedule Event and Hide Insights */}
       <div className="insights-header">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setShowEventCreation(true)}
+          className="schedule-event-btn"
+        >
+          <Plus className="insights-icon" />
+          Schedule Event
+        </Button>
+        
         <Button
           variant="ghost"
           size="sm"
