@@ -627,7 +627,7 @@ body::before {
 .events-grid {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 /* Event Card Container - Simple, no flip */
