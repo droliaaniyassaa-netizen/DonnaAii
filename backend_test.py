@@ -631,6 +631,8 @@ def main():
         tester.test_calendar_crud,
         tester.test_career_functionality,
         tester.test_health_functionality,
+        tester.test_smart_suggestions_telemetry,
+        tester.test_user_settings,
         tester.test_error_handling
     ]
     
