@@ -401,35 +401,55 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
               </div>
               
               <div className="suggestion-actions">
-                {suggestion.suggestionType === 'user_pick' ? (
+                {suggestion.suggestionType === 'dense_nudge' ? (
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    onClick={() => handleShowSlots(suggestion)}
-                    className="action-btn primary"
+                    onClick={() => handleDismiss(suggestion)}
+                    className="action-btn dismiss"
                   >
-                    Pick event
+                    Got it
                   </Button>
+                ) : suggestion.suggestionType === 'user_pick' ? (
+                  <>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleShowSlots(suggestion)}
+                      className="action-btn primary"
+                    >
+                      Pick event
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDismiss(suggestion)}
+                      className="action-btn dismiss"
+                    >
+                      Keep as is
+                    </Button>
+                  </>
                 ) : (
-                  <Button
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => handleShowSlots(suggestion)}
-                    className="action-btn primary"
-                  >
-                    <Clock className="action-icon" />
-                    See slots
-                  </Button>
+                  <>
+                    <Button
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleShowSlots(suggestion)}
+                      className="action-btn primary"
+                    >
+                      <Clock className="action-icon" />
+                      See slots
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDismiss(suggestion)}
+                      className="action-btn dismiss"
+                    >
+                      Keep as is
+                    </Button>
+                  </>
                 )}
-                
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleDismiss(suggestion)}
-                  className="action-btn dismiss"
-                >
-                  Keep as is
-                </Button>
               </div>
             </div>
           </CardContent>
