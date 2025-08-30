@@ -117,6 +117,30 @@ backend:
         agent: "testing"
         comment: "✅ All CRUD operations working perfectly. Created/updated/deleted events across all categories (work, personal, appointments, regular_activities). Events properly sorted by datetime. Update functionality works for title, description, and category changes."
 
+  - task: "Add telemetry logging endpoints for Smart Suggestions"
+    implemented: false
+    working: false
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Need to implement telemetry endpoints for logging Smart Suggestion interactions (impressions, dismissals, action success/failure)"
+
+  - task: "Add user preferences/settings endpoint for weekend mode"
+    implemented: false
+    working: false
+    file: "/app/backend/server.py" 
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Need to implement user settings endpoint to store weekend_mode preference (relaxed vs active)"
+
   - task: "Timezone handling for calendar events"
     implemented: true
     working: true
