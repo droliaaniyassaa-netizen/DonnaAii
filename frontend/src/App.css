@@ -2015,7 +2015,7 @@ body::before {
   line-height: 1.4;
   margin: 0;
   font-weight: 300;
-  display: -webkit-box;
+  display: none; /* Hide on front face for mobile optimization */
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
