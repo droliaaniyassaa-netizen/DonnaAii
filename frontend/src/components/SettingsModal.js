@@ -106,6 +106,7 @@ const SettingsModal = ({ open, onClose }) => {
   
   const handleReset = () => {
     setSelectedTimezone(systemTimezone);
+    setWeekendMode('relaxed'); // Reset to default
   };
   
   const getCurrentTimezoneDisplay = () => {
