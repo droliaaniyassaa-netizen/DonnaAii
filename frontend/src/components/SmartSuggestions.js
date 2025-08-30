@@ -382,7 +382,12 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
             
             <div className="suggestion-main">
               <div className="suggestion-message">
-                {suggestion.suggestionType === 'user_pick' ? (
+                {suggestion.suggestionType === 'dense_nudge' ? (
+                  <span>
+                    Heads up! You have {suggestion.eventCount} events packed into {suggestion.timeSpan} today. 
+                    Consider taking breaks between activities.
+                  </span>
+                ) : suggestion.suggestionType === 'user_pick' ? (
                   <span>
                     {suggestion.dayName} seems overbooked! Pick an event you're flexible with, 
                     and I'll find optional slots to reschedule it.
