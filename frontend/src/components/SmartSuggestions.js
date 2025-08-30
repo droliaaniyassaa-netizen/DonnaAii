@@ -287,15 +287,23 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
         const denseBlock = detectDenseBlock(dayEvents, checkDate);
         if (denseBlock && !dismissedSuggestions.has(`dense_${dateStr}`)) {
           const displayDayName = 'Today';
+          const suggestionId = `dense_suggestion_${dateStr}`;
           
           suggestionsMap.set(`dense_${dateStr}`, {
-            id: `dense_suggestion_${dateStr}`,
+            id: suggestionId,
             type: 'dense_block',
             date: checkDate,
             dayName: displayDayName,
             eventCount: denseBlock.events.length,
             timeSpan: denseBlock.timeSpan,
             suggestionType: 'dense_nudge'
+          });
+
+          // Log impression telemetry for dense block
+          logTelemetry('impression', 'dense_block', suggestionId, null, {
+            event_count: denseBlock.events.length,
+            time_span: denseBlock.timeSpan,
+            day: displayDayName
           });
         }
       }
@@ -325,9 +333,10 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
         const dayName = checkDate.toLocaleDateString('en-US', { weekday: 'long' });
         const isToday = checkDate.toDateString() === today.toDateString();
         const displayDayName = isToday ? 'Today' : dayName;
+        const suggestionId = `suggestion_${dateStr}`;
         
         suggestionsMap.set(dateStr, {
-          id: `suggestion_${dateStr}`,
+          id: suggestionId,
           type: 'overbooked',
           date: checkDate,
           dayName: displayDayName,
@@ -336,11 +345,19 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
           suggestionType,
           availableSlots: candidateEvent ? findAvailableSlots(candidateEvent, checkDate) : []
         });
+
+        // Log impression telemetry for overbooked day
+        logTelemetry('impression', 'overbooked', suggestionId, null, {
+          event_count: dayEvents.length,
+          has_flexible_events: flexibleEvents.length > 0,
+          suggestion_type: suggestionType,
+          day: displayDayName
+        });
       }
     }
     
     return Array.from(suggestionsMap.values());
-  }, [events, dismissedSuggestions]);
+  }, [events, dismissedSuggestions, userSettings]);
 
   // Handle dismissing a suggestion
   const handleDismiss = (suggestion) => {
