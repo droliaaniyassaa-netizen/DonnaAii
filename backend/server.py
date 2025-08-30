@@ -119,6 +119,40 @@ class HealthGoalCreate(BaseModel):
     target: str
     current_progress: str
 
+# Smart Suggestions Models
+class TelemetryLog(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str
+    event_type: str  # 'impression', 'dismiss', 'action_success', 'action_failure'
+    suggestion_type: str  # 'overbooked', 'dense_block'
+    suggestion_id: str
+    action: Optional[str] = None  # 'reschedule', 'keep', 'dismiss', etc.
+    metadata: Optional[Dict[str, Any]] = {}  # Additional context
+    latency_ms: Optional[int] = None  # For action latency tracking
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class TelemetryLogCreate(BaseModel):
+    session_id: str
+    event_type: str
+    suggestion_type: str  
+    suggestion_id: str
+    action: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = {}
+    latency_ms: Optional[int] = None
+
+# User Settings Models
+class UserSettings(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str  # User identifier
+    weekend_mode: str = "relaxed"  # "relaxed" or "active"
+    timezone: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class UserSettingsUpdate(BaseModel):
+    weekend_mode: Optional[str] = None
+    timezone: Optional[str] = None
+
 # Helper function to prepare data for MongoDB
 def prepare_for_mongo(data):
     if isinstance(data, dict):
