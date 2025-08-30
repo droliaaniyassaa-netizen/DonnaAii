@@ -361,11 +361,27 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
 
   // Handle dismissing a suggestion
   const handleDismiss = (suggestion) => {
+    const startTime = performance.now();
+    
     if (suggestion.type === 'dense_block') {
       setDismissedSuggestions(prev => new Set([...prev, `dense_${suggestion.date.toDateString()}`]));
     } else {
       setDismissedSuggestions(prev => new Set([...prev, suggestion.date.toDateString()]));
     }
+
+    // Log dismiss telemetry
+    const latency = Math.round(performance.now() - startTime);
+    logTelemetry(
+      'dismiss', 
+      suggestion.type, 
+      suggestion.id, 
+      'dismiss',
+      { 
+        suggestion_type: suggestion.suggestionType,
+        day: suggestion.dayName 
+      },
+      latency
+    );
   };
 
   // Handle showing slots modal
