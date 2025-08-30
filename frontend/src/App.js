@@ -277,6 +277,33 @@ const App = () => {
     }
   };
 
+  // Helper functions for career action plan
+  const getStepTitle = (step) => {
+    const titles = {
+      1: "Assess Current Skills",
+      2: "Identify Skill Gaps", 
+      3: "Create Learning Plan",
+      4: "Build Network",
+      5: "Gain Experience",
+      6: "Document Achievements",
+      7: "Apply & Interview"
+    };
+    return titles[step] || `Step ${step}`;
+  };
+
+  const getStepDescription = (step) => {
+    const descriptions = {
+      1: "Evaluate your current skills and experience level",
+      2: "Research required skills for your target role",
+      3: "Develop a structured learning curriculum",
+      4: "Connect with professionals in your target field",
+      5: "Take on projects that demonstrate your capabilities",
+      6: "Keep track of your accomplishments and impact",
+      7: "Prepare for and pursue relevant opportunities"
+    };
+    return descriptions[step] || "Complete this step to advance your career goal";
+  };
+
   // Health functions
   const loadHealthEntries = async () => {
     try {
