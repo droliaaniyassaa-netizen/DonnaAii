@@ -915,7 +915,7 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.14rem;
   flex-shrink: 0;
 }
 
