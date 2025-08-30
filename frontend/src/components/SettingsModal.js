@@ -21,9 +21,36 @@ const SettingsModal = ({ open, onClose }) => {
   const [selectedTimezone, setSelectedTimezone] = useState(getUserTimezone());
   const [searchQuery, setSearchQuery] = useState('');
   const [timezoneOpen, setTimezoneOpen] = useState(false);
+  const [weekendMode, setWeekendMode] = useState('relaxed');
+  const [loading, setLoading] = useState(false);
   
   const systemTimezone = getSystemTimezone();
   const allTimezones = getAllTimezones();
+
+  // Load user settings on open
+  useEffect(() => {
+    if (open) {
+      loadUserSettings();
+    }
+  }, [open]);
+
+  const loadUserSettings = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/settings/default`);
+      if (response.ok) {
+        const settings = await response.json();
+        setWeekendMode(settings.weekend_mode || 'relaxed');
+        if (settings.timezone) {
+          setSelectedTimezone(settings.timezone);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load user settings:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   // Filter timezones based on search
   const filteredTimezones = useMemo(() => {
