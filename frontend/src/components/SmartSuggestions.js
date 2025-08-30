@@ -198,7 +198,7 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className 
         suggestionsMap.set(dateStr, {
           id: `suggestion_${dateStr}`,
           date: checkDate,
-          dayName,
+          dayName: displayDayName,
           eventCount: dayEvents.length,
           candidateEvent,
           suggestionType,
