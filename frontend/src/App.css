@@ -1995,13 +1995,17 @@ body::before {
 
 .event-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 400;
   color: #ffffff !important;
   margin: 0;
   line-height: 1.2;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .event-description {
