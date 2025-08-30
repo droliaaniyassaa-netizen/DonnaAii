@@ -485,17 +485,14 @@ const App = () => {
               <SmartSuggestions 
                 events={events}
                 onRescheduleEvent={updateEvent}
-                onDeleteEvent={deleteEvent}
+                onDeleteEvent={deleteEvent} 
                 onRefreshEvents={loadEvents}
+                newEvent={newEvent}
+                setNewEvent={setNewEvent}
+                onCreateEvent={createEvent}
               />
               
               <div className="calendar-grid">
-                {/* Small Event Creation Button */}
-                <EventCreationButton
-                  newEvent={newEvent}
-                  setNewEvent={setNewEvent}
-                  onCreateEvent={createEvent}
-                />
 
                 {/* Events List */}
                 <div className="events-grid">
