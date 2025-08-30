@@ -902,7 +902,7 @@ body::before {
 
 /* Card Content - Simple layout */
 .event-card-content {
-  padding: 2.0rem 2.2rem 1.8rem 2.2rem;
+  padding: 1.2rem 1.4rem 1.0rem 1.4rem;
   height: 100%;
   display: flex;
   flex-direction: column;
