@@ -1,7 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
 import { Clock, X, Calendar, Sparkles, Eye, EyeOff, Plus } from 'lucide-react';
+import { EVENT_CATEGORIES } from '../utils/eventProcessing';
 
 // Smart Suggestions - Donna's Intelligent Calendar Assistant
 const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshEvents, newEvent, setNewEvent, onCreateEvent, className = "" }) => {
