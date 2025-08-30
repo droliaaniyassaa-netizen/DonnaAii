@@ -255,8 +255,10 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
         
         console.log(`✅ Successfully rescheduled ${newEvent.title} to ${slot.label}`);
         
-        // NO PAGE RELOAD - let React update naturally
-        // The parent component will refresh events automatically
+        // Refresh events without page reload
+        if (onRefreshEvents) {
+          onRefreshEvents();
+        }
         
       } else {
         throw new Error('Failed to create rescheduled event');
