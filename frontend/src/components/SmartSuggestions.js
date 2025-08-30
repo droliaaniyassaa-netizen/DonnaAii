@@ -527,8 +527,7 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
               <div className="suggestion-message">
                 {suggestion.suggestionType === 'dense_nudge' ? (
                   <span>
-                    Heads up! You have {suggestion.eventCount} events packed into {suggestion.timeSpan} today. 
-                    Consider taking breaks between activities.
+                    {getDenseBlockMessage(suggestion.eventCount, suggestion.timeSpan)}
                   </span>
                 ) : suggestion.suggestionType === 'user_pick' ? (
                   <span>
