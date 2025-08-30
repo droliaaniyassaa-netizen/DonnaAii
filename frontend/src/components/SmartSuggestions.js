@@ -267,7 +267,11 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
 
   // Handle dismissing a suggestion
   const handleDismiss = (suggestion) => {
-    setDismissedSuggestions(prev => new Set([...prev, suggestion.date.toDateString()]));
+    if (suggestion.type === 'dense_block') {
+      setDismissedSuggestions(prev => new Set([...prev, `dense_${suggestion.date.toDateString()}`]));
+    } else {
+      setDismissedSuggestions(prev => new Set([...prev, suggestion.date.toDateString()]));
+    }
   };
 
   // Handle showing slots modal
