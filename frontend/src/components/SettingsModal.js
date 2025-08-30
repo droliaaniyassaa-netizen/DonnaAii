@@ -317,8 +317,9 @@ const SettingsModal = ({ open, onClose }) => {
             <Button 
               onClick={handleSave}
               className="save-button"
+              disabled={loading}
             >
-              Save Changes
+              {loading ? 'Saving...' : 'Save Changes'}
             </Button>
           </div>
         </div>
