@@ -192,6 +192,8 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className 
         }
         
         const dayName = checkDate.toLocaleDateString('en-US', { weekday: 'long' });
+        const isToday = checkDate.toDateString() === today.toDateString();
+        const displayDayName = isToday ? 'Today' : dayName;
         
         suggestionsMap.set(dateStr, {
           id: `suggestion_${dateStr}`,
