@@ -81,7 +81,7 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
     );
   };
 
-  // Helper: Get day window based on weekday/weekend
+  // Helper: Get day window based on weekday/weekend and user preference
   const getDayWindow = (date) => {
     const d = new Date(date);
     const isWeekend = [0, 6].includes(d.getDay()); // 0 Sun, 6 Sat
@@ -89,9 +89,18 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
     const end = new Date(d);
     
     if (isWeekend) {
-      start.setHours(8, 0, 0, 0);
-      end.setHours(20, 0, 0, 0);
+      // Weekend hours depend on user's weekend_mode setting
+      if (userSettings.weekend_mode === 'active') {
+        // Active weekend: earlier start, later end
+        start.setHours(7, 0, 0, 0);
+        end.setHours(22, 0, 0, 0);
+      } else {
+        // Relaxed weekend: later start, earlier end
+        start.setHours(9, 0, 0, 0);
+        end.setHours(19, 0, 0, 0);
+      }
     } else {
+      // Weekday hours remain the same
       start.setHours(7, 0, 0, 0);
       end.setHours(21, 0, 0, 0);
     }
