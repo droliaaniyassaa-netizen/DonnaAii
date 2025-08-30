@@ -632,7 +632,7 @@ body::before {
 
 /* Event Card Container - Simple, no flip */
 .event-card-container {
-  height: 140px;
+  height: 115px;
   position: relative;
   z-index: 1;
 }
