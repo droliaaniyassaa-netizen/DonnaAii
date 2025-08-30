@@ -1415,7 +1415,7 @@ body::before {
 
 /* Smart Suggestions - Donna's Intelligent Assistant */
 .smart-suggestions-container {
-  margin: 1.5rem 0;
+  margin: 0.75rem 0;
 }
 
 .insights-header {
