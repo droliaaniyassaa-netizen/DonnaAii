@@ -91,13 +91,13 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className 
       targetDate.toDateString() === now.toDateString() ? now.getTime() : todayStart.getTime()
     ));
 
-    // Search today
+    // Search today - CREATE SLOTS IN LOCAL TIMEZONE
     for (let time = new Date(searchStart); time < todayEnd; time.setMinutes(time.getMinutes() + 30)) {
       const slotEnd = new Date(time.getTime() + 60 * 60000); // 60 min slot
       if (slotEnd <= todayEnd && isSlotClear(time, slotEnd, events)) {
         slots.push({
-          start: new Date(time),
-          end: new Date(slotEnd),
+          start: new Date(time), // Keep in local timezone
+          end: new Date(slotEnd), // Keep in local timezone  
           label: `Today ${time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
         });
         if (slots.length >= 4) break;
@@ -116,8 +116,8 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className 
         const slotEnd = new Date(time.getTime() + 60 * 60000);
         if (isSlotClear(time, slotEnd, events)) {
           slots.push({
-            start: new Date(time),
-            end: new Date(slotEnd),
+            start: new Date(time), // Keep in local timezone
+            end: new Date(slotEnd), // Keep in local timezone
             label: `Tomorrow ${time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
           });
           if (slots.length >= 4) break;
@@ -137,8 +137,8 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className 
           if (slotEnd <= dayEnd && isSlotClear(time, slotEnd, events)) {
             const dayName = futureDay.toLocaleDateString('en-US', { weekday: 'short' });
             slots.push({
-              start: new Date(time),
-              end: new Date(slotEnd),
+              start: new Date(time), // Keep in local timezone
+              end: new Date(slotEnd), // Keep in local timezone
               label: `${dayName} ${time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
             });
           }
