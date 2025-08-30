@@ -10,6 +10,7 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
   const [showSlotsModal, setShowSlotsModal] = useState(false);
   const [userSettings, setUserSettings] = useState({ weekend_mode: 'relaxed' });
+  const [showEventCreation, setShowEventCreation] = useState(false);
 
   // Load user settings on mount
   useEffect(() => {
