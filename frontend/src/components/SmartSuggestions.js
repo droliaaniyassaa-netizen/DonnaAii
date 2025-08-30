@@ -229,16 +229,16 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className 
       // Delete the old event first
       await onDeleteEvent(selectedSuggestion.candidateEvent.id);
       
-      // Create new event at the new time
+      // Create new event at the new time - KEEP LOCAL TIME, DON'T DOUBLE CONVERT
       const newEvent = {
         title: selectedSuggestion.candidateEvent.title,
         description: selectedSuggestion.candidateEvent.description || '',
         category: selectedSuggestion.candidateEvent.category,
-        datetime_utc: slot.start.toISOString(),
+        datetime_utc: slot.start.toISOString(), // slot.start is already in correct timezone
         reminder: selectedSuggestion.candidateEvent.reminder || true
       };
       
-      // Create the new event (assuming there's a create function)
+      // Create the new event
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/calendar/events`, {
         method: 'POST',
         headers: {
@@ -255,8 +255,9 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className 
         
         console.log(`✅ Successfully rescheduled ${newEvent.title} to ${slot.label}`);
         
-        // Force refresh of events to show the change immediately
-        window.location.reload();
+        // NO PAGE RELOAD - let React update naturally
+        // The parent component will refresh events automatically
+        
       } else {
         throw new Error('Failed to create rescheduled event');
       }
