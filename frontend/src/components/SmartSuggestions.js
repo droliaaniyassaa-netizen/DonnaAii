@@ -224,24 +224,45 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, className 
     if (!selectedSuggestion?.candidateEvent) return;
     
     try {
-      // Update the event with new datetime
-      const updatedEvent = {
-        ...selectedSuggestion.candidateEvent,
-        datetime_utc: slot.start.toISOString()
+      // Delete the old event first
+      await onDeleteEvent(selectedSuggestion.candidateEvent.id);
+      
+      // Create new event at the new time
+      const newEvent = {
+        title: selectedSuggestion.candidateEvent.title,
+        description: selectedSuggestion.candidateEvent.description || '',
+        category: selectedSuggestion.candidateEvent.category,
+        datetime_utc: slot.start.toISOString(),
+        reminder: selectedSuggestion.candidateEvent.reminder || true
       };
       
-      await onRescheduleEvent(updatedEvent);
+      // Create the new event (assuming there's a create function)
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/calendar/events`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newEvent)
+      });
       
-      // Close modal and dismiss suggestion
-      setShowSlotsModal(false);
-      handleDismiss(selectedSuggestion);
-      setSelectedSuggestion(null);
-      
-      // Show success feedback (you can customize this)
-      console.log(`✅ Rescheduled ${updatedEvent.title} to ${slot.label}`);
+      if (response.ok) {
+        // Close modal and dismiss suggestion
+        setShowSlotsModal(false);
+        handleDismiss(selectedSuggestion);
+        setSelectedSuggestion(null);
+        
+        console.log(`✅ Successfully rescheduled ${newEvent.title} to ${slot.label}`);
+        
+        // Force refresh of events to show the change immediately
+        window.location.reload();
+      } else {
+        throw new Error('Failed to create rescheduled event');
+      }
       
     } catch (error) {
       console.error('Failed to reschedule event:', error);
+      // Show error feedback
+      alert('Failed to reschedule event. Please try again.');
     }
   };
 
