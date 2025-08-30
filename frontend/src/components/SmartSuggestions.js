@@ -149,7 +149,40 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
     return slots.slice(0, 4); // Max 4 slots
   };
 
-  // Detect overbooked days and generate suggestions
+  // Helper: Detect dense blocks (3+ events in 5 hours)
+  const detectDenseBlock = (dayEvents, checkDate) => {
+    if (dayEvents.length < 3) return null;
+    
+    // Sort events by time
+    const sortedEvents = dayEvents
+      .map(event => ({
+        ...event,
+        start: new Date(event.datetime_utc),
+        end: new Date(new Date(event.datetime_utc).getTime() + 60 * 60000) // Assume 1 hour duration
+      }))
+      .sort((a, b) => a.start - b.start);
+    
+    // Check for 3+ events within 5 hours
+    for (let i = 0; i <= sortedEvents.length - 3; i++) {
+      const firstEvent = sortedEvents[i];
+      const thirdEvent = sortedEvents[i + 2];
+      const timeSpan = (thirdEvent.end - firstEvent.start) / (1000 * 60 * 60); // hours
+      
+      if (timeSpan <= 5) {
+        const blockEvents = sortedEvents.slice(i, i + 3);
+        return {
+          events: blockEvents,
+          timeSpan: `${Math.round(timeSpan * 10) / 10}h`,
+          startTime: firstEvent.start,
+          endTime: thirdEvent.end
+        };
+      }
+    }
+    
+    return null;
+  };
+
+  // Detect overbooked days and dense blocks, generate suggestions
   const suggestions = useMemo(() => {
     const suggestionsMap = new Map();
     const today = new Date();
