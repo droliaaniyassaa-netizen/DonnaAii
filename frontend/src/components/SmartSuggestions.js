@@ -666,6 +666,94 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
           </div>
         </div>
       )}
+
+      {/* Event Creation Modal */}
+      {showEventCreation && (
+        <div className="slots-modal-overlay" onClick={() => setShowEventCreation(false)}>
+          <div className="slots-modal-content" onClick={(e) => e.stopPropagation()}>
+            <Card className="slots-modal-card">
+              <CardContent className="slots-modal-body">
+                <div className="modal-header">
+                  <h3 className="modal-title">Schedule New Event</h3>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowEventCreation(false)}
+                    className="close-modal-btn"
+                  >
+                    <X className="close-icon" />
+                  </Button>
+                </div>
+                
+                <div className="event-creation-form">
+                  <Input
+                    placeholder="Event title"
+                    value={newEvent?.title || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+                    className="creation-input"
+                  />
+                  
+                  <select
+                    value={newEvent?.category || 'personal'}
+                    onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
+                    className="creation-select"
+                  >
+                    {Object.entries(EVENT_CATEGORIES).map(([key, category]) => (
+                      <option key={key} value={key.toLowerCase()}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                  
+                  <div className="creation-datetime-row">
+                    <Input
+                      type="date"
+                      value={newEvent?.date || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
+                      className="creation-input creation-date"
+                    />
+                    <Input
+                      type="time"
+                      value={newEvent?.time || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
+                      className="creation-input creation-time"
+                    />
+                  </div>
+                  
+                  <Textarea
+                    placeholder="Description (optional)"
+                    value={newEvent?.description || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
+                    className="creation-textarea"
+                    rows={2}
+                  />
+
+                  <div className="creation-actions">
+                    <Button
+                      variant="ghost"
+                      onClick={() => setShowEventCreation(false)}
+                      className="creation-cancel-btn"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        onCreateEvent();
+                        setShowEventCreation(false);
+                      }}
+                      className="creation-submit-btn"
+                      disabled={!newEvent?.title || !newEvent?.date || !newEvent?.time}
+                    >
+                      <Plus className="creation-submit-icon" />
+                      Create Event
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
