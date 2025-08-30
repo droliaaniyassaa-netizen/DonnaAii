@@ -1984,7 +1984,7 @@ body::before {
 }
 
 .event-main-content {
-  margin-top: 0;
+  margin-top: -0.24rem;
   margin-bottom: 0.2rem;
   overflow: visible;
   flex: 1;
