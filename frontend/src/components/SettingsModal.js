@@ -70,11 +70,38 @@ const SettingsModal = ({ open, onClose }) => {
     return { common: filtered, others: [] };
   }, [searchQuery, allTimezones]);
   
-  const handleSave = () => {
-    saveUserTimezone(selectedTimezone);
-    onClose();
-    // Trigger a page refresh to update all displayed times
-    window.location.reload();
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      
+      // Save timezone to local storage (existing functionality)
+      saveUserTimezone(selectedTimezone);
+      
+      // Save settings to backend
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/settings/default`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          weekend_mode: weekendMode,
+          timezone: selectedTimezone
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to save settings');
+      }
+      
+      onClose();
+      // Trigger a page refresh to update all displayed times
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to save settings:', error);
+      alert('Failed to save settings. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
   
   const handleReset = () => {
