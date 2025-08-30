@@ -407,6 +407,183 @@ class DonnaAPITester:
         
         return True
 
+    def test_smart_suggestions_telemetry(self):
+        """Test Smart Suggestions telemetry logging endpoints"""
+        print("\n" + "="*50)
+        print("TESTING SMART SUGGESTIONS TELEMETRY")
+        print("="*50)
+        
+        # Test telemetry logging with sample data
+        telemetry_data = {
+            "session_id": "test_session_123",
+            "event_type": "impression",
+            "suggestion_type": "dense_block",
+            "suggestion_id": "dense_suggestion_test",
+            "action": None,
+            "metadata": {"test": "data"},
+            "latency_ms": None
+        }
+        
+        success, response = self.run_test(
+            "Log Telemetry Data (Impression)",
+            "POST",
+            "telemetry/log",
+            200,
+            data=telemetry_data
+        )
+        
+        if not success:
+            return False
+            
+        # Verify response contains success and id
+        if response.get('success') and response.get('id'):
+            print("✅ Telemetry logged successfully with ID")
+        else:
+            print("❌ Telemetry response missing success or id field")
+        
+        # Test telemetry logging with dismiss action
+        dismiss_data = {
+            "session_id": "test_session_123",
+            "event_type": "dismiss",
+            "suggestion_type": "dense_block",
+            "suggestion_id": "dense_suggestion_test",
+            "action": "dismiss",
+            "metadata": {"reason": "not_relevant"},
+            "latency_ms": 150
+        }
+        
+        success, response = self.run_test(
+            "Log Telemetry Data (Dismiss)",
+            "POST",
+            "telemetry/log",
+            200,
+            data=dismiss_data
+        )
+        
+        # Test telemetry analytics
+        success, analytics = self.run_test(
+            "Get Telemetry Analytics",
+            "GET",
+            "telemetry/analytics",
+            200
+        )
+        
+        if success and analytics.get('analytics'):
+            print("✅ Telemetry analytics retrieved successfully")
+            analytics_data = analytics['analytics']
+            if len(analytics_data) > 0:
+                print(f"   Found {len(analytics_data)} analytics entries")
+                for entry in analytics_data[:3]:  # Show first 3 entries
+                    print(f"   - {entry['event_type']}/{entry['suggestion_type']}: {entry['count']} events")
+            else:
+                print("   No analytics data found (expected if no telemetry logged yet)")
+        else:
+            print("❌ Failed to retrieve telemetry analytics")
+        
+        return True
+
+    def test_user_settings(self):
+        """Test User Settings endpoints for weekend mode and timezone"""
+        print("\n" + "="*50)
+        print("TESTING USER SETTINGS")
+        print("="*50)
+        
+        session_id = "test_session_123"
+        
+        # Test getting default settings for new session
+        success, settings = self.run_test(
+            "Get Default User Settings",
+            "GET",
+            f"user/settings/{session_id}",
+            200
+        )
+        
+        if not success:
+            return False
+            
+        # Verify default settings
+        if settings.get('session_id') == session_id:
+            print("✅ Settings returned with correct session_id")
+        else:
+            print("❌ Settings session_id mismatch")
+            
+        if settings.get('weekend_mode') == 'relaxed':
+            print("✅ Default weekend_mode is 'relaxed'")
+        else:
+            print(f"❌ Default weekend_mode incorrect: {settings.get('weekend_mode')}")
+        
+        # Test updating user settings
+        update_data = {
+            "weekend_mode": "active",
+            "timezone": "America/New_York"
+        }
+        
+        success, updated_settings = self.run_test(
+            "Update User Settings",
+            "PUT",
+            f"user/settings/{session_id}",
+            200,
+            data=update_data
+        )
+        
+        if success:
+            # Verify updated settings
+            if updated_settings.get('weekend_mode') == 'active':
+                print("✅ Weekend mode updated to 'active'")
+            else:
+                print(f"❌ Weekend mode not updated: {updated_settings.get('weekend_mode')}")
+                
+            if updated_settings.get('timezone') == 'America/New_York':
+                print("✅ Timezone updated to 'America/New_York'")
+            else:
+                print(f"❌ Timezone not updated: {updated_settings.get('timezone')}")
+                
+            if updated_settings.get('updated_at'):
+                print("✅ Updated timestamp present")
+            else:
+                print("❌ Updated timestamp missing")
+        
+        # Test partial update (only weekend_mode)
+        partial_update = {
+            "weekend_mode": "relaxed"
+        }
+        
+        success, partial_settings = self.run_test(
+            "Partial Update User Settings",
+            "PUT",
+            f"user/settings/{session_id}",
+            200,
+            data=partial_update
+        )
+        
+        if success:
+            if partial_settings.get('weekend_mode') == 'relaxed':
+                print("✅ Partial update successful - weekend_mode changed")
+            else:
+                print("❌ Partial update failed")
+                
+            # Timezone should remain unchanged
+            if partial_settings.get('timezone') == 'America/New_York':
+                print("✅ Timezone preserved during partial update")
+            else:
+                print("❌ Timezone lost during partial update")
+        
+        # Test getting settings again to verify persistence
+        success, final_settings = self.run_test(
+            "Get Updated User Settings",
+            "GET",
+            f"user/settings/{session_id}",
+            200
+        )
+        
+        if success:
+            if final_settings.get('weekend_mode') == 'relaxed':
+                print("✅ Settings persisted correctly")
+            else:
+                print("❌ Settings not persisted")
+        
+        return True
+
     def test_error_handling(self):
         """Test API error handling"""
         print("\n" + "="*50)
@@ -428,6 +605,15 @@ class DonnaAPITester:
             "chat",
             422,  # Validation error
             data={"invalid": "data"}
+        )
+        
+        # Test invalid telemetry data
+        success, _ = self.run_test(
+            "Invalid Telemetry Data",
+            "POST",
+            "telemetry/log",
+            422,  # Validation error
+            data={"invalid": "telemetry"}
         )
         
         return True
