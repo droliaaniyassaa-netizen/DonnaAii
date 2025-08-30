@@ -233,8 +233,8 @@ frontend:
         comment: "✅ Dense Block detection already fully implemented - detects 3+ events in 5-hour rolling window, shows compact pill card with dismiss functionality"
 
   - task: "Add telemetry logging to SmartSuggestions component"
-    implemented: false
-    working: false
+    implemented: true
+    working: true
     file: "/app/frontend/src/components/SmartSuggestions.js"
     stuck_count: 0
     priority: "high"
@@ -243,10 +243,13 @@ frontend:
       - working: false
         agent: "main"
         comment: "Need to add telemetry logging for suggestion impressions, dismiss clicks, and action results"
+      - working: true
+        agent: "main"
+        comment: "✅ COMPLETED: Added comprehensive telemetry logging including impression tracking on suggestion generation, dismiss action logging with latency, action success/failure tracking for rescheduling operations, and weekend_mode integration with user settings API"
 
   - task: "Add weekend_mode setting to SettingsModal"
-    implemented: false
-    working: false
+    implemented: true
+    working: true
     file: "/app/frontend/src/components/SettingsModal.js"
     stuck_count: 0
     priority: "high"
@@ -255,6 +258,9 @@ frontend:
       - working: false
         agent: "main"
         comment: "Need to add weekend_mode toggle (relaxed vs active) to settings UI"
+      - working: true
+        agent: "main"
+        comment: "✅ COMPLETED: Added weekend mode selection UI with Relaxed Mode (9 AM - 7 PM) and Active Mode (7 AM - 10 PM) options, integrated with backend API for persistence, includes loading states and proper error handling"
 
   - task: "Fix card depression effect on hover (depress INTO surface)"
     implemented: true
