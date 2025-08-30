@@ -581,89 +581,149 @@ const App = () => {
 
         {/* Career Tab */}
         <TabsContent value="career" className="career-container">
-          <div className="career-grid">
-            <Card className="goal-creation-card">
-              <CardHeader>
-                <CardTitle className="section-title">
-                  <Target className="header-icon" />
-                  Set Career Goal
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="create-form">
-                <Textarea
-                  placeholder="Describe your career goal (e.g., 'Become a manager in 6 months')"
-                  value={newGoal.goal}
-                  onChange={(e) => setNewGoal({ ...newGoal, goal: e.target.value })}
-                  className="form-input"
-                />
-                <Input
-                  placeholder="Timeframe (e.g., '6 months', '1 year')"
-                  value={newGoal.timeframe}
-                  onChange={(e) => setNewGoal({ ...newGoal, timeframe: e.target.value })}
-                  className="form-input"
-                />
-                <Button onClick={createCareerGoal} className="create-button">
-                  <Plus className="button-icon" />
-                  Create Goal & Action Plan
-                </Button>
-              </CardContent>
-            </Card>
-
-            <div className="goals-list">
-              {careerGoals.map((goal) => (
-                <Card key={goal.id} className="goal-card">
-                  <CardHeader>
-                    <CardTitle className="goal-title">{goal.goal}</CardTitle>
-                    <Badge variant="outline" className="timeframe-badge">{goal.timeframe}</Badge>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="progress-section">
-                      <div className="progress-header">
-                        <span>Progress: {goal.progress}%</span>
-                        <Button
-                          onClick={() => updateGoalProgress(goal.id, Math.min(100, goal.progress + 10))}
-                          size="sm"
-                          variant="outline"
-                        >
-                          +10%
-                        </Button>
-                      </div>
-                      <Progress value={goal.progress} className="progress-bar" />
-                    </div>
-                    
-                    {goal.action_plan.length > 0 && (
-                      <div className="action-plan">
-                        <h4 className="plan-title">Action Plan</h4>
-                        <ul className="plan-list">
-                          {goal.action_plan.slice(0, 5).map((step, index) => (
-                            <li key={index} className="plan-item">{step}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    <div className="resources">
-                      <h4 className="resources-title">Recommended Resources</h4>
-                      <div className="resources-list">
-                        {goal.resources.map((resource, index) => (
-                          <Badge key={index} variant="secondary" className="resource-badge">
-                            {resource}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              {careerGoals.length === 0 && (
-                <Card className="empty-card">
-                  <CardContent className="empty-content">
-                    <Star className="empty-icon" />
-                    <p>No career goals yet. Set your first goal to get started with your action plan!</p>
-                  </CardContent>
-                </Card>
-              )}
+          <div className="career-layout">
+            {/* Sticky Goal Bar */}
+            <div className="goal-bar-sticky">
+              <Card className="goal-input-card">
+                <CardContent className="goal-input-content">
+                  <Textarea
+                    placeholder="State your 6-month career goal…"
+                    value={newGoal.goal}
+                    onChange={(e) => setNewGoal({ ...newGoal, goal: e.target.value })}
+                    className="career-goal-input"
+                    rows={2}
+                  />
+                  <Button 
+                    onClick={createCareerGoal} 
+                    className="generate-plan-btn"
+                    disabled={!newGoal.goal.trim()}
+                  >
+                    <Sparkles className="button-icon" />
+                    Generate Plan
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
+
+            {/* Action Plan Card */}
+            {careerGoals.length > 0 && (
+              <Card className="action-plan-card">
+                <CardHeader className="action-plan-header">
+                  <CardTitle className="action-plan-title">
+                    <Target className="title-icon" />
+                    Donna's 6-Month Action Plan
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="action-plan-content">
+                  <div className="action-steps">
+                    {[1,2,3,4,5,6,7].map((step) => (
+                      <div key={step} className="action-step">
+                        <div className="step-header">
+                          <div className="step-number">{step}</div>
+                          <div className="step-content">
+                            <h4 className="step-title">Step {step}: {getStepTitle(step)}</h4>
+                            <p className="step-description">{getStepDescription(step)}</p>
+                            {step === 4 && (
+                              <div className="smart-tool-line">
+                                <span className="smart-tool-label">Smart Tool:</span>
+                                <span className="smart-tool-suggestion">LinkedIn Learning Analytics</span>
+                                <Button variant="link" className="try-this-btn">Try this</Button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="action-plan-buttons">
+                    <Button variant="outline" className="copy-plan-btn">
+                      <Calendar className="button-icon" />
+                      Copy Plan
+                    </Button>
+                    <Button variant="outline" className="save-brag-btn">
+                      <Star className="button-icon" />
+                      Save to Brag Sheet
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Resource Cards Row */}
+            {careerGoals.length > 0 && (
+              <div className="resource-cards-row">
+                {/* AI Tools Card */}
+                <Card className="resource-card ai-tools-card">
+                  <CardHeader>
+                    <CardTitle className="resource-title">
+                      <Sparkles className="resource-icon" />
+                      AI Tools
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="resource-content">
+                    <p className="resource-hint">Type in your goal to get personalised suggestions</p>
+                    <div className="resource-list">
+                      <div className="resource-item">ChatGPT for Resume Review</div>
+                      <div className="resource-item">Grammarly for Professional Writing</div>
+                      <div className="resource-item">Calendly for Interview Scheduling</div>
+                    </div>
+                    <div className="empty-state">No perfect match? I'll pick strong general-purpose tools.</div>
+                  </CardContent>
+                </Card>
+
+                {/* Books Card */}
+                <Card className="resource-card books-card">
+                  <CardHeader>
+                    <CardTitle className="resource-title">
+                      <Target className="resource-icon" />
+                      Books
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="resource-content">
+                    <p className="resource-hint">Type in your goal to get personalised suggestions</p>
+                    <div className="resource-list">
+                      <div className="resource-item">The First 90 Days - Michael Watkins</div>
+                      <div className="resource-item">Atomic Habits - James Clear</div>
+                      <div className="resource-item">Deep Work - Cal Newport</div>
+                    </div>
+                    <div className="empty-state">Only non-fiction, profession-relevant picks.</div>
+                  </CardContent>
+                </Card>
+
+                {/* Talks/Videos Card */}
+                <Card className="resource-card talks-card">
+                  <CardHeader>
+                    <CardTitle className="resource-title">
+                      <Calendar className="resource-icon" />
+                      Talks & Videos
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="resource-content">
+                    <p className="resource-hint">Type in your goal to get personalised suggestions</p>
+                    <div className="resource-list">
+                      <div className="resource-item">TED: How to Speak So People Want to Listen</div>
+                      <div className="resource-item">Harvard Business Review Leadership Series</div>
+                      <div className="resource-item">Stanford Entrepreneurship Corner</div>
+                    </div>
+                    <div className="empty-state">Only non-fiction, profession-relevant picks.</div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* Empty State */}
+            {careerGoals.length === 0 && (
+              <Card className="empty-career-card">
+                <CardContent className="empty-career-content">
+                  <Target className="empty-career-icon" />
+                  <h3 className="empty-career-title">Ready to accelerate your career?</h3>
+                  <p className="empty-career-description">
+                    Tell Donna your 6-month career goal above, and she'll create a personalized action plan 
+                    with curated resources, smart tools, and professional guidance.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </TabsContent>
 
