@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
-import { Clock, X, Calendar, Sparkles, Eye, EyeOff } from 'lucide-react';
+import { Clock, X, Calendar, Sparkles, Eye, EyeOff, Plus } from 'lucide-react';
 
 // Smart Suggestions - Donna's Intelligent Calendar Assistant
 const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshEvents, newEvent, setNewEvent, onCreateEvent, className = "" }) => {
