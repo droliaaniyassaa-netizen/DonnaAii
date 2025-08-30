@@ -257,6 +257,52 @@ const SettingsModal = ({ open, onClose }) => {
               </PopoverContent>
             </Popover>
           </div>
+
+          {/* Weekend Mode Section */}
+          <div className="setting-section">
+            <Label className="setting-label">
+              <Calendar className="label-icon" />
+              Weekend Schedule Mode
+            </Label>
+            
+            <div className="weekend-mode-info">
+              <p className="weekend-mode-description">
+                Control how Donna schedules events on weekends. This affects Smart Suggestions and available time slots.
+              </p>
+              
+              <div className="weekend-mode-options">
+                <div 
+                  className={`weekend-mode-option ${weekendMode === 'relaxed' ? 'selected' : ''}`}
+                  onClick={() => setWeekendMode('relaxed')}
+                >
+                  <div className="option-header">
+                    <span className="option-title">Relaxed Mode</span>
+                    <Badge variant={weekendMode === 'relaxed' ? 'default' : 'outline'} className="mode-badge">
+                      9 AM - 7 PM
+                    </Badge>
+                  </div>
+                  <p className="option-description">
+                    Later start times and earlier end times for a more relaxed weekend schedule.
+                  </p>
+                </div>
+                
+                <div 
+                  className={`weekend-mode-option ${weekendMode === 'active' ? 'selected' : ''}`}
+                  onClick={() => setWeekendMode('active')}
+                >
+                  <div className="option-header">
+                    <span className="option-title">Active Mode</span>
+                    <Badge variant={weekendMode === 'active' ? 'default' : 'outline'} className="mode-badge">
+                      7 AM - 10 PM
+                    </Badge>
+                  </div>
+                  <p className="option-description">
+                    Extended hours similar to weekdays for an active weekend lifestyle.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
           
           {/* Action Buttons */}
           <div className="settings-actions">
