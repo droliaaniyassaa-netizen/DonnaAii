@@ -698,6 +698,89 @@ async def handle_event_notes_response(message: str, context: dict, session_id: s
             {"$set": {"description": message}}
         )
 
+# Smart Suggestions & User Settings Endpoints
+
+@api_router.post("/telemetry/log")
+async def log_telemetry(telemetry: TelemetryLogCreate):
+    """Log telemetry data for Smart Suggestions interactions"""
+    try:
+        log_entry = TelemetryLog(**telemetry.dict())
+        await db.telemetry_logs.insert_one(prepare_for_mongo(log_entry.dict()))
+        return {"success": True, "id": log_entry.id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to log telemetry: {str(e)}")
+
+@api_router.get("/user/settings/{session_id}")
+async def get_user_settings(session_id: str):
+    """Get user settings for a session"""
+    try:
+        settings = await db.user_settings.find_one({"session_id": session_id})
+        if not settings:
+            # Return default settings
+            return UserSettings(session_id=session_id).dict()
+        
+        # Convert MongoDB document to UserSettings model
+        settings_model = UserSettings(**settings)
+        return settings_model.dict()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get user settings: {str(e)}")
+
+@api_router.put("/user/settings/{session_id}")
+async def update_user_settings(session_id: str, settings_update: UserSettingsUpdate):
+    """Update user settings for a session"""
+    try:
+        # Check if settings exist
+        existing_settings = await db.user_settings.find_one({"session_id": session_id})
+        
+        if existing_settings:
+            # Update existing settings
+            update_data = {k: v for k, v in settings_update.dict().items() if v is not None}
+            update_data["updated_at"] = datetime.now(timezone.utc)
+            
+            await db.user_settings.update_one(
+                {"session_id": session_id},
+                {"$set": update_data}
+            )
+        else:
+            # Create new settings
+            new_settings = UserSettings(
+                session_id=session_id,
+                **{k: v for k, v in settings_update.dict().items() if v is not None}
+            )
+            await db.user_settings.insert_one(prepare_for_mongo(new_settings.dict()))
+        
+        # Return updated settings
+        updated_settings = await db.user_settings.find_one({"session_id": session_id})
+        return UserSettings(**updated_settings).dict()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update user settings: {str(e)}")
+
+@api_router.get("/telemetry/analytics")
+async def get_telemetry_analytics():
+    """Get basic analytics from telemetry data (for debugging/monitoring)"""
+    try:
+        # Get counts by event type
+        pipeline = [
+            {"$group": {
+                "_id": {"event_type": "$event_type", "suggestion_type": "$suggestion_type"},
+                "count": {"$sum": 1}
+            }},
+            {"$sort": {"count": -1}}
+        ]
+        
+        analytics = []
+        cursor = db.telemetry_logs.aggregate(pipeline)
+        async for doc in cursor:
+            analytics.append({
+                "event_type": doc["_id"]["event_type"],
+                "suggestion_type": doc["_id"]["suggestion_type"],
+                "count": doc["count"]
+            })
+        
+        return {"analytics": analytics}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get analytics: {str(e)}")
+
 # Include the router in the main app
 app.include_router(api_router)
 
