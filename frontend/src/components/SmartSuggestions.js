@@ -394,6 +394,8 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
   const handleRescheduleToSlot = async (slot) => {
     if (!selectedSuggestion?.candidateEvent) return;
     
+    const startTime = performance.now();
+    
     try {
       // Delete the old event first
       await onDeleteEvent(selectedSuggestion.candidateEvent.id);
@@ -424,6 +426,22 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
         
         console.log(`✅ Successfully rescheduled ${newEvent.title} to ${slot.label}`);
         
+        // Log successful reschedule telemetry
+        const latency = Math.round(performance.now() - startTime);
+        logTelemetry(
+          'action_success',
+          selectedSuggestion.type,
+          selectedSuggestion.id,
+          'reschedule',
+          {
+            event_title: newEvent.title,
+            new_slot: slot.label,
+            old_time: selectedSuggestion.candidateEvent.datetime_utc,
+            new_time: slot.start.toISOString()
+          },
+          latency
+        );
+        
         // Refresh events without page reload
         if (onRefreshEvents) {
           onRefreshEvents();
@@ -435,6 +453,21 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
       
     } catch (error) {
       console.error('Failed to reschedule event:', error);
+      
+      // Log failed reschedule telemetry
+      const latency = Math.round(performance.now() - startTime);
+      logTelemetry(
+        'action_failure',
+        selectedSuggestion.type,
+        selectedSuggestion.id,
+        'reschedule',
+        {
+          error: error.message,
+          event_title: selectedSuggestion.candidateEvent.title
+        },
+        latency
+      );
+      
       // Show error feedback
       alert('Failed to reschedule event. Please try again.');
     }
