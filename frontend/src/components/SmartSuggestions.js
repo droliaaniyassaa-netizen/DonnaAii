@@ -9,6 +9,47 @@ const SmartSuggestions = ({ events, onRescheduleEvent, onDeleteEvent, onRefreshE
   const [dismissedSuggestions, setDismissedSuggestions] = useState(new Set());
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
   const [showSlotsModal, setShowSlotsModal] = useState(false);
+  const [userSettings, setUserSettings] = useState({ weekend_mode: 'relaxed' });
+
+  // Load user settings on mount
+  useEffect(() => {
+    const loadUserSettings = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/settings/default`);
+        if (response.ok) {
+          const settings = await response.json();
+          setUserSettings(settings);
+        }
+      } catch (error) {
+        console.error('Failed to load user settings:', error);
+      }
+    };
+    
+    loadUserSettings();
+  }, []);
+
+  // Telemetry logging helper
+  const logTelemetry = async (eventType, suggestionType, suggestionId, action = null, metadata = {}, latencyMs = null) => {
+    try {
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/telemetry/log`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session_id: 'default', // TODO: Use actual session ID from app context
+          event_type: eventType,
+          suggestion_type: suggestionType,
+          suggestion_id: suggestionId,
+          action,
+          metadata,
+          latency_ms: latencyMs
+        })
+      });
+    } catch (error) {
+      console.error('Failed to log telemetry:', error);
+    }
+  };
 
   // Helper: Check if event is a "real" event (not reminder)
   const isRealEvent = (event) => {
