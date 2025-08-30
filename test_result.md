@@ -118,28 +118,34 @@ backend:
         comment: "✅ All CRUD operations working perfectly. Created/updated/deleted events across all categories (work, personal, appointments, regular_activities). Events properly sorted by datetime. Update functionality works for title, description, and category changes."
 
   - task: "Add telemetry logging endpoints for Smart Suggestions"
-    implemented: false
-    working: false
+    implemented: true
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "main"
         comment: "Need to implement telemetry endpoints for logging Smart Suggestion interactions (impressions, dismissals, action success/failure)"
+      - working: true
+        agent: "testing"
+        comment: "✅ All telemetry endpoints working perfectly. POST /api/telemetry/log successfully logs impression and dismiss events with proper response (success: true, id: uuid). GET /api/telemetry/analytics returns aggregated data by event_type and suggestion_type. Tested with session_id 'test_session_123', event_types 'impression'/'dismiss', suggestion_type 'dense_block', and metadata storage."
 
   - task: "Add user preferences/settings endpoint for weekend mode"
-    implemented: false
-    working: false
+    implemented: true
+    working: true
     file: "/app/backend/server.py" 
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "main"
         comment: "Need to implement user settings endpoint to store weekend_mode preference (relaxed vs active)"
+      - working: true
+        agent: "testing"
+        comment: "✅ User settings endpoints working perfectly. GET /api/user/settings/{session_id} returns default settings (weekend_mode: 'relaxed', timezone: null) for new sessions. PUT /api/user/settings/{session_id} successfully updates weekend_mode to 'active' and timezone to 'America/New_York'. Partial updates work correctly, preserving existing values. Settings persist correctly across requests with proper updated_at timestamps."
 
   - task: "Timezone handling for calendar events"
     implemented: true
