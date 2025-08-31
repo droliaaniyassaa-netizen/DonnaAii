@@ -59,7 +59,7 @@ const App = () => {
     hydration: 1500,
     sleep: 7.5
   });
-  const [healthGoals, setHealthGoals] = useState({
+  const [healthTargets, setHealthTargets] = useState({
     calories: 2000,
     protein: 120,
     hydration: 2500,
