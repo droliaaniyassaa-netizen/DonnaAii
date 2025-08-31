@@ -4763,31 +4763,24 @@ body::before {
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-/* Responsive Design for Onboarding */
+/* Responsive Design for Sample Pills and Onboarding */
 @media (max-width: 768px) {
-  .sample-goals-pods {
+  .sample-goals-pills {
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    max-width: 300px;
   }
   
-  .goal-pod {
-    width: 260px;
-    min-height: 140px;
-    padding: 1.25rem;
+  .goal-pill {
+    white-space: normal;
+    text-align: center;
+    font-size: 0.65rem;
+    padding: 0.5rem 1rem;
+    line-height: 1.4;
+    width: 100%;
   }
   
-  .pod-icon {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .pod-title {
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .pod-description {
+  .sample-goals-label {
     font-size: 0.7rem;
   }
   
