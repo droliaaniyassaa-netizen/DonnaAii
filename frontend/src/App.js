@@ -731,53 +731,85 @@ const App = () => {
               </Card>
             </div>
 
-            {/* Sample Goal Pills - Always visible */}
+            {/* Sample Action Plan - First Time Experience */}
             {careerGoals.length === 0 && (
-              <div className="sample-goals-pills-section">
-                <p className="sample-goals-label">Try a sample:</p>
-                <div className="sample-goals-pills">
-                  <button 
-                    className="goal-pill"
-                    onClick={() => setNewGoal({ ...newGoal, goal: "How can I get promoted from associate to team lead this year?" })}
-                  >
-                    How can I get promoted from associate to team lead this year?
-                  </button>
-                  <button 
-                    className="goal-pill"
-                    onClick={() => setNewGoal({ ...newGoal, goal: "What's the smartest way to double my sales without spending big on ads?" })}
-                  >
-                    What's the smartest way to double my sales without spending big on ads?
-                  </button>
-                  <button 
-                    className="goal-pill"
-                    onClick={() => setNewGoal({ ...newGoal, goal: "I'm a fresh graduate — how do I land my first internship fast?" })}
-                  >
-                    I'm a fresh graduate — how do I land my first internship fast?
-                  </button>
+              <>
+                {/* Sample Plan Message */}
+                <div className="sample-plan-message">
+                  <p className="sample-message-text">
+                    👋 Here's a sample action plan to show you what Donna can do. Enter your own goal above to get a personalized plan tailored just for you!
+                  </p>
                 </div>
-              </div>
-            )}
 
-            {/* Action Plan Section */}
-            {careerGoals.length === 0 && (
-              <Card className="action-plan-card">
-                <CardHeader className="action-plan-header">
-                  <CardTitle className="action-plan-title">
-                    <Target className="title-icon" />
-                    Donna's Action Plan
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="action-plan-content">
-                  <div className="onboarding-invitation">
-                    <p className="invitation-message">
-                      Type in your own goal, and I'll build you a personalized multi-step action plan. Just describe what you want to achieve—promotion, new job, bigger business, or something unique—and I'll chart the fastest path there.
-                    </p>
-                    <p className="clarifying-note">
-                      Every plan is tailored to your industry and ambition, complete with AI tools, books, and talks to give you an edge.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+                {/* Sample Action Plan Card */}
+                <Card className="action-plan-card">
+                  <CardHeader className="action-plan-header">
+                    <CardTitle className="action-plan-title">
+                      <Target className="title-icon" />
+                      Donna's Action Plan
+                      <span className="sample-badge">Sample</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="action-plan-content">
+                    <div className="action-steps">
+                      <div className="action-step">
+                        <div className="step-header">
+                          <div className="step-number">1</div>
+                          <div className="step-content">
+                            <h4 className="step-title">Strategic Skill Assessment</h4>
+                            <p className="step-description">Identify the top 3 skills required for your target role by analyzing job postings and speaking with current professionals in that position. Create a skills gap analysis to prioritize your development efforts.</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="action-step">
+                        <div className="step-header">
+                          <div className="step-number">2</div>
+                          <div className="step-content">
+                            <h4 className="step-title">Visibility & Relationship Building</h4>
+                            <p className="step-description">Schedule monthly one-on-ones with key stakeholders and decision-makers. Share your career aspirations and ask for specific feedback on areas for improvement.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="action-step">
+                        <div className="step-header">
+                          <div className="step-number">3</div>
+                          <div className="step-content">
+                            <h4 className="step-title">High-Impact Project Leadership</h4>
+                            <p className="step-description">Volunteer to lead a cross-functional project that aligns with company priorities. Document and communicate the measurable impact of your leadership.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="action-step">
+                        <div className="step-header">
+                          <div className="step-number">4</div>
+                          <div className="step-content">
+                            <h4 className="step-title">External Credibility Building</h4>
+                            <p className="step-description">Establish thought leadership through industry articles, conference speaking, or professional certifications that demonstrate your expertise beyond your current role.</p>
+                            <div className="smart-tool-line">
+                              <span className="smart-tool-label">Smart Tool:</span>
+                              <span className="smart-tool-suggestion">LinkedIn Learning Analytics</span>
+                              <Button variant="link" className="try-this-btn">Try this</Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="action-step">
+                        <div className="step-header">
+                          <div className="step-number">5</div>
+                          <div className="step-content">
+                            <h4 className="step-title">Strategic Timing & Execution</h4>
+                            <p className="step-description">Create a promotion timeline aligned with company review cycles and budget planning. Present your case with quantified achievements and a clear vision for your expanded role.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </>
             )}
 
             {/* Action Plan Card */}
