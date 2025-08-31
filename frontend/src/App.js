@@ -882,18 +882,68 @@ const App = () => {
               );
             })()}
 
-            {/* Empty State */}
+            {/* Onboarding Experience */}
             {careerGoals.length === 0 && (
-              <Card className="empty-career-card">
-                <CardContent className="empty-career-content">
-                  <Target className="empty-career-icon" />
-                  <h3 className="empty-career-title">Ready to accelerate your career?</h3>
-                  <p className="empty-career-description">
-                    Tell Donna your 6-month career goal above, and she'll create a personalized action plan 
-                    with curated resources, smart tools, and professional guidance.
-                  </p>
-                </CardContent>
-              </Card>
+              <>
+                {/* Action Plan Preview Header */}
+                <Card className="action-plan-card">
+                  <CardHeader className="action-plan-header">
+                    <CardTitle className="action-plan-title">
+                      <Target className="title-icon" />
+                      Donna's Action Plan
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="action-plan-content">
+                    <div className="onboarding-invitation">
+                      <p className="invitation-message">
+                        Type in your own goal, and I'll build you a personalized multi-step action plan. Just describe what you want to achieve—promotion, new job, bigger business, or something unique—and I'll chart the fastest path there.
+                      </p>
+                      <p className="clarifying-note">
+                        Every plan is tailored to your industry and ambition, complete with AI tools, books, and talks to give you an edge.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Sample Goal Pods */}
+                <div className="sample-goals-section">
+                  <h3 className="sample-goals-title">Try a sample goal:</h3>
+                  <div className="sample-goals-pods">
+                    <div 
+                      className="goal-pod career-growth-pod"
+                      onClick={() => setNewGoal({ ...newGoal, goal: "How can I get promoted from associate to team lead this year?" })}
+                    >
+                      <div className="pod-icon">🎯</div>
+                      <div className="pod-content">
+                        <h4 className="pod-title">Career Growth</h4>
+                        <p className="pod-description">"How can I get promoted from associate to team lead this year?"</p>
+                      </div>
+                    </div>
+
+                    <div 
+                      className="goal-pod business-expansion-pod"
+                      onClick={() => setNewGoal({ ...newGoal, goal: "What's the smartest way to double my sales without spending big on ads?" })}
+                    >
+                      <div className="pod-icon">📈</div>
+                      <div className="pod-content">
+                        <h4 className="pod-title">Business Expansion</h4>
+                        <p className="pod-description">"What's the smartest way to double my sales without spending big on ads?"</p>
+                      </div>
+                    </div>
+
+                    <div 
+                      className="goal-pod job-seeking-pod"
+                      onClick={() => setNewGoal({ ...newGoal, goal: "I'm a fresh graduate — how do I land my first internship fast?" })}
+                    >
+                      <div className="pod-icon">💼</div>
+                      <div className="pod-content">
+                        <h4 className="pod-title">Job Seeking</h4>
+                        <p className="pod-description">"I'm a fresh graduate — how do I land my first internship fast?"</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </TabsContent>
