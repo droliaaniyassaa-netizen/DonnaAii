@@ -290,6 +290,23 @@ const App = () => {
   };
 
   // Career goal creation with backend integration
+  
+  // Helper function to parse action plan step and extract title/description
+  const parseActionPlanStep = (step) => {
+    // Look for markdown bold title at the beginning: **Title**: Description
+    const match = step.match(/^\*\*([^*]+)\*\*:?\s*(.*)/s);
+    if (match) {
+      return {
+        title: match[1].trim(),
+        description: match[2].trim()
+      };
+    }
+    // If no title found, return the whole step as description
+    return {
+      title: null,
+      description: step.trim()
+    };
+  };
 
   // Health functions
   const loadHealthEntries = async () => {
