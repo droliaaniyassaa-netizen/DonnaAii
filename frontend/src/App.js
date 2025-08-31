@@ -632,7 +632,17 @@ const App = () => {
                           <div className="step-header">
                             <div className="step-number">{index + 1}</div>
                             <div className="step-content">
-                              <p className="step-description">{step}</p>
+                              {(() => {
+                                const parsed = parseActionPlanStep(step);
+                                return (
+                                  <>
+                                    {parsed.title && (
+                                      <h4 className="step-title">{parsed.title}</h4>
+                                    )}
+                                    <p className="step-description">{parsed.description}</p>
+                                  </>
+                                );
+                              })()}
                               {index === 3 && (
                                 <div className="smart-tool-line">
                                   <span className="smart-tool-label">Smart Tool:</span>
