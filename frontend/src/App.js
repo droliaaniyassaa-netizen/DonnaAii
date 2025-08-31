@@ -786,72 +786,95 @@ const App = () => {
             )}
 
             {/* Resource Cards Row */}
-            {careerGoals.length > 0 && (
-              <div className="resource-cards-row">
-                {/* AI Tools Card */}
-                <Card 
-                  className={`resource-card ai-tools-card ${activeResourceCard === 'ai-tools' ? 'active' : ''}`}
-                  onClick={() => setActiveResourceCard('ai-tools')}
-                >
-                  <CardHeader>
-                    <CardTitle className="resource-title">
-                      <Sparkles className="resource-icon" />
-                      AI Tools
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="resource-content">
-                    <p className="resource-hint">Type in your goal to get personalised suggestions</p>
-                    <div className="resource-list">
-                      <div className="resource-item">ChatGPT</div>
-                      <div className="resource-item">Claude AI</div>
-                      <div className="resource-item">Perplexity</div>
-                    </div>
-                  </CardContent>
-                </Card>
+            {careerGoals.length > 0 && (() => {
+              const resources = getCurrentResources();
+              return (
+                <div className="resource-cards-row">
+                  {/* AI Tools Card */}
+                  <Card 
+                    className={`resource-card ai-tools-card ${activeResourceCard === 'ai-tools' ? 'active' : ''}`}
+                    onClick={() => setActiveResourceCard('ai-tools')}
+                  >
+                    <CardHeader>
+                      <CardTitle className="resource-title">
+                        <Sparkles className="resource-icon" />
+                        AI Tools
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="resource-content">
+                      <p className="resource-hint">Click to explore AI tools for your goals</p>
+                      <div className="resource-list">
+                        {resources.aiTools.map((tool, index) => (
+                          <a 
+                            key={index}
+                            href={tool.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="resource-item clickable"
+                            onClick={(e) => e.stopPropagation()}
+                            title={tool.description}
+                          >
+                            {tool.name}
+                          </a>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
 
-                {/* Books Card */}
-                <Card 
-                  className={`resource-card books-card ${activeResourceCard === 'books' ? 'active' : ''}`}
-                  onClick={() => setActiveResourceCard('books')}
-                >
-                  <CardHeader>
-                    <CardTitle className="resource-title">
-                      <Target className="resource-icon" />
-                      Books
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="resource-content">
-                    <p className="resource-hint">Type in your goal to get personalised suggestions</p>
-                    <div className="resource-list">
-                      <div className="resource-item">Atomic Habits</div>
-                      <div className="resource-item">Deep Work</div>
-                      <div className="resource-item">The First 90 Days</div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  {/* Books Card */}
+                  <Card 
+                    className={`resource-card books-card ${activeResourceCard === 'books' ? 'active' : ''}`}
+                    onClick={() => setActiveResourceCard('books')}
+                  >
+                    <CardHeader>
+                      <CardTitle className="resource-title">
+                        <Target className="resource-icon" />
+                        Books
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="resource-content">
+                      <p className="resource-hint">Essential reading for your journey</p>
+                      <div className="resource-list">
+                        {resources.books.map((book, index) => (
+                          <div key={index} className="resource-item">{book}</div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
 
-                {/* Talks/Videos Card */}
-                <Card 
-                  className={`resource-card talks-card ${activeResourceCard === 'talks' ? 'active' : ''}`}
-                  onClick={() => setActiveResourceCard('talks')}
-                >
-                  <CardHeader>
-                    <CardTitle className="resource-title">
-                      <Calendar className="resource-icon" />
-                      Talks & Videos
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="resource-content">
-                    <p className="resource-hint">Type in your goal to get personalised suggestions</p>
-                    <div className="resource-list">
-                      <div className="resource-item">TED Talks</div>
-                      <div className="resource-item">YCombinator</div>
-                      <div className="resource-item">HBR Leadership</div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            )}
+                  {/* Talks/Videos Card */}
+                  <Card 
+                    className={`resource-card talks-card ${activeResourceCard === 'talks' ? 'active' : ''}`}
+                    onClick={() => setActiveResourceCard('talks')}
+                  >
+                    <CardHeader>
+                      <CardTitle className="resource-title">
+                        <Calendar className="resource-icon" />
+                        Talks & Videos
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="resource-content">
+                      <p className="resource-hint">Inspiring talks to shift your perspective</p>
+                      <div className="resource-list">
+                        {resources.talks.map((talk, index) => (
+                          <a 
+                            key={index}
+                            href={talk.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="resource-item clickable"
+                            onClick={(e) => e.stopPropagation()}
+                            title="Watch on TED"
+                          >
+                            {talk.title}
+                          </a>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })()}
 
             {/* Empty State */}
             {careerGoals.length === 0 && (
