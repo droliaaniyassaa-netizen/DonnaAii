@@ -472,6 +472,11 @@ async def update_goal_progress(goal_id: str, progress: int):
         raise HTTPException(status_code=404, detail="Goal not found")
     return {"message": "Progress updated successfully"}
 
+@api_router.delete("/career/goals")
+async def delete_all_career_goals():
+    result = await db.career_goals.delete_many({})
+    return {"message": f"Deleted {result.deleted_count} career goals"}
+
 # Health endpoints
 @api_router.post("/health/entries", response_model=HealthEntry)
 async def create_health_entry(entry: HealthEntryCreate):
