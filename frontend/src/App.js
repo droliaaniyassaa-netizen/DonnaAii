@@ -51,6 +51,24 @@ const App = () => {
   const [newGoal, setNewGoal] = useState({ goal: '', timeframe: '' });
   const [activeResourceCard, setActiveResourceCard] = useState('ai-tools'); // Default active card
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false); // Loading state for plan generation
+
+  // Health state
+  const [healthStats, setHealthStats] = useState({
+    calories: 1250,
+    protein: 45,
+    hydration: 1500,
+    sleep: 7.5
+  });
+  const [healthGoals, setHealthGoals] = useState({
+    calories: 2000,
+    protein: 120,
+    hydration: 2500,
+    sleep: 8
+  });
+  const [mealInput, setMealInput] = useState('');
+  const [customHydration, setCustomHydration] = useState('');
+  const [sleepInput, setSleepInput] = useState('');
+  const [showGoalModal, setShowGoalModal] = useState(false);
   
   // Health state
   const [healthEntries, setHealthEntries] = useState([]);
