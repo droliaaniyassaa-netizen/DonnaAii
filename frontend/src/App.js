@@ -611,7 +611,7 @@ const App = () => {
                 <CardHeader className="action-plan-header">
                   <CardTitle className="action-plan-title">
                     <Target className="title-icon" />
-                    Donna's 6-Month Action Plan
+                    Donna's Action Plan
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="action-plan-content">
