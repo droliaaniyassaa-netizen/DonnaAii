@@ -5349,20 +5349,37 @@ body::before {
   }
 }
 
-@keyframes mysteriousGlow {
+@keyframes mealGlow {
   0%, 100% { 
     box-shadow: 
       0 4px 16px rgba(0, 0, 0, 0.1),
-      0 2px 8px rgba(var(--glow-color), 0.1),
-      0 0 20px rgba(var(--glow-color), 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      0 2px 8px rgba(251, 146, 60, 0.1),
+      0 0 20px rgba(251, 146, 60, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
   50% { 
     box-shadow: 
       0 6px 20px rgba(0, 0, 0, 0.15),
-      0 4px 12px rgba(var(--glow-color), 0.2),
-      0 0 30px rgba(var(--glow-color), 0.1),
+      0 4px 12px rgba(251, 146, 60, 0.2),
+      0 0 30px rgba(251, 146, 60, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes hydrationGlow {
+  0%, 100% { 
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      0 2px 8px rgba(14, 165, 233, 0.1),
+      0 0 20px rgba(14, 165, 233, 0.05),
       inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  50% { 
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.15),
+      0 4px 12px rgba(14, 165, 233, 0.2),
+      0 0 30px rgba(14, 165, 233, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 }
 
