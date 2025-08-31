@@ -1274,77 +1274,79 @@ const App = () => {
 
             </div>
 
-            {/* Logging Section */}
+            {/* Sleek Logging Section */}
             <div className="health-logging-section">
               
-              {/* Log Meals */}
-              <Card className="logging-card meal-logging-card">
-                <CardHeader>
-                  <CardTitle className="logging-title">Log Meals</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="meal-input-container">
-                    <Textarea
-                      placeholder="Describe your meal (e.g., 'bowl of salad', '2 rotis with dal')"
-                      value={mealInput}
-                      onChange={(e) => setMealInput(e.target.value)}
-                      className="meal-input"
+              {/* Log Sleep - Moved to top */}
+              <div className="sleek-logging-block">
+                <h3 className="logging-label">Log Sleep</h3>
+                <div className="sleep-time-inputs">
+                  <div className="time-input-group">
+                    <label className="time-label">Slept at:</label>
+                    <Input
+                      type="time"
+                      value={sleepTime}
+                      onChange={(e) => setSleepTime(e.target.value)}
+                      className="time-input"
                     />
-                    <Button onClick={logMeal} className="log-meal-btn">
-                      Log Meal
-                    </Button>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="time-input-group">
+                    <label className="time-label">Woke up at:</label>
+                    <Input
+                      type="time"
+                      value={wakeTime}
+                      onChange={(e) => setWakeTime(e.target.value)}
+                      className="time-input"
+                    />
+                  </div>
+                  <Button onClick={logSleepFromTimes} className="sleek-log-btn sleep-btn">
+                    Log Sleep
+                  </Button>
+                </div>
+              </div>
+
+              {/* Log Meals */}
+              <div className="sleek-logging-block">
+                <h3 className="logging-label">Log Meals</h3>
+                <div className="meal-input-container">
+                  <Textarea
+                    placeholder="Describe your meal (e.g., 'bowl of salad', '2 rotis with dal')"
+                    value={mealInput}
+                    onChange={(e) => setMealInput(e.target.value)}
+                    className="sleek-textarea"
+                  />
+                  <Button onClick={logMeal} className="sleek-log-btn meal-btn">
+                    Log Meal
+                  </Button>
+                </div>
+              </div>
 
               {/* Log Hydration */}
-              <Card className="logging-card hydration-logging-card">
-                <CardHeader>
-                  <CardTitle className="logging-title">Log Hydration</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="hydration-controls">
-                    <Button onClick={() => addHydration(250)} className="hydration-btn glass-btn">
+              <div className="sleek-logging-block">
+                <h3 className="logging-label">Log Hydration</h3>
+                <div className="hydration-controls">
+                  <div className="hydration-buttons">
+                    <Button onClick={() => addHydration(250)} className="sleek-hydration-btn">
                       + Glass (250ml)
                     </Button>
-                    <Button onClick={() => addHydration(500)} className="hydration-btn bottle-btn">
+                    <Button onClick={() => addHydration(500)} className="sleek-hydration-btn">
                       + Bottle (500ml)
                     </Button>
-                    <div className="custom-hydration">
-                      <Input
-                        type="number"
-                        placeholder="Custom ml"
-                        value={customHydration}
-                        onChange={(e) => setCustomHydration(e.target.value)}
-                        className="custom-hydration-input"
-                      />
-                      <Button onClick={() => addHydration(parseInt(customHydration) || 0)} className="add-custom-btn">
-                        Add
-                      </Button>
-                    </div>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Log Sleep */}
-              <Card className="logging-card sleep-logging-card">
-                <CardHeader>
-                  <CardTitle className="logging-title">Log Sleep</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="sleep-input-container">
+                  <div className="custom-hydration">
                     <Input
-                      placeholder="Sleep hours (e.g., 7h 30m or 7.5)"
-                      value={sleepInput}
-                      onChange={(e) => setSleepInput(e.target.value)}
-                      className="sleep-input"
+                      type="number"
+                      placeholder="Custom ml"
+                      value={customHydration}
+                      onChange={(e) => setCustomHydration(e.target.value)}
+                      className="sleek-input"
                     />
-                    <Button onClick={logSleep} className="log-sleep-btn">
-                      Log Sleep
+                    <Button onClick={() => addHydration(parseInt(customHydration) || 0)} className="sleek-log-btn hydration-btn">
+                      Add
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
             </div>
 
