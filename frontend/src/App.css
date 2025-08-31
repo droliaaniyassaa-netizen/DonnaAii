@@ -4553,6 +4553,33 @@ body::before {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
+/* Sample Goal Display */
+.sample-goal-display {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.4) 0%,
+    rgba(51, 65, 85, 0.3) 100%
+  );
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  box-shadow: 
+    0 2px 12px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.sample-goal-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(248, 250, 252, 0.9);
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
 .sample-message-text {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.85rem;
