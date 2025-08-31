@@ -4780,7 +4780,7 @@ body::before {
 .health-logging-section {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 3rem;
   margin-bottom: 2rem;
   max-width: 500px;
   margin-left: auto;
