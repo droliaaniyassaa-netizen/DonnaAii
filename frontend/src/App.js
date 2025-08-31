@@ -1013,11 +1013,232 @@ const App = () => {
           </div>
         </TabsContent>
 
-        {/* Health Tab - Fresh Start */}
+        {/* Health Tab - Complete Redesign */}
         <TabsContent value="health" className="health-container">
           <div className="health-content">
-            <h2>New Health Tab Coming Soon!</h2>
-            <p>We're redesigning this from scratch to create an amazing health experience.</p>
+            
+            {/* Stat Cards - Main Focus */}
+            <div className="health-stats-grid">
+              
+              {/* Calories Card */}
+              <Card className="health-stat-card calories-card">
+                <CardContent className="stat-card-content">
+                  <div className="circular-progress-container">
+                    <div className="circular-progress calories-progress">
+                      <svg className="progress-ring" width="120" height="120">
+                        <circle 
+                          className="progress-ring-background"
+                          cx="60" 
+                          cy="60" 
+                          r="45"
+                        />
+                        <circle 
+                          className="progress-ring-fill calories-fill"
+                          cx="60" 
+                          cy="60" 
+                          r="45"
+                          style={{
+                            strokeDasharray: `${(healthStats.calories / healthGoals.calories) * 283} 283`,
+                            strokeDashoffset: 0
+                          }}
+                        />
+                      </svg>
+                      <div className="stat-content">
+                        <div className="stat-value">{healthStats.calories}</div>
+                        <div className="stat-unit">kcal</div>
+                        <div className="stat-goal">of {healthGoals.calories}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="stat-label">Calories</div>
+                </CardContent>
+              </Card>
+
+              {/* Protein Card */}
+              <Card className="health-stat-card protein-card">
+                <CardContent className="stat-card-content">
+                  <div className="circular-progress-container">
+                    <div className="circular-progress protein-progress">
+                      <svg className="progress-ring" width="120" height="120">
+                        <circle 
+                          className="progress-ring-background"
+                          cx="60" 
+                          cy="60" 
+                          r="45"
+                        />
+                        <circle 
+                          className="progress-ring-fill protein-fill"
+                          cx="60" 
+                          cy="60" 
+                          r="45"
+                          style={{
+                            strokeDasharray: `${(healthStats.protein / healthGoals.protein) * 283} 283`,
+                            strokeDashoffset: 0
+                          }}
+                        />
+                      </svg>
+                      <div className="stat-content">
+                        <div className="stat-value">{healthStats.protein}</div>
+                        <div className="stat-unit">g</div>
+                        <div className="stat-goal">of {healthGoals.protein}g</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="stat-label">Protein</div>
+                </CardContent>
+              </Card>
+
+              {/* Hydration Card */}
+              <Card className="health-stat-card hydration-card">
+                <CardContent className="stat-card-content">
+                  <div className="circular-progress-container">
+                    <div className="circular-progress hydration-progress">
+                      <svg className="progress-ring" width="120" height="120">
+                        <circle 
+                          className="progress-ring-background"
+                          cx="60" 
+                          cy="60" 
+                          r="45"
+                        />
+                        <circle 
+                          className="progress-ring-fill hydration-fill"
+                          cx="60" 
+                          cy="60" 
+                          r="45"
+                          style={{
+                            strokeDasharray: `${(healthStats.hydration / healthGoals.hydration) * 283} 283`,
+                            strokeDashoffset: 0
+                          }}
+                        />
+                      </svg>
+                      <div className="stat-content">
+                        <div className="stat-value">{healthStats.hydration}</div>
+                        <div className="stat-unit">ml</div>
+                        <div className="stat-goal">of {healthGoals.hydration}ml</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="stat-label">Hydration</div>
+                </CardContent>
+              </Card>
+
+              {/* Sleep Card */}
+              <Card className="health-stat-card sleep-card">
+                <CardContent className="stat-card-content">
+                  <div className="circular-progress-container">
+                    <div className="circular-progress sleep-progress">
+                      <svg className="progress-ring" width="120" height="120">
+                        <circle 
+                          className="progress-ring-background"
+                          cx="60" 
+                          cy="60" 
+                          r="45"
+                        />
+                        <circle 
+                          className="progress-ring-fill sleep-fill"
+                          cx="60" 
+                          cy="60" 
+                          r="45"
+                          style={{
+                            strokeDasharray: `${(healthStats.sleep / healthGoals.sleep) * 283} 283`,
+                            strokeDashoffset: 0
+                          }}
+                        />
+                      </svg>
+                      <div className="stat-content">
+                        <div className="stat-value">{healthStats.sleep}</div>
+                        <div className="stat-unit">h</div>
+                        <div className="stat-goal">of {healthGoals.sleep}h</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="stat-label">Sleep</div>
+                </CardContent>
+              </Card>
+
+            </div>
+
+            {/* Logging Section */}
+            <div className="health-logging-section">
+              
+              {/* Log Meals */}
+              <Card className="logging-card meal-logging-card">
+                <CardHeader>
+                  <CardTitle className="logging-title">Log Meals</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="meal-input-container">
+                    <Textarea
+                      placeholder="Describe your meal (e.g., 'bowl of salad', '2 rotis with dal')"
+                      value={mealInput}
+                      onChange={(e) => setMealInput(e.target.value)}
+                      className="meal-input"
+                    />
+                    <Button onClick={logMeal} className="log-meal-btn">
+                      Log Meal
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Log Hydration */}
+              <Card className="logging-card hydration-logging-card">
+                <CardHeader>
+                  <CardTitle className="logging-title">Log Hydration</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="hydration-controls">
+                    <Button onClick={() => addHydration(250)} className="hydration-btn glass-btn">
+                      + Glass (250ml)
+                    </Button>
+                    <Button onClick={() => addHydration(500)} className="hydration-btn bottle-btn">
+                      + Bottle (500ml)
+                    </Button>
+                    <div className="custom-hydration">
+                      <Input
+                        type="number"
+                        placeholder="Custom ml"
+                        value={customHydration}
+                        onChange={(e) => setCustomHydration(e.target.value)}
+                        className="custom-hydration-input"
+                      />
+                      <Button onClick={() => addHydration(parseInt(customHydration) || 0)} className="add-custom-btn">
+                        Add
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Log Sleep */}
+              <Card className="logging-card sleep-logging-card">
+                <CardHeader>
+                  <CardTitle className="logging-title">Log Sleep</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="sleep-input-container">
+                    <Input
+                      placeholder="Sleep hours (e.g., 7h 30m or 7.5)"
+                      value={sleepInput}
+                      onChange={(e) => setSleepInput(e.target.value)}
+                      className="sleep-input"
+                    />
+                    <Button onClick={logSleep} className="log-sleep-btn">
+                      Log Sleep
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+            </div>
+
+            {/* Goal Setting Button */}
+            <div className="goal-setting-section">
+              <Button onClick={() => setShowGoalModal(true)} className="set-goals-btn">
+                Set Goals
+              </Button>
+            </div>
+
           </div>
         </TabsContent>
       </Tabs>
