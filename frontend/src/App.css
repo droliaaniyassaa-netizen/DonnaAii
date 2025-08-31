@@ -3631,7 +3631,7 @@ body::before {
   cursor: not-allowed;
 }
 
-/* Move Action Plan Closer (6mm ≈ 1.5rem reduction) */
+/* Move Action Plan Closer (Additional 2mm ≈ 0.5rem) */
 .action-plan-card {
   background: none !important;
   backdrop-filter: none !important;
@@ -3640,7 +3640,7 @@ body::before {
   box-shadow: none !important;
   border-radius: 0;
   padding: 0;
-  margin: -0.5rem 0 1rem 0;
+  margin: -1rem 0 1rem 0;
 }
 
 .action-plan-header {
