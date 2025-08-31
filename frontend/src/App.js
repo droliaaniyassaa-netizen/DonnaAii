@@ -877,9 +877,9 @@ const App = () => {
               </Card>
             )}
 
-            {/* Resource Cards Row */}
-            {careerGoals.length > 0 && (() => {
-              const resources = getCurrentResources();
+            {/* Resource Cards Row - Both Sample and User Goals */}
+            {(() => {
+              const resources = careerGoals.length > 0 ? getCurrentResources() : careerResourcesData.career_growth;
               return (
                 <div className="resource-cards-row">
                   {/* AI Tools Card */}
@@ -891,6 +891,7 @@ const App = () => {
                       <CardTitle className="resource-title">
                         <Sparkles className="resource-icon" />
                         AI Tools
+                        {careerGoals.length === 0 && <span className="sample-badge-small">Sample</span>}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
@@ -924,6 +925,7 @@ const App = () => {
                       <CardTitle className="resource-title">
                         <Target className="resource-icon" />
                         Books
+                        {careerGoals.length === 0 && <span className="sample-badge-small">Sample</span>}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
@@ -947,6 +949,7 @@ const App = () => {
                       <CardTitle className="resource-title">
                         <Calendar className="resource-icon" />
                         Talks & Videos
+                        {careerGoals.length === 0 && <span className="sample-badge-small">Sample</span>}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
