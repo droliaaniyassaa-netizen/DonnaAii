@@ -653,7 +653,10 @@ const App = () => {
             {careerGoals.length > 0 && (
               <div className="resource-cards-row">
                 {/* AI Tools Card */}
-                <Card className="resource-card ai-tools-card">
+                <Card 
+                  className={`resource-card ai-tools-card ${activeResourceCard === 'ai-tools' ? 'active' : ''}`}
+                  onClick={() => setActiveResourceCard('ai-tools')}
+                >
                   <CardHeader>
                     <CardTitle className="resource-title">
                       <Sparkles className="resource-icon" />
@@ -662,17 +665,14 @@ const App = () => {
                   </CardHeader>
                   <CardContent className="resource-content">
                     <p className="resource-hint">Type in your goal to get personalised suggestions</p>
-                    <div className="resource-list">
-                      <div className="resource-item">ChatGPT for Resume Review</div>
-                      <div className="resource-item">Grammarly for Professional Writing</div>
-                      <div className="resource-item">Calendly for Interview Scheduling</div>
-                    </div>
-                    <div className="empty-state">No perfect match? I'll pick strong general-purpose tools.</div>
                   </CardContent>
                 </Card>
 
                 {/* Books Card */}
-                <Card className="resource-card books-card">
+                <Card 
+                  className={`resource-card books-card ${activeResourceCard === 'books' ? 'active' : ''}`}
+                  onClick={() => setActiveResourceCard('books')}
+                >
                   <CardHeader>
                     <CardTitle className="resource-title">
                       <Target className="resource-icon" />
@@ -681,17 +681,14 @@ const App = () => {
                   </CardHeader>
                   <CardContent className="resource-content">
                     <p className="resource-hint">Type in your goal to get personalised suggestions</p>
-                    <div className="resource-list">
-                      <div className="resource-item">The First 90 Days - Michael Watkins</div>
-                      <div className="resource-item">Atomic Habits - James Clear</div>
-                      <div className="resource-item">Deep Work - Cal Newport</div>
-                    </div>
-                    <div className="empty-state">Only non-fiction, profession-relevant picks.</div>
                   </CardContent>
                 </Card>
 
                 {/* Talks/Videos Card */}
-                <Card className="resource-card talks-card">
+                <Card 
+                  className={`resource-card talks-card ${activeResourceCard === 'talks' ? 'active' : ''}`}
+                  onClick={() => setActiveResourceCard('talks')}
+                >
                   <CardHeader>
                     <CardTitle className="resource-title">
                       <Calendar className="resource-icon" />
@@ -700,12 +697,6 @@ const App = () => {
                   </CardHeader>
                   <CardContent className="resource-content">
                     <p className="resource-hint">Type in your goal to get personalised suggestions</p>
-                    <div className="resource-list">
-                      <div className="resource-item">TED: How to Speak So People Want to Listen</div>
-                      <div className="resource-item">Harvard Business Review Leadership Series</div>
-                      <div className="resource-item">Stanford Entrepreneurship Corner</div>
-                    </div>
-                    <div className="empty-state">Only non-fiction, profession-relevant picks.</div>
                   </CardContent>
                 </Card>
               </div>
