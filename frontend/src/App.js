@@ -1119,7 +1119,7 @@ const App = () => {
               {/* Calories */}
               <div className="sophisticated-stat">
                 <div className="segmented-circle">
-                  <svg className="segmented-ring" width="140" height="140" viewBox="0 0 140 140">
+                  <svg className="segmented-ring" width="160" height="160" viewBox="0 0 140 140">
                     {Array.from({length: 60}, (_, i) => {
                       const angle = (i * 6) * (Math.PI / 180);
                       const progress = healthStats.calories / healthTargets.calories;
