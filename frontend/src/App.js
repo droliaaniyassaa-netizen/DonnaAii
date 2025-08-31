@@ -256,10 +256,14 @@ const App = () => {
   };
 
   const createCareerGoal = async () => {
-    if (!newGoal.goal || !newGoal.timeframe) return;
+    if (!newGoal.goal.trim()) return;
     
     try {
-      await axios.post(`${API}/career/goals`, newGoal);
+      const goalData = {
+        goal: newGoal.goal,
+        timeframe: '6 months' // Default timeframe
+      };
+      await axios.post(`${API}/career/goals`, goalData);
       setNewGoal({ goal: '', timeframe: '' });
       loadCareerGoals();
     } catch (error) {
