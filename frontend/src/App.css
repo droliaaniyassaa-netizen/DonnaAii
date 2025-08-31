@@ -5031,16 +5031,16 @@ body::before {
   }
   
   .segmented-ring {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
   }
   
   .stat-value {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
   
   .stat-subtitle {
-    font-size: 0.4rem;
+    font-size: 0.45rem;
   }
 }
 
