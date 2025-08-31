@@ -5214,11 +5214,17 @@ body::before {
 
 .meal-btn {
   background: linear-gradient(135deg, 
-    rgba(203, 213, 225, 0.25) 0%,
-    rgba(226, 232, 240, 0.2) 100%
+    rgba(251, 146, 60, 0.4) 0%,
+    rgba(245, 158, 11, 0.3) 100%
   );
-  color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(203, 213, 225, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  box-shadow: 
+    0 4px 12px rgba(251, 146, 60, 0.2),
+    0 0 20px rgba(251, 146, 60, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
 }
 
 .hydration-btn {
