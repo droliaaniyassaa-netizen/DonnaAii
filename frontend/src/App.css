@@ -4181,7 +4181,7 @@ body::before {
 
 .resource-item {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   color: rgba(248, 250, 252, 0.9);
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.1) 0%,
@@ -4190,8 +4190,8 @@ body::before {
   backdrop-filter: blur(15px) saturate(120%);
   -webkit-backdrop-filter: blur(15px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  padding: 0.35rem 0.5rem;
   text-align: left;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -4207,6 +4207,7 @@ body::before {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  hyphens: auto;
 }
 
 /* Clickable resource items (AI tools and talks) */
