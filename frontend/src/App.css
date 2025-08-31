@@ -4776,188 +4776,193 @@ body::before {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Logging Section */
+/* Sleek Logging Section - No Cards */
 .health-logging-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.logging-card {
-  background: linear-gradient(145deg, 
-    rgba(51, 65, 85, 0.4) 0%,
-    rgba(71, 85, 105, 0.3) 100%
-  );
-  backdrop-filter: blur(20px) saturate(120%);
-  -webkit-backdrop-filter: blur(20px) saturate(120%);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 20px;
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+.sleek-logging-block {
+  padding: 0;
 }
 
-.logging-title {
+.logging-label {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: rgba(248, 250, 252, 0.95);
-  margin: 0;
+  color: rgba(248, 250, 252, 0.9);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.02em;
 }
 
-/* Meal Logging */
+/* Sleep Time Inputs */
+.sleep-time-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.time-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.time-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(156, 163, 175, 0.8);
+  min-width: 70px;
+  font-weight: 500;
+}
+
+.time-input {
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.2) 0%,
+    rgba(51, 65, 85, 0.1) 100%
+  );
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
+  color: rgba(248, 250, 252, 0.9);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.75rem;
+  width: 120px;
+}
+
+/* Meal Input */
 .meal-input-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-.meal-input {
+.sleek-textarea {
   background: linear-gradient(145deg, 
-    rgba(71, 85, 105, 0.3) 0%,
-    rgba(51, 65, 85, 0.2) 100%
+    rgba(71, 85, 105, 0.2) 0%,
+    rgba(51, 65, 85, 0.1) 100%
   );
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
   color: rgba(248, 250, 252, 0.9);
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
-  padding: 0.75rem;
-  min-height: 80px;
+  font-size: 0.8rem;
+  padding: 0.6rem;
+  min-height: 60px;
   resize: vertical;
 }
 
-.meal-input::placeholder {
-  color: rgba(148, 163, 184, 0.6);
-}
-
-.log-meal-btn {
-  background: linear-gradient(135deg, 
-    rgba(245, 158, 11, 0.7) 0%,
-    rgba(251, 146, 60, 0.6) 100%
-  );
-  color: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 12px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.log-meal-btn:hover {
-  background: linear-gradient(135deg, 
-    rgba(245, 158, 11, 0.8) 0%,
-    rgba(251, 146, 60, 0.7) 100%
-  );
-  transform: translateY(-2px);
+.sleek-textarea::placeholder {
+  color: rgba(148, 163, 184, 0.5);
+  font-size: 0.75rem;
 }
 
 /* Hydration Controls */
 .hydration-controls {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-.hydration-btn {
-  background: linear-gradient(135deg, 
-    rgba(14, 165, 233, 0.7) 0%,
-    rgba(59, 130, 246, 0.6) 100%
-  );
-  color: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(14, 165, 233, 0.3);
-  border-radius: 12px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  padding: 0.75rem 1rem;
-  transition: all 0.3s ease;
-}
-
-.hydration-btn:hover {
-  background: linear-gradient(135deg, 
-    rgba(14, 165, 233, 0.8) 0%,
-    rgba(59, 130, 246, 0.7) 100%
-  );
-  transform: translateY(-2px);
-}
-
-.custom-hydration {
+.hydration-buttons {
   display: flex;
   gap: 0.5rem;
 }
 
-.custom-hydration-input {
-  flex: 1;
-  background: linear-gradient(145deg, 
-    rgba(71, 85, 105, 0.3) 0%,
-    rgba(51, 65, 85, 0.2) 100%
-  );
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
-  color: rgba(248, 250, 252, 0.9);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
-  padding: 0.75rem;
-}
-
-.add-custom-btn {
+.sleek-hydration-btn {
   background: linear-gradient(135deg, 
     rgba(14, 165, 233, 0.6) 0%,
     rgba(59, 130, 246, 0.5) 100%
   );
   color: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(14, 165, 233, 0.3);
-  border-radius: 12px;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 8px;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  padding: 0.75rem 1rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.2s ease;
+  flex: 1;
 }
 
-/* Sleep Logging */
-.sleep-input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.sleep-input {
-  background: linear-gradient(145deg, 
-    rgba(71, 85, 105, 0.3) 0%,
-    rgba(51, 65, 85, 0.2) 100%
+.sleek-hydration-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(14, 165, 233, 0.7) 0%,
+    rgba(59, 130, 246, 0.6) 100%
   );
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
+  transform: translateY(-1px);
+}
+
+.custom-hydration {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sleek-input {
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.2) 0%,
+    rgba(51, 65, 85, 0.1) 100%
+  );
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
   color: rgba(248, 250, 252, 0.9);
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
-  padding: 0.75rem;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.75rem;
+  flex: 1;
 }
 
-.log-sleep-btn {
-  background: linear-gradient(135deg, 
-    rgba(34, 197, 94, 0.7) 0%,
-    rgba(16, 185, 129, 0.6) 100%
-  );
-  color: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  border-radius: 12px;
+/* Sleek Log Buttons */
+.sleek-log-btn {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
 }
 
-.log-sleep-btn:hover {
+.sleep-btn {
   background: linear-gradient(135deg, 
-    rgba(34, 197, 94, 0.8) 0%,
-    rgba(16, 185, 129, 0.7) 100%
+    rgba(34, 197, 94, 0.6) 0%,
+    rgba(16, 185, 129, 0.5) 100%
   );
-  transform: translateY(-2px);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.meal-btn {
+  background: linear-gradient(135deg, 
+    rgba(245, 158, 11, 0.6) 0%,
+    rgba(251, 146, 60, 0.5) 100%
+  );
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.hydration-btn {
+  background: linear-gradient(135deg, 
+    rgba(14, 165, 233, 0.6) 0%,
+    rgba(59, 130, 246, 0.5) 100%
+  );
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.sleek-log-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
 /* Goal Setting */
