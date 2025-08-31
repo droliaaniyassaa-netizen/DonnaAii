@@ -3585,197 +3585,260 @@ body::before {
   cursor: not-allowed;
 }
 
-/* Professional Dark Action Plan Card */
+/* Professional Timeline Action Plan (No Card) */
 .action-plan-card {
-  background: linear-gradient(145deg, 
-    rgba(15, 23, 42, 0.95) 0%,
-    rgba(30, 41, 59, 0.9) 50%,
-    rgba(51, 65, 85, 0.85) 100%
-  ) !important;
-  backdrop-filter: blur(30px) saturate(130%) brightness(1.2) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(130%) brightness(1.2) !important;
-  border: 1px solid rgba(71, 85, 105, 0.3) !important;
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.6),
-    0 4px 16px rgba(0, 0, 0, 0.3),
-    0 0 30px rgba(14, 165, 233, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  background: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  padding: 0;
+  margin: 2rem 0;
 }
 
 .action-plan-header {
-  padding: 1.75rem 2rem 1.25rem 2rem;
-  border-bottom: 1px solid rgba(71, 85, 105, 0.2);
-  background: linear-gradient(145deg, 
-    rgba(30, 41, 59, 0.4) 0%,
-    rgba(51, 65, 85, 0.2) 100%
-  );
-  border-radius: 8px 8px 0 0;
+  padding: 0 0 2rem 0;
+  border-bottom: none;
+  background: none;
+  border-radius: 0;
 }
 
 .action-plan-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.375rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
   font-weight: 700;
   color: rgba(248, 250, 252, 0.98);
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  letter-spacing: -0.025em;
+  gap: 0.75rem;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  font-size: 1.1rem;
+  margin-bottom: 0;
 }
 
 .title-icon {
   color: rgba(14, 165, 233, 0.9);
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .action-plan-content {
-  padding: 1.75rem 2rem;
-  background: rgba(15, 23, 42, 0.3);
+  padding: 0;
+  background: none;
 }
 
+/* Timeline Implementation */
 .action-steps {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  margin-bottom: 1.75rem;
+  gap: 0;
+  margin-bottom: 3rem;
+  position: relative;
+  padding-left: 0;
+}
+
+/* Timeline Vertical Line */
+.action-steps::before {
+  content: '';
+  position: absolute;
+  left: 120px;
+  top: 20px;
+  bottom: 20px;
+  width: 1px;
+  background: rgba(71, 85, 105, 0.4);
 }
 
 .action-step {
-  transition: all 0.3s ease;
-  cursor: pointer;
-  padding: 1rem 1.25rem;
-  border-radius: 6px;
-  border: 1px solid rgba(71, 85, 105, 0.2);
-  background: rgba(30, 41, 59, 0.4);
+  display: flex;
+  align-items: flex-start;
+  padding: 1.5rem 0;
+  border: none;
+  background: none;
+  cursor: default;
+  position: relative;
 }
 
 .action-step:hover {
-  transform: translateY(-2px);
-  background: rgba(51, 65, 85, 0.5);
-  border-color: rgba(14, 165, 233, 0.3);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transform: none;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 .step-header {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0;
+  width: 100%;
 }
 
+/* Timeline Circle Marker */
 .step-number {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  background: linear-gradient(145deg, 
-    rgba(14, 165, 233, 0.9) 0%,
-    rgba(59, 130, 246, 0.8) 100%
-  );
-  border: 1px solid rgba(14, 165, 233, 0.6);
+  position: absolute;
+  left: 115px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.9);
+  border: 3px solid rgba(15, 23, 42, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  color: rgba(248, 250, 252, 0.98);
-  font-size: 0.875rem;
+  font-weight: 600;
+  color: transparent;
+  font-size: 0;
   flex-shrink: 0;
-  margin-top: 0.125rem;
-  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+  margin-top: 4px;
+  z-index: 2;
 }
 
-.step-content {
-  flex: 1;
-}
-
+/* Step Label (Left Side) */
 .step-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
   font-weight: 600;
   color: rgba(248, 250, 252, 0.95);
-  margin: 0 0 0.375rem 0;
-  letter-spacing: -0.01em;
+  margin: 0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  width: 100px;
+  text-align: right;
+  padding-right: 2rem;
+  padding-top: 0.125rem;
+}
+
+/* Step Content (Right Side) */
+.step-content {
+  flex: 1;
+  margin-left: 145px;
+  padding-top: 0;
 }
 
 .step-description {
-  font-size: 0.825rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
   color: rgba(148, 163, 184, 0.9);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
+/* Smart Tool Line - Adjusted for Timeline */
 .smart-tool-line {
   margin-top: 0.75rem;
-  padding: 0.75rem;
-  background: rgba(14, 165, 233, 0.08);
-  border: 1px solid rgba(14, 165, 233, 0.2);
+  margin-left: 145px;
+  padding: 0.625rem 0.75rem;
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.15);
   border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  font-size: 0.75rem;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  max-width: 400px;
 }
 
 .smart-tool-label {
+  font-family: 'Montserrat', sans-serif;
   color: rgba(14, 165, 233, 0.9);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  font-size: 0.65rem;
 }
 
 .smart-tool-suggestion {
+  font-family: 'Montserrat', sans-serif;
   color: rgba(248, 250, 252, 0.9);
   flex: 1;
   font-weight: 500;
+  font-size: 0.7rem;
 }
 
 .try-this-btn {
+  font-family: 'Montserrat', sans-serif;
   color: rgba(14, 165, 233, 0.9) !important;
-  padding: 0.375rem 0.75rem;
-  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.65rem;
   height: auto;
   font-weight: 600;
   text-decoration: underline;
   text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .try-this-btn:hover {
   color: rgba(248, 250, 252, 1) !important;
-  background: rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.15);
 }
 
+/* Action Plan Buttons - Timeline Style */
 .action-plan-buttons {
   display: flex;
-  gap: 0.875rem;
-  justify-content: flex-end;
-  padding-top: 1.25rem;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding-top: 2rem;
   border-top: 1px solid rgba(71, 85, 105, 0.2);
+  margin-left: 145px;
 }
 
 .copy-plan-btn,
 .save-brag-btn {
-  background: rgba(30, 41, 59, 0.8) !important;
-  border: 1px solid rgba(71, 85, 105, 0.4) !important;
+  font-family: 'Montserrat', sans-serif;
+  background: rgba(30, 41, 59, 0.6) !important;
+  border: 1px solid rgba(71, 85, 105, 0.3) !important;
   color: rgba(248, 250, 252, 0.95) !important;
   transition: all 0.3s ease;
-  font-size: 0.8rem;
-  padding: 0.625rem 1.125rem;
+  font-size: 0.7rem;
+  padding: 0.5rem 1rem;
   font-weight: 600;
   border-radius: 4px;
   text-transform: uppercase;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.05em;
 }
 
 .copy-plan-btn:hover,
 .save-brag-btn:hover {
-  background: rgba(51, 65, 85, 0.9) !important;
+  background: rgba(51, 65, 85, 0.8) !important;
   border-color: rgba(14, 165, 233, 0.4) !important;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile Timeline Adjustments */
+@media (max-width: 768px) {
+  .action-steps::before {
+    left: 80px;
+  }
+  
+  .step-number {
+    left: 75px;
+  }
+  
+  .step-title {
+    width: 60px;
+    font-size: 0.7rem;
+  }
+  
+  .step-content {
+    margin-left: 95px;
+  }
+  
+  .smart-tool-line {
+    margin-left: 95px;
+  }
+  
+  .action-plan-buttons {
+    margin-left: 95px;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .action-plan-title {
+    font-size: 1rem;
+  }
 }
 
 /* Professional Dark Resource Cards */
