@@ -257,7 +257,9 @@ const App = () => {
   };
 
   const createCareerGoal = async () => {
-    if (!newGoal.goal.trim()) return;
+    if (!newGoal.goal.trim() || isGeneratingPlan) return;
+    
+    setIsGeneratingPlan(true);
     
     try {
       const goalData = {
@@ -267,10 +269,12 @@ const App = () => {
       const response = await axios.post(`${API}/career/goals`, goalData);
       console.log('Career goal created:', response.data);
       setNewGoal({ goal: '', timeframe: '' });
-      loadCareerGoals();
+      await loadCareerGoals(); // Wait for the goals to load
     } catch (error) {
       console.error('Error creating career goal:', error);
       alert('Error creating career goal. Please try again.');
+    } finally {
+      setIsGeneratingPlan(false);
     }
   };
 
