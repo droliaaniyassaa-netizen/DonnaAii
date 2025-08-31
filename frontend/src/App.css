@@ -4823,6 +4823,39 @@ body::before {
     inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.sleep-time-inputs::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, 
+    rgba(34, 197, 94, 0.05) 0%,
+    transparent 50%,
+    rgba(16, 185, 129, 0.03) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.sleep-time-inputs:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    0 8px 24px rgba(34, 197, 94, 0.15),
+    0 0 30px rgba(34, 197, 94, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.sleep-time-inputs:hover::before {
+  opacity: 1;
 }
 
 .time-input-group {
