@@ -4758,17 +4758,17 @@ body::before {
 
 .stat-value {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
-  line-height: 1.2;
+  line-height: 1.1;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.1rem;
 }
 
 .stat-subtitle {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.65rem;
+  font-size: 0.5rem;
   font-weight: 500;
   color: rgba(156, 163, 175, 0.8);
   text-transform: uppercase;
