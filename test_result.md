@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Complete implementation of Dense Block Smart Suggestion feature and add telemetry logging plus weekend mode settings for the Smart Suggestions system."
+user_problem_statement: "Fix the Career tab 'Generate plan' button functionality to ensure it works properly and generates accurate action plans based on the user's specific career goals."
 
 backend:
   - task: "Calendar event CRUD operations (Create, Read, Update, Delete)"
