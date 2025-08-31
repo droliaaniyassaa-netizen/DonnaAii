@@ -4719,99 +4719,33 @@ body::before {
   margin: 0 auto;
 }
 
-/* Health Stats Grid - Main Focus */
+/* Health Stats Grid - Clean & Mobile-Friendly */
 .health-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  justify-items: center;
 }
 
-/* Health Stat Cards */
-.health-stat-card {
-  background: linear-gradient(145deg, 
-    rgba(15, 23, 42, 0.8) 0%,
-    rgba(30, 41, 59, 0.7) 25%,
-    rgba(51, 65, 85, 0.6) 75%,
-    rgba(71, 85, 105, 0.5) 100%
-  );
-  backdrop-filter: blur(25px) saturate(150%) brightness(1.15);
-  -webkit-backdrop-filter: blur(25px) saturate(150%) brightness(1.15);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 24px;
-  padding: 0;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 4px 16px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.health-stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.4),
-    0 8px 24px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-
-.stat-card-content {
-  padding: 2rem;
-  text-align: center;
-}
-
-/* Circular Progress */
-.circular-progress-container {
+/* Sophisticated Circular Stats */
+.sophisticated-stat {
   display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: center;
 }
 
-.circular-progress {
+.segmented-circle {
   position: relative;
   display: inline-block;
 }
 
-.progress-ring {
-  transform: rotate(-90deg);
+.segmented-ring {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
 }
 
-.progress-ring-background {
-  fill: none;
-  stroke: rgba(71, 85, 105, 0.3);
-  stroke-width: 8;
-}
-
-.progress-ring-fill {
-  fill: none;
-  stroke-width: 8;
-  stroke-linecap: round;
-  transition: stroke-dasharray 0.6s ease;
-}
-
-/* Individual stat card colors */
-.calories-fill {
-  stroke: rgba(245, 158, 11, 0.8);
-}
-
-.protein-fill {
-  stroke: rgba(168, 85, 247, 0.8);
-}
-
-.hydration-fill {
-  stroke: rgba(14, 165, 233, 0.8);
-}
-
-.sleep-fill {
-  stroke: rgba(34, 197, 94, 0.8);
-}
-
-/* Stat Content */
-.stat-content {
+/* Center Content */
+.stat-center {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -4821,36 +4755,22 @@ body::before {
 
 .stat-value {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: rgba(248, 250, 252, 0.95);
-  line-height: 1;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 0.2rem;
 }
 
-.stat-unit {
+.stat-subtitle {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 500;
-  color: rgba(148, 163, 184, 0.8);
+  color: rgba(156, 163, 175, 0.8);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.stat-goal {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.6rem;
-  color: rgba(148, 163, 184, 0.7);
-  margin-top: 0.2rem;
-}
-
-.stat-label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: rgba(248, 250, 252, 0.9);
-  text-align: center;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Logging Section */
