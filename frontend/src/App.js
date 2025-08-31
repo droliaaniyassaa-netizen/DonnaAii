@@ -587,7 +587,7 @@ const App = () => {
               <Card className="goal-input-card">
                 <CardContent className="goal-input-content">
                   <Textarea
-                    placeholder="State your career goal…"
+                    placeholder="Become a Senior Software Engineer at Google"
                     value={newGoal.goal}
                     onChange={(e) => setNewGoal({ ...newGoal, goal: e.target.value })}
                     className="career-goal-input"
