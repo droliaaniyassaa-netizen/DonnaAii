@@ -4362,3 +4362,68 @@ body::before {
     font-size: 0.85rem;
   }
 }
+
+/* Loading States and Spinners */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(14, 165, 233, 0.2);
+  border-top: 3px solid rgba(14, 165, 233, 0.8);
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-plan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  min-height: 200px;
+}
+
+.loading-plan p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(248, 250, 252, 0.9);
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.loading-subtext {
+  font-size: 0.75rem;
+  color: rgba(148, 163, 184, 0.7);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Button loading state */
+.generate-plan-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.generate-plan-btn .spinner {
+  width: 12px;
+  height: 12px;
+  border-width: 2px;
+  margin-right: 0.4rem;
+}
