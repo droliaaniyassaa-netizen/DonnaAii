@@ -4512,3 +4512,219 @@ body::before {
   border-width: 2px;
   margin-right: 0.4rem;
 }
+
+/* Onboarding Experience Styles */
+.onboarding-invitation {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.invitation-message {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(248, 250, 252, 0.95);
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  font-weight: 400;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.clarifying-note {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(14, 165, 233, 0.9);
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 500;
+  font-style: italic;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Sample Goals Section */
+.sample-goals-section {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.sample-goals-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.9);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.sample-goals-pods {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Individual Goal Pods */
+.goal-pod {
+  width: 280px;
+  min-height: 160px;
+  background: linear-gradient(145deg, 
+    rgba(15, 23, 42, 0.8) 0%,
+    rgba(30, 41, 59, 0.7) 25%,
+    rgba(51, 65, 85, 0.6) 75%,
+    rgba(71, 85, 105, 0.5) 100%
+  );
+  backdrop-filter: blur(25px) saturate(150%) brightness(1.15);
+  -webkit-backdrop-filter: blur(25px) saturate(150%) brightness(1.15);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 20px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.goal-pod::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.goal-pod:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(14, 165, 233, 0.3);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(14, 165, 233, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.goal-pod:hover::before {
+  opacity: 1;
+}
+
+.goal-pod:active {
+  transform: translateY(-4px) scale(0.98);
+}
+
+/* Pod Content */
+.pod-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.pod-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(248, 250, 252, 0.98);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.pod-description {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(148, 163, 184, 0.9);
+  line-height: 1.4;
+  margin: 0;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Different accent colors for each pod type */
+.career-growth-pod:hover {
+  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(34, 197, 94, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.business-expansion-pod:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(245, 158, 11, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.job-seeking-pod:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(168, 85, 247, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Responsive Design for Onboarding */
+@media (max-width: 768px) {
+  .sample-goals-pods {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .goal-pod {
+    width: 260px;
+    min-height: 140px;
+    padding: 1.25rem;
+  }
+  
+  .pod-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .pod-title {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .pod-description {
+    font-size: 0.7rem;
+  }
+  
+  .invitation-message {
+    font-size: 0.85rem;
+    padding: 0 1rem;
+  }
+  
+  .clarifying-note {
+    font-size: 0.75rem;
+    padding: 0 1rem;
+  }
+}
