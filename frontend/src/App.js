@@ -502,24 +502,20 @@ const App = () => {
     return 5; // Default estimate
   };
 
-  const parseSleepInput = (input) => {
-    // Parse formats like "7h 30m", "7.5", "7:30"
-    const timeRegex = /(\d+)h?\s*(\d+)?m?/;
-    const decimalRegex = /(\d+\.?\d*)/;
+  const calculateSleepHours = (sleepTime, wakeTime) => {
+    const [sleepHour, sleepMin] = sleepTime.split(':').map(Number);
+    const [wakeHour, wakeMin] = wakeTime.split(':').map(Number);
     
-    const timeMatch = input.match(timeRegex);
-    if (timeMatch) {
-      const hours = parseInt(timeMatch[1]);
-      const minutes = parseInt(timeMatch[2] || 0);
-      return hours + (minutes / 60);
+    let sleepMinutes = sleepHour * 60 + sleepMin;
+    let wakeMinutes = wakeHour * 60 + wakeMin;
+    
+    // Handle overnight sleep (e.g., sleep at 23:00, wake at 07:00)
+    if (wakeMinutes <= sleepMinutes) {
+      wakeMinutes += 24 * 60; // Add 24 hours
     }
     
-    const decimalMatch = input.match(decimalRegex);
-    if (decimalMatch) {
-      return parseFloat(decimalMatch[1]);
-    }
-    
-    return 0;
+    const totalMinutes = wakeMinutes - sleepMinutes;
+    return Math.round((totalMinutes / 60) * 10) / 10; // Round to 1 decimal place
   };
 
   // Health functions
