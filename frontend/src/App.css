@@ -5192,11 +5192,11 @@ body::before {
 
 .meal-btn {
   background: linear-gradient(135deg, 
-    rgba(245, 158, 11, 0.6) 0%,
-    rgba(251, 146, 60, 0.5) 100%
+    rgba(203, 213, 225, 0.25) 0%,
+    rgba(226, 232, 240, 0.2) 100%
   );
-  color: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(203, 213, 225, 0.15);
 }
 
 .hydration-btn {
