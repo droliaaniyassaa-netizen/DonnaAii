@@ -4590,10 +4590,83 @@ body::before {
 }
 
 .goal-pill:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
   box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(14, 165, 233, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Subtle pulse animation */
+@keyframes subtle-pulse {
+  0%, 100% { 
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.15),
+      0 2px 8px rgba(14, 165, 233, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  50% { 
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.15),
+      0 2px 8px rgba(14, 165, 233, 0.1),
+      0 0 15px rgba(14, 165, 233, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Slight color variations for each pill */
+.goal-pill:nth-child(1) {
+  background: linear-gradient(145deg, 
+    rgba(51, 65, 85, 0.6) 0%,
+    rgba(71, 85, 105, 0.4) 50%,
+    rgba(34, 197, 94, 0.12) 100%
+  );
+  border-color: rgba(34, 197, 94, 0.15);
+}
+
+.goal-pill:nth-child(1):hover {
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.7) 0%,
+    rgba(51, 65, 85, 0.5) 50%,
+    rgba(34, 197, 94, 0.2) 100%
+  );
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.goal-pill:nth-child(2) {
+  background: linear-gradient(145deg, 
+    rgba(51, 65, 85, 0.6) 0%,
+    rgba(71, 85, 105, 0.4) 50%,
+    rgba(245, 158, 11, 0.12) 100%
+  );
+  border-color: rgba(245, 158, 11, 0.15);
+}
+
+.goal-pill:nth-child(2):hover {
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.7) 0%,
+    rgba(51, 65, 85, 0.5) 50%,
+    rgba(245, 158, 11, 0.2) 100%
+  );
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.goal-pill:nth-child(3) {
+  background: linear-gradient(145deg, 
+    rgba(51, 65, 85, 0.6) 0%,
+    rgba(71, 85, 105, 0.4) 50%,
+    rgba(168, 85, 247, 0.12) 100%
+  );
+  border-color: rgba(168, 85, 247, 0.15);
+}
+
+.goal-pill:nth-child(3):hover {
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.7) 0%,
+    rgba(51, 65, 85, 0.5) 50%,
+    rgba(168, 85, 247, 0.2) 100%
+  );
+  border-color: rgba(168, 85, 247, 0.3);
 }
 
 /* Onboarding Experience Styles */
