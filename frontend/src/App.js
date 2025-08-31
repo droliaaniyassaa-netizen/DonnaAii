@@ -858,7 +858,9 @@ const App = () => {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
-                      <p className="resource-hint">Inspiring talks to shift your perspective</p>
+                      <p className="resource-hint">
+                        {activeResourceCard === 'talks' ? 'Click any talk to watch on TED' : 'Inspiring talks to shift your perspective'}
+                      </p>
                       <div className="resource-list">
                         {resources.talks.map((talk, index) => (
                           <a 
