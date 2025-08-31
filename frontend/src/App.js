@@ -1176,7 +1176,7 @@ const App = () => {
                       <div className="stat-content">
                         <div className="stat-value">{healthStats.protein}</div>
                         <div className="stat-unit">g</div>
-                        <div className="stat-goal">of {healthGoals.protein}g</div>
+                        <div className="stat-goal">of {healthTargets.protein}g</div>
                       </div>
                     </div>
                   </div>
