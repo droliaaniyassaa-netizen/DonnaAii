@@ -3945,9 +3945,11 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4rem;
-  padding: 2rem 0;
+  gap: 3rem;
+  padding: 2rem 1rem;
   margin: 2rem 0;
+  max-width: 100%;
+  overflow: visible;
 }
 
 /* Base Circle Style */
