@@ -1308,7 +1308,10 @@ const App = () => {
 
               {/* Log Meals */}
               <div className="sleek-logging-block">
-                <h3 className="logging-label">Log Meals</h3>
+                <h3 className="logging-label">
+                  Log Meals
+                  <div className="section-icon meal-icon"></div>
+                </h3>
                 <div className="meal-input-container">
                   <Textarea
                     placeholder="Describe your meal (e.g., 'bowl of salad', '2 rotis with dal')"
