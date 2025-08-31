@@ -263,11 +263,13 @@ const App = () => {
         goal: newGoal.goal,
         timeframe: '6 months' // Default timeframe
       };
-      await axios.post(`${API}/career/goals`, goalData);
+      const response = await axios.post(`${API}/career/goals`, goalData);
+      console.log('Career goal created:', response.data);
       setNewGoal({ goal: '', timeframe: '' });
       loadCareerGoals();
     } catch (error) {
       console.error('Error creating career goal:', error);
+      alert('Error creating career goal. Please try again.');
     }
   };
 
