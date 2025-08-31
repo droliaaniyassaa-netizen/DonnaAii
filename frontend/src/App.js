@@ -1210,7 +1210,7 @@ const App = () => {
                       <div className="stat-content">
                         <div className="stat-value">{healthStats.hydration}</div>
                         <div className="stat-unit">ml</div>
-                        <div className="stat-goal">of {healthGoals.hydration}ml</div>
+                        <div className="stat-goal">of {healthTargets.hydration}ml</div>
                       </div>
                     </div>
                   </div>
