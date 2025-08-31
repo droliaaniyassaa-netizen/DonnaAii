@@ -5103,8 +5103,7 @@ body::before {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  --glow-color: 251, 146, 60;
-  animation: mysteriousGlow 6s ease-in-out infinite;
+  animation: mealGlow 6s ease-in-out infinite;
 }
 
 .sleek-textarea::placeholder {
