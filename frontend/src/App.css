@@ -4190,6 +4190,36 @@ body::before {
   box-shadow: 
     0 4px 16px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  display: block;
+  text-decoration: none;
+}
+
+/* Clickable resource items (AI tools and talks) */
+.resource-item.clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.resource-item.clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.resource-item.clickable::after {
+  content: '↗';
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.6rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.resource-item.clickable:hover::after {
+  opacity: 0.7;
 }
 
 .resource-item:hover {
