@@ -741,6 +741,13 @@ const App = () => {
                   </p>
                 </div>
 
+                {/* Sample Goal Display */}
+                <div className="sample-goal-display">
+                  <p className="sample-goal-text">
+                    <strong>Sample Goal:</strong> "How can I get promoted from associate to team lead this year?"
+                  </p>
+                </div>
+
                 {/* Sample Action Plan Card */}
                 <Card className="action-plan-card">
                   <CardHeader className="action-plan-header">
@@ -756,8 +763,8 @@ const App = () => {
                         <div className="step-header">
                           <div className="step-number">1</div>
                           <div className="step-content">
-                            <h4 className="step-title">Strategic Skill Assessment</h4>
-                            <p className="step-description">Identify the top 3 skills required for your target role by analyzing job postings and speaking with current professionals in that position. Create a skills gap analysis to prioritize your development efforts.</p>
+                            <h4 className="step-title">Map the Decision Makers</h4>
+                            <p className="step-description">Identify your manager, their manager, and one peer with strong informal influence in leadership decisions. Study their communication styles, priorities, and current challenges. Position your contributions to directly support their visible wins.</p>
                           </div>
                         </div>
                       </div>
@@ -766,8 +773,8 @@ const App = () => {
                         <div className="step-header">
                           <div className="step-number">2</div>
                           <div className="step-content">
-                            <h4 className="step-title">Visibility & Relationship Building</h4>
-                            <p className="step-description">Schedule monthly one-on-ones with key stakeholders and decision-makers. Share your career aspirations and ask for specific feedback on areas for improvement.</p>
+                            <h4 className="step-title">Deploy Leadership Signal Tools</h4>
+                            <p className="step-description">Implement a team productivity tool (like Notion for project tracking or Slack automation for status updates) that makes your leadership capabilities visible daily. Every time the team benefits from your system, they associate you with solutions.</p>
                           </div>
                         </div>
                       </div>
@@ -776,8 +783,8 @@ const App = () => {
                         <div className="step-header">
                           <div className="step-number">3</div>
                           <div className="step-content">
-                            <h4 className="step-title">High-Impact Project Leadership</h4>
-                            <p className="step-description">Volunteer to lead a cross-functional project that aligns with company priorities. Document and communicate the measurable impact of your leadership.</p>
+                            <h4 className="step-title">Own Cross-Functional Wins</h4>
+                            <p className="step-description">Volunteer for one high-visibility project that requires coordinating with other departments. Focus on projects tied to company KPIs or executive priorities. Document your role in driving measurable outcomes and collaboration success.</p>
                           </div>
                         </div>
                       </div>
@@ -786,8 +793,8 @@ const App = () => {
                         <div className="step-header">
                           <div className="step-number">4</div>
                           <div className="step-content">
-                            <h4 className="step-title">External Credibility Building</h4>
-                            <p className="step-description">Establish thought leadership through industry articles, conference speaking, or professional certifications that demonstrate your expertise beyond your current role.</p>
+                            <h4 className="step-title">Build External Authority</h4>
+                            <p className="step-description">Write one industry article or speak at a professional event within 90 days. Share strategic insights from your work (without confidential details). When leadership sees you representing the company externally, your internal credibility multiplies.</p>
                             <div className="smart-tool-line">
                               <span className="smart-tool-label">Smart Tool:</span>
                               <span className="smart-tool-suggestion">LinkedIn Learning Analytics</span>
@@ -801,8 +808,8 @@ const App = () => {
                         <div className="step-header">
                           <div className="step-number">5</div>
                           <div className="step-content">
-                            <h4 className="step-title">Strategic Timing & Execution</h4>
-                            <p className="step-description">Create a promotion timeline aligned with company review cycles and budget planning. Present your case with quantified achievements and a clear vision for your expanded role.</p>
+                            <h4 className="step-title">Execute the Strategic Ask</h4>
+                            <p className="step-description">Create a "promotion proposal" document with quantified achievements, expanded responsibilities you've already taken on, and specific value you'll deliver as team lead. Time your ask 4-6 weeks before annual reviews when budgets and roles are being planned.</p>
                           </div>
                         </div>
                       </div>
