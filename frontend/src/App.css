@@ -4717,20 +4717,39 @@ body::before {
 
 
 /* Responsive Design for Sample Pills and Onboarding */
+@media (max-width: 1024px) {
+  .sample-goals-pills {
+    gap: 0.5rem;
+  }
+  
+  .goal-pill {
+    font-size: 0.6rem;
+    padding: 0.5rem 1rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+    min-width: 0;
+    flex: 1;
+    max-width: 300px;
+  }
+}
+
 @media (max-width: 768px) {
   .sample-goals-pills {
     flex-direction: column;
     align-items: center;
-    max-width: 300px;
+    gap: 0.6rem;
+    max-width: 320px;
   }
   
   .goal-pill {
+    font-size: 0.65rem;
+    padding: 0.6rem 1.2rem;
     white-space: normal;
     text-align: center;
-    font-size: 0.65rem;
-    padding: 0.5rem 1rem;
     line-height: 1.4;
     width: 100%;
+    max-width: 280px;
   }
   
   .sample-goals-label {
