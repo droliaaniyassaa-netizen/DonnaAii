@@ -583,9 +583,16 @@ const App = () => {
                   <Button 
                     onClick={createCareerGoal} 
                     className="generate-plan-btn"
-                    disabled={!newGoal.goal.trim()}
+                    disabled={!newGoal.goal.trim() || isGeneratingPlan}
                   >
-                    Generate plan
+                    {isGeneratingPlan ? (
+                      <>
+                        <div className="spinner"></div>
+                        Generating plan...
+                      </>
+                    ) : (
+                      'Generate plan'
+                    )}
                   </Button>
                 </CardContent>
               </Card>
