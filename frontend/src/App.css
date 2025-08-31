@@ -3496,7 +3496,7 @@ body::before {
   min-height: 100vh;
 }
 
-/* Clean Goal Input Section (No Card) */
+/* Clean Goal Input Section (Google-style Search Pill) */
 .goal-bar-sticky {
   position: sticky;
   top: 0;
@@ -3516,74 +3516,94 @@ body::before {
 
 .goal-input-content {
   display: flex;
-  gap: 1.5rem;
-  align-items: flex-end;
+  gap: 2rem;
+  align-items: center;
   padding: 0;
   margin-bottom: 2rem;
 }
 
+/* Google-style Search Pill */
 .career-goal-input {
   flex: 1;
-  background: rgba(30, 41, 59, 0.6) !important;
+  max-width: 600px;
+  background: linear-gradient(145deg, 
+    rgba(30, 41, 59, 0.8) 0%,
+    rgba(51, 65, 85, 0.6) 100%
+  ) !important;
+  backdrop-filter: blur(20px) saturate(120%) brightness(1.1) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(120%) brightness(1.1) !important;
   border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   color: rgba(248, 250, 252, 0.95) !important;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.8rem;
+  line-height: 1.4;
   resize: none;
   transition: all 0.3s ease;
-  border-radius: 6px;
+  border-radius: 50px;
   font-weight: 400;
-  padding: 1rem 1.25rem;
+  padding: 0.875rem 1.5rem;
   letter-spacing: 0.01em;
 }
 
 .career-goal-input:focus {
-  background: rgba(51, 65, 85, 0.8) !important;
-  border-color: rgba(14, 165, 233, 0.5) !important;
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+  background: linear-gradient(145deg, 
+    rgba(51, 65, 85, 0.9) 0%,
+    rgba(71, 85, 105, 0.7) 100%
+  ) !important;
+  border-color: rgba(14, 165, 233, 0.4) !important;
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(14, 165, 233, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   color: rgba(248, 250, 252, 1) !important;
   outline: none;
+  transform: translateY(-1px);
 }
 
 .career-goal-input::placeholder {
-  color: rgba(148, 163, 184, 0.7);
+  color: rgba(148, 163, 184, 0.6);
   font-style: italic;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
+  font-weight: 300;
 }
 
+/* Clean Text-only Generate Button */
 .generate-plan-btn {
-  background: linear-gradient(145deg, 
-    rgba(14, 165, 233, 0.9) 0%,
-    rgba(59, 130, 246, 0.8) 100%
-  ) !important;
-  border: 1px solid rgba(14, 165, 233, 0.6) !important;
-  color: rgba(248, 250, 252, 0.98) !important;
-  padding: 1rem 1.75rem;
+  background: none !important;
+  border: none !important;
+  color: rgba(14, 165, 233, 0.9) !important;
+  padding: 0 !important;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 0.75rem;
+  font-weight: 400;
+  font-size: 0.8rem;
   transition: all 0.3s ease;
-  min-width: 150px;
-  border-radius: 6px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  min-width: auto;
+  border-radius: 0;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 .generate-plan-btn:hover:not(:disabled) {
-  background: linear-gradient(145deg, 
-    rgba(14, 165, 233, 1) 0%,
-    rgba(59, 130, 246, 0.9) 100%
-  ) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+  background: none !important;
+  color: rgba(14, 165, 233, 1) !important;
+  transform: none;
+  box-shadow: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .generate-plan-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+  text-decoration: none;
 }
 
 /* Professional Timeline Action Plan (No Card) */
