@@ -1277,7 +1277,10 @@ const App = () => {
               
               {/* Log Sleep - Moved to top */}
               <div className="sleek-logging-block">
-                <h3 className="logging-label">Log Sleep</h3>
+                <h3 className="logging-label">
+                  Log Sleep
+                  <div className="moon-icon">🌙</div>
+                </h3>
                 <div className="sleep-time-inputs">
                   <div className="time-input-group">
                     <label className="time-label">Slept at:</label>
