@@ -442,6 +442,84 @@ const App = () => {
     return careerResourcesData[goalCategory] || careerResourcesData.career_growth;
   };
 
+  // Health logging functions
+  const logMeal = () => {
+    if (!mealInput.trim()) return;
+    
+    // Simple approximation logic (can be enhanced with AI later)
+    const estimatedCalories = estimateCalories(mealInput);
+    const estimatedProtein = estimateProtein(mealInput);
+    
+    setHealthStats(prev => ({
+      ...prev,
+      calories: prev.calories + estimatedCalories,
+      protein: prev.protein + estimatedProtein
+    }));
+    
+    setMealInput('');
+  };
+
+  const addHydration = (amount) => {
+    setHealthStats(prev => ({
+      ...prev,
+      hydration: prev.hydration + amount
+    }));
+    setCustomHydration('');
+  };
+
+  const logSleep = () => {
+    if (!sleepInput.trim()) return;
+    
+    const hours = parseSleepInput(sleepInput);
+    if (hours > 0) {
+      setHealthStats(prev => ({
+        ...prev,
+        sleep: hours
+      }));
+      setSleepInput('');
+    }
+  };
+
+  // Simple estimation functions (can be enhanced with AI)
+  const estimateCalories = (meal) => {
+    const mealLower = meal.toLowerCase();
+    if (mealLower.includes('salad')) return 150;
+    if (mealLower.includes('roti') || mealLower.includes('bread')) return 100;
+    if (mealLower.includes('rice')) return 200;
+    if (mealLower.includes('chicken')) return 250;
+    if (mealLower.includes('dal')) return 120;
+    return 100; // Default estimate
+  };
+
+  const estimateProtein = (meal) => {
+    const mealLower = meal.toLowerCase();
+    if (mealLower.includes('chicken')) return 25;
+    if (mealLower.includes('dal')) return 8;
+    if (mealLower.includes('egg')) return 12;
+    if (mealLower.includes('paneer')) return 15;
+    return 5; // Default estimate
+  };
+
+  const parseSleepInput = (input) => {
+    // Parse formats like "7h 30m", "7.5", "7:30"
+    const timeRegex = /(\d+)h?\s*(\d+)?m?/;
+    const decimalRegex = /(\d+\.?\d*)/;
+    
+    const timeMatch = input.match(timeRegex);
+    if (timeMatch) {
+      const hours = parseInt(timeMatch[1]);
+      const minutes = parseInt(timeMatch[2] || 0);
+      return hours + (minutes / 60);
+    }
+    
+    const decimalMatch = input.match(decimalRegex);
+    if (decimalMatch) {
+      return parseFloat(decimalMatch[1]);
+    }
+    
+    return 0;
+  };
+
   // Health functions
   const loadHealthEntries = async () => {
     try {
