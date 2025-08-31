@@ -4272,6 +4272,22 @@ body::before {
   display: none;
 }
 
+/* Prevent horizontal overflow on all screen sizes */
+@media (max-width: 1200px) {
+  .ai-tools-card.active .resource-list,
+  .talks-card.active .resource-list {
+    right: 80%;
+    margin-right: 1rem;
+    max-width: 200px;
+  }
+  
+  .books-card.active .resource-list {
+    left: 80%;
+    margin-left: 1rem;
+    max-width: 200px;
+  }
+}
+
 /* Mobile Circular Layout */
 @media (max-width: 768px) {
   .resource-cards-row {
@@ -4299,6 +4315,20 @@ body::before {
   .resource-hint {
     font-size: 0.65rem;
     max-width: 100px;
+  }
+  
+  /* Mobile: Show resources below cards instead of to sides */
+  .ai-tools-card.active .resource-list,
+  .books-card.active .resource-list,
+  .talks-card.active .resource-list {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 1rem auto 0;
+    transform: none;
+    max-width: 280px;
+    display: flex !important;
   }
 }
 
