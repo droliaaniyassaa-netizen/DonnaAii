@@ -1279,7 +1279,7 @@ const App = () => {
               <div className="sleek-logging-block">
                 <h3 className="logging-label">
                   Log Sleep
-                  <div className="moon-icon">🌙</div>
+                  <div className="section-icon moon-icon"></div>
                 </h3>
                 <div className="sleep-time-inputs">
                   <div className="time-input-group">
