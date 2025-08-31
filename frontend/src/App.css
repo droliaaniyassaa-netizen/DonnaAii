@@ -3501,7 +3501,7 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 100;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .goal-input-card {
