@@ -3572,7 +3572,7 @@ body::before {
   color: rgba(248, 250, 252, 1) !important;
   outline: none;
   transform: translateY(-2px);
-  text-align: left;
+  text-align: center;
 }
 
 .career-goal-input::placeholder {
