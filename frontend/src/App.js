@@ -1202,7 +1202,7 @@ const App = () => {
                           cy="60" 
                           r="45"
                           style={{
-                            strokeDasharray: `${(healthStats.hydration / healthGoals.hydration) * 283} 283`,
+                            strokeDasharray: `${(healthStats.hydration / healthTargets.hydration) * 283} 283`,
                             strokeDashoffset: 0
                           }}
                         />
