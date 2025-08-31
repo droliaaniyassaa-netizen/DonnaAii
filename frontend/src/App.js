@@ -710,24 +710,32 @@ const App = () => {
                 </CardHeader>
                 <CardContent className="action-plan-content">
                   <div className="action-steps">
-                    {[1,2,3,4,5,6,7].map((step) => (
-                      <div key={step} className="action-step">
-                        <div className="step-header">
-                          <div className="step-number">{step}</div>
-                          <div className="step-content">
-                            <h4 className="step-title">Step {step}: {getStepTitle(step)}</h4>
-                            <p className="step-description">{getStepDescription(step)}</p>
-                            {step === 4 && (
-                              <div className="smart-tool-line">
-                                <span className="smart-tool-label">Smart Tool:</span>
-                                <span className="smart-tool-suggestion">LinkedIn Learning Analytics</span>
-                                <Button variant="link" className="try-this-btn">Try this</Button>
-                              </div>
-                            )}
+                    {(() => {
+                      const plan = generateDonnaActionPlan(careerGoals[0]?.goal || '');
+                      const maxSteps = Math.min(plan.titles.length, plan.descriptions.length, plan.insights.length);
+                      
+                      return Array.from({length: maxSteps}, (_, i) => (
+                        <div key={i + 1} className="action-step">
+                          <div className="step-header">
+                            <div className="step-number">{i + 1}</div>
+                            <div className="step-content">
+                              <h4 className="step-title">{plan.titles[i]}</h4>
+                              <p className="step-description">{plan.descriptions[i]}</p>
+                              <p className="step-insight">
+                                <span className="insight-label">Insight:</span> {plan.insights[i]}
+                              </p>
+                              {i + 1 === 4 && (
+                                <div className="smart-tool-line">
+                                  <span className="smart-tool-label">Smart Tool:</span>
+                                  <span className="smart-tool-suggestion">LinkedIn Learning Analytics</span>
+                                  <Button variant="link" className="try-this-btn">Try this</Button>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ));
+                    })()}
                   </div>
                   <div className="action-plan-buttons">
                     <Button variant="outline" className="copy-plan-btn">
