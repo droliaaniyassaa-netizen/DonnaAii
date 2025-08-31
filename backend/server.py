@@ -362,28 +362,100 @@ async def delete_event(event_id: str):
 # Career endpoints
 @api_router.post("/career/goals", response_model=CareerGoal)
 async def create_career_goal(goal: CareerGoalCreate):
-    # Generate action plan using Donna
-    chat = LlmChat(
-        api_key=openai_api_key,
-        session_id="career_planning",
-        system_message="You are Donna, a career coach. Create a detailed, practical action plan with specific steps and resources."
-    ).with_model("openai", "gpt-4o-mini")
-    
-    prompt = f"Create a detailed action plan to achieve this career goal: '{goal.goal}' within {goal.timeframe}. Provide specific steps and recommended resources."
-    user_msg = UserMessage(text=prompt)
-    action_plan_response = await chat.send_message(user_msg)
-    
-    # Parse action plan (simple split for now)
-    action_steps = [step.strip() for step in action_plan_response.split('\n') if step.strip() and not step.strip().startswith('#')]
-    
-    goal_obj = CareerGoal(
-        goal=goal.goal,
-        timeframe=goal.timeframe,
-        action_plan=action_steps[:10],  # Limit to 10 steps
-        resources=["LinkedIn Learning", "Industry Books", "Networking Events", "Online Courses"]
-    )
-    await db.career_goals.insert_one(prepare_for_mongo(goal_obj.dict()))
-    return goal_obj
+    try:
+        # Generate action plan using Donna with enhanced prompt
+        chat = LlmChat(
+            api_key=openai_api_key,
+            session_id="career_planning",
+            system_message="""You are Donna, an elite career strategist like Donna Paulsen from Suits. You're sharp, strategic, and give actionable advice that gets results. 
+
+Create a precise 5-step action plan that's specific to the user's goal. Each step should be:
+1. Actionable and specific (not generic advice)
+2. Include strategic insights that most people miss
+3. Focus on leverage and smart positioning
+
+Format your response as exactly 5 numbered steps, each 2-3 sentences max. Be direct and strategic."""
+        ).with_model("openai", "gpt-4o-mini")
+        
+        # Enhanced prompt based on goal analysis
+        goal_lower = goal.goal.lower()
+        context = ""
+        
+        if any(word in goal_lower for word in ['senior', 'promotion', 'manager', 'lead']):
+            context = "This is a career advancement goal within an existing company or field."
+        elif any(word in goal_lower for word in ['business', 'startup', 'company', 'entrepreneur']):
+            context = "This is an entrepreneurial or business development goal."
+        elif any(word in goal_lower for word in ['job', 'hire', 'position', 'role']):
+            context = "This is a job search or career transition goal."
+        else:
+            context = "This is a general career development goal."
+            
+        prompt = f"""Goal: {goal.goal}
+Timeframe: {goal.timeframe}
+Context: {context}
+
+Create a strategic 5-step action plan that's specific to this exact goal. Focus on high-leverage activities that create momentum and visibility. Be sharp and actionable, not generic."""
+
+        user_msg = UserMessage(text=prompt)
+        action_plan_response = await chat.send_message(user_msg)
+        
+        print(f"✅ Generated action plan for goal '{goal.goal}': {action_plan_response}")
+        
+        # Enhanced parsing to extract clean steps
+        import re
+        
+        # Split by numbered items (1., 2., etc.)
+        step_pattern = r'^\d+\.\s*(.+?)(?=^\d+\.|$)'
+        matches = re.findall(step_pattern, action_plan_response, re.MULTILINE | re.DOTALL)
+        
+        if not matches:
+            # Fallback: split by lines and clean
+            action_steps = [
+                step.strip().lstrip('123456789.-• ') 
+                for step in action_plan_response.split('\n') 
+                if step.strip() and len(step.strip()) > 10
+            ]
+        else:
+            action_steps = [match.strip() for match in matches]
+        
+        # Limit to 5 steps and ensure quality
+        action_steps = action_steps[:5]
+        if len(action_steps) < 3:
+            # Fallback steps if parsing failed
+            action_steps = [
+                "Research key players and decision-makers in your target area, identifying their priorities and communication styles.",
+                "Identify and implement one high-visibility tool or process improvement that demonstrates your strategic thinking.",
+                "Build strategic relationships both vertically (with leadership) and horizontally (with influential peers).",
+                "Create measurable wins and document them in a 'results portfolio' for strategic positioning.",
+                "Time your strategic ask when you have momentum and evidence of impact."
+            ]
+        
+        # Generate contextual resources
+        resources = []
+        if 'business' in goal_lower or 'startup' in goal_lower:
+            resources = ["Y Combinator Startup School", "Lean Startup by Eric Ries", "First Round Review", "Harvard Business Review"]
+        elif 'tech' in goal_lower or 'engineer' in goal_lower or 'software' in goal_lower:
+            resources = ["LinkedIn Learning (Tech Skills)", "System Design Interview by Alex Xu", "Tech Lead Handbook", "Engineering Management Books"]
+        elif 'manager' in goal_lower or 'leadership' in goal_lower:
+            resources = ["The First 90 Days by Michael Watkins", "LinkedIn Learning (Leadership)", "Harvard ManageMentor", "Executive Presence"]
+        else:
+            resources = ["LinkedIn Learning", "Industry-specific Books", "Professional Networking Events", "Skill-building Online Courses"]
+        
+        goal_obj = CareerGoal(
+            goal=goal.goal,
+            timeframe=goal.timeframe,
+            action_plan=action_steps,
+            resources=resources
+        )
+        
+        await db.career_goals.insert_one(prepare_for_mongo(goal_obj.dict()))
+        print(f"✅ Saved career goal to database: {goal_obj.id}")
+        
+        return goal_obj
+        
+    except Exception as e:
+        print(f"❌ Error creating career goal: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to create career goal: {str(e)}")
 
 @api_router.get("/career/goals", response_model=List[CareerGoal])
 async def get_career_goals():
