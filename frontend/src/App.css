@@ -4142,8 +4142,11 @@ body::before {
   top: 50%;
   transform: translateY(-50%);
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
   z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.5rem;
 }
 
 .resource-card.active .resource-list {
