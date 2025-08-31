@@ -232,12 +232,24 @@ backend:
         comment: "✅ Backend fully supports glassmorphic frontend redesign. All event data properly serialized as JSON, categories support color coding, datetime handling supports Today box filtering, CRUD operations support flip-to-edit functionality. 96.9% test success rate (62/64 tests passed)."
 
 frontend:
+  - task: "Career tab 'Generate plan' button functionality"
+    implemented: false
+    working: false
+    file: "/app/frontend/src/App.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Generate plan button not properly integrated with backend. Frontend uses local generateDonnaActionPlan (lines 320-404) instead of calling backend /api/career/goals endpoint. Need to fix createCareerGoal function and action plan display logic."
+
   - task: "Dense Block Smart Suggestion implementation"
     implemented: true
     working: true
     file: "/app/frontend/src/components/SmartSuggestions.js"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
