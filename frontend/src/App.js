@@ -627,9 +627,15 @@ const App = () => {
                           </div>
                         </div>
                       ))
+                    ) : isGeneratingPlan ? (
+                      <div className="loading-plan">
+                        <div className="loading-spinner"></div>
+                        <p>Donna is crafting your personalized action plan...</p>
+                        <p className="loading-subtext">This may take a few seconds</p>
+                      </div>
                     ) : (
                       <div className="loading-plan">
-                        <p>Generating your personalized action plan...</p>
+                        <p>Enter your career goal above and click "Generate plan"</p>
                       </div>
                     )}
                   </div>
