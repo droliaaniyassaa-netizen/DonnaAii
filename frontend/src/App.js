@@ -835,7 +835,9 @@ const App = () => {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
-                      <p className="resource-hint">Essential reading for your journey</p>
+                      <p className="resource-hint">
+                        {activeResourceCard === 'books' ? 'Curated for your specific goal' : 'Essential reading for your journey'}  
+                      </p>
                       <div className="resource-list">
                         {resources.books.map((book, index) => (
                           <div key={index} className="resource-item">{book}</div>
