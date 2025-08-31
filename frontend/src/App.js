@@ -468,16 +468,17 @@ const App = () => {
     setCustomHydration('');
   };
 
-  const logSleep = () => {
-    if (!sleepInput.trim()) return;
+  const logSleepFromTimes = () => {
+    if (!sleepTime || !wakeTime) return;
     
-    const hours = parseSleepInput(sleepInput);
+    const hours = calculateSleepHours(sleepTime, wakeTime);
     if (hours > 0) {
       setHealthStats(prev => ({
         ...prev,
         sleep: hours
       }));
-      setSleepInput('');
+      setSleepTime('');
+      setWakeTime('');
     }
   };
 
