@@ -1244,7 +1244,7 @@ const App = () => {
                       <div className="stat-content">
                         <div className="stat-value">{healthStats.sleep}</div>
                         <div className="stat-unit">h</div>
-                        <div className="stat-goal">of {healthGoals.sleep}h</div>
+                        <div className="stat-goal">of {healthTargets.sleep}h</div>
                       </div>
                     </div>
                   </div>
