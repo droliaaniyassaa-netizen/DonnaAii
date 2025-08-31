@@ -355,7 +355,6 @@ metadata:
 test_plan:
   current_focus:
     - "Career tab 'Generate plan' button functionality"
-    - "Career goal creation with LLM-powered action plan generation"
   stuck_tasks:
     - "Frontend-backend integration for career goal generation"
   test_all: false
