@@ -765,6 +765,9 @@ const App = () => {
                           <div className="step-content">
                             <h4 className="step-title">Map the Decision Makers</h4>
                             <p className="step-description">Identify your manager, their manager, and one peer with strong informal influence in leadership decisions. Study their communication styles, priorities, and current challenges. Position your contributions to directly support their visible wins.</p>
+                            <p className="step-insight">
+                              <span className="insight-label">Insight:</span> Promotions happen when the right three people talk about you. Design your output for their radar, not the whole office.
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -775,6 +778,9 @@ const App = () => {
                           <div className="step-content">
                             <h4 className="step-title">Deploy Leadership Signal Tools</h4>
                             <p className="step-description">Implement a team productivity tool (like Notion for project tracking or Slack automation for status updates) that makes your leadership capabilities visible daily. Every time the team benefits from your system, they associate you with solutions.</p>
+                            <p className="step-insight">
+                              <span className="insight-label">Insight:</span> Every time the team saves effort with your tool, they unconsciously credit you. That repetition builds relevance faster than any self-promotion.
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -785,6 +791,9 @@ const App = () => {
                           <div className="step-content">
                             <h4 className="step-title">Own Cross-Functional Wins</h4>
                             <p className="step-description">Volunteer for one high-visibility project that requires coordinating with other departments. Focus on projects tied to company KPIs or executive priorities. Document your role in driving measurable outcomes and collaboration success.</p>
+                            <p className="step-insight">
+                              <span className="insight-label">Insight:</span> Leadership sees coordination as the hardest skill to scale. When you can make other departments work together, you look like management material.
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -795,6 +804,9 @@ const App = () => {
                           <div className="step-content">
                             <h4 className="step-title">Build External Authority</h4>
                             <p className="step-description">Write one industry article or speak at a professional event within 90 days. Share strategic insights from your work (without confidential details). When leadership sees you representing the company externally, your internal credibility multiplies.</p>
+                            <p className="step-insight">
+                              <span className="insight-label">Insight:</span> When leadership sees you representing the company externally, they start viewing you as a brand ambassador, not just an employee.
+                            </p>
                             <div className="smart-tool-line">
                               <span className="smart-tool-label">Smart Tool:</span>
                               <span className="smart-tool-suggestion">LinkedIn Learning Analytics</span>
@@ -810,6 +822,9 @@ const App = () => {
                           <div className="step-content">
                             <h4 className="step-title">Execute the Strategic Ask</h4>
                             <p className="step-description">Create a "promotion proposal" document with quantified achievements, expanded responsibilities you've already taken on, and specific value you'll deliver as team lead. Time your ask 4-6 weeks before annual reviews when budgets and roles are being planned.</p>
+                            <p className="step-insight">
+                              <span className="insight-label">Insight:</span> The ask becomes less "please promote me" and more "here's the logical next step to expand impact." That tone is taken seriously.
+                            </p>
                           </div>
                         </div>
                       </div>
