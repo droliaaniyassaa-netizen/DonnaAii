@@ -802,7 +802,9 @@ const App = () => {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
-                      <p className="resource-hint">Click to explore AI tools for your goals</p>
+                      <p className="resource-hint">
+                        {activeResourceCard === 'ai-tools' ? 'Click any tool to try it out' : 'Click to explore AI tools for your goals'}
+                      </p>
                       <div className="resource-list">
                         {resources.aiTools.map((tool, index) => (
                           <a 
