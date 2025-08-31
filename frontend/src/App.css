@@ -5196,7 +5196,7 @@ body::before {
     rgba(251, 146, 60, 0.5) 100%
   );
   color: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 .hydration-btn {
