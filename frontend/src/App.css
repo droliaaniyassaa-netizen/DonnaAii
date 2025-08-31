@@ -3496,61 +3496,62 @@ body::before {
   min-height: 100vh;
 }
 
-/* Executive Dark Goal Input Bar */
+/* Clean Goal Input Section (No Card) */
 .goal-bar-sticky {
   position: sticky;
   top: 0;
   z-index: 100;
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
 }
 
 .goal-input-card {
-  background: linear-gradient(145deg, 
-    rgba(15, 23, 42, 0.95) 0%,
-    rgba(30, 41, 59, 0.9) 50%,
-    rgba(51, 65, 85, 0.85) 100%
-  ) !important;
-  backdrop-filter: blur(25px) saturate(140%) brightness(1.1) !important;
-  -webkit-backdrop-filter: blur(25px) saturate(140%) brightness(1.1) !important;
-  border: 1px solid rgba(14, 165, 233, 0.2) !important;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(14, 165, 233, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  background: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  padding: 0;
 }
 
 .goal-input-content {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: flex-end;
-  padding: 1rem 1.5rem;
+  padding: 0;
+  margin-bottom: 2rem;
 }
 
 .career-goal-input {
   flex: 1;
-  background: rgba(15, 23, 42, 0.6) !important;
+  background: rgba(30, 41, 59, 0.6) !important;
   border: 1px solid rgba(71, 85, 105, 0.3) !important;
   color: rgba(248, 250, 252, 0.95) !important;
-  font-size: 0.875rem;
-  line-height: 1.4;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
   resize: none;
   transition: all 0.3s ease;
   border-radius: 6px;
   font-weight: 400;
+  padding: 1rem 1.25rem;
+  letter-spacing: 0.01em;
 }
 
 .career-goal-input:focus {
-  background: rgba(30, 41, 59, 0.8) !important;
+  background: rgba(51, 65, 85, 0.8) !important;
   border-color: rgba(14, 165, 233, 0.5) !important;
   box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
   color: rgba(248, 250, 252, 1) !important;
+  outline: none;
 }
 
 .career-goal-input::placeholder {
   color: rgba(148, 163, 184, 0.7);
   font-style: italic;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }
 
 .generate-plan-btn {
@@ -3560,15 +3561,15 @@ body::before {
   ) !important;
   border: 1px solid rgba(14, 165, 233, 0.6) !important;
   color: rgba(248, 250, 252, 0.98) !important;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  font-size: 0.875rem;
+  padding: 1rem 1.75rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
   transition: all 0.3s ease;
-  min-width: 140px;
+  min-width: 150px;
   border-radius: 6px;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  font-size: 0.8rem;
 }
 
 .generate-plan-btn:hover:not(:disabled) {
@@ -3576,7 +3577,7 @@ body::before {
     rgba(14, 165, 233, 1) 0%,
     rgba(59, 130, 246, 0.9) 100%
   ) !important;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
 }
 
