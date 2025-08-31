@@ -665,6 +665,11 @@ const App = () => {
                   </CardHeader>
                   <CardContent className="resource-content">
                     <p className="resource-hint">Type in your goal to get personalised suggestions</p>
+                    <div className="resource-list">
+                      <div className="resource-item">ChatGPT</div>
+                      <div className="resource-item">Claude AI</div>
+                      <div className="resource-item">Perplexity</div>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -681,6 +686,11 @@ const App = () => {
                   </CardHeader>
                   <CardContent className="resource-content">
                     <p className="resource-hint">Type in your goal to get personalised suggestions</p>
+                    <div className="resource-list">
+                      <div className="resource-item">Atomic Habits</div>
+                      <div className="resource-item">Deep Work</div>
+                      <div className="resource-item">The First 90 Days</div>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -697,6 +707,11 @@ const App = () => {
                   </CardHeader>
                   <CardContent className="resource-content">
                     <p className="resource-hint">Type in your goal to get personalised suggestions</p>
+                    <div className="resource-list">
+                      <div className="resource-item">TED Talks</div>
+                      <div className="resource-item">YCombinator</div>
+                      <div className="resource-item">HBR Leadership</div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
