@@ -4708,6 +4708,407 @@ body::before {
   border-top: 1px solid rgba(148, 163, 184, 0.1);
 }
 
+/* Health Tab Styles */
+.health-container {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.health-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Health Stats Grid - Main Focus */
+.health-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Health Stat Cards */
+.health-stat-card {
+  background: linear-gradient(145deg, 
+    rgba(15, 23, 42, 0.8) 0%,
+    rgba(30, 41, 59, 0.7) 25%,
+    rgba(51, 65, 85, 0.6) 75%,
+    rgba(71, 85, 105, 0.5) 100%
+  );
+  backdrop-filter: blur(25px) saturate(150%) brightness(1.15);
+  -webkit-backdrop-filter: blur(25px) saturate(150%) brightness(1.15);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 24px;
+  padding: 0;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.health-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.stat-card-content {
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Circular Progress */
+.circular-progress-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.circular-progress {
+  position: relative;
+  display: inline-block;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-background {
+  fill: none;
+  stroke: rgba(71, 85, 105, 0.3);
+  stroke-width: 8;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.6s ease;
+}
+
+/* Individual stat card colors */
+.calories-fill {
+  stroke: rgba(245, 158, 11, 0.8);
+}
+
+.protein-fill {
+  stroke: rgba(168, 85, 247, 0.8);
+}
+
+.hydration-fill {
+  stroke: rgba(14, 165, 233, 0.8);
+}
+
+.sleep-fill {
+  stroke: rgba(34, 197, 94, 0.8);
+}
+
+/* Stat Content */
+.stat-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.stat-value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: rgba(248, 250, 252, 0.95);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.stat-unit {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-goal {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  color: rgba(148, 163, 184, 0.7);
+  margin-top: 0.2rem;
+}
+
+.stat-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.9);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* Logging Section */
+.health-logging-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.logging-card {
+  background: linear-gradient(145deg, 
+    rgba(51, 65, 85, 0.4) 0%,
+    rgba(71, 85, 105, 0.3) 100%
+  );
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 20px;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.logging-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.95);
+  margin: 0;
+}
+
+/* Meal Logging */
+.meal-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.meal-input {
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.3) 0%,
+    rgba(51, 65, 85, 0.2) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  color: rgba(248, 250, 252, 0.9);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.75rem;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.meal-input::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.log-meal-btn {
+  background: linear-gradient(135deg, 
+    rgba(245, 158, 11, 0.7) 0%,
+    rgba(251, 146, 60, 0.6) 100%
+  );
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.log-meal-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(245, 158, 11, 0.8) 0%,
+    rgba(251, 146, 60, 0.7) 100%
+  );
+  transform: translateY(-2px);
+}
+
+/* Hydration Controls */
+.hydration-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hydration-btn {
+  background: linear-gradient(135deg, 
+    rgba(14, 165, 233, 0.7) 0%,
+    rgba(59, 130, 246, 0.6) 100%
+  );
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.hydration-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(14, 165, 233, 0.8) 0%,
+    rgba(59, 130, 246, 0.7) 100%
+  );
+  transform: translateY(-2px);
+}
+
+.custom-hydration {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.custom-hydration-input {
+  flex: 1;
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.3) 0%,
+    rgba(51, 65, 85, 0.2) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  color: rgba(248, 250, 252, 0.9);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.75rem;
+}
+
+.add-custom-btn {
+  background: linear-gradient(135deg, 
+    rgba(14, 165, 233, 0.6) 0%,
+    rgba(59, 130, 246, 0.5) 100%
+  );
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+/* Sleep Logging */
+.sleep-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sleep-input {
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.3) 0%,
+    rgba(51, 65, 85, 0.2) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  color: rgba(248, 250, 252, 0.9);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.75rem;
+}
+
+.log-sleep-btn {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.7) 0%,
+    rgba(16, 185, 129, 0.6) 100%
+  );
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.log-sleep-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.8) 0%,
+    rgba(16, 185, 129, 0.7) 100%
+  );
+  transform: translateY(-2px);
+}
+
+/* Goal Setting */
+.goal-setting-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.set-goals-btn {
+  background: linear-gradient(135deg, 
+    rgba(71, 85, 105, 0.6) 0%,
+    rgba(51, 65, 85, 0.5) 100%
+  );
+  color: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 1rem 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.set-goals-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(71, 85, 105, 0.7) 0%,
+    rgba(51, 65, 85, 0.6) 100%
+  );
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .health-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .health-logging-section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .stat-card-content {
+    padding: 1.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .progress-ring {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .progress-ring-background,
+  .progress-ring-fill {
+    r: 35;
+  }
+}
+
+@media (max-width: 480px) {
+  .health-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .reset-career-btn {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.7rem;
