@@ -4858,10 +4858,10 @@ body::before {
 
 .meal-icon {
   background: linear-gradient(135deg, 
-    rgba(245, 158, 11, 0.15) 0%,
-    rgba(251, 146, 60, 0.08) 100%
+    rgba(148, 163, 184, 0.08) 0%,
+    rgba(156, 163, 175, 0.05) 100%
   );
-  border-color: rgba(245, 158, 11, 0.3);
+  border-color: rgba(148, 163, 184, 0.25);
 }
 
 .meal-icon::before {
@@ -4870,11 +4870,11 @@ body::before {
   width: 8px;
   height: 8px;
   background: linear-gradient(135deg, 
-    rgba(245, 158, 11, 0.8) 0%,
-    rgba(251, 146, 60, 0.6) 100%
+    rgba(203, 213, 225, 0.6) 0%,
+    rgba(148, 163, 184, 0.4) 100%
   );
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 4px rgba(148, 163, 184, 0.2);
 }
 
 .meal-icon::after {
@@ -4883,8 +4883,8 @@ body::before {
   width: 12px;
   height: 2px;
   background: linear-gradient(90deg, 
-    rgba(245, 158, 11, 0.6) 0%,
-    rgba(251, 146, 60, 0.4) 100%
+    rgba(203, 213, 225, 0.4) 0%,
+    rgba(148, 163, 184, 0.3) 100%
   );
   border-radius: 1px;
   top: 50%;
