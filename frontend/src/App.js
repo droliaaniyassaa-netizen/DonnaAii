@@ -1327,7 +1327,10 @@ const App = () => {
 
               {/* Log Hydration */}
               <div className="sleek-logging-block">
-                <h3 className="logging-label">Log Hydration</h3>
+                <h3 className="logging-label">
+                  Log Hydration
+                  <div className="section-icon hydration-icon"></div>
+                </h3>
                 <div className="hydration-controls">
                   <div className="hydration-buttons">
                     <Button onClick={() => addHydration(250)} className="sleek-hydration-btn">
