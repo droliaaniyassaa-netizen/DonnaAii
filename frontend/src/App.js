@@ -1236,7 +1236,7 @@ const App = () => {
                           cy="60" 
                           r="45"
                           style={{
-                            strokeDasharray: `${(healthStats.sleep / healthGoals.sleep) * 283} 283`,
+                            strokeDasharray: `${(healthStats.sleep / healthTargets.sleep) * 283} 283`,
                             strokeDashoffset: 0
                           }}
                         />
