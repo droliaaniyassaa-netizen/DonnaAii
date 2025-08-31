@@ -67,7 +67,8 @@ const App = () => {
   });
   const [mealInput, setMealInput] = useState('');
   const [customHydration, setCustomHydration] = useState('');
-  const [sleepInput, setSleepInput] = useState('');
+  const [sleepTime, setSleepTime] = useState('');
+  const [wakeTime, setWakeTime] = useState('');
   const [showGoalModal, setShowGoalModal] = useState(false);
   
   // Health state
