@@ -4317,18 +4317,18 @@ body::before {
     max-width: 100px;
   }
   
-  /* Mobile: Show resources below cards instead of to sides */
+  /* Mobile: Keep left/right positioning but make them smaller */
   .ai-tools-card.active .resource-list,
-  .books-card.active .resource-list,
   .talks-card.active .resource-list {
-    position: relative;
-    top: auto;
-    left: auto;
-    right: auto;
-    margin: 1rem auto 0;
-    transform: none;
-    max-width: 280px;
-    display: flex !important;
+    right: 90%;
+    margin-right: 0.5rem;
+    max-width: 160px;
+  }
+  
+  .books-card.active .resource-list {
+    left: 90%;
+    margin-left: 0.5rem;
+    max-width: 160px;
   }
 }
 
