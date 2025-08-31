@@ -3784,10 +3784,33 @@ body::before {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.75rem;
   color: rgba(148, 163, 184, 0.9);
-  margin: 0;
+  margin: 0 0 0.75rem 0;
   line-height: 1.6;
   font-weight: 400;
   letter-spacing: 0.01em;
+}
+
+.step-insight {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(14, 165, 233, 0.9);
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 400;
+  font-style: italic;
+  padding: 0.5rem 0;
+  border-left: 2px solid rgba(14, 165, 233, 0.3);
+  padding-left: 0.75rem;
+  margin-left: 0.5rem;
+}
+
+.insight-label {
+  font-weight: 600;
+  font-style: normal;
+  color: rgba(14, 165, 233, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.65rem;
 }
 
 /* Smart Tool Line - Adjusted for Timeline */
