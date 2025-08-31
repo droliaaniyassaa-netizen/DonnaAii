@@ -4895,12 +4895,15 @@ body::before {
   width: 12px;
   height: 2px;
   background: linear-gradient(90deg, 
-    rgba(203, 213, 225, 0.4) 0%,
-    rgba(148, 163, 184, 0.3) 100%
+    rgba(251, 191, 36, 0.6) 0%,
+    rgba(245, 158, 11, 0.4) 100%
   );
   border-radius: 1px;
   top: 50%;
   transform: translateY(-50%);
+  box-shadow: 
+    0 0 4px rgba(251, 146, 60, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .hydration-icon {
