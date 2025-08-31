@@ -4858,10 +4858,10 @@ body::before {
 
 .meal-icon {
   background: linear-gradient(135deg, 
-    rgba(148, 163, 184, 0.08) 0%,
+    rgba(203, 213, 225, 0.08) 0%,
     rgba(156, 163, 175, 0.05) 100%
   );
-  border-color: rgba(148, 163, 184, 0.25);
+  border-color: rgba(203, 213, 225, 0.2);
 }
 
 .meal-icon::before {
