@@ -4728,3 +4728,76 @@ body::before {
     padding: 0 1rem;
   }
 }
+
+/* Reset Career Goals Button */
+.career-reset-section {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0 1rem 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.reset-career-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.8);
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.3) 0%,
+    rgba(51, 65, 85, 0.2) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.reset-career-btn:hover {
+  color: rgba(239, 68, 68, 0.9);
+  border-color: rgba(239, 68, 68, 0.3);
+  background: linear-gradient(145deg, 
+    rgba(239, 68, 68, 0.1) 0%,
+    rgba(220, 38, 38, 0.05) 100%
+  );
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 0 15px rgba(239, 68, 68, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.reset-career-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.reset-career-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  color: rgba(148, 163, 184, 0.5);
+}
+
+.reset-career-btn:disabled:hover {
+  transform: none;
+  color: rgba(148, 163, 184, 0.5);
+  border-color: rgba(148, 163, 184, 0.2);
+  background: linear-gradient(145deg, 
+    rgba(71, 85, 105, 0.3) 0%,
+    rgba(51, 65, 85, 0.2) 100%
+  );
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
