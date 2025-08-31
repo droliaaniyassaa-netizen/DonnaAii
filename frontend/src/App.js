@@ -1132,9 +1132,9 @@ const App = () => {
                       let segmentColor = 'rgba(75, 85, 99, 0.3)';
                       if (isActive) {
                         if (i < 15) segmentColor = 'rgba(245, 158, 11, 0.9)';
-                        else if (i < 30) segmentColor = 'rgba(239, 68, 68, 0.9)';
-                        else if (i < 45) segmentColor = 'rgba(168, 85, 247, 0.9)';
-                        else segmentColor = 'rgba(34, 197, 94, 0.9)';
+                        else if (i < 30) segmentColor = 'rgba(251, 146, 60, 0.9)';
+                        else if (i < 45) segmentColor = 'rgba(249, 115, 22, 0.9)';
+                        else segmentColor = 'rgba(234, 88, 12, 0.9)';
                       }
                       
                       return (
