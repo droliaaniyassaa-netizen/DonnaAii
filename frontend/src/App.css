@@ -5037,7 +5037,7 @@ body::before {
   );
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 10px;
   color: rgba(248, 250, 252, 0.9);
   font-family: 'Montserrat', sans-serif;
