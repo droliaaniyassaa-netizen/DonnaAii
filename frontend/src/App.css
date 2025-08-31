@@ -4787,6 +4787,11 @@ body::before {
   margin-right: auto;
 }
 
+/* Extra spacing between meals and hydration */
+.sleek-logging-block:nth-child(2) {
+  margin-bottom: 1.5rem;
+}
+
 .sleek-logging-block {
   padding: 0;
 }
