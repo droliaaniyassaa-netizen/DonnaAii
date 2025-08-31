@@ -4150,22 +4150,28 @@ body::before {
   display: flex;
 }
 
-/* Left side content for AI Tools */
+/* AI Tools - Left side */
 .ai-tools-card.active .resource-list {
   right: 100%;
-  margin-right: 2.5rem;
+  margin-right: 1.5rem;
+  max-width: 250px;
+  min-width: 200px;
 }
 
-/* Right side content for Talks */  
-.talks-card.active .resource-list {
-  left: 100%;
-  margin-left: 2.5rem;
-}
-
-/* Right side content for Books (center) */
+/* Books - Right side */
 .books-card.active .resource-list {
   left: 100%;
-  margin-left: 2.5rem;
+  margin-left: 1.5rem;
+  max-width: 250px;
+  min-width: 200px;
+}
+
+/* Talks - Left side (alternating) */  
+.talks-card.active .resource-list {
+  right: 100%;
+  margin-right: 1.5rem;
+  max-width: 250px;
+  min-width: 200px;
 }
 
 .resource-item {
