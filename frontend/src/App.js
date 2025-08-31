@@ -956,6 +956,18 @@ const App = () => {
                 </div>
               </>
             )}
+
+            {/* Small Reset Button - Always visible at bottom */}
+            <div className="career-reset-section">
+              <button 
+                className="reset-career-btn"
+                onClick={resetCareerGoals}
+                disabled={isGeneratingPlan}
+                title="Clear all career goals and start fresh"
+              >
+                ↻ Start Fresh
+              </button>
+            </div>
           </div>
         </TabsContent>
 
