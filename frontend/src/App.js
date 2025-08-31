@@ -308,6 +308,111 @@ const App = () => {
     };
   };
 
+  // Career Resources Data
+  const careerResourcesData = {
+    'career_growth': {
+      aiTools: [
+        { name: 'Otter.ai', description: 'Automated meeting notes and summaries', url: 'https://otter.ai' },
+        { name: 'Notion AI', description: 'Organize and summarize projects', url: 'https://www.notion.so/product/ai' },
+        { name: 'Grammarly Business', description: 'Professional communication polish', url: 'https://www.grammarly.com/business' },
+        { name: 'Crystal Knows', description: 'Personality insights for better workplace interactions', url: 'https://www.crystalknows.com' },
+        { name: 'Reclaim.ai', description: 'Smart calendar and focus time optimization', url: 'https://reclaim.ai' }
+      ],
+      books: [
+        'The First 90 Days by Michael D. Watkins',
+        'Power: Why Some People Have It and Others Don\'t by Jeffrey Pfeffer',
+        'The Art of Strategy by Avinash K. Dixit & Barry Nalebuff', 
+        'How to Win Friends and Influence People by Dale Carnegie',
+        'Multipliers by Liz Wiseman'
+      ],
+      talks: [
+        { title: 'Amy Cuddy: "Your Body Language Shapes Who You Are"', url: 'https://www.ted.com/talks/amy_cuddy_your_body_language_shapes_who_you_are' },
+        { title: 'Sheryl Sandberg: "Why We Have Too Few Women Leaders"', url: 'https://www.ted.com/talks/sheryl_sandberg_why_we_have_too_few_women_leaders' },
+        { title: 'Roselinde Torres: "What It Takes to Be a Great Leader"', url: 'https://www.ted.com/talks/roselinde_torres_what_it_takes_to_be_a_great_leader' },
+        { title: 'Margaret Heffernan: "Dare to Disagree"', url: 'https://www.ted.com/talks/margaret_heffernan_dare_to_disagree' },
+        { title: 'Adam Grant: "Are You a Giver or a Taker?"', url: 'https://www.ted.com/talks/adam_grant_are_you_a_giver_or_a_taker' },
+        { title: 'Drew Dudley: "Everyday Leadership"', url: 'https://www.ted.com/talks/drew_dudley_everyday_leadership' }
+      ]
+    },
+    'business_expansion': {
+      aiTools: [
+        { name: 'Jasper.ai', description: 'High-converting marketing copy', url: 'https://www.jasper.ai' },
+        { name: 'Canva AI', description: 'Design campaigns with speed', url: 'https://www.canva.com/ai-image-generator/' },
+        { name: 'AdCreative.ai', description: 'Generate tested ad creatives automatically', url: 'https://www.adcreative.ai' },
+        { name: 'Tableau', description: 'Advanced data visualization for business strategy', url: 'https://www.tableau.com' },
+        { name: 'Zapier', description: 'Workflow automation to scale operations', url: 'https://zapier.com' }
+      ],
+      books: [
+        'Zero to One by Peter Thiel',
+        'The Lean Startup by Eric Ries',
+        'Blue Ocean Strategy by W. Chan Kim & Renée Mauborgne',
+        'The Hard Thing About Hard Things by Ben Horowitz',
+        'Measure What Matters by John Doerr'
+      ],
+      talks: [
+        { title: 'Simon Sinek: "How Great Leaders Inspire Action"', url: 'https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action' },
+        { title: 'Bill Gross: "The Single Biggest Reason Why Startups Succeed"', url: 'https://www.ted.com/talks/bill_gross_the_single_biggest_reason_why_startups_succeed' },
+        { title: 'Casey Gerald: "The Gospel of Doubt"', url: 'https://www.ted.com/talks/casey_gerald_the_gospel_of_doubt' },
+        { title: 'Linda Hill: "How to Manage for Collective Creativity"', url: 'https://www.ted.com/talks/linda_hill_how_to_manage_for_collective_creativity' },
+        { title: 'Martin Reeves: "How to Build a Business That Lasts 100 Years"', url: 'https://www.ted.com/talks/martin_reeves_how_to_build_a_business_that_lasts_100_years' },
+        { title: 'Harish Manwani: "Profit\'s Not Always the Point"', url: 'https://www.ted.com/talks/harish_manwani_profit_s_not_always_the_point' }
+      ]
+    },
+    'job_seeking': {
+      aiTools: [
+        { name: 'Kickresume', description: 'AI-powered résumé and cover letters', url: 'https://kickresume.com' },
+        { name: 'Rezi', description: 'Tailored résumé optimization for ATS', url: 'https://rezi.ai' },
+        { name: 'Jobscan', description: 'Match résumé to job descriptions', url: 'https://www.jobscan.co' },
+        { name: 'LinkedIn Career Explorer', description: 'Skill mapping for emerging roles', url: 'https://linkedin.github.io/career-explorer/' },
+        { name: 'Big Interview AI', description: 'Practice interviews with instant AI feedback', url: 'https://biginterview.com' }
+      ],
+      books: [
+        'So Good They Can\'t Ignore You by Cal Newport',
+        'The 2-Hour Job Search by Steve Dalton',
+        'Never Eat Alone by Keith Ferrazzi',
+        'Designing Your Life by Bill Burnett & Dave Evans',
+        'What Color Is Your Parachute? by Richard N. Bolles'
+      ],
+      talks: [
+        { title: 'Larry Smith: "Why You Will Fail to Have a Great Career"', url: 'https://www.ted.com/talks/larry_smith_why_you_will_fail_to_have_a_great_career' },
+        { title: 'Regina Hartley: "Why the Best Hire Might Not Have the Perfect Resume"', url: 'https://www.ted.com/talks/regina_hartley_why_the_best_hire_might_not_have_the_perfect_resume' },
+        { title: 'Angela Lee Duckworth: "Grit: The Power of Passion and Perseverance"', url: 'https://www.ted.com/talks/angela_lee_duckworth_grit_the_power_of_passion_and_perseverance' },
+        { title: 'Julian Treasure: "How to Speak So That People Want to Listen"', url: 'https://www.ted.com/talks/julian_treasure_how_to_speak_so_that_people_want_to_listen' },
+        { title: 'Celeste Headlee: "10 Ways to Have a Better Conversation"', url: 'https://www.ted.com/talks/celeste_headlee_10_ways_to_have_a_better_conversation' },
+        { title: 'Emilie Wapnick: "Why Some of Us Don\'t Have One True Calling"', url: 'https://www.ted.com/talks/emilie_wapnick_why_some_of_us_don_t_have_one_true_calling' }
+      ]
+    }
+  };
+
+  // Function to detect goal category based on goal text
+  const detectGoalCategory = (goalText) => {
+    if (!goalText) return 'career_growth';
+    
+    const goal = goalText.toLowerCase();
+    
+    if (goal.includes('business') || goal.includes('startup') || goal.includes('company') || 
+        goal.includes('scale') || goal.includes('expand') || goal.includes('entrepreneur') ||
+        goal.includes('founder') || goal.includes('revenue') || goal.includes('market')) {
+      return 'business_expansion';
+    }
+    
+    if (goal.includes('job') || goal.includes('hire') || goal.includes('interview') || 
+        goal.includes('internship') || goal.includes('graduate') || goal.includes('entry') ||
+        goal.includes('resume') || goal.includes('career change') || goal.includes('transition')) {
+      return 'job_seeking';
+    }
+    
+    return 'career_growth'; // Default
+  };
+
+  // Get current resources based on goal
+  const getCurrentResources = () => {
+    if (careerGoals.length === 0) return careerResourcesData.career_growth;
+    
+    const goalCategory = detectGoalCategory(careerGoals[0]?.goal);
+    return careerResourcesData[goalCategory] || careerResourcesData.career_growth;
+  };
+
   // Health functions
   const loadHealthEntries = async () => {
     try {
