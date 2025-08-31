@@ -1113,144 +1113,164 @@ const App = () => {
         <TabsContent value="health" className="health-container">
           <div className="health-content">
             
-            {/* Stat Cards - Main Focus */}
+            {/* Sophisticated Circular Progress Stats */}
             <div className="health-stats-grid">
               
-              {/* Calories Card */}
-              <Card className="health-stat-card calories-card">
-                <CardContent className="stat-card-content">
-                  <div className="circular-progress-container">
-                    <div className="circular-progress calories-progress">
-                      <svg className="progress-ring" width="120" height="120">
-                        <circle 
-                          className="progress-ring-background"
-                          cx="60" 
-                          cy="60" 
-                          r="45"
+              {/* Calories */}
+              <div className="sophisticated-stat">
+                <div className="segmented-circle">
+                  <svg className="segmented-ring" width="140" height="140" viewBox="0 0 140 140">
+                    {Array.from({length: 60}, (_, i) => {
+                      const angle = (i * 6) * (Math.PI / 180);
+                      const progress = healthStats.calories / healthTargets.calories;
+                      const isActive = i <= (progress * 60);
+                      const x1 = 70 + 55 * Math.cos(angle - Math.PI / 2);
+                      const y1 = 70 + 55 * Math.sin(angle - Math.PI / 2);
+                      const x2 = 70 + 45 * Math.cos(angle - Math.PI / 2);
+                      const y2 = 70 + 45 * Math.sin(angle - Math.PI / 2);
+                      
+                      let segmentColor = 'rgba(75, 85, 99, 0.3)';
+                      if (isActive) {
+                        if (i < 15) segmentColor = 'rgba(245, 158, 11, 0.9)';
+                        else if (i < 30) segmentColor = 'rgba(239, 68, 68, 0.9)';
+                        else if (i < 45) segmentColor = 'rgba(168, 85, 247, 0.9)';
+                        else segmentColor = 'rgba(34, 197, 94, 0.9)';
+                      }
+                      
+                      return (
+                        <line
+                          key={i}
+                          x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke={segmentColor}
+                          strokeWidth="3"
+                          strokeLinecap="round"
                         />
-                        <circle 
-                          className="progress-ring-fill calories-fill"
-                          cx="60" 
-                          cy="60" 
-                          r="45"
-                          style={{
-                            strokeDasharray: `${(healthStats.calories / healthTargets.calories) * 283} 283`,
-                            strokeDashoffset: 0
-                          }}
-                        />
-                      </svg>
-                      <div className="stat-content">
-                        <div className="stat-value">{healthStats.calories}</div>
-                        <div className="stat-unit">kcal</div>
-                        <div className="stat-goal">of {healthTargets.calories}</div>
-                      </div>
-                    </div>
+                      );
+                    })}
+                  </svg>
+                  <div className="stat-center">
+                    <div className="stat-value">{healthStats.calories}kcal</div>
+                    <div className="stat-subtitle">Calories</div>
                   </div>
-                  <div className="stat-label">Calories</div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              {/* Protein Card */}
-              <Card className="health-stat-card protein-card">
-                <CardContent className="stat-card-content">
-                  <div className="circular-progress-container">
-                    <div className="circular-progress protein-progress">
-                      <svg className="progress-ring" width="120" height="120">
-                        <circle 
-                          className="progress-ring-background"
-                          cx="60" 
-                          cy="60" 
-                          r="45"
+              {/* Protein */}
+              <div className="sophisticated-stat">
+                <div className="segmented-circle">
+                  <svg className="segmented-ring" width="140" height="140" viewBox="0 0 140 140">
+                    {Array.from({length: 60}, (_, i) => {
+                      const angle = (i * 6) * (Math.PI / 180);
+                      const progress = healthStats.protein / healthTargets.protein;
+                      const isActive = i <= (progress * 60);
+                      const x1 = 70 + 55 * Math.cos(angle - Math.PI / 2);
+                      const y1 = 70 + 55 * Math.sin(angle - Math.PI / 2);
+                      const x2 = 70 + 45 * Math.cos(angle - Math.PI / 2);
+                      const y2 = 70 + 45 * Math.sin(angle - Math.PI / 2);
+                      
+                      let segmentColor = 'rgba(75, 85, 99, 0.3)';
+                      if (isActive) {
+                        if (i < 15) segmentColor = 'rgba(168, 85, 247, 0.9)';
+                        else if (i < 30) segmentColor = 'rgba(139, 92, 246, 0.9)';
+                        else if (i < 45) segmentColor = 'rgba(99, 102, 241, 0.9)';
+                        else segmentColor = 'rgba(59, 130, 246, 0.9)';
+                      }
+                      
+                      return (
+                        <line
+                          key={i}
+                          x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke={segmentColor}
+                          strokeWidth="3"
+                          strokeLinecap="round"
                         />
-                        <circle 
-                          className="progress-ring-fill protein-fill"
-                          cx="60" 
-                          cy="60" 
-                          r="45"
-                          style={{
-                            strokeDasharray: `${(healthStats.protein / healthTargets.protein) * 283} 283`,
-                            strokeDashoffset: 0
-                          }}
-                        />
-                      </svg>
-                      <div className="stat-content">
-                        <div className="stat-value">{healthStats.protein}</div>
-                        <div className="stat-unit">g</div>
-                        <div className="stat-goal">of {healthTargets.protein}g</div>
-                      </div>
-                    </div>
+                      );
+                    })}
+                  </svg>
+                  <div className="stat-center">
+                    <div className="stat-value">{healthStats.protein}g</div>
+                    <div className="stat-subtitle">Protein</div>
                   </div>
-                  <div className="stat-label">Protein</div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              {/* Hydration Card */}
-              <Card className="health-stat-card hydration-card">
-                <CardContent className="stat-card-content">
-                  <div className="circular-progress-container">
-                    <div className="circular-progress hydration-progress">
-                      <svg className="progress-ring" width="120" height="120">
-                        <circle 
-                          className="progress-ring-background"
-                          cx="60" 
-                          cy="60" 
-                          r="45"
+              {/* Hydration */}
+              <div className="sophisticated-stat">
+                <div className="segmented-circle">
+                  <svg className="segmented-ring" width="140" height="140" viewBox="0 0 140 140">
+                    {Array.from({length: 60}, (_, i) => {
+                      const angle = (i * 6) * (Math.PI / 180);
+                      const progress = healthStats.hydration / healthTargets.hydration;
+                      const isActive = i <= (progress * 60);
+                      const x1 = 70 + 55 * Math.cos(angle - Math.PI / 2);
+                      const y1 = 70 + 55 * Math.sin(angle - Math.PI / 2);
+                      const x2 = 70 + 45 * Math.cos(angle - Math.PI / 2);
+                      const y2 = 70 + 45 * Math.sin(angle - Math.PI / 2);
+                      
+                      let segmentColor = 'rgba(75, 85, 99, 0.3)';
+                      if (isActive) {
+                        if (i < 15) segmentColor = 'rgba(14, 165, 233, 0.9)';
+                        else if (i < 30) segmentColor = 'rgba(6, 182, 212, 0.9)';
+                        else if (i < 45) segmentColor = 'rgba(20, 184, 166, 0.9)';
+                        else segmentColor = 'rgba(16, 185, 129, 0.9)';
+                      }
+                      
+                      return (
+                        <line
+                          key={i}
+                          x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke={segmentColor}
+                          strokeWidth="3"
+                          strokeLinecap="round"
                         />
-                        <circle 
-                          className="progress-ring-fill hydration-fill"
-                          cx="60" 
-                          cy="60" 
-                          r="45"
-                          style={{
-                            strokeDasharray: `${(healthStats.hydration / healthTargets.hydration) * 283} 283`,
-                            strokeDashoffset: 0
-                          }}
-                        />
-                      </svg>
-                      <div className="stat-content">
-                        <div className="stat-value">{healthStats.hydration}</div>
-                        <div className="stat-unit">ml</div>
-                        <div className="stat-goal">of {healthTargets.hydration}ml</div>
-                      </div>
-                    </div>
+                      );
+                    })}
+                  </svg>
+                  <div className="stat-center">
+                    <div className="stat-value">{healthStats.hydration}ml</div>
+                    <div className="stat-subtitle">Water</div>
                   </div>
-                  <div className="stat-label">Hydration</div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              {/* Sleep Card */}
-              <Card className="health-stat-card sleep-card">
-                <CardContent className="stat-card-content">
-                  <div className="circular-progress-container">
-                    <div className="circular-progress sleep-progress">
-                      <svg className="progress-ring" width="120" height="120">
-                        <circle 
-                          className="progress-ring-background"
-                          cx="60" 
-                          cy="60" 
-                          r="45"
+              {/* Sleep */}
+              <div className="sophisticated-stat">
+                <div className="segmented-circle">
+                  <svg className="segmented-ring" width="140" height="140" viewBox="0 0 140 140">
+                    {Array.from({length: 60}, (_, i) => {
+                      const angle = (i * 6) * (Math.PI / 180);
+                      const progress = healthStats.sleep / healthTargets.sleep;
+                      const isActive = i <= (progress * 60);
+                      const x1 = 70 + 55 * Math.cos(angle - Math.PI / 2);
+                      const y1 = 70 + 55 * Math.sin(angle - Math.PI / 2);
+                      const x2 = 70 + 45 * Math.cos(angle - Math.PI / 2);
+                      const y2 = 70 + 45 * Math.sin(angle - Math.PI / 2);
+                      
+                      let segmentColor = 'rgba(75, 85, 99, 0.3)';
+                      if (isActive) {
+                        if (i < 15) segmentColor = 'rgba(34, 197, 94, 0.9)';
+                        else if (i < 30) segmentColor = 'rgba(22, 163, 74, 0.9)';
+                        else if (i < 45) segmentColor = 'rgba(21, 128, 61, 0.9)';
+                        else segmentColor = 'rgba(22, 101, 52, 0.9)';
+                      }
+                      
+                      return (
+                        <line
+                          key={i}
+                          x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke={segmentColor}
+                          strokeWidth="3"
+                          strokeLinecap="round"
                         />
-                        <circle 
-                          className="progress-ring-fill sleep-fill"
-                          cx="60" 
-                          cy="60" 
-                          r="45"
-                          style={{
-                            strokeDasharray: `${(healthStats.sleep / healthTargets.sleep) * 283} 283`,
-                            strokeDashoffset: 0
-                          }}
-                        />
-                      </svg>
-                      <div className="stat-content">
-                        <div className="stat-value">{healthStats.sleep}</div>
-                        <div className="stat-unit">h</div>
-                        <div className="stat-goal">of {healthTargets.sleep}h</div>
-                      </div>
-                    </div>
+                      );
+                    })}
+                  </svg>
+                  <div className="stat-center">
+                    <div className="stat-value">{healthStats.sleep}h</div>
+                    <div className="stat-subtitle">Sleep</div>
                   </div>
-                  <div className="stat-label">Sleep</div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
             </div>
 
