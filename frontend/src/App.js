@@ -50,6 +50,7 @@ const App = () => {
   const [careerGoals, setCareerGoals] = useState([]);
   const [newGoal, setNewGoal] = useState({ goal: '', timeframe: '' });
   const [activeResourceCard, setActiveResourceCard] = useState('ai-tools'); // Default active card
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false); // Loading state for plan generation
   
   // Health state
   const [healthEntries, setHealthEntries] = useState([]);
