@@ -4758,7 +4758,7 @@ body::before {
 
 .stat-value {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   line-height: 1.1;
@@ -4768,7 +4768,7 @@ body::before {
 
 .stat-subtitle {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.5rem;
+  font-size: 0.55rem;
   font-weight: 500;
   color: rgba(156, 163, 175, 0.8);
   text-transform: uppercase;
