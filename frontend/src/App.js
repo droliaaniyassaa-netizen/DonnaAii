@@ -289,6 +289,17 @@ const App = () => {
     }
   };
 
+  const resetCareerGoals = async () => {
+    try {
+      await axios.delete(`${API}/career/goals`);
+      setCareerGoals([]);
+      setNewGoal({ goal: '', timeframe: '' });
+    } catch (error) {
+      console.error('Error resetting career goals:', error);
+      alert('Error resetting career goals. Please try again.');
+    }
+  };
+
   // Career goal creation with backend integration
   
   // Helper function to parse action plan step and extract title/description
