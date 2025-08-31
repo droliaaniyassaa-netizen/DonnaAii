@@ -598,8 +598,7 @@ const App = () => {
                     className="generate-plan-btn"
                     disabled={!newGoal.goal.trim()}
                   >
-                    <Sparkles className="button-icon" />
-                    Generate Plan
+                    Generate plan
                   </Button>
                 </CardContent>
               </Card>
