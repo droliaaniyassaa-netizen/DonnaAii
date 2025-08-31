@@ -105,12 +105,24 @@
 user_problem_statement: "Fix the Career tab 'Generate plan' button functionality to ensure it works properly and generates accurate action plans based on the user's specific career goals."
 
 backend:
+  - task: "Career goal creation with LLM-powered action plan generation"
+    implemented: true  
+    working: false
+    file: "/app/backend/server.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Backend career endpoint exists (lines 363-386) with LLM integration but frontend is not calling it properly. Frontend uses local generateDonnaActionPlan function instead of backend API."
+
   - task: "Calendar event CRUD operations (Create, Read, Update, Delete)"
     implemented: true
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
