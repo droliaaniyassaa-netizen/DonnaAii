@@ -737,7 +737,7 @@ const App = () => {
                 {/* Sample Plan Message */}
                 <div className="sample-plan-message">
                   <p className="sample-message-text">
-                    👋 Here's a sample action plan to show you what Donna can do. Enter your own goal above to get a personalized plan tailored just for you!
+                    Here's a sample action plan to show you what Donna can do. Enter your own goal above to get a personalized plan tailored just for you!
                   </p>
                 </div>
 
