@@ -4222,10 +4222,9 @@ body::before {
 .resource-item.clickable::after {
   content: '↗';
   position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.6rem;
+  right: 0.4rem;
+  top: 0.3rem;
+  font-size: 0.55rem;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
