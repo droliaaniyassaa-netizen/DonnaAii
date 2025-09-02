@@ -1648,7 +1648,33 @@ const App = () => {
                       Back
                     </Button>
                     <Button 
-                      onClick={handleGoalSubmit}
+                      onClick={() => {
+                        // Direct implementation: Calculate targets and update stat circles
+                        if (currentWeight && selectedGoalType) {
+                          const weight = parseFloat(currentWeight);
+                          let newTargets = { hydration: Math.round(35 * weight), sleep: 8 };
+                          
+                          if (selectedGoalType === 'maintain') {
+                            newTargets.calories = Math.round(30 * weight);
+                            newTargets.protein = Math.round(1.4 * weight);
+                          } else if (selectedGoalType === 'lose') {
+                            newTargets.calories = Math.max(Math.round(25 * weight), 1200);
+                            newTargets.protein = Math.round(2.0 * weight);
+                          } else if (selectedGoalType === 'gain') {
+                            newTargets.calories = Math.round(33 * weight);
+                            newTargets.protein = Math.round(2.0 * weight);
+                          }
+                          
+                          // Update stat circles
+                          setHealthTargets(newTargets);
+                          
+                          // Close modal
+                          setShowGoalModal(false);
+                          setGoalStep('select');
+                          setSelectedGoalType('');
+                          setCurrentWeight('');
+                        }
+                      }}
                       className="goal-btn-primary"
                       disabled={!currentWeight}
                     >
