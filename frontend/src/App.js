@@ -1291,6 +1291,7 @@ const App = () => {
                   </svg>
                   <div className="stat-center">
                     <div className="stat-value">{healthStats.calories}kcal</div>
+                    <div className="stat-target">of {healthTargets.calories}</div>
                     <div className="stat-subtitle">Calories</div>
                   </div>
                 </div>
