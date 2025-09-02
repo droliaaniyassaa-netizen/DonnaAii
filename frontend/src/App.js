@@ -1568,9 +1568,9 @@ const App = () => {
                         setGoalStep('weight');
                       }}
                     >
-                      <div className="goal-option-icon">📉</div>
+                      <div className="goal-option-indicator lose-indicator"></div>
                       <div className="goal-option-title">Lose Weight</div>
-                      <div className="goal-option-desc">Reduce calories for weight loss</div>
+                      <div className="goal-option-desc">Optimized calorie deficit for safe weight loss</div>
                     </button>
 
                     <button
@@ -1580,9 +1580,9 @@ const App = () => {
                         setGoalStep('weight');
                       }}
                     >
-                      <div className="goal-option-icon">💪</div>
+                      <div className="goal-option-indicator gain-indicator"></div>
                       <div className="goal-option-title">Gain Muscle</div>
-                      <div className="goal-option-desc">Increase protein for muscle growth</div>
+                      <div className="goal-option-desc">Higher protein & calories for muscle growth</div>
                     </button>
 
                     <button
@@ -1592,9 +1592,9 @@ const App = () => {
                         setGoalStep('weight');
                       }}
                     >
-                      <div className="goal-option-icon">⚖️</div>
+                      <div className="goal-option-indicator maintain-indicator"></div>
                       <div className="goal-option-title">Maintain Weight</div>
-                      <div className="goal-option-desc">Balanced nutrition targets</div>
+                      <div className="goal-option-desc">Balanced nutrition for current weight</div>
                     </button>
 
                     <button
@@ -1604,9 +1604,9 @@ const App = () => {
                         setGoalStep('custom');
                       }}
                     >
-                      <div className="goal-option-icon">⚙️</div>
-                      <div className="goal-option-title">Set Your Own Goal</div>
-                      <div className="goal-option-desc">Custom calorie & nutrition targets</div>
+                      <div className="goal-option-indicator custom-indicator"></div>
+                      <div className="goal-option-title">Custom Goals</div>
+                      <div className="goal-option-desc">Set your own personalized targets</div>
                     </button>
                   </div>
                 </div>
