@@ -72,8 +72,8 @@ const App = () => {
   const [sleepAmPm, setSleepAmPm] = useState('PM');
   const [wakeAmPm, setWakeAmPm] = useState('AM');
   const [showGoalModal, setShowGoalModal] = useState(true);
-  const [goalStep, setGoalStep] = useState('select'); // 'select', 'weight', 'custom'
-  const [selectedGoalType, setSelectedGoalType] = useState('');
+  const [goalStep, setGoalStep] = useState('weight'); // 'select', 'weight', 'custom'
+  const [selectedGoalType, setSelectedGoalType] = useState('gain');
   const [currentWeight, setCurrentWeight] = useState('');
   const [customGoals, setCustomGoals] = useState({
     calories: '',
