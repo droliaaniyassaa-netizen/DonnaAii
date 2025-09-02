@@ -4893,15 +4893,7 @@ body::before {
 }
 
 .meal-icon {
-  background: linear-gradient(135deg, 
-    rgba(251, 146, 60, 0.15) 0%,
-    rgba(245, 158, 11, 0.1) 100%
-  );
-  border-color: rgba(251, 146, 60, 0.3);
-  box-shadow: 
-    0 0 20px rgba(251, 146, 60, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  animation: mealPulse 4s ease-in-out infinite;
+  background: transparent;
 }
 
 @keyframes mealPulse {
