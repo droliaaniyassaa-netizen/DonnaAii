@@ -4852,21 +4852,19 @@ body::before {
   text-transform: uppercase;
 }
 
-/* Sophisticated Icons */
+/* Minimal Luxury Icons */
 .section-icon {
-  width: 18px;
-  height: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  width: 14px;
+  height: 14px;
+  border: none;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  opacity: 0.6;
 }
 
 .moon-icon {
