@@ -4951,6 +4951,12 @@ body::before {
   gap: 1rem;
 }
 
+.time-input-with-ampm {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .time-label {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
   font-size: 0.65rem;
