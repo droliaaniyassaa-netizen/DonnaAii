@@ -515,24 +515,29 @@ const App = () => {
     return 5; // Default estimate
   };
 
-  // Goal calculation functions
+  // Goal calculation functions - Scientifically accurate
   const calculateGoalTargets = (goalType, weightKg) => {
     const weight = parseFloat(weightKg);
-    if (!weight || weight <= 0) return null;
+    console.log('calculateGoalTargets - goalType:', goalType, 'weight:', weight);
+    
+    if (!weight || weight <= 0) {
+      console.log('Invalid weight provided');
+      return null;
+    }
 
     let targets = {
-      water: Math.round(35 * weight), // ml
+      water: Math.round(35 * weight), // ml - 35ml per kg is standard
       sleep: 8 // default 8 hours for all goals
     };
 
     switch (goalType) {
       case 'maintain':
-        targets.calories = Math.round(30 * weight);
-        targets.protein = Math.round(1.4 * weight);
+        targets.calories = Math.round(30 * weight); // ~30 kcal per kg for maintenance
+        targets.protein = Math.round(1.4 * weight); // 1.4g per kg for maintenance
         break;
       
       case 'lose':
-        let loseCalories = Math.round(25 * weight);
+        let loseCalories = Math.round(25 * weight); // ~25 kcal per kg for weight loss
         let maintainCalories = Math.round(30 * weight);
         
         // Safety rails: never drop more than 750 kcal below maintain or under 1200 kcal total
@@ -544,11 +549,11 @@ const App = () => {
         }
         
         targets.calories = loseCalories;
-        targets.protein = Math.round(2.0 * weight);
+        targets.protein = Math.round(2.0 * weight); // Higher protein during weight loss - 2.0g per kg
         break;
       
       case 'gain':
-        let gainCalories = Math.round(33 * weight);
+        let gainCalories = Math.round(33 * weight); // ~33 kcal per kg for muscle gain
         let maintainCals = Math.round(30 * weight);
         
         // Safety rail: don't push more than 350 kcal surplus
@@ -557,13 +562,15 @@ const App = () => {
         }
         
         targets.calories = gainCalories;
-        targets.protein = Math.round(2.0 * weight);
+        targets.protein = Math.round(2.0 * weight); // High protein for muscle synthesis - 2.0g per kg
         break;
       
       default:
+        console.log('Unknown goal type:', goalType);
         return null;
     }
 
+    console.log('Calculated targets:', targets);
     return targets;
   };
 
