@@ -565,11 +565,9 @@ const App = () => {
         break;
       
       default:
-        console.log('Unknown goal type:', goalType);
         return null;
     }
 
-    console.log('Calculated targets:', targets);
     return targets;
   };
 
