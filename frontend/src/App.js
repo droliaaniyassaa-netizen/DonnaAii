@@ -1536,6 +1536,200 @@ const App = () => {
         open={showSettings} 
         onClose={() => setShowSettings(false)} 
       />
+
+      {/* Goal Setting Modal */}
+      {showGoalModal && (
+        <div className="goal-modal-overlay">
+          <div className="goal-modal-content">
+            <div className="goal-modal-header">
+              <h3 className="goal-modal-title">Set Your Health Goals</h3>
+              <button 
+                className="goal-modal-close"
+                onClick={() => {
+                  setShowGoalModal(false);
+                  setGoalStep('select');
+                  setSelectedGoalType('');
+                  setCurrentWeight('');
+                  setCustomGoals({ calories: '', protein: '', water: '', sleep: '' });
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="goal-modal-body">
+              {goalStep === 'select' && (
+                <div className="goal-options">
+                  <div className="goal-options-grid">
+                    <button
+                      className="goal-option-card"
+                      onClick={() => {
+                        setSelectedGoalType('lose');
+                        setGoalStep('weight');
+                      }}
+                    >
+                      <div className="goal-option-icon">📉</div>
+                      <div className="goal-option-title">Lose Weight</div>
+                      <div className="goal-option-desc">Reduce calories for weight loss</div>
+                    </button>
+
+                    <button
+                      className="goal-option-card"
+                      onClick={() => {
+                        setSelectedGoalType('gain');
+                        setGoalStep('weight');
+                      }}
+                    >
+                      <div className="goal-option-icon">💪</div>
+                      <div className="goal-option-title">Gain Muscle</div>
+                      <div className="goal-option-desc">Increase protein for muscle growth</div>
+                    </button>
+
+                    <button
+                      className="goal-option-card"
+                      onClick={() => {
+                        setSelectedGoalType('maintain');
+                        setGoalStep('weight');
+                      }}
+                    >
+                      <div className="goal-option-icon">⚖️</div>
+                      <div className="goal-option-title">Maintain Weight</div>
+                      <div className="goal-option-desc">Balanced nutrition targets</div>
+                    </button>
+
+                    <button
+                      className="goal-option-card"
+                      onClick={() => {
+                        setSelectedGoalType('custom');
+                        setGoalStep('custom');
+                      }}
+                    >
+                      <div className="goal-option-icon">⚙️</div>
+                      <div className="goal-option-title">Set Your Own Goal</div>
+                      <div className="goal-option-desc">Custom calorie & nutrition targets</div>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {goalStep === 'weight' && (
+                <div className="goal-weight-input">
+                  <div className="weight-input-section">
+                    <label className="weight-label">Current Weight (kg)</label>
+                    <Input
+                      type="number"
+                      value={currentWeight}
+                      onChange={(e) => setCurrentWeight(e.target.value)}
+                      className="weight-input"
+                      placeholder="70"
+                    />
+                    <div className="weight-explanation">
+                      Weight is needed so I can calculate your personal targets based on your goal.
+                    </div>
+                  </div>
+                  
+                  <div className="goal-actions">
+                    <Button 
+                      onClick={() => setGoalStep('select')}
+                      className="goal-btn-secondary"
+                    >
+                      Back
+                    </Button>
+                    <Button 
+                      onClick={handleGoalSubmit}
+                      className="goal-btn-primary"
+                      disabled={!currentWeight}
+                    >
+                      Calculate Targets
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {goalStep === 'custom' && (
+                <div className="goal-custom-input">
+                  <div className="custom-goals-grid">
+                    <div className="custom-goal-field">
+                      <label className="custom-label">Daily Calories</label>
+                      <Input
+                        type="number"
+                        value={customGoals.calories}
+                        onChange={(e) => setCustomGoals(prev => ({ ...prev, calories: e.target.value }))}
+                        className="custom-input"
+                        placeholder="2000"
+                      />
+                    </div>
+                    
+                    <div className="custom-goal-field">
+                      <label className="custom-label">Protein (g)</label>  
+                      <Input
+                        type="number"
+                        value={customGoals.protein}
+                        onChange={(e) => setCustomGoals(prev => ({ ...prev, protein: e.target.value }))}
+                        className="custom-input"
+                        placeholder="100"
+                      />
+                    </div>
+                    
+                    <div className="custom-goal-field">
+                      <label className="custom-label">Water (ml)</label>
+                      <Input
+                        type="number"
+                        value={customGoals.water}
+                        onChange={(e) => setCustomGoals(prev => ({ ...prev, water: e.target.value }))}
+                        className="custom-input"
+                        placeholder="2500"
+                      />
+                    </div>
+                    
+                    <div className="custom-goal-field">
+                      <label className="custom-label">Sleep (hours)</label>
+                      <Input
+                        type="number"
+                        step="0.5"
+                        value={customGoals.sleep}
+                        onChange={(e) => setCustomGoals(prev => ({ ...prev, sleep: e.target.value }))}
+                        className="custom-input"
+                        placeholder="8"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="weight-input-section" style={{ marginTop: '1.5rem' }}>
+                    <label className="weight-label">Current Weight (kg) <span style={{ opacity: 0.6 }}>(optional)</span></label>
+                    <Input
+                      type="number"
+                      value={currentWeight}
+                      onChange={(e) => setCurrentWeight(e.target.value)}
+                      className="weight-input"
+                      placeholder="70"
+                    />
+                    <div className="weight-explanation">
+                      If provided, I'll fill in any blank fields with calculated values.
+                    </div>
+                  </div>
+                  
+                  <div className="goal-actions">
+                    <Button 
+                      onClick={() => setGoalStep('select')}
+                      className="goal-btn-secondary"
+                    >
+                      Back
+                    </Button>
+                    <Button 
+                      onClick={handleGoalSubmit}
+                      className="goal-btn-primary"
+                    >
+                      Set Custom Goals
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      
     </div>
   );
 };
