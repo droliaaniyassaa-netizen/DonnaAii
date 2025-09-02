@@ -528,7 +528,7 @@ const App = () => {
     }
 
     let targets = {
-      water: Math.round(35 * weight), // ml - 35ml per kg is standard
+      hydration: Math.round(35 * weight), // ml - 35ml per kg is standard
       sleep: 8 // default 8 hours for all goals
     };
 
