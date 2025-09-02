@@ -1236,6 +1236,13 @@ const App = () => {
         <TabsContent value="health" className="health-container">
           <div className="health-content">
             
+            {/* Set Goals Button - Top Position */}
+            <div className="health-goals-header">
+              <Button onClick={() => setShowGoalModal(true)} className="luxury-set-goals-btn">
+                Set Goals
+              </Button>
+            </div>
+            
             {/* Sophisticated Circular Progress Stats */}
             <div className="health-stats-grid">
               
