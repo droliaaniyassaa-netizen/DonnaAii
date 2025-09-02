@@ -1246,24 +1246,9 @@ const App = () => {
             
             {/* Set Goals Button - Top Position */}
             <div className="health-goals-header">
-              <button 
-                onClick={() => {
-                  // Direct goal update for 45kg muscle gain - WORKING SOLUTION
-                  console.log('=== DIRECT GOAL UPDATE ===');
-                  const targets = {
-                    calories: 1485, // 33 * 45
-                    protein: 90,    // 2.0 * 45  
-                    hydration: 1575, // 35 * 45
-                    sleep: 8
-                  };
-                  setHealthTargets(targets);
-                  console.log('Updated targets:', targets);
-                }}
-                className="luxury-set-goals-btn"
-                type="button"
-              >
-                Update Targets (45kg)
-              </button>
+              <Button onClick={() => setShowGoalModal(true)} className="luxury-set-goals-btn">
+                Set Goals
+              </Button>
             </div>
             
             {/* Sophisticated Circular Progress Stats */}
