@@ -1643,16 +1643,22 @@ const App = () => {
                     >
                       Back
                     </Button>
-                    <Button 
-                      onClick={() => {
-                        console.log('Calculate button clicked!');
+                    <button 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('=== BUTTON CLICKED ===');
+                        console.log('Event:', e);
+                        console.log('selectedGoalType:', selectedGoalType);
+                        console.log('currentWeight:', currentWeight);
                         handleGoalSubmit();
                       }}
                       className="goal-btn-primary"
                       disabled={!currentWeight}
+                      type="button"
                     >
                       Calculate Targets
-                    </Button>
+                    </button>
                   </div>
                 </div>
               )}
