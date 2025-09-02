@@ -568,6 +568,8 @@ const App = () => {
   };
 
   const handleGoalSubmit = () => {
+    console.log('Goal Submit - selectedGoalType:', selectedGoalType, 'currentWeight:', currentWeight);
+    
     if (selectedGoalType === 'custom') {
       // Handle custom goals
       let finalTargets = { ...customGoals };
@@ -575,6 +577,7 @@ const App = () => {
       // Fill in blanks with maintain weight logic if weight is provided
       if (currentWeight) {
         const weight = parseFloat(currentWeight);
+        console.log('Custom goals - parsed weight:', weight);
         if (weight > 0) {
           if (!finalTargets.calories) finalTargets.calories = Math.round(30 * weight);
           if (!finalTargets.protein) finalTargets.protein = Math.round(1.4 * weight);
@@ -592,8 +595,16 @@ const App = () => {
     } else {
       // Handle preset goals
       const targets = calculateGoalTargets(selectedGoalType, currentWeight);
+      console.log('Preset goals - calculated targets:', targets);
+      
       if (targets) {
         setHealthTargets({
+          calories: targets.calories,
+          protein: targets.protein,
+          water: targets.water,
+          sleep: targets.sleep
+        });
+        console.log('Setting health targets:', {
           calories: targets.calories,
           protein: targets.protein,
           water: targets.water,
