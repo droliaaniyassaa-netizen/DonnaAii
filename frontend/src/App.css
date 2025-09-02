@@ -5240,39 +5240,41 @@ body::before {
 
 
 
-/* Goal Setting */
-.goal-setting-section {
+/* Luxury Health Goals Header */
+.health-goals-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.luxury-set-goals-btn {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(248, 250, 252, 0.8);
+  border: 0.5px solid rgba(148, 163, 184, 0.15);
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.65rem;
+  letter-spacing: 0.01em;
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  min-width: 90px;
   text-align: center;
-  margin-top: 2rem;
 }
 
-.set-goals-btn {
-  background: linear-gradient(135deg, 
-    rgba(71, 85, 105, 0.6) 0%,
-    rgba(51, 65, 85, 0.5) 100%
-  );
-  color: rgba(248, 250, 252, 0.9);
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  border-radius: 16px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 1rem 2rem;
-  transition: all 0.3s ease;
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+.luxury-set-goals-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(148, 163, 184, 0.25);
+  color: rgba(248, 250, 252, 1);
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.1);
 }
 
-.set-goals-btn:hover {
-  background: linear-gradient(135deg, 
-    rgba(71, 85, 105, 0.7) 0%,
-    rgba(51, 65, 85, 0.6) 100%
-  );
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+.luxury-set-goals-btn:active {
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Responsive Design - Mobile-First */
