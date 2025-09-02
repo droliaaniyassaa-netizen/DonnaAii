@@ -515,6 +515,101 @@ const App = () => {
     return 5; // Default estimate
   };
 
+  // Goal calculation functions
+  const calculateGoalTargets = (goalType, weightKg) => {
+    const weight = parseFloat(weightKg);
+    if (!weight || weight <= 0) return null;
+
+    let targets = {
+      water: Math.round(35 * weight), // ml
+      sleep: 8 // default 8 hours for all goals
+    };
+
+    switch (goalType) {
+      case 'maintain':
+        targets.calories = Math.round(30 * weight);
+        targets.protein = Math.round(1.4 * weight);
+        break;
+      
+      case 'lose':
+        let loseCalories = Math.round(25 * weight);
+        let maintainCalories = Math.round(30 * weight);
+        
+        // Safety rails: never drop more than 750 kcal below maintain or under 1200 kcal total
+        if (maintainCalories - loseCalories > 750) {
+          loseCalories = maintainCalories - 750;
+        }
+        if (loseCalories < 1200) {
+          loseCalories = 1200;
+        }
+        
+        targets.calories = loseCalories;
+        targets.protein = Math.round(2.0 * weight);
+        break;
+      
+      case 'gain':
+        let gainCalories = Math.round(33 * weight);
+        let maintainCals = Math.round(30 * weight);
+        
+        // Safety rail: don't push more than 350 kcal surplus
+        if (gainCalories - maintainCals > 350) {
+          gainCalories = maintainCals + 350;
+        }
+        
+        targets.calories = gainCalories;
+        targets.protein = Math.round(2.0 * weight);
+        break;
+      
+      default:
+        return null;
+    }
+
+    return targets;
+  };
+
+  const handleGoalSubmit = () => {
+    if (selectedGoalType === 'custom') {
+      // Handle custom goals
+      let finalTargets = { ...customGoals };
+      
+      // Fill in blanks with maintain weight logic if weight is provided
+      if (currentWeight) {
+        const weight = parseFloat(currentWeight);
+        if (weight > 0) {
+          if (!finalTargets.calories) finalTargets.calories = Math.round(30 * weight);
+          if (!finalTargets.protein) finalTargets.protein = Math.round(1.4 * weight);
+          if (!finalTargets.water) finalTargets.water = Math.round(35 * weight);
+          if (!finalTargets.sleep) finalTargets.sleep = 8;
+        }
+      }
+      
+      setHealthTargets({
+        calories: parseInt(finalTargets.calories) || 2000,
+        protein: parseInt(finalTargets.protein) || 100,
+        water: parseInt(finalTargets.water) || 2500,
+        sleep: parseFloat(finalTargets.sleep) || 8
+      });
+    } else {
+      // Handle preset goals
+      const targets = calculateGoalTargets(selectedGoalType, currentWeight);
+      if (targets) {
+        setHealthTargets({
+          calories: targets.calories,
+          protein: targets.protein,
+          water: targets.water,
+          sleep: targets.sleep
+        });
+      }
+    }
+    
+    // Close modal and reset state
+    setShowGoalModal(false);
+    setGoalStep('select');
+    setSelectedGoalType('');
+    setCurrentWeight('');
+    setCustomGoals({ calories: '', protein: '', water: '', sleep: '' });
+  };
+
   const calculateSleepHours = (sleepTime, wakeTime) => {
     const [sleepHour, sleepMin] = sleepTime.split(':').map(Number);
     const [wakeHour, wakeMin] = wakeTime.split(':').map(Number);
