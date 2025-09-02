@@ -598,7 +598,7 @@ const App = () => {
       setHealthTargets({
         calories: parseInt(finalTargets.calories) || 2000,
         protein: parseInt(finalTargets.protein) || 100,
-        water: parseInt(finalTargets.water) || 2500,
+        hydration: parseInt(finalTargets.hydration) || 2500,
         sleep: parseFloat(finalTargets.sleep) || 8
       });
     } else {
