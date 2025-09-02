@@ -4995,10 +4995,7 @@ body::before {
   background: rgba(255, 255, 255, 0.015);
 }
 
-.time-input:focus::before,
-.time-input:hover::before {
-  opacity: 1;
-}
+
 
 /* Luxury Meal Input */
 .meal-input-container {
