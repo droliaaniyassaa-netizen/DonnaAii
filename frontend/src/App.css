@@ -5373,6 +5373,8 @@ body::before {
   text-align: center;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  pointer-events: all;
+  z-index: 1;
 }
 
 .goal-option-card:hover {
