@@ -1587,10 +1587,14 @@ const App = () => {
 
                     <button
                       className="goal-option-card"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('=== GAIN MUSCLE CLICKED ===');
                         setSelectedGoalType('gain');
                         setGoalStep('weight');
                       }}
+                      type="button"
                     >
                       <div className="goal-option-indicator gain-indicator"></div>
                       <div className="goal-option-title">Gain Muscle</div>
