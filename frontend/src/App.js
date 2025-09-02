@@ -601,14 +601,12 @@ const App = () => {
       // Handle preset goals
       const targets = calculateGoalTargets(selectedGoalType, currentWeight);
       if (targets) {
-        console.log('🎯 SETTING NEW TARGETS:', targets);
         setHealthTargets({
           calories: targets.calories,
           protein: targets.protein,
           hydration: targets.hydration,
           sleep: targets.sleep
         });
-        console.log('✅ TARGETS SET SUCCESSFULLY');
       }
     }
     
