@@ -5097,8 +5097,9 @@ body::before {
 }
 
 .sleek-textarea::placeholder {
-  color: rgba(148, 163, 184, 0.5);
-  font-size: 0.75rem;
+  color: rgba(148, 163, 184, 0.4);
+  font-size: 0.65rem;
+  font-weight: 400;
 }
 
 .sleek-textarea::before {
