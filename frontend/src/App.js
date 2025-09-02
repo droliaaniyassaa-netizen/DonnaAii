@@ -627,7 +627,7 @@ const App = () => {
     setGoalStep('select');
     setSelectedGoalType('');
     setCurrentWeight('');
-    setCustomGoals({ calories: '', protein: '', water: '', sleep: '' });
+    setCustomGoals({ calories: '', protein: '', hydration: '', sleep: '' });
   };
 
   const calculateSleepHours = (sleepTime, wakeTime) => {
