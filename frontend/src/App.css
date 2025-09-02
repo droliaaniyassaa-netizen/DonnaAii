@@ -4999,6 +4999,54 @@ body::before {
   background: rgba(255, 255, 255, 0.015);
 }
 
+/* Luxury AM/PM Toggle */
+.ampm-toggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 0.5px solid rgba(34, 197, 94, 0.12);
+  border-radius: 16px;
+  padding: 2px;
+  gap: 1px;
+}
+
+.ampm-btn {
+  background: transparent;
+  border: none;
+  border-radius: 14px;
+  color: rgba(156, 163, 175, 0.6);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  min-width: 28px;
+  text-align: center;
+}
+
+.ampm-btn:hover {
+  color: rgba(34, 197, 94, 0.8);
+  background: rgba(34, 197, 94, 0.04);
+}
+
+.ampm-btn.active {
+  background: rgba(34, 197, 94, 0.08);
+  color: rgba(34, 197, 94, 1);
+  box-shadow: 
+    0 2px 4px rgba(34, 197, 94, 0.1),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.02);
+}
+
+.ampm-btn.active:hover {
+  background: rgba(34, 197, 94, 0.12);
+  box-shadow: 
+    0 3px 6px rgba(34, 197, 94, 0.15),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.04);
+}
+
 
 
 /* Luxury Meal Input */
