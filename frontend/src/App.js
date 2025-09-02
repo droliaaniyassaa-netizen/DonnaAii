@@ -60,9 +60,9 @@ const App = () => {
     sleep: 7.5
   });
   const [healthTargets, setHealthTargets] = useState({
-    calories: 2000,
-    protein: 120,
-    hydration: 2500,
+    calories: 1485, // 33 * 45 = 1485
+    protein: 90,    // 2.0 * 45 = 90 (this should be the correct value)
+    hydration: 1575,    // 35 * 45 = 1575
     sleep: 8
   });
   const [mealInput, setMealInput] = useState('');
