@@ -5277,6 +5277,263 @@ body::before {
   background: rgba(255, 255, 255, 0.08);
 }
 
+/* Goal Setting Modal */
+.goal-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+.goal-modal-content {
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  width: 500px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 
+    0 40px 80px rgba(0, 0, 0, 0.4),
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.goal-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem 1rem;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+}
+
+.goal-modal-title {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.9);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.goal-modal-close {
+  background: none;
+  border: none;
+  color: rgba(156, 163, 175, 0.7);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+.goal-modal-close:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(248, 250, 252, 0.9);
+}
+
+.goal-modal-body {
+  padding: 1.5rem 2rem 2rem;
+}
+
+/* Goal Options Grid */
+.goal-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.goal-option-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.25rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-align: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.goal-option-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.goal-option-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.goal-option-title {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.9);
+  margin-bottom: 0.25rem;
+}
+
+.goal-option-desc {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.65rem;
+  color: rgba(156, 163, 175, 0.7);
+  line-height: 1.3;
+}
+
+/* Weight Input Section */
+.goal-weight-input,
+.goal-custom-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.weight-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.weight-label,
+.custom-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.8);
+  letter-spacing: 0.01em;
+}
+
+.weight-input,
+.custom-input {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: rgba(248, 250, 252, 0.9);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.weight-input:focus,
+.custom-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.04);
+}
+
+.weight-explanation {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.6rem;
+  color: rgba(156, 163, 175, 0.6);
+  line-height: 1.4;
+  font-style: italic;
+}
+
+/* Custom Goals Grid */
+.custom-goals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.custom-goal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Goal Actions */
+.goal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.goal-btn-primary,
+.goal-btn-secondary {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.goal-btn-primary {
+  background: rgba(59, 130, 246, 0.15);
+  color: rgba(59, 130, 246, 0.9);
+  border: 0.5px solid rgba(59, 130, 246, 0.2);
+}
+
+.goal-btn-primary:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: rgba(59, 130, 246, 1);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.1);
+}
+
+.goal-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.goal-btn-secondary {
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(156, 163, 175, 0.8);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.goal-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(248, 250, 252, 0.9);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+  from { 
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Responsive Design - Mobile-First */
 @media (max-width: 768px) {
   .health-stats-grid {
