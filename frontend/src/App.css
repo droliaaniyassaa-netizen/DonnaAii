@@ -4835,9 +4835,7 @@ body::before {
   transform: translateY(-2px);
 }
 
-.sleek-logging-block {
-  padding: 0;
-}
+
 
 .logging-label {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Neue Haas Grotesk Display Pro', system-ui, sans-serif;
