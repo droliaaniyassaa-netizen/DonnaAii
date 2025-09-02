@@ -5292,6 +5292,7 @@ body::before {
   justify-content: center;
   z-index: 10000;
   animation: modalFadeIn 0.2s ease-out;
+  pointer-events: all;
 }
 
 .goal-modal-content {
