@@ -610,13 +610,13 @@ const App = () => {
         setHealthTargets({
           calories: targets.calories,
           protein: targets.protein,
-          water: targets.water,
+          hydration: targets.hydration,
           sleep: targets.sleep
         });
         console.log('Setting health targets:', {
           calories: targets.calories,
           protein: targets.protein,
-          water: targets.water,
+          hydration: targets.hydration,
           sleep: targets.sleep
         });
       }
