@@ -1525,12 +1525,7 @@ const App = () => {
 
             </div>
 
-            {/* Goal Setting Button */}
-            <div className="goal-setting-section">
-              <Button onClick={() => setShowGoalModal(true)} className="set-goals-btn">
-                Set Goals
-              </Button>
-            </div>
+
 
           </div>
         </TabsContent>
