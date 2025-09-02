@@ -1286,21 +1286,57 @@ const App = () => {
                 <div className="sleep-time-inputs">
                   <div className="time-input-group">
                     <label className="time-label">Slept at:</label>
-                    <Input
-                      type="time"
-                      value={sleepTime}
-                      onChange={(e) => setSleepTime(e.target.value)}
-                      className="time-input"
-                    />
+                    <div className="time-input-with-ampm">
+                      <Input
+                        type="time"
+                        value={sleepTime}
+                        onChange={(e) => setSleepTime(e.target.value)}
+                        className="time-input"
+                      />
+                      <div className="ampm-toggle">
+                        <button
+                          type="button"
+                          className={`ampm-btn ${sleepAmPm === 'AM' ? 'active' : ''}`}
+                          onClick={() => setSleepAmPm('AM')}
+                        >
+                          AM
+                        </button>
+                        <button
+                          type="button"
+                          className={`ampm-btn ${sleepAmPm === 'PM' ? 'active' : ''}`}
+                          onClick={() => setSleepAmPm('PM')}
+                        >
+                          PM
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <div className="time-input-group">
                     <label className="time-label">Woke up at:</label>
-                    <Input
-                      type="time"
-                      value={wakeTime}
-                      onChange={(e) => setWakeTime(e.target.value)}
-                      className="time-input"
-                    />
+                    <div className="time-input-with-ampm">
+                      <Input
+                        type="time"
+                        value={wakeTime}
+                        onChange={(e) => setWakeTime(e.target.value)}
+                        className="time-input"
+                      />
+                      <div className="ampm-toggle">
+                        <button
+                          type="button"
+                          className={`ampm-btn ${wakeAmPm === 'AM' ? 'active' : ''}`}
+                          onClick={() => setWakeAmPm('AM')}
+                        >
+                          AM
+                        </button>
+                        <button
+                          type="button"
+                          className={`ampm-btn ${wakeAmPm === 'PM' ? 'active' : ''}`}
+                          onClick={() => setWakeAmPm('PM')}
+                        >
+                          PM
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <Button onClick={logSleepFromTimes} className="sleek-log-btn sleep-btn">
                     Log Sleep
