@@ -603,12 +603,15 @@ const App = () => {
       // Handle preset goals
       const targets = calculateGoalTargets(selectedGoalType, currentWeight);
       if (targets) {
-        setHealthTargets({
+        console.log('Calculated targets:', targets);
+        const newTargets = {
           calories: targets.calories,
           protein: targets.protein,
           hydration: targets.hydration,
           sleep: targets.sleep
-        });
+        };
+        console.log('Setting new health targets:', newTargets);
+        setHealthTargets(newTargets);
       }
     }
     
