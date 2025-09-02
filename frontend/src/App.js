@@ -590,7 +590,7 @@ const App = () => {
         if (weight > 0) {
           if (!finalTargets.calories) finalTargets.calories = Math.round(30 * weight);
           if (!finalTargets.protein) finalTargets.protein = Math.round(1.4 * weight);
-          if (!finalTargets.water) finalTargets.water = Math.round(35 * weight);
+          if (!finalTargets.hydration) finalTargets.hydration = Math.round(35 * weight);
           if (!finalTargets.sleep) finalTargets.sleep = 8;
         }
       }
