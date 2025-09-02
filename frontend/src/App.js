@@ -1246,9 +1246,20 @@ const App = () => {
             
             {/* Set Goals Button - Top Position */}
             <div className="health-goals-header">
-              <Button onClick={() => setShowGoalModal(true)} className="luxury-set-goals-btn">
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('=== SET GOALS BUTTON CLICKED ===');
+                  console.log('Current showGoalModal:', showGoalModal);
+                  setShowGoalModal(true);
+                  console.log('Setting showGoalModal to true');
+                }}
+                className="luxury-set-goals-btn"
+                type="button"
+              >
                 Set Goals
-              </Button>
+              </button>
             </div>
             
             {/* Sophisticated Circular Progress Stats */}
