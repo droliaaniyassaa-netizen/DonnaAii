@@ -1546,7 +1546,7 @@ const App = () => {
       />
 
       {/* Goal Setting Modal */}
-      {showGoalModal ? (
+      {showGoalModal && (
         <div className="goal-modal-overlay">
           <div className="goal-modal-content">
             <div className="goal-modal-header">
