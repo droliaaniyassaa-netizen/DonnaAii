@@ -1695,8 +1695,8 @@ const App = () => {
                       <label className="custom-label">Water (ml)</label>
                       <Input
                         type="number"
-                        value={customGoals.water}
-                        onChange={(e) => setCustomGoals(prev => ({ ...prev, water: e.target.value }))}
+                        value={customGoals.hydration}
+                        onChange={(e) => setCustomGoals(prev => ({ ...prev, hydration: e.target.value }))}
                         className="custom-input"
                         placeholder="2500"
                       />
