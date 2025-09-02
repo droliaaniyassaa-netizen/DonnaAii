@@ -586,7 +586,7 @@ const App = () => {
       // Fill in blanks with maintain weight logic if weight is provided
       if (currentWeight) {
         const weight = parseFloat(currentWeight);
-        console.log('Custom goals - parsed weight:', weight);
+
         if (weight > 0) {
           if (!finalTargets.calories) finalTargets.calories = Math.round(30 * weight);
           if (!finalTargets.protein) finalTargets.protein = Math.round(1.4 * weight);
