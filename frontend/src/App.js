@@ -78,7 +78,7 @@ const App = () => {
   const [customGoals, setCustomGoals] = useState({
     calories: '',
     protein: '',
-    water: '',
+    hydration: '',
     sleep: ''
   });
   
