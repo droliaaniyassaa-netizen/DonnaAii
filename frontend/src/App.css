@@ -5633,6 +5633,8 @@ body::before {
   background: rgba(59, 130, 246, 0.15);
   color: rgba(59, 130, 246, 0.9);
   border: 0.5px solid rgba(59, 130, 246, 0.2);
+  pointer-events: all;
+  z-index: 1;
 }
 
 .goal-btn-primary:hover:not(:disabled) {
