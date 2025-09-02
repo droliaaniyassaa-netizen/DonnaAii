@@ -517,24 +517,7 @@ const App = () => {
 
 
 
-  // Test manual goal setting
-  React.useEffect(() => {
-    setTimeout(() => {
-      console.log('=== MANUAL TEST ===');
-      const testTargets = calculateGoalTargets('gain', '45');
-      console.log('Manual test result:', testTargets);
-      
-      if (testTargets) {
-        console.log('Manually setting health targets for testing');
-        setHealthTargets({
-          calories: testTargets.calories,
-          protein: testTargets.protein,
-          hydration: testTargets.hydration,
-          sleep: testTargets.sleep
-        });
-      }
-    }, 3000);
-  }, []);
+
 
   // Goal calculation functions - Scientifically accurate
   const calculateGoalTargets = (goalType, weightKg) => {
