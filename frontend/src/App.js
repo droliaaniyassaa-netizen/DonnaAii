@@ -572,7 +572,10 @@ const App = () => {
   };
 
   const handleGoalSubmit = () => {
-
+    console.log('=== GOAL SUBMIT DEBUG ===');
+    console.log('selectedGoalType:', selectedGoalType);
+    console.log('currentWeight:', currentWeight);
+    console.log('Current healthTargets:', healthTargets);
     
     if (selectedGoalType === 'custom') {
       // Handle custom goals
