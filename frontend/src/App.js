@@ -515,11 +515,7 @@ const App = () => {
     return 5; // Default estimate
   };
 
-  // Test calculation for debugging
-  React.useEffect(() => {
-    const testResult = calculateGoalTargets('gain', '45');
-    console.log('TEST: Gain muscle for 45kg:', testResult);
-  }, []);
+
 
   // Goal calculation functions - Scientifically accurate
   const calculateGoalTargets = (goalType, weightKg) => {
