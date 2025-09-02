@@ -1411,6 +1411,7 @@ const App = () => {
                   </svg>
                   <div className="stat-center">
                     <div className="stat-value">{healthStats.sleep}h</div>
+                    <div className="stat-target">of {healthTargets.sleep}h</div>
                     <div className="stat-subtitle">Sleep</div>
                   </div>
                 </div>
