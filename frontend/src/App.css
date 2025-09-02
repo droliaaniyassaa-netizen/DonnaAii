@@ -4776,20 +4776,63 @@ body::before {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Sleek Logging Section - No Cards */
+/* Luxury Dashboard Logging Section */
 .health-logging-section {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  margin-bottom: 2rem;
-  max-width: 500px;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  max-width: 420px;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Extra spacing between meals and hydration */
-.sleek-logging-block:nth-child(2) {
-  margin-bottom: 1.5rem;
+/* Futuristic Glass Widget Cards */
+.sleek-logging-block {
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.005) 100%
+  );
+  backdrop-filter: blur(20px) saturate(110%);
+  -webkit-backdrop-filter: blur(20px) saturate(110%);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.5rem 1.8rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sleek-logging-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.003) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.001) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.sleek-logging-block:hover::before {
+  opacity: 1;
+}
+
+.sleek-logging-block:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
 }
 
 .sleek-logging-block {
