@@ -481,6 +481,8 @@ const App = () => {
       }));
       setSleepTime('');
       setWakeTime('');
+      setSleepAmPm('PM');
+      setWakeAmPm('AM');
     }
   };
 
