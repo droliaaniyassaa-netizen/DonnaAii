@@ -520,10 +520,7 @@ const App = () => {
   // Goal calculation functions - Scientifically accurate
   const calculateGoalTargets = (goalType, weightKg) => {
     const weight = parseFloat(weightKg);
-    console.log('calculateGoalTargets - goalType:', goalType, 'weight:', weight);
-    
     if (!weight || weight <= 0) {
-      console.log('Invalid weight provided');
       return null;
     }
 
