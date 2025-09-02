@@ -1571,10 +1571,14 @@ const App = () => {
                   <div className="goal-options-grid">
                     <button
                       className="goal-option-card"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('=== LOSE WEIGHT CLICKED ===');
                         setSelectedGoalType('lose');
                         setGoalStep('weight');
                       }}
+                      type="button"
                     >
                       <div className="goal-option-indicator lose-indicator"></div>
                       <div className="goal-option-title">Lose Weight</div>
