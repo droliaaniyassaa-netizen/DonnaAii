@@ -508,16 +508,33 @@ const App = () => {
     const [sleepHour, sleepMin] = sleepTime.split(':').map(Number);
     const [wakeHour, wakeMin] = wakeTime.split(':').map(Number);
     
-    let sleepMinutes = sleepHour * 60 + sleepMin;
-    let wakeMinutes = wakeHour * 60 + wakeMin;
+    // Convert to 24-hour format based on AM/PM
+    let sleep24Hour = sleepHour;
+    let wake24Hour = wakeHour;
     
-    // Handle overnight sleep (e.g., sleep at 23:00, wake at 07:00)
-    if (wakeMinutes <= sleepMinutes) {
-      wakeMinutes += 24 * 60; // Add 24 hours
+    // Convert sleep time to 24-hour format
+    if (sleepAmPm === 'PM' && sleepHour !== 12) {
+      sleep24Hour = sleepHour + 12;
+    } else if (sleepAmPm === 'AM' && sleepHour === 12) {
+      sleep24Hour = 0;
     }
     
-    const totalMinutes = wakeMinutes - sleepMinutes;
-    return Math.round((totalMinutes / 60) * 10) / 10; // Round to 1 decimal place
+    // Convert wake time to 24-hour format
+    if (wakeAmPm === 'PM' && wakeHour !== 12) {
+      wake24Hour = wakeHour + 12;
+    } else if (wakeAmPm === 'AM' && wakeHour === 12) {
+      wake24Hour = 0;
+    }
+    
+    let sleepMinutes = sleep24Hour * 60 + sleepMin;
+    let wakeMinutes = wake24Hour * 60 + wakeMin;
+    
+    // Handle overnight sleep (e.g., sleep at 11 PM, wake at 7 AM)
+    if (wakeMinutes <= sleepMinutes) {
+      wakeMinutes += 24 * 60; // Add 24 hours to wake time
+    }
+    
+    return (wakeMinutes - sleepMinutes) / 60;
   };
 
   // Health functions
