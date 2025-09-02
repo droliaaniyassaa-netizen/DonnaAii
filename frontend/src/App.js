@@ -1651,7 +1651,10 @@ const App = () => {
                       Back
                     </Button>
                     <Button 
-                      onClick={handleGoalSubmit}
+                      onClick={() => {
+                        console.log('Calculate button clicked!');
+                        handleGoalSubmit();
+                      }}
                       className="goal-btn-primary"
                       disabled={!currentWeight}
                     >
