@@ -1686,13 +1686,28 @@ const App = () => {
                     <Input
                       type="number"
                       value={currentWeight}
-                      onChange={(e) => setCurrentWeight(e.target.value)}
+                      onChange={(e) => {
+                        setCurrentWeight(e.target.value);
+                        setWeightError(''); // Clear error when user types
+                      }}
                       className="weight-input"
                       placeholder="70"
                     />
+                    {weightError && (
+                      <div className="weight-error">{weightError}</div>
+                    )}
                     <div className="weight-explanation">
                       Weight is needed so I can calculate your personal targets based on your goal.
                     </div>
+                    
+                    {/* New Calculate Goal Button */}
+                    <button
+                      onClick={calculateGoal}
+                      className="calculate-goal-btn"
+                      type="button"
+                    >
+                      Calculate Goal
+                    </button>
                   </div>
                   
                   <div className="goal-actions">
