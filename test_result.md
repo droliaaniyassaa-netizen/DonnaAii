@@ -249,6 +249,18 @@ backend:
         agent: "testing"
         comment: "❌ CRITICAL ISSUE FOUND: Health goals backend missing key functionality for stat cards. Basic CRUD works (77.8% test success) but NO automatic progress calculation between goals and health entries. Analytics endpoint (/api/health/analytics) only provides basic counts (meals, workouts) without goal correlation. Goals have no progress tracking mechanism. Need: 1) Goal-specific analytics endpoints, 2) Automatic progress calculation algorithms, 3) Goal-to-entry correlation logic. This explains why stat cards don't update when users set health goals."
 
+  - task: "Health Targets CRUD endpoints for personalized stat cards"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ HEALTH TARGETS FULLY FUNCTIONAL: All CRUD operations working perfectly (100% test success rate). POST /api/health/targets creates/updates targets with session-based storage. GET /api/health/targets/{session_id} retrieves targets correctly. PUT /api/health/targets/{session_id} supports partial updates while preserving unchanged values. DELETE /api/health/targets/{session_id} cleans up properly. Proper error handling for non-existent sessions (404). Timestamps (created_at, updated_at) working correctly. Tested with exact sample data from review request - all endpoints respond as expected. Ready for frontend stat card integration."
+
 frontend:
   - task: "Career tab 'Generate plan' button functionality"
     implemented: true
