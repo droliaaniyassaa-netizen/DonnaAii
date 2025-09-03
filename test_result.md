@@ -237,6 +237,18 @@ backend:
         agent: "testing"
         comment: "✅ Backend fully supports glassmorphic frontend redesign. All event data properly serialized as JSON, categories support color coding, datetime handling supports Today box filtering, CRUD operations support flip-to-edit functionality. 96.9% test success rate (62/64 tests passed)."
 
+  - task: "Health Goal progress tracking and stat card integration"
+    implemented: false
+    working: false
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE FOUND: Health goals backend missing key functionality for stat cards. Basic CRUD works (77.8% test success) but NO automatic progress calculation between goals and health entries. Analytics endpoint (/api/health/analytics) only provides basic counts (meals, workouts) without goal correlation. Goals have no progress tracking mechanism. Need: 1) Goal-specific analytics endpoints, 2) Automatic progress calculation algorithms, 3) Goal-to-entry correlation logic. This explains why stat cards don't update when users set health goals."
+
 frontend:
   - task: "Career tab 'Generate plan' button functionality"
     implemented: true
