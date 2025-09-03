@@ -520,8 +520,8 @@ const App = () => {
 
 
 
-  // New Calculate Goal function with debugging
-  const calculateGoal = () => {
+  // New Calculate Goal function with backend integration
+  const calculateGoal = async () => {
     console.log('🔧 BUTTON CLICKED!');
     console.log('Current weight:', currentWeight);
     console.log('Selected goal type:', selectedGoalType);
@@ -552,29 +552,54 @@ const App = () => {
         calories: Math.round(weight * 30),
         protein: Math.round(weight * 1.4),
         hydration: Math.round(weight * 35),
-        sleep: 7
+        sleep: 8
       };
     } else if (selectedGoalType === 'lose') {
       newTargets = {
         calories: Math.round(weight * 25),
-        protein: Math.round(weight * 1.6),
+        protein: Math.round(weight * 2.0),
         hydration: Math.round(weight * 35),
-        sleep: 7.5
+        sleep: 8
       };
     } else if (selectedGoalType === 'gain') {
       newTargets = {
-        calories: Math.round(weight * 35),
-        protein: Math.round(weight * 1.8),
-        hydration: Math.round(weight * 40),
+        calories: Math.round(weight * 33),
+        protein: Math.round(weight * 2.0),
+        hydration: Math.round(weight * 35),
         sleep: 8
       };
     }
     
     console.log('✅ Calculated new targets:', newTargets);
     
-    // Update the stat cards immediately
-    setHealthTargets(newTargets);
-    console.log('✅ Called setHealthTargets');
+    try {
+      // Save targets to backend
+      const response = await fetch(`${API}/health/targets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session_id: 'default', // Using default session for now
+          ...newTargets
+        })
+      });
+      
+      if (response.ok) {
+        console.log('✅ Targets saved to backend');
+        // Update the stat cards immediately
+        setHealthTargets(newTargets);
+        console.log('✅ Called setHealthTargets');
+      } else {
+        console.error('❌ Failed to save targets to backend');
+        // Still update locally if backend fails
+        setHealthTargets(newTargets);
+      }
+    } catch (error) {
+      console.error('❌ Error saving targets:', error);
+      // Still update locally if backend fails
+      setHealthTargets(newTargets);
+    }
     
     // Close modal and reset
     setShowGoalModal(false);
