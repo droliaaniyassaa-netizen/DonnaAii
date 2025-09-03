@@ -91,7 +91,7 @@ const App = () => {
   const [newHealthGoal, setNewHealthGoal] = useState({ goal_type: 'weight_loss', target: '', current_progress: '' });
   
   // UI state
-  const [activeTab, setActiveTab] = useState('chat');
+  const [activeTab, setActiveTab] = useState('health');
   const [activeCalendarView, setActiveCalendarView] = useState('upcoming'); // New state for calendar sub-tabs
   const [showSettings, setShowSettings] = useState(false);
   
