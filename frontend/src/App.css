@@ -5605,6 +5605,53 @@ body::before {
   font-style: italic;
 }
 
+.weight-error {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.65rem;
+  color: rgba(239, 68, 68, 0.8);
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* New Calculate Goal Button */
+.calculate-goal-btn {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.2) 0%,
+    rgba(22, 163, 74, 0.15) 100%
+  );
+  color: rgba(34, 197, 94, 1);
+  border: 0.5px solid rgba(34, 197, 94, 0.3);
+  border-radius: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  width: 100%;
+  text-align: center;
+}
+
+.calculate-goal-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.25) 0%,
+    rgba(22, 163, 74, 0.2) 100%
+  );
+  border-color: rgba(34, 197, 94, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(34, 197, 94, 0.2),
+    0 0 20px rgba(34, 197, 94, 0.1);
+}
+
+.calculate-goal-btn:active {
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
+}
+
 /* Custom Goals Grid */
 .custom-goals-grid {
   display: grid;
