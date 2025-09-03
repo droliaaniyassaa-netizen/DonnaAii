@@ -1311,69 +1311,7 @@ const App = () => {
         <TabsContent value="health" className="health-container">
           <div className="health-content">
             
-            {/* Simple Goal Setter - Direct on Health Tab */}
-            <div className="simple-goal-setter">
-              <div className="goal-inputs">
-                <div className="weight-field">
-                  <Input
-                    type="number"
-                    placeholder="Enter weight (kg)"
-                    value={currentWeight}
-                    onChange={(e) => setCurrentWeight(e.target.value)}
-                    className="weight-glass-input"
-                  />
-                </div>
-                <div className="goal-selector">
-                  <select 
-                    value={selectedGoalType} 
-                    onChange={(e) => setSelectedGoalType(e.target.value)}
-                    className="goal-dropdown"
-                  >
-                    <option value="">Select Goal</option>
-                    <option value="maintain">Maintain Weight</option>
-                    <option value="lose">Lose Weight</option>
-                    <option value="gain">Gain Muscle</option>
-                  </select>
-                </div>
-              </div>
-              <button 
-                onClick={() => {
-                  if (currentWeight && selectedGoalType) {
-                    const weight = parseFloat(currentWeight);
-                    let newTargets = {};
-                    
-                    if (selectedGoalType === 'maintain') {
-                      newTargets = {
-                        calories: Math.round(weight * 30),
-                        protein: Math.round(weight * 1.4),
-                        hydration: Math.round(weight * 35),
-                        sleep: 7
-                      };
-                    } else if (selectedGoalType === 'lose') {
-                      newTargets = {
-                        calories: Math.round(weight * 25),
-                        protein: Math.round(weight * 1.6),
-                        hydration: Math.round(weight * 35),
-                        sleep: 7.5
-                      };
-                    } else if (selectedGoalType === 'gain') {
-                      newTargets = {
-                        calories: Math.round(weight * 35),
-                        protein: Math.round(weight * 1.8),
-                        hydration: Math.round(weight * 40),
-                        sleep: 8
-                      };
-                    }
-                    
-                    setHealthTargets(newTargets);
-                  }
-                }}
-                className="calculate-pill-btn"
-                disabled={!currentWeight || !selectedGoalType}
-              >
-                Calculate Goals
-              </button>
-            </div>
+
             
             {/* Sophisticated Circular Progress Stats */}
             <div className="health-stats-grid">
