@@ -372,10 +372,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Career tab functionality COMPLETED ✅"
-  stuck_tasks: []
+    - "Health Goal progress tracking and stat card integration"
+  stuck_tasks: 
+    - "Health Goal progress tracking and stat card integration"
   test_all: false
-  test_priority: "completed"
+  test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
