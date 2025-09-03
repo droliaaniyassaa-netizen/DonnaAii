@@ -520,19 +520,26 @@ const App = () => {
 
 
 
-  // New Calculate Goal function with exact formulas
+  // New Calculate Goal function with debugging
   const calculateGoal = () => {
+    console.log('🔧 BUTTON CLICKED!');
+    console.log('Current weight:', currentWeight);
+    console.log('Selected goal type:', selectedGoalType);
+    console.log('Current healthTargets:', healthTargets);
+    
     // Clear any previous errors
     setWeightError('');
     
     // Check if weight is entered
     if (!currentWeight || currentWeight.trim() === '') {
+      console.log('❌ No weight entered');
       setWeightError('Please enter your weight');
       return;
     }
     
     const weight = parseFloat(currentWeight);
     if (isNaN(weight) || weight <= 0) {
+      console.log('❌ Invalid weight');
       setWeightError('Please enter a valid weight');
       return;
     }
@@ -563,8 +570,11 @@ const App = () => {
       };
     }
     
+    console.log('✅ Calculated new targets:', newTargets);
+    
     // Update the stat cards immediately
     setHealthTargets(newTargets);
+    console.log('✅ Called setHealthTargets');
     
     // Close modal and reset
     setShowGoalModal(false);
@@ -572,6 +582,8 @@ const App = () => {
     setSelectedGoalType('');
     setCurrentWeight('');
     setWeightError('');
+    
+    console.log('✅ Modal closed');
   };
 
   // Goal calculation functions - Scientifically accurate
