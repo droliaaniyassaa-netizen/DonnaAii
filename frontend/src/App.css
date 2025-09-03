@@ -5249,11 +5249,146 @@ body::before {
 
 
 
-/* Luxury Health Goals Header */
-.health-goals-header {
+/* Simple Goal Setter - Direct on Health Tab */
+.simple-goal-setter {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, 
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.005) 100%
+  );
+  backdrop-filter: blur(20px) saturate(110%);
+  -webkit-backdrop-filter: blur(20px) saturate(110%);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.goal-inputs {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.weight-field {
+  flex: 1;
+}
+
+.weight-glass-input {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(248, 250, 252, 0.9);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  padding: 0.75rem;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.weight-glass-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.04);
+}
+
+.goal-selector {
+  flex: 1;
+}
+
+.goal-dropdown {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(248, 250, 252, 0.9);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  padding: 0.75rem;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.goal-dropdown:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.goal-dropdown option {
+  background: rgba(15, 23, 42, 0.95);
+  color: rgba(248, 250, 252, 0.9);
+}
+
+.calculate-pill-btn {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.2) 0%,
+    rgba(37, 99, 235, 0.15) 100%
+  );
+  color: rgba(59, 130, 246, 1);
+  border: 0.5px solid rgba(59, 130, 246, 0.3);
+  border-radius: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: pillPulse 2s ease-in-out infinite;
+}
+
+.calculate-pill-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.25) 0%,
+    rgba(37, 99, 235, 0.2) 100%
+  );
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(59, 130, 246, 0.2),
+    0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+.calculate-pill-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  animation: pillPress 0.1s ease;
+}
+
+.calculate-pill-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  animation: none;
+}
+
+@keyframes pillPulse {
+  0%, 100% { 
+    box-shadow: 
+      0 2px 8px rgba(59, 130, 246, 0.15),
+      0 0 16px rgba(59, 130, 246, 0.05);
+  }
+  50% { 
+    box-shadow: 
+      0 4px 12px rgba(59, 130, 246, 0.2),
+      0 0 24px rgba(59, 130, 246, 0.08);
+  }
+}
+
+@keyframes pillPress {
+  0% { transform: scale(0.98); }
+  100% { transform: scale(1); }
 }
 
 .luxury-set-goals-btn {
