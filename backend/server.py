@@ -119,6 +119,30 @@ class HealthGoalCreate(BaseModel):
     target: str
     current_progress: str
 
+# Health Targets Models (for stat cards)
+class HealthTargets(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str
+    calories: int
+    protein: int  # grams
+    hydration: int  # ml
+    sleep: float  # hours
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class HealthTargetsCreate(BaseModel):
+    session_id: str
+    calories: int
+    protein: int
+    hydration: int
+    sleep: float
+
+class HealthTargetsUpdate(BaseModel):
+    calories: Optional[int] = None
+    protein: Optional[int] = None
+    hydration: Optional[int] = None
+    sleep: Optional[float] = None
+
 # Smart Suggestions Models
 class TelemetryLog(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
