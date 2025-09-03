@@ -1316,6 +1316,31 @@ const App = () => {
               <Button onClick={() => setShowGoalModal(true)} className="luxury-set-goals-btn">
                 Set Goals
               </Button>
+              
+              {/* TEST BUTTON - Direct stat card update */}
+              <button 
+                onClick={() => {
+                  console.log('🚀 TEST BUTTON CLICKED!');
+                  setHealthTargets({
+                    calories: 1750, // 50kg × 35 for gain
+                    protein: 90,    // 50kg × 1.8 for gain  
+                    hydration: 2000, // 50kg × 40 for gain
+                    sleep: 8
+                  });
+                  console.log('✅ Updated stat cards with test values');
+                }}
+                style={{
+                  marginLeft: '1rem',
+                  padding: '0.5rem 1rem',
+                  background: 'red',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                TEST UPDATE
+              </button>
             </div>
             
             {/* Sophisticated Circular Progress Stats */}
