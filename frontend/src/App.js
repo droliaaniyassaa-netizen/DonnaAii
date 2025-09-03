@@ -520,6 +520,60 @@ const App = () => {
 
 
 
+  // New Calculate Goal function with exact formulas
+  const calculateGoal = () => {
+    // Clear any previous errors
+    setWeightError('');
+    
+    // Check if weight is entered
+    if (!currentWeight || currentWeight.trim() === '') {
+      setWeightError('Please enter your weight');
+      return;
+    }
+    
+    const weight = parseFloat(currentWeight);
+    if (isNaN(weight) || weight <= 0) {
+      setWeightError('Please enter a valid weight');
+      return;
+    }
+    
+    let newTargets = {};
+    
+    // Apply the exact formulas based on goal type
+    if (selectedGoalType === 'maintain') {
+      newTargets = {
+        calories: Math.round(weight * 30),
+        protein: Math.round(weight * 1.4),
+        hydration: Math.round(weight * 35),
+        sleep: 7
+      };
+    } else if (selectedGoalType === 'lose') {
+      newTargets = {
+        calories: Math.round(weight * 25),
+        protein: Math.round(weight * 1.6),
+        hydration: Math.round(weight * 35),
+        sleep: 7.5
+      };
+    } else if (selectedGoalType === 'gain') {
+      newTargets = {
+        calories: Math.round(weight * 35),
+        protein: Math.round(weight * 1.8),
+        hydration: Math.round(weight * 40),
+        sleep: 8
+      };
+    }
+    
+    // Update the stat cards immediately
+    setHealthTargets(newTargets);
+    
+    // Close modal and reset
+    setShowGoalModal(false);
+    setGoalStep('select');
+    setSelectedGoalType('');
+    setCurrentWeight('');
+    setWeightError('');
+  };
+
   // Goal calculation functions - Scientifically accurate
   const calculateGoalTargets = (goalType, weightKg) => {
     const weight = parseFloat(weightKg);
