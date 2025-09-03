@@ -583,6 +583,74 @@ async def get_health_analytics():
         "average_sleep": len(sleep_entries)
     }
 
+# Health Targets endpoints (for stat cards personalization)
+@api_router.post("/health/targets", response_model=HealthTargets)
+async def create_or_update_health_targets(targets: HealthTargetsCreate):
+    """Create or update health targets for a session"""
+    # Check if targets already exist for this session
+    existing = await db.health_targets.find_one({"session_id": targets.session_id})
+    
+    if existing:
+        # Update existing targets
+        update_data = {
+            "calories": targets.calories,
+            "protein": targets.protein,
+            "hydration": targets.hydration,
+            "sleep": targets.sleep,
+            "updated_at": datetime.now(timezone.utc)
+        }
+        await db.health_targets.update_one(
+            {"session_id": targets.session_id},
+            {"$set": update_data}
+        )
+        
+        # Return updated targets
+        updated = await db.health_targets.find_one({"session_id": targets.session_id})
+        return HealthTargets(**updated)
+    else:
+        # Create new targets
+        targets_obj = HealthTargets(**targets.dict())
+        await db.health_targets.insert_one(prepare_for_mongo(targets_obj.dict()))
+        return targets_obj
+
+@api_router.get("/health/targets/{session_id}", response_model=HealthTargets)
+async def get_health_targets(session_id: str):
+    """Get health targets for a specific session"""
+    targets = await db.health_targets.find_one({"session_id": session_id})
+    if not targets:
+        raise HTTPException(status_code=404, detail="Health targets not found for this session")
+    return HealthTargets(**targets)
+
+@api_router.put("/health/targets/{session_id}", response_model=HealthTargets)
+async def update_health_targets(session_id: str, updates: HealthTargetsUpdate):
+    """Update specific health targets for a session"""
+    existing = await db.health_targets.find_one({"session_id": session_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Health targets not found for this session")
+    
+    # Build update dictionary with only provided fields
+    update_data = {"updated_at": datetime.now(timezone.utc)}
+    for field, value in updates.dict(exclude_unset=True).items():
+        if value is not None:
+            update_data[field] = value
+    
+    await db.health_targets.update_one(
+        {"session_id": session_id},
+        {"$set": update_data}
+    )
+    
+    # Return updated targets
+    updated = await db.health_targets.find_one({"session_id": session_id})
+    return HealthTargets(**updated)
+
+@api_router.delete("/health/targets/{session_id}")
+async def delete_health_targets(session_id: str):
+    """Delete health targets for a session"""
+    result = await db.health_targets.delete_one({"session_id": session_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Health targets not found for this session")
+    return {"message": "Health targets deleted successfully"}
+
 # Helper functions for event notes handling
 async def handle_event_notes_response(message: str, context: dict, session_id: str):
     """Handle user's response to event notes question"""
