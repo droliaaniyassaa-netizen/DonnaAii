@@ -75,6 +75,7 @@ const App = () => {
   const [goalStep, setGoalStep] = useState('select'); // 'select', 'weight', 'custom'
   const [selectedGoalType, setSelectedGoalType] = useState('');
   const [currentWeight, setCurrentWeight] = useState('');
+  const [weightError, setWeightError] = useState('');
   const [customGoals, setCustomGoals] = useState({
     calories: '',
     protein: '',
