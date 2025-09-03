@@ -665,7 +665,8 @@ const App = () => {
     return targets;
   };
 
-  const handleGoalSubmit = () => {
+  const handleGoalSubmit = async () => {
+    let newTargets = {};
     
     if (selectedGoalType === 'custom') {
       // Handle custom goals
@@ -683,23 +684,51 @@ const App = () => {
         }
       }
       
-      setHealthTargets({
+      newTargets = {
         calories: parseInt(finalTargets.calories) || 2000,
         protein: parseInt(finalTargets.protein) || 100,
         hydration: parseInt(finalTargets.hydration) || 2500,
         sleep: parseFloat(finalTargets.sleep) || 8
-      });
+      };
     } else {
       // Handle preset goals
       const targets = calculateGoalTargets(selectedGoalType, currentWeight);
       if (targets) {
-        setHealthTargets({
+        newTargets = {
           calories: targets.calories,
           protein: targets.protein,
           hydration: targets.hydration,
           sleep: targets.sleep
-        });
+        };
       }
+    }
+    
+    try {
+      // Save targets to backend
+      const response = await fetch(`${API}/health/targets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session_id: 'default', // Using default session for now
+          ...newTargets
+        })
+      });
+      
+      if (response.ok) {
+        console.log('✅ Targets saved to backend');
+        // Update the stat cards immediately
+        setHealthTargets(newTargets);
+      } else {
+        console.error('❌ Failed to save targets to backend');
+        // Still update locally if backend fails
+        setHealthTargets(newTargets);
+      }
+    } catch (error) {
+      console.error('❌ Error saving targets:', error);
+      // Still update locally if backend fails
+      setHealthTargets(newTargets);
     }
     
     // Close modal and reset state
