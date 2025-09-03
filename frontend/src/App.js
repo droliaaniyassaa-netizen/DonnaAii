@@ -113,6 +113,7 @@ const App = () => {
     loadHealthEntries();
     loadHealthGoals();
     loadHealthAnalytics();
+    loadHealthTargets();
     
     // Initialize default date/time for new entries
     const now = getCurrentInUserTimezone();
