@@ -407,6 +407,208 @@ class DonnaAPITester:
         
         return True
 
+    def test_health_targets_crud(self):
+        """Test Health Targets CRUD operations for stat card personalization"""
+        print("\n" + "="*50)
+        print("TESTING HEALTH TARGETS CRUD OPERATIONS")
+        print("="*50)
+        
+        session_id = "test_session"
+        
+        # Test creating health targets
+        targets_data = {
+            "session_id": session_id,
+            "calories": 1800,
+            "protein": 120,
+            "hydration": 2800,
+            "sleep": 8.0
+        }
+        
+        success, targets = self.run_test(
+            "Create Health Targets",
+            "POST",
+            "health/targets",
+            200,
+            data=targets_data
+        )
+        
+        if not success:
+            return False
+            
+        # Verify created targets structure
+        if targets.get('session_id') == session_id:
+            print("✅ Health targets created with correct session_id")
+        else:
+            print(f"❌ Session ID mismatch: expected {session_id}, got {targets.get('session_id')}")
+            
+        if targets.get('calories') == 1800:
+            print("✅ Calories target set correctly")
+        else:
+            print(f"❌ Calories target incorrect: {targets.get('calories')}")
+            
+        if targets.get('protein') == 120:
+            print("✅ Protein target set correctly")
+        else:
+            print(f"❌ Protein target incorrect: {targets.get('protein')}")
+            
+        if targets.get('hydration') == 2800:
+            print("✅ Hydration target set correctly")
+        else:
+            print(f"❌ Hydration target incorrect: {targets.get('hydration')}")
+            
+        if targets.get('sleep') == 8.0:
+            print("✅ Sleep target set correctly")
+        else:
+            print(f"❌ Sleep target incorrect: {targets.get('sleep')}")
+            
+        if targets.get('id') and targets.get('created_at') and targets.get('updated_at'):
+            print("✅ Health targets have proper metadata (id, timestamps)")
+        else:
+            print("❌ Missing metadata fields")
+        
+        # Test retrieving health targets
+        success, retrieved_targets = self.run_test(
+            "Get Health Targets",
+            "GET",
+            f"health/targets/{session_id}",
+            200
+        )
+        
+        if success:
+            if retrieved_targets.get('calories') == 1800:
+                print("✅ Retrieved targets match created targets")
+            else:
+                print("❌ Retrieved targets don't match created targets")
+        
+        # Test updating health targets (partial update)
+        update_data = {
+            "calories": 2000,
+            "protein": 150
+        }
+        
+        success, updated_targets = self.run_test(
+            "Update Health Targets (Partial)",
+            "PUT",
+            f"health/targets/{session_id}",
+            200,
+            data=update_data
+        )
+        
+        if success:
+            if updated_targets.get('calories') == 2000:
+                print("✅ Calories updated successfully")
+            else:
+                print(f"❌ Calories not updated: {updated_targets.get('calories')}")
+                
+            if updated_targets.get('protein') == 150:
+                print("✅ Protein updated successfully")
+            else:
+                print(f"❌ Protein not updated: {updated_targets.get('protein')}")
+                
+            # Verify unchanged fields remain the same
+            if updated_targets.get('hydration') == 2800:
+                print("✅ Hydration preserved during partial update")
+            else:
+                print(f"❌ Hydration changed unexpectedly: {updated_targets.get('hydration')}")
+                
+            if updated_targets.get('sleep') == 8.0:
+                print("✅ Sleep preserved during partial update")
+            else:
+                print(f"❌ Sleep changed unexpectedly: {updated_targets.get('sleep')}")
+                
+            # Check updated_at timestamp changed
+            if updated_targets.get('updated_at') != targets.get('updated_at'):
+                print("✅ Updated timestamp changed correctly")
+            else:
+                print("❌ Updated timestamp not changed")
+        
+        # Test retrieving updated targets to verify persistence
+        success, final_targets = self.run_test(
+            "Verify Updated Health Targets",
+            "GET",
+            f"health/targets/{session_id}",
+            200
+        )
+        
+        if success:
+            if final_targets.get('calories') == 2000 and final_targets.get('protein') == 150:
+                print("✅ Updates persisted correctly")
+            else:
+                print("❌ Updates not persisted")
+        
+        # Test creating/updating targets for same session (should update, not create new)
+        duplicate_data = {
+            "session_id": session_id,
+            "calories": 2200,
+            "protein": 160,
+            "hydration": 3000,
+            "sleep": 7.5
+        }
+        
+        success, duplicate_targets = self.run_test(
+            "Create Targets for Existing Session (Should Update)",
+            "POST",
+            "health/targets",
+            200,
+            data=duplicate_data
+        )
+        
+        if success:
+            if duplicate_targets.get('calories') == 2200:
+                print("✅ Existing session targets updated via POST")
+            else:
+                print("❌ POST to existing session didn't update properly")
+        
+        # Test error cases
+        # Test getting targets for non-existent session
+        success, _ = self.run_test(
+            "Get Non-existent Health Targets",
+            "GET",
+            "health/targets/nonexistent_session",
+            404
+        )
+        
+        # Test updating targets for non-existent session
+        success, _ = self.run_test(
+            "Update Non-existent Health Targets",
+            "PUT",
+            "health/targets/nonexistent_session",
+            404,
+            data={"calories": 1500}
+        )
+        
+        # Test deleting health targets
+        success, delete_response = self.run_test(
+            "Delete Health Targets",
+            "DELETE",
+            f"health/targets/{session_id}",
+            200
+        )
+        
+        if success:
+            if delete_response.get('message'):
+                print("✅ Health targets deleted successfully")
+            else:
+                print("❌ Delete response missing message")
+        
+        # Verify targets are actually deleted
+        success, _ = self.run_test(
+            "Verify Health Targets Deleted",
+            "GET",
+            f"health/targets/{session_id}",
+            404
+        )
+        
+        # Test deleting non-existent targets
+        success, _ = self.run_test(
+            "Delete Non-existent Health Targets",
+            "DELETE",
+            "health/targets/nonexistent_session",
+            404
+        )
+        
+        return True
+
     def test_smart_suggestions_telemetry(self):
         """Test Smart Suggestions telemetry logging endpoints"""
         print("\n" + "="*50)
