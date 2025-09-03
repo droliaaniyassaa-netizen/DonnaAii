@@ -800,6 +800,27 @@ const App = () => {
     }
   };
 
+  const loadHealthTargets = async () => {
+    try {
+      const response = await axios.get(`${API}/health/targets/default`);
+      if (response.data) {
+        setHealthTargets({
+          calories: response.data.calories,
+          protein: response.data.protein,
+          hydration: response.data.hydration,
+          sleep: response.data.sleep
+        });
+        console.log('✅ Loaded health targets from backend:', response.data);
+      }
+    } catch (error) {
+      if (error.response?.status === 404) {
+        console.log('ℹ️ No health targets found, using defaults');
+      } else {
+        console.error('Error loading health targets:', error);
+      }
+    }
+  };
+
   const createHealthEntry = async () => {
     if (!newHealthEntry.description || !newHealthEntry.date) return;
     
