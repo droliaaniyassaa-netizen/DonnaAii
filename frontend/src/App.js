@@ -1542,17 +1542,6 @@ const App = () => {
                     <div className="stat-value">{healthStats.hydration}ml</div>
                     <div className="stat-target">of {healthTargets.hydration}ml</div>
                     <div className="stat-subtitle">Water</div>
-                    {healthStats.hydration > 0 && (
-                      <button 
-                        onClick={() => undoHealthEntry('hydration')}
-                        className={`undo-button water ${undoingEntry ? 'disabled' : ''}`}
-                        title="Undo last hydration entry"
-                        disabled={undoingEntry}
-                        style={{ cursor: undoingEntry ? 'not-allowed' : 'pointer' }}
-                      >
-                        <Trash2 size={10} />
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
