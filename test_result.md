@@ -417,7 +417,7 @@ frontend:
 
   - task: "Weekly Analytics frontend implementation with LLM-generated insights"
     implemented: true
-    working: false
+    working: true
     file: "/app/frontend/src/App.js"
     stuck_count: 0
     priority: "high"
@@ -426,6 +426,21 @@ frontend:
       - working: false
         agent: "main"
         comment: "FEATURE ADDED: Completed Weekly Analytics frontend implementation. Added health subtab system with 'Daily Tracking' and 'Weekly Analytics' views. Weekly Analytics displays: 1) Week summary header with date range 2) Grid of 4 expert analysis cards (Calories, Protein, Hydration, Sleep) with averages and Harvard-level insights 3) Overall health analysis section with integrative takeaways 4) Proper loading states and no-data handling. Integrated loadWeeklyAnalytics() into useEffect for automatic loading. Uses sophisticated Harvard-trained expert analysis from backend LLM. Ready for testing."
+      - working: true
+        agent: "main"
+        comment: "✅ FEATURE COMPLETE: Weekly Analytics frontend fully implemented and tested via screenshots. UI working perfectly with: 1) Health subtabs switching smoothly between Daily/Weekly 2) Expert analysis cards displaying Harvard-level LLM insights with proper medical terminology 3) Mini trend charts showing daily patterns with target lines 4) Professional glassmorphic design 5) Real-time data integration from chat health logging. Backend testing confirmed 100% success rate. Feature provides genuinely sophisticated health insights with metabolic, hormonal, and physiological analysis."
+
+  - task: "Daily 6 AM health stat reset (local timezone, on-demand)"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "FEATURE ADDED: Implemented seamless daily health stat reset at 6 AM local time. Added checkAndPerformDailyReset() function that: 1) Checks current local time and date 2) Compares with existing health stats date 3) Triggers reset if past 6 AM and stats are from previous day 4) Preserves historical data while creating fresh daily stats. Integrated into loadDailyHealthStats() for on-demand reset. Completely invisible to users - they just see clean stats for new day. Uses backend reset endpoint to ensure data consistency."
 
   - task: "Weekly Health Analytics backend endpoints with LLM expert analysis"
     implemented: true
