@@ -831,8 +831,52 @@ const App = () => {
     }
   };
 
+  // Helper function to check if daily reset is needed (6 AM local time)
+  const checkAndPerformDailyReset = async () => {
+    try {
+      const now = new Date();
+      const today = now.toLocaleDateString('en-CA'); // YYYY-MM-DD format
+      
+      // Get current local time
+      const currentHour = now.getHours();
+      
+      // First, get existing stats to check the date
+      const response = await axios.get(`${API}/health/stats/default`);
+      const existingStats = response.data;
+      
+      if (existingStats && existingStats.date) {
+        const statsDate = existingStats.date; // YYYY-MM-DD format from backend
+        
+        // Check if we need to reset:
+        // 1. Current time is past 6 AM (>= 6)
+        // 2. Stats are from a previous day (statsDate < today)
+        const isPast6AM = currentHour >= 6;
+        const isNewDay = statsDate < today;
+        
+        if (isPast6AM && isNewDay) {
+          console.log(`🔄 Performing daily reset: ${statsDate} → ${today} (${currentHour}:00)`);
+          
+          // Trigger reset API
+          await axios.post(`${API}/health/stats/reset/default`);
+          console.log('✅ Daily health stats reset completed');
+          
+          return true; // Reset was performed
+        }
+      }
+      
+      return false; // No reset needed
+    } catch (error) {
+      console.error('Error checking/performing daily reset:', error);
+      return false;
+    }
+  };
+
   const loadDailyHealthStats = async () => {
     try {
+      // Check if daily reset is needed first
+      await checkAndPerformDailyReset();
+      
+      // Load current stats (fresh if reset occurred)
       const response = await axios.get(`${API}/health/stats/default`);
       if (response.data) {
         setHealthStats({
