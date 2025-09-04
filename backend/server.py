@@ -267,7 +267,14 @@ MEAL MESSAGES:
 HYDRATION MESSAGES:
 - Keep simple and encouraging: "Glass noted. Your hydration's looking good — keep it consistent."
 
-Be supportive, give useful info, but don't overdo it."""
+Be supportive, give useful info, but don't overdo it.
+
+DELETE CONFIRMATIONS:
+- "Removed 250ml hydration entry. Stats updated."
+- "Removed meal entry: pasta. Calories and protein recalculated."  
+- "Removed sleep entry: 8 hours. Sleep reset."
+
+Keep delete confirmations brief and factual."""
 
 # Helper function to prepare data for MongoDB
 def prepare_for_mongo(data):
