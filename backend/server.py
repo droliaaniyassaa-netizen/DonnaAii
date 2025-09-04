@@ -1127,8 +1127,8 @@ async def undo_last_health_entry(session_id: str, entry_type: str):
 
 async def recalculate_meal_stats(session_id: str, date: str):
     """Recalculate meal calories and protein from remaining entries"""
-    start_date = datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc)
-    end_date = start_date + timedelta(days=1)
+    start_date = datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc).isoformat()
+    end_date = (datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)).isoformat()
     
     # Get all remaining meal entries for today and this session
     meal_entries = await db.health_entries.find({
