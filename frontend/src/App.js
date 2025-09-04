@@ -94,7 +94,6 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('chat');
   const [activeCalendarView, setActiveCalendarView] = useState('upcoming'); // New state for calendar sub-tabs
   const [showSettings, setShowSettings] = useState(false);
-  const [undoingEntry, setUndoingEntry] = useState(false); // Loading state for undo buttons
   
   // Refs
   const messagesEndRef = useRef(null);
