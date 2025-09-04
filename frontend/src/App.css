@@ -209,6 +209,287 @@ body::before {
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* Settings Modal Dark Theme Styles */
+.settings-modal {
+  background: linear-gradient(145deg, 
+    rgba(17, 24, 39, 0.95) 0%,
+    rgba(31, 41, 55, 0.98) 50%,
+    rgba(17, 24, 39, 0.95) 100%
+  ) !important;
+  backdrop-filter: blur(40px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px !important;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  max-width: 500px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+}
+
+.settings-title {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.settings-icon {
+  width: 20px !important;
+  height: 20px !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.settings-content {
+  padding: 1rem 0 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.setting-section {
+  margin-bottom: 2rem !important;
+}
+
+.setting-label {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.label-icon {
+  width: 16px !important;
+  height: 16px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.timezone-info, .weekend-mode-info {
+  margin-bottom: 1rem !important;
+}
+
+.timezone-description, .weekend-mode-description {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  margin-bottom: 1rem !important;
+}
+
+.current-timezone, .system-timezone {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.timezone-label {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.875rem !important;
+  min-width: 60px !important;
+}
+
+.timezone-badge {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  font-size: 0.8rem !important;
+}
+
+.timezone-selector {
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  justify-content: space-between !important;
+}
+
+.timezone-selector:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.selector-icon, .chevron-icon {
+  width: 16px !important;
+  height: 16px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.timezone-popover {
+  background: linear-gradient(145deg, 
+    rgba(17, 24, 39, 0.98) 0%,
+    rgba(31, 41, 55, 0.95) 100%
+  ) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  max-height: 300px !important;
+}
+
+.timezone-search {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 8px !important;
+}
+
+.timezone-search::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.timezone-list {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.timezone-item {
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 0.75rem !important;
+  border-radius: 8px !important;
+  margin: 0.25rem 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+}
+
+.timezone-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.timezone-item-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.25rem !important;
+  flex: 1 !important;
+}
+
+.timezone-name {
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.timezone-time {
+  font-size: 0.8rem !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.check-icon {
+  width: 16px !important;
+  height: 16px !important;
+  color: rgba(34, 197, 94, 0.8) !important;
+}
+
+.weekend-mode-options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+
+.weekend-mode-option {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 1rem !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+.weekend-mode-option:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.weekend-mode-option.selected {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+}
+
+.option-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.option-title {
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.mode-badge {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  font-size: 0.75rem !important;
+}
+
+.option-description {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+.settings-actions {
+  display: flex !important;
+  gap: 1rem !important;
+  justify-content: flex-end !important;
+  margin-top: 2rem !important;
+  padding-top: 1.5rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.reset-button {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 10px !important;
+}
+
+.reset-button:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.save-button {
+  background: linear-gradient(145deg, 
+    rgba(59, 130, 246, 0.8) 0%,
+    rgba(37, 99, 235, 0.9) 100%
+  ) !important;
+  border: 1px solid rgba(59, 130, 246, 0.4) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
+}
+
+.save-button:hover:not(:disabled) {
+  background: linear-gradient(145deg, 
+    rgba(59, 130, 246, 0.9) 0%,
+    rgba(37, 99, 235, 1) 100%
+  ) !important;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3) !important;
+}
+
+.save-button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
 .settings-icon {
   width: 20px;
   height: 20px;
