@@ -883,6 +883,28 @@ const App = () => {
     }
   };
 
+  const undoHealthEntry = async (entryType) => {
+    try {
+      const response = await axios.delete(`${API}/health/stats/undo/default/${entryType}`);
+      console.log(`✅ Undid ${entryType} entry:`, response.data);
+      
+      // Refresh health stats immediately
+      loadDailyHealthStats();
+      loadHealthEntries();
+      
+      // Show brief confirmation in console (could add toast notification later)
+      alert(response.data.message || `${entryType} entry removed successfully`);
+      
+    } catch (error) {
+      console.error(`Error undoing ${entryType} entry:`, error);
+      if (error.response?.status === 404) {
+        alert(`No recent ${entryType} entries found to remove.`);
+      } else {
+        alert(`Error removing ${entryType} entry. Please try again.`);
+      }
+    }
+  };
+
   return (
     <div className="app-container">
       <div className="app-header">
