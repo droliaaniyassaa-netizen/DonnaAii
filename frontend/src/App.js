@@ -1989,17 +1989,17 @@ const App = () => {
 
                             {/* Calories Analysis Card */}
                             <div className="weekly-stat-card calories-card">
-                        <div className="weekly-stat-header">
-                          <h3>Calories</h3>
-                          <div className="weekly-average">
-                            <span className="avg-value">{Math.round(weeklyAnalytics.avg_calories)}</span>
-                            <span className="avg-label">avg/day</span>
-                          </div>
-                        </div>
-                        
-                        {/* Mini Trend Chart */}
-                        {weeklyAnalytics.calories_pattern && weeklyAnalytics.calories_pattern.daily_values && (
-                          <div className="trend-chart">
+                              <div className="weekly-stat-header">
+                                <h3>Calories</h3>
+                                <div className="weekly-average">
+                                  <span className="avg-value">{Math.round(weeklyAnalytics.avg_calories)}</span>
+                                  <span className="avg-label">avg/day</span>
+                                </div>
+                              </div>
+                              
+                              {/* Mini Trend Chart */}
+                              {weeklyAnalytics.calories_pattern && weeklyAnalytics.calories_pattern.daily_values && (
+                                <div className="trend-chart">
                             <svg width="100%" height="40" viewBox="0 0 280 40">
                               {weeklyAnalytics.calories_pattern.daily_values.map((value, index) => {
                                 const max = Math.max(...weeklyAnalytics.calories_pattern.daily_values, weeklyAnalytics.target_calories);
