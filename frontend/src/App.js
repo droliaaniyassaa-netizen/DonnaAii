@@ -1499,8 +1499,10 @@ const App = () => {
                     {healthStats.calories > 0 && (
                       <button 
                         onClick={() => undoHealthEntry('meal')}
-                        className="undo-button calories"
+                        className={`undo-button calories ${undoingEntry ? 'disabled' : ''}`}
                         title="Undo last meal entry"
+                        disabled={undoingEntry}
+                        style={{ cursor: undoingEntry ? 'not-allowed' : 'pointer' }}
                       >
                         <Trash2 size={10} />
                       </button>
