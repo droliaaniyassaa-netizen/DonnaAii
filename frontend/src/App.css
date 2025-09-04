@@ -6411,3 +6411,29 @@ body::before {
   font-size: 0.9rem;
   line-height: 1.6;
 }
+
+/* Trend Chart Styles */
+.trend-chart {
+  margin: 1rem 0;
+  position: relative;
+}
+
+.trend-chart svg {
+  width: 100%;
+  height: 40px;
+  display: block;
+}
+
+.trend-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+  padding: 0 5px;
+}
+
+.trend-label {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
