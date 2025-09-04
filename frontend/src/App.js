@@ -2053,8 +2053,8 @@ const App = () => {
                         </div>
                       </div>
 
-                      {/* Protein Analysis Card */}
-                      <div className="weekly-stat-card protein-card">
+                            {/* Protein Analysis Card */}
+                            <div className="weekly-stat-card protein-card">
                         <div className="weekly-stat-header">
                           <h3>Protein</h3>
                           <div className="weekly-average">
