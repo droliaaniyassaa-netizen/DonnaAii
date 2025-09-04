@@ -401,14 +401,14 @@ async def generate_health_confirmation(health_result: HealthProcessingResult) ->
         
         return await chat.send_message(user_msg)
     except Exception:
-        # Fallback confirmation
+        # Fallback confirmation - Donna Paulsen style
         if health_result.message_type == "hydration":
-            return f"✅ Added {health_result.hydration_ml}ml to your hydration! 💧"
+            return f"{health_result.hydration_ml}ml logged — hydration updated."
         elif health_result.message_type == "meal":
-            return f"✅ Logged your meal - {health_result.calories} calories, {health_result.protein}g protein! 🍽️"
+            return f"Meal noted. {health_result.calories} calories, {health_result.protein}g protein — all accounted for."
         elif health_result.message_type == "sleep":
-            return f"✅ Logged {health_result.sleep_hours} hours of sleep! 😴"
-        return "✅ Health data logged successfully!"
+            return f"{health_result.sleep_hours} hours logged. Your sleep data's handled."
+        return "Health data logged. I've got it covered."
 
 # Chat endpoints
 @api_router.post("/chat", response_model=ChatResponse)
