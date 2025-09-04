@@ -845,6 +845,20 @@ const App = () => {
     }
   };
 
+  const loadWeeklyAnalytics = async (weekOffset = 0) => {
+    try {
+      setLoadingWeeklyAnalytics(true);
+      const response = await axios.get(`${API}/health/analytics/weekly/default?week_offset=${weekOffset}`);
+      setWeeklyAnalytics(response.data);
+      console.log('✅ Loaded weekly analytics:', response.data);
+    } catch (error) {
+      console.error('Error loading weekly analytics:', error);
+      setWeeklyAnalytics(null);
+    } finally {
+      setLoadingWeeklyAnalytics(false);
+    }
+  };
+
   const createHealthEntry = async () => {
     if (!newHealthEntry.description || !newHealthEntry.date) return;
     
