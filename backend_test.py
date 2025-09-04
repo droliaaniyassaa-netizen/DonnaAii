@@ -786,6 +786,239 @@ class DonnaAPITester:
         
         return True
 
+    def test_chat_based_health_logging(self):
+        """Test the new chat-based health logging functionality with LLM processing"""
+        print("\n" + "="*50)
+        print("TESTING CHAT-BASED HEALTH LOGGING")
+        print("="*50)
+        
+        session_id = "health_test_session"
+        
+        # First, get initial daily health stats
+        success, initial_stats = self.run_test(
+            "Get Initial Daily Health Stats",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if not success:
+            return False
+            
+        print(f"📊 Initial stats: Calories={initial_stats.get('calories', 0)}, "
+              f"Protein={initial_stats.get('protein', 0)}, "
+              f"Hydration={initial_stats.get('hydration', 0)}, "
+              f"Sleep={initial_stats.get('sleep', 0)}")
+        
+        # Test hydration messages
+        hydration_messages = [
+            "I had a glass of water",
+            "drank a bottle of water", 
+            "had 500ml water",
+            "I drank 2 cups of water"
+        ]
+        
+        print("\n🥤 Testing Hydration Messages:")
+        for message in hydration_messages:
+            success, response = self.run_test(
+                f"Chat Health Message: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            
+            if success:
+                # Check if Donna's response indicates health logging
+                donna_response = response.get('response', '')
+                if any(word in donna_response.lower() for word in ['hydration', 'water', 'ml', '💧']):
+                    print(f"✅ Donna confirmed hydration logging: {donna_response[:100]}...")
+                else:
+                    print(f"⚠️  Donna response unclear: {donna_response[:100]}...")
+            
+            time.sleep(1)  # Brief pause between messages
+        
+        # Check updated hydration stats
+        success, hydration_stats = self.run_test(
+            "Check Hydration Stats After Messages",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            new_hydration = hydration_stats.get('hydration', 0)
+            initial_hydration = initial_stats.get('hydration', 0)
+            if new_hydration > initial_hydration:
+                print(f"✅ Hydration increased from {initial_hydration}ml to {new_hydration}ml")
+            else:
+                print(f"❌ Hydration not updated: {initial_hydration}ml -> {new_hydration}ml")
+        
+        # Test meal messages
+        meal_messages = [
+            "I ate pasta for lunch",
+            "had a sandwich",
+            "just ate a burger",
+            "I had grilled chicken with rice for dinner"
+        ]
+        
+        print("\n🍽️ Testing Meal Messages:")
+        for message in meal_messages:
+            success, response = self.run_test(
+                f"Chat Health Message: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            
+            if success:
+                donna_response = response.get('response', '')
+                if any(word in donna_response.lower() for word in ['calories', 'protein', 'meal', 'logged', '🍝', '🍽️']):
+                    print(f"✅ Donna confirmed meal logging: {donna_response[:100]}...")
+                else:
+                    print(f"⚠️  Donna response unclear: {donna_response[:100]}...")
+            
+            time.sleep(1)
+        
+        # Check updated meal stats
+        success, meal_stats = self.run_test(
+            "Check Meal Stats After Messages",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            new_calories = meal_stats.get('calories', 0)
+            new_protein = meal_stats.get('protein', 0)
+            initial_calories = initial_stats.get('calories', 0)
+            initial_protein = initial_stats.get('protein', 0)
+            
+            if new_calories > initial_calories:
+                print(f"✅ Calories increased from {initial_calories} to {new_calories}")
+            else:
+                print(f"❌ Calories not updated: {initial_calories} -> {new_calories}")
+                
+            if new_protein > initial_protein:
+                print(f"✅ Protein increased from {initial_protein}g to {new_protein}g")
+            else:
+                print(f"❌ Protein not updated: {initial_protein}g -> {new_protein}g")
+        
+        # Test sleep messages
+        sleep_messages = [
+            "I slept 8 hours",
+            "slept at 10pm and woke at 6am",
+            "got 7.5 hours sleep last night"
+        ]
+        
+        print("\n😴 Testing Sleep Messages:")
+        for message in sleep_messages:
+            success, response = self.run_test(
+                f"Chat Health Message: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            
+            if success:
+                donna_response = response.get('response', '')
+                if any(word in donna_response.lower() for word in ['sleep', 'hours', 'rest', '😴']):
+                    print(f"✅ Donna confirmed sleep logging: {donna_response[:100]}...")
+                else:
+                    print(f"⚠️  Donna response unclear: {donna_response[:100]}...")
+            
+            time.sleep(1)
+        
+        # Check final sleep stats
+        success, sleep_stats = self.run_test(
+            "Check Sleep Stats After Messages",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            new_sleep = sleep_stats.get('sleep', 0)
+            initial_sleep = initial_stats.get('sleep', 0)
+            if new_sleep > initial_sleep:
+                print(f"✅ Sleep updated from {initial_sleep} to {new_sleep} hours")
+            else:
+                print(f"❌ Sleep not updated: {initial_sleep} -> {new_sleep} hours")
+        
+        # Test data validation - hydration cap at 2000ml per entry
+        success, response = self.run_test(
+            "Chat Health Message: Large Hydration",
+            "POST",
+            "chat",
+            200,
+            data={"message": "I drank 3000ml of water", "session_id": session_id}
+        )
+        
+        if success:
+            print("✅ Large hydration message processed (should cap at 2000ml)")
+        
+        # Test non-health messages (should not affect stats)
+        success, response = self.run_test(
+            "Chat Non-Health Message",
+            "POST",
+            "chat",
+            200,
+            data={"message": "What's the weather like today?", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            if not any(word in donna_response.lower() for word in ['calories', 'hydration', 'logged']):
+                print("✅ Non-health message handled normally")
+            else:
+                print("⚠️  Non-health message incorrectly processed as health data")
+        
+        # Test daily health stats reset
+        success, reset_response = self.run_test(
+            "Reset Daily Health Stats",
+            "POST",
+            f"health/stats/reset/{session_id}",
+            200
+        )
+        
+        if success and reset_response.get('message'):
+            print("✅ Daily health stats reset successfully")
+            
+            # Verify stats are reset
+            success, reset_stats = self.run_test(
+                "Check Reset Stats",
+                "GET",
+                f"health/stats/{session_id}",
+                200
+            )
+            
+            if success:
+                if (reset_stats.get('calories', 0) == 0 and 
+                    reset_stats.get('protein', 0) == 0 and 
+                    reset_stats.get('hydration', 0) == 0 and 
+                    reset_stats.get('sleep', 0) == 0):
+                    print("✅ All stats reset to zero")
+                else:
+                    print("❌ Stats not properly reset")
+        
+        # Test final comprehensive stats
+        success, final_stats = self.run_test(
+            "Get Final Daily Health Stats",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            print(f"📊 Final stats: Calories={final_stats.get('calories', 0)}, "
+                  f"Protein={final_stats.get('protein', 0)}, "
+                  f"Hydration={final_stats.get('hydration', 0)}, "
+                  f"Sleep={final_stats.get('sleep', 0)}")
+        
+        return True
+
     def test_error_handling(self):
         """Test API error handling"""
         print("\n" + "="*50)
