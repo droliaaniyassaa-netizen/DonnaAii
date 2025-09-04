@@ -448,6 +448,7 @@ metadata:
 test_plan:
   current_focus:
     - "Health Goal progress tracking and stat card integration"
+    - "Weekly Analytics frontend implementation with LLM-generated insights"
   stuck_tasks: 
     - "Health Goal progress tracking and stat card integration"
   test_all: false
