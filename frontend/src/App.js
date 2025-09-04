@@ -171,6 +171,9 @@ const App = () => {
       loadEvents();
       loadHealthEntries();
       loadDailyHealthStats(); // Refresh health stats from chat logging
+      if (activeHealthView === 'weekly') {
+        loadWeeklyAnalytics(); // Refresh weekly analytics if viewing that tab
+      }
       
     } catch (error) {
       console.error('Error sending message:', error);
