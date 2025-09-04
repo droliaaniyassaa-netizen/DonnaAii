@@ -1629,6 +1629,15 @@ const App = () => {
                     <div className="stat-value">{healthStats.sleep}h</div>
                     <div className="stat-target">of {healthTargets.sleep}h</div>
                     <div className="stat-subtitle">Sleep</div>
+                    {healthStats.sleep > 0 && (
+                      <button 
+                        onClick={() => undoHealthEntry('sleep')}
+                        className="undo-button"
+                        title="Undo last sleep entry"
+                      >
+                        <Trash2 size={10} />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
