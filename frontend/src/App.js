@@ -1978,10 +1978,16 @@ const App = () => {
                       </div>
                     </div>
 
-                    {/* Weekly Stat Cards Grid */}
-                    <div className="weekly-stats-grid">
+                    {(() => {
+                      // Check if we have data for analysis (same logic for consistency)
+                      const hasAnalyticsData = weeklyAnalytics.overall_expert && weeklyAnalytics.avg_calories > 0;
                       
-                      {/* Calories Analysis Card */}
+                      return (
+                        <>
+                          {/* Weekly Stat Cards Grid */}
+                          <div className="weekly-stats-grid">
+
+                            {/* Calories Analysis Card */}
                       <div className="weekly-stat-card calories-card">
                         <div className="weekly-stat-header">
                           <h3>Calories</h3>
