@@ -448,43 +448,35 @@ async def chat_with_donna(request: ChatRequest):
                 await setup_event_notes_context(request.session_id, created_event_id)
                 
             elif context and context.get("waiting_for_notes"):
-            # Check if message contains scheduling keywords - if so, treat as new event not notes
-            scheduling_keywords = [
-                'schedule', 'remind me', 'appointment', 'meeting', 'lunch', 'dinner', 
-                'breakfast', 'i have', 'birthday', 'call', 'visit', 'gym', 'workout',
-                'tomorrow', 'today', 'next week', 'am', 'pm', 'at '
-            ]
-            
-            message_lower = request.message.lower()
-            contains_scheduling = any(keyword in message_lower for keyword in scheduling_keywords)
-            
-            if contains_scheduling:
-                # This is actually a new scheduling request, not notes
-                await db.conversation_context.update_one(
-                    {"id": context["id"]},
-                    {"$set": {"waiting_for_notes": False}}
-                )
+                # Check if message contains scheduling keywords - if so, treat as new event not notes
+                scheduling_keywords = [
+                    'schedule', 'remind me', 'appointment', 'meeting', 'lunch', 'dinner', 
+                    'breakfast', 'i have', 'birthday', 'call', 'visit', 'gym', 'workout',
+                    'tomorrow', 'today', 'next week', 'am', 'pm', 'at '
+                ]
                 
-                # Process as new event (recursive call to handle properly)
-                return await chat_with_donna(request)
-            else:
-                # User is responding with notes for previous event
-                await handle_event_notes_response(request.message, context, request.session_id)
-                donna_response = "Perfect! I've added those notes to your event. You're all set!"
+                message_lower = request.message.lower()
+                contains_scheduling = any(keyword in message_lower for keyword in scheduling_keywords)
                 
-                # Clear the context
-                await db.conversation_context.update_one(
-                    {"id": context["id"]},
-                    {"$set": {"waiting_for_notes": False}}
-                )
-        else:
-            # Check for health messages first
-            health_result = await process_health_message(request.message)
-            
-            if health_result.detected and health_result.confidence > 0.6:
-                # Process health data
-                await update_daily_health_stats(request.session_id, health_result)
-                donna_response = await generate_health_confirmation(health_result)
+                if contains_scheduling:
+                    # This is actually a new scheduling request, not notes
+                    await db.conversation_context.update_one(
+                        {"id": context["id"]},
+                        {"$set": {"waiting_for_notes": False}}
+                    )
+                    
+                    # Process as new event (recursive call to handle properly)
+                    return await chat_with_donna(request)
+                else:
+                    # User is responding with notes for previous event
+                    await handle_event_notes_response(request.message, context, request.session_id)
+                    donna_response = "Perfect! I've added those notes to your event. You're all set!"
+                    
+                    # Clear the context
+                    await db.conversation_context.update_one(
+                        {"id": context["id"]},
+                        {"$set": {"waiting_for_notes": False}}
+                    )
             else:
                 # Normal conversation flow - no event created, not waiting for notes
                 chat = LlmChat(
