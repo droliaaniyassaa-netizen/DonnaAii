@@ -1119,9 +1119,10 @@ async def recalculate_meal_stats(session_id: str, date: str):
     start_date = datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc)
     end_date = start_date + timedelta(days=1)
     
-    # Get all remaining meal entries for today
+    # Get all remaining meal entries for today and this session
     meal_entries = await db.health_entries.find({
         "type": "meal",
+        "session_id": session_id,
         "datetime_utc": {"$gte": start_date, "$lt": end_date}
     }).to_list(100)
     
