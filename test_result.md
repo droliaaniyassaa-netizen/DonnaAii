@@ -261,6 +261,18 @@ backend:
         agent: "testing"
         comment: "✅ HEALTH TARGETS FULLY FUNCTIONAL: All CRUD operations working perfectly (100% test success rate). POST /api/health/targets creates/updates targets with session-based storage. GET /api/health/targets/{session_id} retrieves targets correctly. PUT /api/health/targets/{session_id} supports partial updates while preserving unchanged values. DELETE /api/health/targets/{session_id} cleans up properly. Proper error handling for non-existent sessions (404). Timestamps (created_at, updated_at) working correctly. Tested with exact sample data from review request - all endpoints respond as expected. Ready for frontend stat card integration."
 
+  - task: "Chat-based health logging with LLM processing"
+    implemented: true
+    working: false
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "FEATURE ADDED: Implemented chat-based health logging system. Users can now log hydration ('glass of water' = 250ml), meals (LLM estimates calories/protein), and sleep ('slept 8 hours') through main chat interface. Added health processing functions with LLM integration, daily health stats storage, and confirmation messages. Backend endpoints: GET /api/health/stats/{session_id}, POST /api/health/stats/reset/{session_id}. Ready for testing."
+
 frontend:
   - task: "Career tab 'Generate plan' button functionality"
     implemented: true
