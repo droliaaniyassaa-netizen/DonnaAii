@@ -87,6 +87,8 @@ const App = () => {
   const [healthEntries, setHealthEntries] = useState([]);
   const [healthGoals, setHealthGoals] = useState([]);
   const [healthAnalytics, setHealthAnalytics] = useState({});
+  const [weeklyAnalytics, setWeeklyAnalytics] = useState(null);
+  const [loadingWeeklyAnalytics, setLoadingWeeklyAnalytics] = useState(false);
   const [newHealthEntry, setNewHealthEntry] = useState({ type: 'meal', description: '', date: '', time: '12:00' });
   const [newHealthGoal, setNewHealthGoal] = useState({ goal_type: 'weight_loss', target: '', current_progress: '' });
   
