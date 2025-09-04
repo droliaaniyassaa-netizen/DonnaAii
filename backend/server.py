@@ -1239,6 +1239,212 @@ async def recalculate_meal_stats(session_id: str, date: str):
         }
     )
 
+# Weekly Analytics Functions
+async def get_week_bounds(week_offset: int = 0):
+    """Get Monday and Sunday dates for the specified week"""
+    today = datetime.now(timezone.utc).date()
+    days_since_monday = today.weekday()  # 0=Monday, 6=Sunday
+    
+    # Calculate this week's Monday
+    current_monday = today - timedelta(days=days_since_monday)
+    target_monday = current_monday + timedelta(weeks=week_offset)
+    target_sunday = target_monday + timedelta(days=6)
+    
+    return target_monday.strftime('%Y-%m-%d'), target_sunday.strftime('%Y-%m-%d')
+
+async def aggregate_weekly_health_data(session_id: str, week_start: str, week_end: str):
+    """Aggregate 7 days of health data and detect patterns"""
+    
+    # Get all daily stats for the week
+    daily_stats = await db.daily_health_stats.find({
+        "session_id": session_id,
+        "date": {
+            "$gte": week_start,
+            "$lte": week_end
+        }
+    }).sort("date", 1).to_list(7)
+    
+    if not daily_stats:
+        return None
+    
+    # Calculate averages
+    total_days = len(daily_stats)
+    total_calories = sum(day.get('calories', 0) for day in daily_stats)
+    total_protein = sum(day.get('protein', 0) for day in daily_stats)
+    total_hydration = sum(day.get('hydration', 0) for day in daily_stats)
+    total_sleep = sum(day.get('sleep', 0) for day in daily_stats)
+    
+    avg_calories = total_calories / total_days if total_days > 0 else 0
+    avg_protein = total_protein / total_days if total_days > 0 else 0
+    avg_hydration = total_hydration / total_days if total_days > 0 else 0
+    avg_sleep = total_sleep / total_days if total_days > 0 else 0
+    
+    # Pattern analysis
+    def analyze_patterns(values, category_name):
+        if not values:
+            return {"consistency": "no_data", "trend": "flat", "weekday_vs_weekend": "no_pattern"}
+        
+        # Calculate consistency (coefficient of variation)
+        mean_val = sum(values) / len(values)
+        if mean_val == 0:
+            consistency = "no_data"
+        else:
+            variance = sum((x - mean_val) ** 2 for x in values) / len(values)
+            std_dev = variance ** 0.5
+            cv = std_dev / mean_val
+            if cv < 0.15:
+                consistency = "very_consistent"
+            elif cv < 0.3:
+                consistency = "consistent"
+            elif cv < 0.5:
+                consistency = "variable"
+            else:
+                consistency = "highly_variable"
+        
+        # Trend analysis (simple linear trend)
+        n = len(values)
+        if n < 3:
+            trend = "insufficient_data"
+        else:
+            x_avg = (n - 1) / 2
+            y_avg = mean_val
+            slope = sum((i - x_avg) * (values[i] - y_avg) for i in range(n)) / sum((i - x_avg) ** 2 for i in range(n))
+            if abs(slope) < mean_val * 0.02:  # Less than 2% change per day
+                trend = "stable"
+            elif slope > 0:
+                trend = "increasing"
+            else:
+                trend = "decreasing"
+        
+        # Weekday vs weekend (if we have enough data)
+        weekday_vs_weekend = "no_pattern"
+        if len(values) >= 5:  # Need at least 5 days to compare
+            # Assume first day is Monday, so weekend is days 5,6 (Sat, Sun)
+            weekdays = values[:5] if len(values) >= 5 else values
+            weekends = values[5:] if len(values) > 5 else []
+            
+            if weekends:
+                weekday_avg = sum(weekdays) / len(weekdays)
+                weekend_avg = sum(weekends) / len(weekends)
+                
+                if weekend_avg > weekday_avg * 1.2:
+                    weekday_vs_weekend = "higher_weekends"
+                elif weekend_avg < weekday_avg * 0.8:
+                    weekday_vs_weekend = "lower_weekends"
+                else:
+                    weekday_vs_weekend = "similar"
+        
+        return {
+            "consistency": consistency,
+            "trend": trend,
+            "weekday_vs_weekend": weekday_vs_weekend,
+            "daily_values": values,
+            "mean": mean_val,
+            "days_with_data": len([v for v in values if v > 0])
+        }
+    
+    # Extract daily values for pattern analysis
+    calories_values = [day.get('calories', 0) for day in daily_stats]
+    protein_values = [day.get('protein', 0) for day in daily_stats]
+    hydration_values = [day.get('hydration', 0) for day in daily_stats]
+    sleep_values = [day.get('sleep', 0) for day in daily_stats]
+    
+    return {
+        "daily_stats": daily_stats,
+        "aggregated": {
+            "avg_calories": round(avg_calories, 1),
+            "avg_protein": round(avg_protein, 1),
+            "avg_hydration": round(avg_hydration, 1),
+            "avg_sleep": round(avg_sleep, 1),
+            "total_days": total_days
+        },
+        "patterns": {
+            "calories": analyze_patterns(calories_values, "calories"),
+            "protein": analyze_patterns(protein_values, "protein"),
+            "hydration": analyze_patterns(hydration_values, "hydration"),
+            "sleep": analyze_patterns(sleep_values, "sleep")
+        }
+    }
+
+async def generate_weekly_expert_analysis(session_id: str, weekly_data: dict, targets: dict):
+    """Generate expert analysis using LLM based on weekly patterns"""
+    
+    try:
+        # Get user's targets (use defaults if not found)
+        target_calories = targets.get('calories', 2200)
+        target_protein = targets.get('protein', 120)
+        target_hydration = targets.get('hydration', 2500)
+        target_sleep = targets.get('sleep', 8.0)
+        
+        aggregated = weekly_data["aggregated"]
+        patterns = weekly_data["patterns"]
+        
+        # Create context for LLM
+        context = f"""
+WEEKLY HEALTH DATA ANALYSIS:
+
+AVERAGES vs TARGETS:
+- Calories: {aggregated['avg_calories']} avg (target: {target_calories}) - {((aggregated['avg_calories']/target_calories - 1) * 100):+.1f}%
+- Protein: {aggregated['avg_protein']}g avg (target: {target_protein}g) - {((aggregated['avg_protein']/target_protein - 1) * 100):+.1f}%
+- Hydration: {aggregated['avg_hydration']}ml avg (target: {target_hydration}ml) - {((aggregated['avg_hydration']/target_hydration - 1) * 100):+.1f}%
+- Sleep: {aggregated['avg_sleep']}h avg (target: {target_sleep}h) - {((aggregated['avg_sleep']/target_sleep - 1) * 100):+.1f}%
+
+PATTERN INSIGHTS:
+Calories: {patterns['calories']['consistency']} consistency, {patterns['calories']['trend']} trend, weekends vs weekdays: {patterns['calories']['weekday_vs_weekend']}
+Protein: {patterns['protein']['consistency']} consistency, {patterns['protein']['trend']} trend, weekends vs weekdays: {patterns['protein']['weekday_vs_weekend']}
+Hydration: {patterns['hydration']['consistency']} consistency, {patterns['hydration']['trend']} trend, weekends vs weekdays: {patterns['hydration']['weekday_vs_weekend']}
+Sleep: {patterns['sleep']['consistency']} consistency, {patterns['sleep']['trend']} trend, weekends vs weekdays: {patterns['sleep']['weekday_vs_weekend']}
+
+CROSS-CATEGORY OPPORTUNITIES:
+Look for connections between sleep quality and calorie cravings, hydration patterns and sleep disruption, protein consistency and recovery patterns, weekend lifestyle changes affecting multiple metrics.
+
+Generate insights that make the user think "Wow, I never realized that connection!" Focus on actionable health impacts, not just describing the numbers.
+"""
+
+        chat = LlmChat(
+            api_key=openai_api_key,
+            session_id=f"weekly_analytics_{session_id}",
+            system_message=WEEKLY_ANALYTICS_SYSTEM_MESSAGE
+        ).with_model("openai", "gpt-4o-mini")
+        
+        user_msg = UserMessage(text=context)
+        llm_response = await chat.send_message(user_msg)
+        
+        # Parse JSON response
+        import json
+        try:
+            analysis = json.loads(llm_response.strip())
+            return analysis
+        except json.JSONDecodeError:
+            logging.error(f"Failed to parse LLM response: {llm_response}")
+            return {
+                "calories_expert": "Analysis temporarily unavailable.",
+                "calories_insight": "Check back later for insights.",
+                "protein_expert": "Analysis temporarily unavailable.",
+                "protein_insight": "Check back later for insights.",
+                "hydration_expert": "Analysis temporarily unavailable.",
+                "hydration_insight": "Check back later for insights.",
+                "sleep_expert": "Analysis temporarily unavailable.",
+                "sleep_insight": "Check back later for insights.",
+                "overall_expert": "Analysis temporarily unavailable.",
+                "overall_insight": "Check back later for insights."
+            }
+            
+    except Exception as e:
+        logging.error(f"Error generating weekly analysis: {str(e)}")
+        return {
+            "calories_expert": "Analysis currently unavailable due to technical issues.",
+            "calories_insight": "Please try again later.",
+            "protein_expert": "Analysis currently unavailable due to technical issues.",
+            "protein_insight": "Please try again later.",
+            "hydration_expert": "Analysis currently unavailable due to technical issues.",
+            "hydration_insight": "Please try again later.",
+            "sleep_expert": "Analysis currently unavailable due to technical issues.",
+            "sleep_insight": "Please try again later.",
+            "overall_expert": "Analysis currently unavailable due to technical issues.",
+            "overall_insight": "Please try again later."
+        }
+
 # Helper functions for event notes handling
 async def handle_event_notes_response(message: str, context: dict, session_id: str):
     """Handle user's response to event notes question"""
