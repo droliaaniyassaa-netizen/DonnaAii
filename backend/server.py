@@ -345,11 +345,29 @@ async def update_daily_health_stats(session_id: str, health_result: HealthProces
     
     # Update or create the daily stats
     if "$inc" in update_data or "sleep" in update_data:
-        await db.daily_health_stats.update_one(
-            {"session_id": session_id, "date": today},
-            {"$set": update_data} if "sleep" in update_data else {**update_data},
-            upsert=True
-        )
+        if "sleep" in update_data:
+            # For sleep, use $set operation
+            set_data = {k: v for k, v in update_data.items() if k != "$inc"}
+            await db.daily_health_stats.update_one(
+                {"session_id": session_id, "date": today},
+                {"$set": set_data},
+                upsert=True
+            )
+        else:
+            # For increment operations, separate $set and $inc
+            inc_data = update_data.pop("$inc")
+            set_data = update_data
+            update_operations = {}
+            if inc_data:
+                update_operations["$inc"] = inc_data
+            if set_data:
+                update_operations["$set"] = set_data
+            
+            await db.daily_health_stats.update_one(
+                {"session_id": session_id, "date": today},
+                update_operations,
+                upsert=True
+            )
         
         # Log health entry for history
         entry = HealthEntry(
