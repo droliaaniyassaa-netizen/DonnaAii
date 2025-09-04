@@ -454,8 +454,13 @@ async def chat_with_donna(request: ChatRequest):
         
         if health_result.detected and health_result.confidence > 0.6:
             # Process health data first - this takes priority over event creation
-            await update_daily_health_stats(request.session_id, health_result)
-            donna_response = await generate_health_confirmation(health_result)
+            if health_result.message_type == "delete":
+                # Handle delete/undo commands
+                donna_response = await handle_health_delete_command(request.session_id, health_result)
+            else:
+                # Normal health logging
+                await update_daily_health_stats(request.session_id, health_result)
+                donna_response = await generate_health_confirmation(health_result)
             
         else:
             # Check for event creation if not a health message
