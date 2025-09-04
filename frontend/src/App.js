@@ -2094,44 +2094,44 @@ const App = () => {
                                 strokeWidth="1"
                                 strokeDasharray="2,2"
                               />
-                            </svg>
-                            <div className="trend-labels">
-                              <span className="trend-label">Mon</span>
-                              <span className="trend-label">Tue</span>
-                              <span className="trend-label">Wed</span>
-                              <span className="trend-label">Thu</span>
-                              <span className="trend-label">Fri</span>
-                              <span className="trend-label">Sat</span>
-                              <span className="trend-label">Sun</span>
+                                  </svg>
+                                  <div className="trend-labels">
+                                    <span className="trend-label">Mon</span>
+                                    <span className="trend-label">Tue</span>
+                                    <span className="trend-label">Wed</span>
+                                    <span className="trend-label">Thu</span>
+                                    <span className="trend-label">Fri</span>
+                                    <span className="trend-label">Sat</span>
+                                    <span className="trend-label">Sun</span>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              <div className="expert-analysis">
+                                {hasAnalyticsData ? (
+                                  <>
+                                    <div className="expert-text">{weeklyAnalytics.protein_expert}</div>
+                                    <div className="compact-insight">💡 {weeklyAnalytics.protein_insight}</div>
+                                  </>
+                                ) : (
+                                  <div className="empty-analysis-placeholder"></div>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        )}
-                        
-                        <div className="expert-analysis">
-                          {hasAnalyticsData ? (
-                            <>
-                              <div className="expert-text">{weeklyAnalytics.protein_expert}</div>
-                              <div className="compact-insight">💡 {weeklyAnalytics.protein_insight}</div>
-                            </>
-                          ) : (
-                            <div className="empty-analysis-placeholder"></div>
-                          )}
-                        </div>
-                      </div>
 
                             {/* Hydration Analysis Card */}
                             <div className="weekly-stat-card hydration-card">
-                        <div className="weekly-stat-header">
-                          <h3>Hydration</h3>
-                          <div className="weekly-average">
-                            <span className="avg-value">{Math.round(weeklyAnalytics.avg_hydration)}ml</span>
-                            <span className="avg-label">avg/day</span>
-                          </div>
-                        </div>
-                        
-                        {/* Mini Trend Chart */}
-                        {weeklyAnalytics.hydration_pattern && weeklyAnalytics.hydration_pattern.daily_values && (
-                          <div className="trend-chart">
+                              <div className="weekly-stat-header">
+                                <h3>Hydration</h3>
+                                <div className="weekly-average">
+                                  <span className="avg-value">{Math.round(weeklyAnalytics.avg_hydration)}ml</span>
+                                  <span className="avg-label">avg/day</span>
+                                </div>
+                              </div>
+                              
+                              {/* Mini Trend Chart */}
+                              {weeklyAnalytics.hydration_pattern && weeklyAnalytics.hydration_pattern.daily_values && (
+                                <div className="trend-chart">
                             <svg width="100%" height="40" viewBox="0 0 280 40">
                               {weeklyAnalytics.hydration_pattern.daily_values.map((value, index) => {
                                 const max = Math.max(...weeklyAnalytics.hydration_pattern.daily_values, weeklyAnalytics.target_hydration);
