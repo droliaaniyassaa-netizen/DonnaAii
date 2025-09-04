@@ -2000,7 +2000,7 @@ const App = () => {
                               {/* Mini Trend Chart */}
                               {weeklyAnalytics.calories_pattern && weeklyAnalytics.calories_pattern.daily_values && (
                                 <div className="trend-chart">
-                            <svg width="100%" height="40" viewBox="0 0 280 40">
+                                  <svg width="100%" height="40" viewBox="0 0 280 40">
                               {weeklyAnalytics.calories_pattern.daily_values.map((value, index) => {
                                 const max = Math.max(...weeklyAnalytics.calories_pattern.daily_values, weeklyAnalytics.target_calories);
                                 const height = (value / max) * 30;
