@@ -2119,8 +2119,8 @@ const App = () => {
                         </div>
                       </div>
 
-                      {/* Hydration Analysis Card */}
-                      <div className="weekly-stat-card hydration-card">
+                            {/* Hydration Analysis Card */}
+                            <div className="weekly-stat-card hydration-card">
                         <div className="weekly-stat-header">
                           <h3>Hydration</h3>
                           <div className="weekly-average">
