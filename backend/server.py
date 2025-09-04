@@ -261,6 +261,137 @@ def prepare_for_mongo(data):
                 data[key] = value.isoformat()
     return data
 
+# Health Processing Functions
+async def process_health_message(message: str) -> HealthProcessingResult:
+    """Process message to detect and extract health data using LLM"""
+    try:
+        # Use LLM to detect and extract health information
+        chat = LlmChat(
+            api_key=openai_api_key,
+            session_id="health_processing",
+            system_message=HEALTH_DETECTION_SYSTEM_MESSAGE
+        ).with_model("openai", "gpt-4o-mini")
+        
+        user_msg = UserMessage(text=message)
+        llm_response = await chat.send_message(user_msg)
+        
+        # Parse JSON response
+        import json
+        try:
+            health_data = json.loads(llm_response.strip())
+            return HealthProcessingResult(**health_data)
+        except json.JSONDecodeError:
+            # Fallback if JSON parsing fails
+            return HealthProcessingResult(
+                detected=False,
+                message_type="none",
+                description="Processing failed",
+                confidence=0.0
+            )
+    except Exception as e:
+        logging.error(f"Health processing error: {str(e)}")
+        return HealthProcessingResult(
+            detected=False,
+            message_type="none", 
+            description="Error processing",
+            confidence=0.0
+        )
+
+async def get_or_create_daily_health_stats(session_id: str) -> DailyHealthStats:
+    """Get or create daily health stats for today"""
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    
+    # Check if stats exist for today
+    existing = await db.daily_health_stats.find_one({
+        "session_id": session_id,
+        "date": today
+    })
+    
+    if existing:
+        return DailyHealthStats(**existing)
+    else:
+        # Create new daily stats
+        new_stats = DailyHealthStats(
+            session_id=session_id,
+            date=today
+        )
+        await db.daily_health_stats.insert_one(prepare_for_mongo(new_stats.dict()))
+        return new_stats
+
+async def update_daily_health_stats(session_id: str, health_result: HealthProcessingResult):
+    """Update daily health stats based on processed health data"""
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    
+    # Prepare update data
+    update_data = {"updated_at": datetime.now(timezone.utc)}
+    
+    if health_result.message_type == "hydration" and health_result.hydration_ml:
+        # Validate hydration (max 2000ml per entry)
+        hydration_amount = min(health_result.hydration_ml, 2000)
+        update_data["$inc"] = {"hydration": hydration_amount}
+        
+    elif health_result.message_type == "meal":
+        inc_data = {}
+        if health_result.calories:
+            inc_data["calories"] = health_result.calories
+        if health_result.protein:
+            inc_data["protein"] = health_result.protein
+        if inc_data:
+            update_data["$inc"] = inc_data
+            
+    elif health_result.message_type == "sleep" and health_result.sleep_hours:
+        # For sleep, we replace rather than increment (daily total)
+        update_data["sleep"] = health_result.sleep_hours
+    
+    # Update or create the daily stats
+    if "$inc" in update_data or "sleep" in update_data:
+        await db.daily_health_stats.update_one(
+            {"session_id": session_id, "date": today},
+            {"$set": update_data} if "sleep" in update_data else {**update_data},
+            upsert=True
+        )
+        
+        # Log health entry for history
+        entry = HealthEntry(
+            type=health_result.message_type,
+            description=health_result.description,
+            value=str(health_result.hydration_ml or health_result.calories or health_result.sleep_hours or ""),
+            datetime_utc=datetime.now(timezone.utc)
+        )
+        await db.health_entries.insert_one(prepare_for_mongo(entry.dict()))
+
+async def generate_health_confirmation(health_result: HealthProcessingResult) -> str:
+    """Generate a confirmation message using Donna's personality"""
+    try:
+        chat = LlmChat(
+            api_key=openai_api_key,
+            session_id="health_confirmation",
+            system_message=HEALTH_CONFIRMATION_SYSTEM_MESSAGE
+        ).with_model("openai", "gpt-4o-mini")
+        
+        # Create context message for Donna
+        context_parts = []
+        if health_result.message_type == "hydration":
+            context_parts.append(f"Added {health_result.hydration_ml}ml hydration")
+        elif health_result.message_type == "meal":
+            context_parts.append(f"Added {health_result.calories}cal, {health_result.protein}g protein")
+        elif health_result.message_type == "sleep":
+            context_parts.append(f"Logged {health_result.sleep_hours} hours sleep")
+            
+        context = f"Health logged: {', '.join(context_parts)}. Description: {health_result.description}"
+        user_msg = UserMessage(text=context)
+        
+        return await chat.send_message(user_msg)
+    except Exception as e:
+        # Fallback confirmation
+        if health_result.message_type == "hydration":
+            return f"✅ Added {health_result.hydration_ml}ml to your hydration! 💧"
+        elif health_result.message_type == "meal":
+            return f"✅ Logged your meal - {health_result.calories} calories, {health_result.protein}g protein! 🍽️"
+        elif health_result.message_type == "sleep":
+            return f"✅ Logged {health_result.sleep_hours} hours of sleep! 😴"
+        return "✅ Health data logged successfully!"
+
 # Chat endpoints
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat_with_donna(request: ChatRequest):
