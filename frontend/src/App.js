@@ -1988,7 +1988,7 @@ const App = () => {
                           <div className="weekly-stats-grid">
 
                             {/* Calories Analysis Card */}
-                      <div className="weekly-stat-card calories-card">
+                            <div className="weekly-stat-card calories-card">
                         <div className="weekly-stat-header">
                           <h3>Calories</h3>
                           <div className="weekly-average">
