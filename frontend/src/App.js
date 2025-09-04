@@ -93,6 +93,7 @@ const App = () => {
   // UI state
   const [activeTab, setActiveTab] = useState('chat');
   const [activeCalendarView, setActiveCalendarView] = useState('upcoming'); // New state for calendar sub-tabs
+  const [activeHealthView, setActiveHealthView] = useState('daily'); // New state for health sub-tabs
   const [showSettings, setShowSettings] = useState(false);
   
   // Refs
