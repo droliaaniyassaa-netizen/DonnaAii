@@ -1132,6 +1132,104 @@ async def reset_daily_health_stats(session_id: str):
     
     return {"message": "Daily health stats reset successfully", "date": today}
 
+# Weekly Analytics endpoints
+@api_router.get("/health/analytics/weekly/{session_id}", response_model=WeeklyHealthAnalytics)
+async def get_weekly_health_analytics(session_id: str, week_offset: int = 0):
+    """Get or generate weekly health analytics for a specific week"""
+    
+    # Get week boundaries
+    week_start, week_end = await get_week_bounds(week_offset)
+    
+    # Check if we already have analytics for this week
+    existing_analytics = await db.weekly_health_analytics.find_one({
+        "session_id": session_id,
+        "week_start": week_start,
+        "week_end": week_end
+    })
+    
+    if existing_analytics:
+        return WeeklyHealthAnalytics(**existing_analytics)
+    
+    # Generate new analytics
+    weekly_data = await aggregate_weekly_health_data(session_id, week_start, week_end)
+    
+    if not weekly_data:
+        # No data available for this week
+        return WeeklyHealthAnalytics(
+            session_id=session_id,
+            week_start=week_start,
+            week_end=week_end,
+            overall_expert="No health data logged for this week yet.",
+            overall_insight="Start logging your health data to get personalized insights!"
+        )
+    
+    # Get user's targets for comparison
+    targets = {"calories": 2200, "protein": 120, "hydration": 2500, "sleep": 8.0}
+    try:
+        user_targets = await db.health_targets.find_one({"session_id": session_id})
+        if user_targets:
+            targets.update({
+                "calories": user_targets.get("calories", 2200),
+                "protein": user_targets.get("protein", 120),
+                "hydration": user_targets.get("hydration", 2500),
+                "sleep": user_targets.get("sleep", 8.0)
+            })
+    except:
+        pass  # Use defaults if no targets found
+    
+    # Generate expert analysis
+    expert_analysis = await generate_weekly_expert_analysis(session_id, weekly_data, targets)
+    
+    # Create WeeklyHealthAnalytics object
+    analytics = WeeklyHealthAnalytics(
+        session_id=session_id,
+        week_start=week_start,
+        week_end=week_end,
+        avg_calories=weekly_data["aggregated"]["avg_calories"],
+        avg_protein=weekly_data["aggregated"]["avg_protein"],
+        avg_hydration=weekly_data["aggregated"]["avg_hydration"],
+        avg_sleep=weekly_data["aggregated"]["avg_sleep"],
+        target_calories=targets["calories"],
+        target_protein=targets["protein"],
+        target_hydration=targets["hydration"],
+        target_sleep=targets["sleep"],
+        calories_pattern=weekly_data["patterns"]["calories"],
+        protein_pattern=weekly_data["patterns"]["protein"],
+        hydration_pattern=weekly_data["patterns"]["hydration"],
+        sleep_pattern=weekly_data["patterns"]["sleep"],
+        calories_expert=expert_analysis.get("calories_expert", ""),
+        calories_insight=expert_analysis.get("calories_insight", ""),
+        protein_expert=expert_analysis.get("protein_expert", ""),
+        protein_insight=expert_analysis.get("protein_insight", ""),
+        hydration_expert=expert_analysis.get("hydration_expert", ""),
+        hydration_insight=expert_analysis.get("hydration_insight", ""),
+        sleep_expert=expert_analysis.get("sleep_expert", ""),
+        sleep_insight=expert_analysis.get("sleep_insight", ""),
+        overall_expert=expert_analysis.get("overall_expert", ""),
+        overall_insight=expert_analysis.get("overall_insight", "")
+    )
+    
+    # Store analytics for future use (cache for performance)
+    await db.weekly_health_analytics.insert_one(prepare_for_mongo(analytics.dict()))
+    
+    return analytics
+
+@api_router.post("/health/analytics/weekly/regenerate/{session_id}")
+async def regenerate_weekly_analytics(session_id: str, week_offset: int = 0):
+    """Force regenerate weekly analytics (useful for testing or after data corrections)"""
+    
+    week_start, week_end = await get_week_bounds(week_offset)
+    
+    # Delete existing analytics
+    await db.weekly_health_analytics.delete_many({
+        "session_id": session_id,
+        "week_start": week_start,
+        "week_end": week_end
+    })
+    
+    # Generate fresh analytics
+    return await get_weekly_health_analytics(session_id, week_offset)
+
 @api_router.delete("/health/stats/undo/{session_id}/{entry_type}")
 async def undo_last_health_entry(session_id: str, entry_type: str):
     """Undo the last health entry of a specific type (hydration, meal, sleep)"""
