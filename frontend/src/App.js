@@ -2198,7 +2198,7 @@ const App = () => {
                               {/* Mini Trend Chart */}
                               {weeklyAnalytics.sleep_pattern && weeklyAnalytics.sleep_pattern.daily_values && (
                                 <div className="trend-chart">
-                            <svg width="100%" height="40" viewBox="0 0 280 40">
+                                  <svg width="100%" height="40" viewBox="0 0 280 40">
                               {weeklyAnalytics.sleep_pattern.daily_values.map((value, index) => {
                                 const max = Math.max(...weeklyAnalytics.sleep_pattern.daily_values, weeklyAnalytics.target_sleep);
                                 const height = (value / max) * 30;
