@@ -180,11 +180,12 @@ class UserSettingsUpdate(BaseModel):
 # Health Processing Models
 class HealthProcessingResult(BaseModel):
     detected: bool
-    message_type: str  # 'hydration', 'meal', 'sleep', 'none'
+    message_type: str  # 'hydration', 'meal', 'sleep', 'delete', 'none'
     hydration_ml: Optional[int] = None
     calories: Optional[int] = None
     protein: Optional[int] = None
     sleep_hours: Optional[float] = None
+    delete_type: Optional[str] = None  # 'hydration', 'meal', 'sleep', 'last'
     description: str
     confidence: float
 
