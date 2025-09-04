@@ -106,6 +106,7 @@ class HealthEntryCreate(BaseModel):
     type: str
     description: str
     value: Optional[str] = None
+    session_id: Optional[str] = "default"
     datetime_utc: str  # ISO string datetime in UTC from frontend
 
 class HealthGoal(BaseModel):
