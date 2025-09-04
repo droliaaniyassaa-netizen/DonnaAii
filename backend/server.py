@@ -429,6 +429,93 @@ async def generate_health_confirmation(health_result: HealthProcessingResult) ->
                 return f"{health_result.sleep_hours} hours logged. Try to turn in earlier tonight or slip in a midday nap."
         return "Health data logged successfully."
 
+async def handle_health_delete_command(session_id: str, health_result: HealthProcessingResult) -> str:
+    """Handle delete/undo commands for health entries"""
+    try:
+        delete_type = health_result.delete_type or "last"
+        
+        if delete_type == "last":
+            # Find and delete the most recent health entry of any type
+            today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+            recent_entry = await db.health_entries.find_one(
+                {
+                    "datetime_utc": {
+                        "$gte": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc),
+                        "$lt": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)
+                    }
+                },
+                sort=[("datetime_utc", -1)]
+            )
+            
+            if not recent_entry:
+                return "No recent entries found to delete."
+            
+            delete_type = recent_entry["type"]
+        
+        # Use the undo endpoint logic
+        from fastapi import Request
+        import httpx
+        
+        # Call our own undo endpoint
+        try:
+            # Manually call the undo logic
+            today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+            recent_entry = await db.health_entries.find_one(
+                {
+                    "type": delete_type,
+                    "datetime_utc": {
+                        "$gte": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc),
+                        "$lt": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)
+                    }
+                },
+                sort=[("datetime_utc", -1)]
+            )
+            
+            if not recent_entry:
+                return f"No recent {delete_type} entries found to delete."
+            
+            # Remove the entry
+            await db.health_entries.delete_one({"id": recent_entry["id"]})
+            
+            # Update daily stats
+            entry_data = HealthEntry(**recent_entry)
+            update_data = {"updated_at": datetime.now(timezone.utc)}
+            
+            if delete_type == "hydration" and entry_data.value:
+                hydration_amount = int(entry_data.value) if entry_data.value.isdigit() else 0
+                if hydration_amount > 0:
+                    await db.daily_health_stats.update_one(
+                        {"session_id": session_id, "date": today},
+                        {"$inc": {"hydration": -hydration_amount}, "$set": {"updated_at": datetime.now(timezone.utc)}}
+                    )
+                    
+            elif delete_type == "meal":
+                await recalculate_meal_stats(session_id, today)
+                
+            elif delete_type == "sleep":
+                await db.daily_health_stats.update_one(
+                    {"session_id": session_id, "date": today},
+                    {"$set": {"sleep": 0.0, "updated_at": datetime.now(timezone.utc)}}
+                )
+            
+            # Return appropriate confirmation
+            if delete_type == "hydration":
+                return f"Removed {entry_data.value}ml hydration entry. Stats updated."
+            elif delete_type == "meal":
+                return f"Removed meal entry: {entry_data.description}. Calories and protein recalculated."
+            elif delete_type == "sleep":
+                return f"Removed sleep entry: {entry_data.value} hours. Sleep reset."
+            else:
+                return f"Removed {delete_type} entry successfully."
+                
+        except Exception as e:
+            logging.error(f"Error deleting health entry: {str(e)}")
+            return "Sorry, I couldn't delete that entry. Please try again."
+            
+    except Exception as e:
+        logging.error(f"Error handling delete command: {str(e)}")
+        return "I didn't catch that. Try 'delete last entry' or 'undo hydration'."
+
 # Chat endpoints
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat_with_donna(request: ChatRequest):
