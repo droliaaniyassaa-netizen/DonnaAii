@@ -866,6 +866,45 @@ async def delete_health_targets(session_id: str):
         raise HTTPException(status_code=404, detail="Health targets not found for this session")
     return {"message": "Health targets deleted successfully"}
 
+# Daily Health Stats endpoints (for chat-based health logging)
+@api_router.get("/health/stats/{session_id}", response_model=DailyHealthStats)
+async def get_daily_health_stats(session_id: str):
+    """Get today's health stats for a session"""
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    stats = await db.daily_health_stats.find_one({
+        "session_id": session_id,
+        "date": today
+    })
+    
+    if not stats:
+        # Return empty stats for today
+        return DailyHealthStats(
+            session_id=session_id,
+            date=today
+        )
+    
+    return DailyHealthStats(**stats)
+
+@api_router.post("/health/stats/reset/{session_id}")
+async def reset_daily_health_stats(session_id: str):
+    """Reset daily health stats (called at 6am local time)"""
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    
+    # Create fresh stats for today
+    new_stats = DailyHealthStats(
+        session_id=session_id,
+        date=today
+    )
+    
+    # Replace existing stats
+    await db.daily_health_stats.replace_one(
+        {"session_id": session_id, "date": today},
+        prepare_for_mongo(new_stats.dict()),
+        upsert=True
+    )
+    
+    return {"message": "Daily health stats reset successfully", "date": today}
+
 # Helper functions for event notes handling
 async def handle_event_notes_response(message: str, context: dict, session_id: str):
     """Handle user's response to event notes question"""
