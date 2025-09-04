@@ -1550,8 +1550,10 @@ const App = () => {
                     {healthStats.protein > 0 && (
                       <button 
                         onClick={() => undoHealthEntry('meal')}
-                        className="undo-button protein"
+                        className={`undo-button protein ${undoingEntry ? 'disabled' : ''}`}
                         title="Undo last meal entry"
+                        disabled={undoingEntry}
+                        style={{ cursor: undoingEntry ? 'not-allowed' : 'pointer' }}
                       >
                         <Trash2 size={10} />
                       </button>
