@@ -4859,6 +4859,41 @@ body::before {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Undo Button - Barely Visible */
+.undo-button {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.sophisticated-stat:hover .undo-button {
+  opacity: 0.4;
+}
+
+.undo-button:hover {
+  opacity: 1 !important;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  transform: scale(1.1);
+}
+
+.undo-button svg {
+  color: rgba(239, 68, 68, 0.8);
+}
+
 /* Luxury Dashboard Logging Section */
 .health-logging-section {
   display: flex;
