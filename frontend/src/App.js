@@ -2001,33 +2001,33 @@ const App = () => {
                               {weeklyAnalytics.calories_pattern && weeklyAnalytics.calories_pattern.daily_values && (
                                 <div className="trend-chart">
                                   <svg width="100%" height="40" viewBox="0 0 280 40">
-                              {weeklyAnalytics.calories_pattern.daily_values.map((value, index) => {
-                                const max = Math.max(...weeklyAnalytics.calories_pattern.daily_values, weeklyAnalytics.target_calories);
-                                const height = (value / max) * 30;
-                                const x = index * 40 + 20;
-                                const y = 35 - height;
-                                return (
-                                  <rect
-                                    key={index}
-                                    x={x - 15}
-                                    y={y}
-                                    width="30"
-                                    height={height}
-                                    fill="rgba(245, 158, 11, 0.7)"
-                                    rx="2"
-                                  />
-                                );
-                              })}
-                              {/* Target line */}
-                              <line
-                                x1="5"
-                                y1={35 - (weeklyAnalytics.target_calories / Math.max(...weeklyAnalytics.calories_pattern.daily_values, weeklyAnalytics.target_calories)) * 30}
-                                x2="275"
-                                y2={35 - (weeklyAnalytics.target_calories / Math.max(...weeklyAnalytics.calories_pattern.daily_values, weeklyAnalytics.target_calories)) * 30}
-                                stroke="rgba(245, 158, 11, 0.4)"
-                                strokeWidth="1"
-                                strokeDasharray="2,2"
-                              />
+                                    {weeklyAnalytics.calories_pattern.daily_values.map((value, index) => {
+                                      const max = Math.max(...weeklyAnalytics.calories_pattern.daily_values, weeklyAnalytics.target_calories);
+                                      const height = (value / max) * 30;
+                                      const x = index * 40 + 20;
+                                      const y = 35 - height;
+                                      return (
+                                        <rect
+                                          key={index}
+                                          x={x - 15}
+                                          y={y}
+                                          width="30"
+                                          height={height}
+                                          fill="rgba(245, 158, 11, 0.7)"
+                                          rx="2"
+                                        />
+                                      );
+                                    })}
+                                    {/* Target line */}
+                                    <line
+                                      x1="5"
+                                      y1={35 - (weeklyAnalytics.target_calories / Math.max(...weeklyAnalytics.calories_pattern.daily_values, weeklyAnalytics.target_calories)) * 30}
+                                      x2="275"
+                                      y2={35 - (weeklyAnalytics.target_calories / Math.max(...weeklyAnalytics.calories_pattern.daily_values, weeklyAnalytics.target_calories)) * 30}
+                                      stroke="rgba(245, 158, 11, 0.4)"
+                                      strokeWidth="1"
+                                      strokeDasharray="2,2"
+                                    />
                                   </svg>
                                   <div className="trend-labels">
                                     <span className="trend-label">Mon</span>
