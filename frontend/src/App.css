@@ -3498,9 +3498,7 @@ body::before {
 
 /* Clean Goal Input Section (Google-style Search Pill) */
 .goal-bar-sticky {
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: relative;
   margin-bottom: 1rem;
 }
 
