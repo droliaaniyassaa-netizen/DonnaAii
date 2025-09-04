@@ -1482,6 +1482,15 @@ const App = () => {
                     <div className="stat-value">{healthStats.calories}kcal</div>
                     <div className="stat-target">of {healthTargets.calories}</div>
                     <div className="stat-subtitle">Calories</div>
+                    {healthStats.calories > 0 && (
+                      <button 
+                        onClick={() => undoHealthEntry('meal')}
+                        className="undo-button"
+                        title="Undo last meal entry"
+                      >
+                        <Trash2 size={10} />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
