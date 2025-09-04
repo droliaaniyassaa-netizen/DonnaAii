@@ -1749,7 +1749,111 @@ const App = () => {
 
             </div>
 
+              </div>
+            )}
 
+            {/* Weekly Analytics View */}
+            {activeHealthView === 'weekly' && (
+              <div className="weekly-analytics-view">
+                
+                {loadingWeeklyAnalytics ? (
+                  <div className="loading-analytics">
+                    <div className="loading-spinner"></div>
+                    <p>Generating your weekly health insights...</p>
+                  </div>
+                ) : weeklyAnalytics ? (
+                  <div className="weekly-analytics-content">
+                    
+                    {/* Week Summary Header */}
+                    <div className="week-summary-header">
+                      <h2>Weekly Health Analysis</h2>
+                      <p className="week-range">{weeklyAnalytics.week_start} to {weeklyAnalytics.week_end}</p>
+                    </div>
+
+                    {/* Weekly Stat Cards Grid */}
+                    <div className="weekly-stats-grid">
+                      
+                      {/* Calories Analysis Card */}
+                      <div className="weekly-stat-card calories-card">
+                        <div className="weekly-stat-header">
+                          <h3>Calories</h3>
+                          <div className="weekly-average">
+                            <span className="avg-value">{Math.round(weeklyAnalytics.avg_calories)}</span>
+                            <span className="avg-label">avg/day</span>
+                          </div>
+                        </div>
+                        <div className="expert-analysis">
+                          <div className="expert-text">{weeklyAnalytics.calories_expert}</div>
+                          <div className="compact-insight">💡 {weeklyAnalytics.calories_insight}</div>
+                        </div>
+                      </div>
+
+                      {/* Protein Analysis Card */}
+                      <div className="weekly-stat-card protein-card">
+                        <div className="weekly-stat-header">
+                          <h3>Protein</h3>
+                          <div className="weekly-average">
+                            <span className="avg-value">{Math.round(weeklyAnalytics.avg_protein)}g</span>
+                            <span className="avg-label">avg/day</span>
+                          </div>
+                        </div>
+                        <div className="expert-analysis">
+                          <div className="expert-text">{weeklyAnalytics.protein_expert}</div>
+                          <div className="compact-insight">💡 {weeklyAnalytics.protein_insight}</div>
+                        </div>
+                      </div>
+
+                      {/* Hydration Analysis Card */}
+                      <div className="weekly-stat-card hydration-card">
+                        <div className="weekly-stat-header">
+                          <h3>Hydration</h3>
+                          <div className="weekly-average">
+                            <span className="avg-value">{Math.round(weeklyAnalytics.avg_hydration)}ml</span>
+                            <span className="avg-label">avg/day</span>
+                          </div>
+                        </div>
+                        <div className="expert-analysis">
+                          <div className="expert-text">{weeklyAnalytics.hydration_expert}</div>
+                          <div className="compact-insight">💡 {weeklyAnalytics.hydration_insight}</div>
+                        </div>
+                      </div>
+
+                      {/* Sleep Analysis Card */}
+                      <div className="weekly-stat-card sleep-card">
+                        <div className="weekly-stat-header">
+                          <h3>Sleep</h3>
+                          <div className="weekly-average">
+                            <span className="avg-value">{weeklyAnalytics.avg_sleep}h</span>
+                            <span className="avg-label">avg/night</span>
+                          </div>
+                        </div>
+                        <div className="expert-analysis">
+                          <div className="expert-text">{weeklyAnalytics.sleep_expert}</div>
+                          <div className="compact-insight">💡 {weeklyAnalytics.sleep_insight}</div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* Overall Analysis Section */}
+                    <div className="overall-analysis-section">
+                      <h3>Your Week's Health Story</h3>
+                      <div className="overall-expert-analysis">
+                        <div className="overall-expert-text">{weeklyAnalytics.overall_expert}</div>
+                        <div className="overall-insight">🔬 {weeklyAnalytics.overall_insight}</div>
+                      </div>
+                    </div>
+
+                  </div>
+                ) : (
+                  <div className="no-analytics-data">
+                    <h3>No Weekly Data Yet</h3>
+                    <p>Start logging your health data daily to get personalized weekly insights from your Harvard-trained health expert!</p>
+                  </div>
+                )}
+
+              </div>
+            )}
 
           </div>
         </TabsContent>
