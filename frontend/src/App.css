@@ -4878,14 +4878,14 @@ body::before {
   z-index: 10;
 }
 
-/* Left side positioning for calories and water - 3mm more left */
+/* Left side positioning for calories and water - 6mm more left total */
 .undo-button.left {
-  left: -47px;
+  left: -59px;
 }
 
-/* Right side positioning for protein and sleep - 3mm more right */
+/* Right side positioning for protein and sleep - 6mm more right total */
 .undo-button.right {
-  right: -47px;
+  right: -59px;
 }
 
 .undo-button:hover {
