@@ -822,6 +822,24 @@ const App = () => {
     }
   };
 
+  const loadDailyHealthStats = async () => {
+    try {
+      const response = await axios.get(`${API}/health/stats/default`);
+      if (response.data) {
+        setHealthStats({
+          calories: response.data.calories || 0,
+          protein: response.data.protein || 0,
+          hydration: response.data.hydration || 0,
+          sleep: response.data.sleep || 0
+        });
+        console.log('✅ Loaded daily health stats from backend:', response.data);
+      }
+    } catch (error) {
+      console.error('Error loading daily health stats:', error);
+      // Keep existing stats as fallback
+    }
+  };
+
   const createHealthEntry = async () => {
     if (!newHealthEntry.description || !newHealthEntry.date) return;
     
