@@ -2251,8 +2251,14 @@ const App = () => {
                     <div className="overall-analysis-section">
                       <h3>Your Week's Health Story</h3>
                       <div className="overall-expert-analysis">
-                        <div className="overall-expert-text">{weeklyAnalytics.overall_expert}</div>
-                        <div className="overall-insight">🔬 {weeklyAnalytics.overall_insight}</div>
+                        {hasAnalyticsData ? (
+                          <>
+                            <div className="overall-expert-text">{weeklyAnalytics.overall_expert}</div>
+                            <div className="overall-insight">🔬 {weeklyAnalytics.overall_insight}</div>
+                          </>
+                        ) : (
+                          <div className="empty-analysis-placeholder"></div>
+                        )}
                       </div>
                     </div>
 
