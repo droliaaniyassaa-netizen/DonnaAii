@@ -1820,8 +1820,8 @@ const App = () => {
 
                     {/* Weekly Performance Visual Summary */}
                     <div className="weekly-performance-chart">
+                      <h3 className="chart-title">Your Week vs Targets</h3>
                       <div className="performance-chart-container">
-                        <h3 className="chart-title">Your Week vs Targets</h3>
                         <div className="vertical-bars-container">
                           
                           {(() => {
