@@ -1426,6 +1426,29 @@ const App = () => {
         <TabsContent value="health" className="health-container">
           <div className="health-content">
             
+            {/* Health Subtabs */}
+            <div className="health-subtabs">
+              <button 
+                className={`health-subtab ${activeHealthView === 'daily' ? 'active' : ''}`}
+                onClick={() => setActiveHealthView('daily')}
+              >
+                Daily Tracking
+              </button>
+              <button 
+                className={`health-subtab ${activeHealthView === 'weekly' ? 'active' : ''}`}
+                onClick={() => {
+                  setActiveHealthView('weekly');
+                  if (!weeklyAnalytics) loadWeeklyAnalytics();
+                }}
+              >
+                Weekly Analytics
+              </button>
+            </div>
+
+            {/* Daily Health View */}
+            {activeHealthView === 'daily' && (
+              <div className="daily-health-view">
+                
             {/* Set Goal Section */}
             <div className="health-goal-section">
               <div className="goal-section-header">
