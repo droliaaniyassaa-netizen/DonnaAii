@@ -2102,8 +2102,14 @@ const App = () => {
                         )}
                         
                         <div className="expert-analysis">
-                          <div className="expert-text">{weeklyAnalytics.protein_expert}</div>
-                          <div className="compact-insight">💡 {weeklyAnalytics.protein_insight}</div>
+                          {hasAnalyticsData ? (
+                            <>
+                              <div className="expert-text">{weeklyAnalytics.protein_expert}</div>
+                              <div className="compact-insight">💡 {weeklyAnalytics.protein_insight}</div>
+                            </>
+                          ) : (
+                            <div className="empty-analysis-placeholder"></div>
+                          )}
                         </div>
                       </div>
 
