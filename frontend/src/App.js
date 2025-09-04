@@ -118,6 +118,7 @@ const App = () => {
     loadHealthAnalytics();
     loadHealthTargets();
     loadDailyHealthStats(); // Load chat-based health stats
+    loadWeeklyAnalytics(); // Load weekly analytics
     
     // Initialize default date/time for new entries
     const now = getCurrentInUserTimezone();
