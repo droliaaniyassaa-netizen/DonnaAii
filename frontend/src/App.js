@@ -883,49 +883,7 @@ const App = () => {
     }
   };
 
-  const undoHealthEntry = async (entryType) => {
-    // Prevent multiple rapid clicks
-    if (undoingEntry) {
-      console.log('Undo already in progress, ignoring click');
-      return;
-    }
 
-    try {
-      setUndoingEntry(true);
-      console.log(`🔄 Starting undo for ${entryType}...`);
-      
-      // Add small delay to ensure UI updates
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      const response = await axios.delete(`${API}/health/stats/undo/default/${entryType}`);
-      console.log(`✅ Undid ${entryType} entry:`, response.data);
-      
-      // Refresh health stats immediately and wait for completion
-      await Promise.all([
-        loadDailyHealthStats(),
-        loadHealthEntries()
-      ]);
-      
-      // Small additional delay to ensure state updates are complete
-      await new Promise(resolve => setTimeout(resolve, 200));
-      
-      // Show brief confirmation
-      console.log(`✅ ${response.data.message || `${entryType} entry removed successfully`}`);
-      
-    } catch (error) {
-      console.error(`❌ Error undoing ${entryType} entry:`, error);
-      if (error.response?.status === 404) {
-        console.log(`ℹ️ No recent ${entryType} entries found to remove.`);
-      } else {
-        console.error(`❌ Error removing ${entryType} entry. Please try again.`);
-      }
-    } finally {
-      // Ensure loading state is reset after a minimum delay
-      await new Promise(resolve => setTimeout(resolve, 300));
-      setUndoingEntry(false);
-      console.log(`🔄 Undo operation completed for ${entryType}`);
-    }
-  };
 
   return (
     <div className="app-container">
