@@ -474,6 +474,7 @@ async def handle_health_delete_command(session_id: str, health_result: HealthPro
             recent_entry = await db.health_entries.find_one(
                 {
                     "type": delete_type,
+                    "session_id": session_id,
                     "datetime_utc": {
                         "$gte": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc),
                         "$lt": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)
