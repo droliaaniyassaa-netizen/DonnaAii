@@ -8,7 +8,7 @@ import json
 from datetime import datetime, timezone, timedelta
 
 def debug_datetime_filtering():
-    base_url = "https://quickload-5.preview.emergentagent.com/api"
+    base_url = "https://fitness-donna.preview.emergentagent.com/api"
     session_id = "datetime_debug"
     
     print("🔍 Debugging datetime filtering...")

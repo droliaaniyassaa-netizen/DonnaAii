@@ -7,7 +7,7 @@ import requests
 import json
 
 def check_health_entries():
-    base_url = "https://quickload-5.preview.emergentagent.com/api"
+    base_url = "https://fitness-donna.preview.emergentagent.com/api"
     
     print("🔍 Checking health entries storage...")
     
