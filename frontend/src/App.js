@@ -1632,7 +1632,7 @@ const App = () => {
                     {healthStats.sleep > 0 && (
                       <button 
                         onClick={() => undoHealthEntry('sleep')}
-                        className="undo-button right"
+                        className="undo-button sleep"
                         title="Undo last sleep entry"
                       >
                         <Trash2 size={10} />
