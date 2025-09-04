@@ -1582,17 +1582,6 @@ const App = () => {
                     <div className="stat-value">{healthStats.sleep}h</div>
                     <div className="stat-target">of {healthTargets.sleep}h</div>
                     <div className="stat-subtitle">Sleep</div>
-                    {healthStats.sleep > 0 && (
-                      <button 
-                        onClick={() => undoHealthEntry('sleep')}
-                        className={`undo-button sleep ${undoingEntry ? 'disabled' : ''}`}
-                        title="Undo last sleep entry"
-                        disabled={undoingEntry}
-                        style={{ cursor: undoingEntry ? 'not-allowed' : 'pointer' }}
-                      >
-                        <Trash2 size={10} />
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
