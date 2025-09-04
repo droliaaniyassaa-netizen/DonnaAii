@@ -794,7 +794,15 @@ class DonnaAPITester:
         
         session_id = "health_test_session"
         
-        # First, get initial daily health stats
+        # First, reset stats to ensure clean test
+        success, reset_response = self.run_test(
+            "Reset Daily Health Stats for Clean Test",
+            "POST",
+            f"health/stats/reset/{session_id}",
+            200
+        )
+        
+        # Get initial daily health stats
         success, initial_stats = self.run_test(
             "Get Initial Daily Health Stats",
             "GET",
@@ -975,47 +983,476 @@ class DonnaAPITester:
             else:
                 print("⚠️  Non-health message incorrectly processed as health data")
         
-        # Test daily health stats reset
+        return True
+
+    def test_enhanced_health_undo_delete_functionality(self):
+        """Test the NEW enhanced chat-based health logging with undo/delete functionality"""
+        print("\n" + "="*50)
+        print("TESTING ENHANCED HEALTH UNDO/DELETE FUNCTIONALITY")
+        print("="*50)
+        
+        session_id = "undo_test_session"
+        
+        # Reset stats for clean test
         success, reset_response = self.run_test(
-            "Reset Daily Health Stats",
+            "Reset Stats for Undo Test",
             "POST",
             f"health/stats/reset/{session_id}",
             200
         )
         
-        if success and reset_response.get('message'):
-            print("✅ Daily health stats reset successfully")
-            
-            # Verify stats are reset
-            success, reset_stats = self.run_test(
-                "Check Reset Stats",
-                "GET",
-                f"health/stats/{session_id}",
-                200
-            )
-            
-            if success:
-                if (reset_stats.get('calories', 0) == 0 and 
-                    reset_stats.get('protein', 0) == 0 and 
-                    reset_stats.get('hydration', 0) == 0 and 
-                    reset_stats.get('sleep', 0) == 0):
-                    print("✅ All stats reset to zero")
-                else:
-                    print("❌ Stats not properly reset")
+        print("\n🔄 PHASE 1: COMPLETE HEALTH WORKFLOW TESTING")
+        print("="*50)
         
-        # Test final comprehensive stats
-        success, final_stats = self.run_test(
-            "Get Final Daily Health Stats",
+        # Step 1: Log hydration and verify
+        success, response = self.run_test(
+            "Log Hydration: 'I had a glass of water'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "I had a glass of water", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            print(f"✅ Donna response: {donna_response[:100]}...")
+        
+        time.sleep(1)
+        
+        # Verify hydration stats updated
+        success, stats_after_hydration = self.run_test(
+            "Check Stats After Hydration",
             "GET",
             f"health/stats/{session_id}",
             200
         )
         
         if success:
-            print(f"📊 Final stats: Calories={final_stats.get('calories', 0)}, "
-                  f"Protein={final_stats.get('protein', 0)}, "
-                  f"Hydration={final_stats.get('hydration', 0)}, "
-                  f"Sleep={final_stats.get('sleep', 0)}")
+            hydration_amount = stats_after_hydration.get('hydration', 0)
+            if hydration_amount > 0:
+                print(f"✅ Hydration logged: {hydration_amount}ml")
+            else:
+                print("❌ Hydration not logged")
+        
+        # Step 2: Delete hydration via chat and verify
+        success, response = self.run_test(
+            "Delete Hydration: 'undo hydration'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "undo hydration", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            print(f"✅ Donna undo response: {donna_response[:100]}...")
+        
+        time.sleep(1)
+        
+        # Verify hydration decreased
+        success, stats_after_undo = self.run_test(
+            "Check Stats After Hydration Undo",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            new_hydration = stats_after_undo.get('hydration', 0)
+            if new_hydration < hydration_amount:
+                print(f"✅ Hydration decreased after undo: {hydration_amount}ml -> {new_hydration}ml")
+            else:
+                print(f"❌ Hydration not decreased: {hydration_amount}ml -> {new_hydration}ml")
+        
+        # Step 3: Log meal and verify
+        success, response = self.run_test(
+            "Log Meal: 'I ate pasta'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "I ate pasta", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            print(f"✅ Donna meal response: {donna_response[:100]}...")
+        
+        time.sleep(1)
+        
+        # Verify meal stats updated
+        success, stats_after_meal = self.run_test(
+            "Check Stats After Meal",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            calories = stats_after_meal.get('calories', 0)
+            protein = stats_after_meal.get('protein', 0)
+            if calories > 0 and protein > 0:
+                print(f"✅ Meal logged: {calories} calories, {protein}g protein")
+            else:
+                print(f"❌ Meal not logged properly: {calories} calories, {protein}g protein")
+        
+        # Step 4: Delete meal via chat and verify recalculation
+        success, response = self.run_test(
+            "Delete Meal: 'remove last meal'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "remove last meal", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            print(f"✅ Donna meal undo response: {donna_response[:100]}...")
+        
+        time.sleep(1)
+        
+        # Verify meal stats recalculated
+        success, stats_after_meal_undo = self.run_test(
+            "Check Stats After Meal Undo",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            new_calories = stats_after_meal_undo.get('calories', 0)
+            new_protein = stats_after_meal_undo.get('protein', 0)
+            if new_calories < calories or new_protein < protein:
+                print(f"✅ Meal stats recalculated: {calories}→{new_calories} cal, {protein}→{new_protein}g protein")
+            else:
+                print(f"❌ Meal stats not recalculated: {calories}→{new_calories} cal, {protein}→{new_protein}g protein")
+        
+        # Step 5: Log sleep and verify
+        success, response = self.run_test(
+            "Log Sleep: 'I slept 8 hours'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "I slept 8 hours", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            print(f"✅ Donna sleep response: {donna_response[:100]}...")
+        
+        time.sleep(1)
+        
+        # Verify sleep logged
+        success, stats_after_sleep = self.run_test(
+            "Check Stats After Sleep",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            sleep_hours = stats_after_sleep.get('sleep', 0)
+            if sleep_hours > 0:
+                print(f"✅ Sleep logged: {sleep_hours} hours")
+            else:
+                print("❌ Sleep not logged")
+        
+        # Step 6: Delete sleep via chat and verify reset
+        success, response = self.run_test(
+            "Delete Sleep: 'undo sleep'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "undo sleep", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            print(f"✅ Donna sleep undo response: {donna_response[:100]}...")
+        
+        time.sleep(1)
+        
+        # Verify sleep reset
+        success, stats_after_sleep_undo = self.run_test(
+            "Check Stats After Sleep Undo",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            new_sleep = stats_after_sleep_undo.get('sleep', 0)
+            if new_sleep == 0:
+                print(f"✅ Sleep reset: {sleep_hours} -> {new_sleep} hours")
+            else:
+                print(f"❌ Sleep not reset: {sleep_hours} -> {new_sleep} hours")
+        
+        print("\n🔄 PHASE 2: CHAT-BASED DELETE COMMANDS")
+        print("="*50)
+        
+        # Test various delete command patterns
+        delete_commands = [
+            "delete last entry",
+            "undo hydration", 
+            "undo last meal",
+            "remove sleep"
+        ]
+        
+        # First add some data to delete
+        setup_messages = [
+            "I had a bottle of water",
+            "I ate a sandwich", 
+            "I slept 7 hours"
+        ]
+        
+        print("Setting up data for delete tests...")
+        for message in setup_messages:
+            success, response = self.run_test(
+                f"Setup: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            time.sleep(1)
+        
+        # Get stats before delete tests
+        success, stats_before_deletes = self.run_test(
+            "Stats Before Delete Tests",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            print(f"📊 Stats before deletes: Calories={stats_before_deletes.get('calories', 0)}, "
+                  f"Protein={stats_before_deletes.get('protein', 0)}, "
+                  f"Hydration={stats_before_deletes.get('hydration', 0)}, "
+                  f"Sleep={stats_before_deletes.get('sleep', 0)}")
+        
+        # Test each delete command
+        for command in delete_commands:
+            success, response = self.run_test(
+                f"Chat Delete Command: '{command}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": command, "session_id": session_id}
+            )
+            
+            if success:
+                donna_response = response.get('response', '')
+                if any(word in donna_response.lower() for word in ['removed', 'deleted', 'undo', 'reset']):
+                    print(f"✅ Delete command '{command}' processed: {donna_response[:80]}...")
+                else:
+                    print(f"⚠️  Delete command '{command}' unclear response: {donna_response[:80]}...")
+            
+            time.sleep(1)
+        
+        print("\n🔄 PHASE 3: UNDO API ENDPOINTS")
+        print("="*50)
+        
+        # Reset and add fresh data for API tests
+        success, reset_response = self.run_test(
+            "Reset for API Tests",
+            "POST",
+            f"health/stats/reset/{session_id}",
+            200
+        )
+        
+        # Add test data via chat
+        api_test_messages = [
+            "I drank 2 glasses of water",  # Should add ~500ml
+            "I ate a burger",              # Should add calories/protein
+            "I slept 8.5 hours"           # Should set sleep
+        ]
+        
+        print("Setting up data for API endpoint tests...")
+        for message in api_test_messages:
+            success, response = self.run_test(
+                f"API Setup: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            time.sleep(1)
+        
+        # Get baseline stats
+        success, api_baseline_stats = self.run_test(
+            "API Baseline Stats",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            print(f"📊 API baseline: Calories={api_baseline_stats.get('calories', 0)}, "
+                  f"Protein={api_baseline_stats.get('protein', 0)}, "
+                  f"Hydration={api_baseline_stats.get('hydration', 0)}, "
+                  f"Sleep={api_baseline_stats.get('sleep', 0)}")
+        
+        # Test undo hydration API
+        success, undo_response = self.run_test(
+            "API Undo Hydration",
+            "DELETE",
+            f"health/stats/undo/{session_id}/hydration",
+            200
+        )
+        
+        if success:
+            if undo_response.get('message'):
+                print(f"✅ Hydration undo API: {undo_response['message']}")
+            else:
+                print("❌ Hydration undo API missing message")
+        
+        # Test undo meal API
+        success, undo_response = self.run_test(
+            "API Undo Meal",
+            "DELETE",
+            f"health/stats/undo/{session_id}/meal",
+            200
+        )
+        
+        if success:
+            if undo_response.get('message'):
+                print(f"✅ Meal undo API: {undo_response['message']}")
+            else:
+                print("❌ Meal undo API missing message")
+        
+        # Test undo sleep API
+        success, undo_response = self.run_test(
+            "API Undo Sleep",
+            "DELETE",
+            f"health/stats/undo/{session_id}/sleep",
+            200
+        )
+        
+        if success:
+            if undo_response.get('message'):
+                print(f"✅ Sleep undo API: {undo_response['message']}")
+            else:
+                print("❌ Sleep undo API missing message")
+        
+        # Verify final stats after API undos
+        success, final_api_stats = self.run_test(
+            "Final Stats After API Undos",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            print(f"📊 Final API stats: Calories={final_api_stats.get('calories', 0)}, "
+                  f"Protein={final_api_stats.get('protein', 0)}, "
+                  f"Hydration={final_api_stats.get('hydration', 0)}, "
+                  f"Sleep={final_api_stats.get('sleep', 0)}")
+        
+        print("\n🔄 PHASE 4: ERROR HANDLING")
+        print("="*50)
+        
+        # Test undo when no entries exist
+        success, error_response = self.run_test(
+            "Undo Non-existent Hydration",
+            "DELETE",
+            f"health/stats/undo/{session_id}/hydration",
+            404
+        )
+        
+        if success:
+            print("✅ Proper 404 error for non-existent hydration entry")
+        
+        # Test undo invalid type
+        success, error_response = self.run_test(
+            "Undo Invalid Type",
+            "DELETE",
+            f"health/stats/undo/{session_id}/invalid_type",
+            404
+        )
+        
+        if success:
+            print("✅ Proper error handling for invalid entry type")
+        
+        # Test chat delete when no entries exist
+        success, response = self.run_test(
+            "Chat Delete No Entries",
+            "POST",
+            "chat",
+            200,
+            data={"message": "delete last entry", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            if any(word in donna_response.lower() for word in ['no', 'found', 'recent', 'entries']):
+                print(f"✅ Proper error message for no entries: {donna_response[:80]}...")
+            else:
+                print(f"⚠️  Unclear error message: {donna_response[:80]}...")
+        
+        print("\n🔄 PHASE 5: DATA CONSISTENCY VERIFICATION")
+        print("="*50)
+        
+        # Add complex data and verify consistency
+        consistency_messages = [
+            "I had 3 glasses of water",     # 750ml
+            "I ate pasta with chicken",     # Calories + protein
+            "I had another glass of water", # +250ml = 1000ml total
+            "I ate an apple",              # More calories + protein
+            "I slept 7.5 hours"           # Sleep
+        ]
+        
+        print("Adding complex data for consistency test...")
+        for message in consistency_messages:
+            success, response = self.run_test(
+                f"Consistency: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            time.sleep(1)
+        
+        # Get complex stats
+        success, complex_stats = self.run_test(
+            "Complex Stats Before Undo",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            print(f"📊 Complex stats: Calories={complex_stats.get('calories', 0)}, "
+                  f"Protein={complex_stats.get('protein', 0)}, "
+                  f"Hydration={complex_stats.get('hydration', 0)}, "
+                  f"Sleep={complex_stats.get('sleep', 0)}")
+        
+        # Test meal recalculation by removing one meal
+        success, response = self.run_test(
+            "Remove One Meal for Recalculation Test",
+            "DELETE",
+            f"health/stats/undo/{session_id}/meal",
+            200
+        )
+        
+        time.sleep(1)
+        
+        # Verify recalculation worked
+        success, recalc_stats = self.run_test(
+            "Stats After Meal Recalculation",
+            "GET",
+            f"health/stats/{session_id}",
+            200
+        )
+        
+        if success:
+            new_calories = recalc_stats.get('calories', 0)
+            new_protein = recalc_stats.get('protein', 0)
+            old_calories = complex_stats.get('calories', 0)
+            old_protein = complex_stats.get('protein', 0)
+            
+            if new_calories < old_calories and new_protein < old_protein:
+                print(f"✅ Meal recalculation working: {old_calories}→{new_calories} cal, {old_protein}→{new_protein}g protein")
+            else:
+                print(f"❌ Meal recalculation failed: {old_calories}→{new_calories} cal, {old_protein}→{new_protein}g protein")
         
         return True
 
