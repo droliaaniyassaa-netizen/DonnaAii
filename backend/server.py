@@ -933,6 +933,107 @@ async def reset_daily_health_stats(session_id: str):
     
     return {"message": "Daily health stats reset successfully", "date": today}
 
+@api_router.delete("/health/stats/undo/{session_id}/{entry_type}")
+async def undo_last_health_entry(session_id: str, entry_type: str):
+    """Undo the last health entry of a specific type (hydration, meal, sleep)"""
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    
+    # Find the most recent health entry of this type for today
+    recent_entry = await db.health_entries.find_one(
+        {
+            "type": entry_type,
+            "datetime_utc": {
+                "$gte": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc),
+                "$lt": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)
+            }
+        },
+        sort=[("datetime_utc", -1)]
+    )
+    
+    if not recent_entry:
+        raise HTTPException(status_code=404, detail=f"No recent {entry_type} entry found for today")
+    
+    # Remove the entry from health_entries
+    await db.health_entries.delete_one({"id": recent_entry["id"]})
+    
+    # Recalculate daily stats by removing this entry's contribution
+    entry_data = HealthEntry(**recent_entry)
+    
+    # Prepare update to subtract the entry's values
+    update_data = {"updated_at": datetime.now(timezone.utc)}
+    
+    if entry_type == "hydration" and entry_data.value:
+        # Subtract hydration amount
+        hydration_amount = int(entry_data.value) if entry_data.value.isdigit() else 0
+        if hydration_amount > 0:
+            update_data["$inc"] = {"hydration": -hydration_amount}
+            
+    elif entry_type == "meal" and entry_data.description:
+        # Recalculate meal stats by reprocessing remaining entries
+        await recalculate_meal_stats(session_id, today)
+        return {"message": f"Last {entry_type} entry undone successfully", "recalculated": True}
+        
+    elif entry_type == "sleep":
+        # Reset sleep to 0 (since we replace, not accumulate sleep)
+        update_data["sleep"] = 0.0
+    
+    # Update daily stats
+    if "$inc" in update_data or "sleep" in update_data:
+        if "sleep" in update_data:
+            await db.daily_health_stats.update_one(
+                {"session_id": session_id, "date": today},
+                {"$set": update_data}
+            )
+        else:
+            set_data = {k: v for k, v in update_data.items() if k != "$inc"}
+            inc_data = update_data.get("$inc", {})
+            update_operations = {}
+            if inc_data:
+                update_operations["$inc"] = inc_data
+            if set_data:
+                update_operations["$set"] = set_data
+            await db.daily_health_stats.update_one(
+                {"session_id": session_id, "date": today},
+                update_operations
+            )
+    
+    return {"message": f"Last {entry_type} entry undone successfully", "entry_removed": recent_entry["description"]}
+
+async def recalculate_meal_stats(session_id: str, date: str):
+    """Recalculate meal calories and protein from remaining entries"""
+    start_date = datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc)
+    end_date = start_date + timedelta(days=1)
+    
+    # Get all remaining meal entries for today
+    meal_entries = await db.health_entries.find({
+        "type": "meal",
+        "datetime_utc": {"$gte": start_date, "$lt": end_date}
+    }).to_list(100)
+    
+    # Recalculate totals using LLM processing
+    total_calories = 0
+    total_protein = 0
+    
+    for entry in meal_entries:
+        # Re-process each meal description to get accurate totals
+        if entry.get("description"):
+            health_result = await process_health_message(f"I ate {entry['description']}")
+            if health_result.detected and health_result.message_type == "meal":
+                total_calories += health_result.calories or 0
+                total_protein += health_result.protein or 0
+    
+    # Update daily stats with recalculated values
+    await db.daily_health_stats.update_one(
+        {"session_id": session_id, "date": date},
+        {
+            "$set": {
+                "calories": total_calories,
+                "protein": total_protein,
+                "updated_at": datetime.now(timezone.utc)
+            }
+        }
+    )
+
 # Helper functions for event notes handling
 async def handle_event_notes_response(message: str, context: dict, session_id: str):
     """Handle user's response to event notes question"""
