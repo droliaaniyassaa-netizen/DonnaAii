@@ -2055,17 +2055,17 @@ const App = () => {
 
                             {/* Protein Analysis Card */}
                             <div className="weekly-stat-card protein-card">
-                        <div className="weekly-stat-header">
-                          <h3>Protein</h3>
-                          <div className="weekly-average">
-                            <span className="avg-value">{Math.round(weeklyAnalytics.avg_protein)}g</span>
-                            <span className="avg-label">avg/day</span>
-                          </div>
-                        </div>
-                        
-                        {/* Mini Trend Chart */}
-                        {weeklyAnalytics.protein_pattern && weeklyAnalytics.protein_pattern.daily_values && (
-                          <div className="trend-chart">
+                              <div className="weekly-stat-header">
+                                <h3>Protein</h3>
+                                <div className="weekly-average">
+                                  <span className="avg-value">{Math.round(weeklyAnalytics.avg_protein)}g</span>
+                                  <span className="avg-label">avg/day</span>
+                                </div>
+                              </div>
+                              
+                              {/* Mini Trend Chart */}
+                              {weeklyAnalytics.protein_pattern && weeklyAnalytics.protein_pattern.daily_values && (
+                                <div className="trend-chart">
                             <svg width="100%" height="40" viewBox="0 0 280 40">
                               {weeklyAnalytics.protein_pattern.daily_values.map((value, index) => {
                                 const max = Math.max(...weeklyAnalytics.protein_pattern.daily_values, weeklyAnalytics.target_protein);
