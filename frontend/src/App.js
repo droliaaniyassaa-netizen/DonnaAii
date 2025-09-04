@@ -2185,8 +2185,8 @@ const App = () => {
                         </div>
                       </div>
 
-                      {/* Sleep Analysis Card */}
-                      <div className="weekly-stat-card sleep-card">
+                            {/* Sleep Analysis Card */}
+                            <div className="weekly-stat-card sleep-card">
                         <div className="weekly-stat-header">
                           <h3>Sleep</h3>
                           <div className="weekly-average">
