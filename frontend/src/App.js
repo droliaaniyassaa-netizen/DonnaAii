@@ -1963,6 +1963,51 @@ const App = () => {
                             <span className="avg-label">avg/night</span>
                           </div>
                         </div>
+                        
+                        {/* Mini Trend Chart */}
+                        {weeklyAnalytics.sleep_pattern && weeklyAnalytics.sleep_pattern.daily_values && (
+                          <div className="trend-chart">
+                            <svg width="100%" height="40" viewBox="0 0 280 40">
+                              {weeklyAnalytics.sleep_pattern.daily_values.map((value, index) => {
+                                const max = Math.max(...weeklyAnalytics.sleep_pattern.daily_values, weeklyAnalytics.target_sleep);
+                                const height = (value / max) * 30;
+                                const x = index * 40 + 20;
+                                const y = 35 - height;
+                                return (
+                                  <rect
+                                    key={index}
+                                    x={x - 15}
+                                    y={y}
+                                    width="30"
+                                    height={height}
+                                    fill="rgba(34, 197, 94, 0.7)"
+                                    rx="2"
+                                  />
+                                );
+                              })}
+                              {/* Target line */}
+                              <line
+                                x1="5"
+                                y1={35 - (weeklyAnalytics.target_sleep / Math.max(...weeklyAnalytics.sleep_pattern.daily_values, weeklyAnalytics.target_sleep)) * 30}
+                                x2="275"
+                                y2={35 - (weeklyAnalytics.target_sleep / Math.max(...weeklyAnalytics.sleep_pattern.daily_values, weeklyAnalytics.target_sleep)) * 30}
+                                stroke="rgba(34, 197, 94, 0.4)"
+                                strokeWidth="1"
+                                strokeDasharray="2,2"
+                              />
+                            </svg>
+                            <div className="trend-labels">
+                              <span className="trend-label">Mon</span>
+                              <span className="trend-label">Tue</span>
+                              <span className="trend-label">Wed</span>
+                              <span className="trend-label">Thu</span>
+                              <span className="trend-label">Fri</span>
+                              <span className="trend-label">Sat</span>
+                              <span className="trend-label">Sun</span>
+                            </div>
+                          </div>
+                        )}
+                        
                         <div className="expert-analysis">
                           <div className="expert-text">{weeklyAnalytics.sleep_expert}</div>
                           <div className="compact-insight">💡 {weeklyAnalytics.sleep_insight}</div>
