@@ -2251,22 +2251,27 @@ const App = () => {
                         </div>
                       </div>
 
-                    </div>
+                          </div>
 
-                    {/* Overall Analysis Section */}
-                    <div className="overall-analysis-section">
-                      <h3>Your Week's Health Story</h3>
-                      <div className="overall-expert-analysis">
-                        {hasAnalyticsData ? (
-                          <>
-                            <div className="overall-expert-text">{weeklyAnalytics.overall_expert}</div>
-                            <div className="overall-insight">🔬 {weeklyAnalytics.overall_insight}</div>
-                          </>
-                        ) : (
-                          <div className="empty-analysis-placeholder"></div>
-                        )}
-                      </div>
-                    </div>
+                          {/* Overall Analysis Section */}
+                          <div className="overall-analysis-section">
+                            <div className="overall-analysis-card">
+                              <h3>Your Week's Health Story</h3>
+                              <div className="overall-expert-analysis">
+                                {hasAnalyticsData ? (
+                                  <>
+                                    <div className="expert-text">{weeklyAnalytics.overall_expert}</div>
+                                    <div className="compact-insight">💡 {weeklyAnalytics.overall_insight}</div>
+                                  </>
+                                ) : (
+                                  <div className="empty-analysis-placeholder"></div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })()}
 
                   </div>
                 ) : (
