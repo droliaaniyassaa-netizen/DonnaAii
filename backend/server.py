@@ -394,11 +394,12 @@ async def update_daily_health_stats(session_id: str, health_result: HealthProces
                 upsert=True
             )
         
-        # Log health entry for history
+        # Log health entry for history with session_id
         entry = HealthEntry(
             type=health_result.message_type,
             description=health_result.description,
             value=str(health_result.hydration_ml or health_result.calories or health_result.sleep_hours or ""),
+            session_id=session_id,  # Include session_id
             datetime_utc=datetime.now(timezone.utc)
         )
         await db.health_entries.insert_one(prepare_for_mongo(entry.dict()))
