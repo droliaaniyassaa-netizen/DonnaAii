@@ -206,15 +206,17 @@ DETECTION CATEGORIES:
 1. HYDRATION: Messages about drinking water, beverages, etc.
 2. MEALS: Messages about eating food, meals, snacks
 3. SLEEP: Messages about sleeping, going to bed, waking up
+4. DELETE: Messages about undoing/deleting health entries
 
 OUTPUT FORMAT (JSON ONLY):
 {
   "detected": true/false,
-  "message_type": "hydration"/"meal"/"sleep"/"none",
+  "message_type": "hydration"/"meal"/"sleep"/"delete"/"none",
   "hydration_ml": number (if hydration),
   "calories": number (if meal), 
   "protein": number (if meal),
   "sleep_hours": number (if sleep),
+  "delete_type": "hydration"/"meal"/"sleep"/"last" (if delete),
   "description": "brief description",
   "confidence": 0.0-1.0
 }
