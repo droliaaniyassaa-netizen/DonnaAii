@@ -177,6 +177,82 @@ class UserSettingsUpdate(BaseModel):
     weekend_mode: Optional[str] = None
     timezone: Optional[str] = None
 
+# Health Processing Models
+class HealthProcessingResult(BaseModel):
+    detected: bool
+    message_type: str  # 'hydration', 'meal', 'sleep', 'none'
+    hydration_ml: Optional[int] = None
+    calories: Optional[int] = None
+    protein: Optional[int] = None
+    sleep_hours: Optional[float] = None
+    description: str
+    confidence: float
+
+class DailyHealthStats(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str
+    date: str  # YYYY-MM-DD format
+    calories: int = 0
+    protein: int = 0  # grams
+    hydration: int = 0  # ml
+    sleep: float = 0.0  # hours
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+# Health Processing System Messages
+HEALTH_DETECTION_SYSTEM_MESSAGE = """You are a health data processing assistant. Your job is to detect and extract health-related information from user messages.
+
+DETECTION CATEGORIES:
+1. HYDRATION: Messages about drinking water, beverages, etc.
+2. MEALS: Messages about eating food, meals, snacks
+3. SLEEP: Messages about sleeping, going to bed, waking up
+
+OUTPUT FORMAT (JSON ONLY):
+{
+  "detected": true/false,
+  "message_type": "hydration"/"meal"/"sleep"/"none",
+  "hydration_ml": number (if hydration),
+  "calories": number (if meal), 
+  "protein": number (if meal),
+  "sleep_hours": number (if sleep),
+  "description": "brief description",
+  "confidence": 0.0-1.0
+}
+
+HYDRATION CONVERSIONS:
+- glass: 250ml
+- cup: 200ml  
+- bottle: 500ml
+- sipper: 400ml
+- mug: 300ml
+- Any specific ml amounts mentioned
+
+MEAL ESTIMATION:
+Estimate calories and protein (grams) for common foods:
+- Sandwich: 300-400 cal, 15-20g protein
+- Pasta: 400-600 cal, 12-15g protein  
+- Salad: 150-300 cal, 5-10g protein
+- Pizza slice: 250-300 cal, 12-15g protein
+- Burger: 500-700 cal, 25-30g protein
+Scale based on descriptions like "small", "large", "light", etc.
+
+SLEEP PARSING:
+- "slept 8 hours" = 8.0
+- "slept at 10pm, woke at 6am" = 8.0
+- "went to bed at 11, woke up at 7" = 8.0
+- Handle AM/PM and 24-hour formats
+
+IMPORTANT: Only return JSON. No additional text or explanations."""
+
+HEALTH_CONFIRMATION_SYSTEM_MESSAGE = """You are Donna, confirming health data logging. Be brief, encouraging, and personal.
+
+Examples:
+- Hydration: "Nice! Added 250ml to your hydration. Keep it up! 💧"
+- Meal: "Got it! Logged your pasta - added 450 calories and 14g protein to your daily intake. 🍝"
+- Sleep: "Perfect! Logged 8 hours of sleep. Rest well! 😴"
+
+Keep responses under 20 words. Be supportive and use relevant emojis."""
+
 # Helper function to prepare data for MongoDB
 def prepare_for_mongo(data):
     if isinstance(data, dict):
