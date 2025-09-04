@@ -952,20 +952,15 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <div className="app-header">
-        <div className="donna-title">
-          <h1>Donna</h1>
-          <p>Your intelligent daily companion</p>
-        </div>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="settings-button"
-          onClick={() => setShowSettings(true)}
-        >
-          <Settings className="settings-icon" />
-        </Button>
-      </div>
+      {/* Floating Settings Button */}
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        className="floating-settings-button"
+        onClick={() => setShowSettings(true)}
+      >
+        <Settings className="settings-icon" />
+      </Button>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="main-tabs">
         <TabsList className="tabs-list">
