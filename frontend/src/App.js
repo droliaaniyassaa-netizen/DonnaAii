@@ -1601,8 +1601,10 @@ const App = () => {
                     {healthStats.hydration > 0 && (
                       <button 
                         onClick={() => undoHealthEntry('hydration')}
-                        className="undo-button water"
+                        className={`undo-button water ${undoingEntry ? 'disabled' : ''}`}
                         title="Undo last hydration entry"
+                        disabled={undoingEntry}
+                        style={{ cursor: undoingEntry ? 'not-allowed' : 'pointer' }}
                       >
                         <Trash2 size={10} />
                       </button>
