@@ -382,7 +382,7 @@ async def generate_health_confirmation(health_result: HealthProcessingResult) ->
         user_msg = UserMessage(text=context)
         
         return await chat.send_message(user_msg)
-    except Exception as e:
+    except Exception:
         # Fallback confirmation
         if health_result.message_type == "hydration":
             return f"✅ Added {health_result.hydration_ml}ml to your hydration! 💧"
