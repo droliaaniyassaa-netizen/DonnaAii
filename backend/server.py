@@ -469,15 +469,23 @@ async def chat_with_donna(request: ChatRequest):
                     {"$set": {"waiting_for_notes": False}}
                 )
         else:
-            # Normal conversation flow - no event created, not waiting for notes
-            chat = LlmChat(
-                api_key=openai_api_key,
-                session_id=request.session_id,
-                system_message=DONNA_SYSTEM_MESSAGE
-            ).with_model("openai", "gpt-4o-mini")
+            # Check for health messages first
+            health_result = await process_health_message(request.message)
             
-            user_msg = UserMessage(text=request.message)
-            donna_response = await chat.send_message(user_msg)
+            if health_result.detected and health_result.confidence > 0.6:
+                # Process health data
+                await update_daily_health_stats(request.session_id, health_result)
+                donna_response = await generate_health_confirmation(health_result)
+            else:
+                # Normal conversation flow - no event created, not waiting for notes
+                chat = LlmChat(
+                    api_key=openai_api_key,
+                    session_id=request.session_id,
+                    system_message=DONNA_SYSTEM_MESSAGE
+                ).with_model("openai", "gpt-4o-mini")
+                
+                user_msg = UserMessage(text=request.message)
+                donna_response = await chat.send_message(user_msg)
         
         # Store Donna's response
         donna_message = ChatMessage(
