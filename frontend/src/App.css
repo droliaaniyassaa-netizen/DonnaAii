@@ -142,11 +142,11 @@ body::before {
 /* Floating Settings Button - Top Right Corner */
 .floating-settings-button {
   position: fixed;
-  top: 1.5rem;
+  bottom: 1.5rem;
   right: 1.5rem;
   z-index: 999;
-  padding: 0.625rem;
-  border-radius: 14px;
+  padding: 0.5rem;
+  border-radius: 12px;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.06) 0%,
     rgba(255, 255, 255, 0.02) 50%,
