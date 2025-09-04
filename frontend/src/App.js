@@ -1878,7 +1878,7 @@ const App = () => {
                                     <div className="metric-label">
                                       <span className="metric-name">Calories</span>
                                       <span className="metric-values">
-                                        {Math.round(weeklyActualCalories).toLocaleString()} / {weeklyTargetCalories.toLocaleString()}
+                                        {hasAnalyticsData ? `${Math.round(weeklyActualCalories).toLocaleString()} / ${weeklyTargetCalories.toLocaleString()}` : `0 / ${weeklyTargetCalories.toLocaleString()}`}
                                       </span>
                                     </div>
                                   </div>
