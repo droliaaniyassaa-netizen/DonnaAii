@@ -1832,23 +1832,26 @@ const App = () => {
                         <div className="vertical-bars-container">
                           
                           {(() => {
-                            // Calculate weekly totals vs weekly targets
-                            const weeklyActualCalories = weeklyAnalytics.avg_calories * 7;
+                            // Check if we have data for analysis
+                            const hasAnalyticsData = weeklyAnalytics.overall_expert && weeklyAnalytics.avg_calories > 0;
+                            
+                            // Calculate weekly totals vs weekly targets (or show empty if no data)
+                            const weeklyActualCalories = hasAnalyticsData ? weeklyAnalytics.avg_calories * 7 : 0;
                             const weeklyTargetCalories = weeklyAnalytics.target_calories * 7;
-                            const weeklyActualProtein = weeklyAnalytics.avg_protein * 7;
+                            const weeklyActualProtein = hasAnalyticsData ? weeklyAnalytics.avg_protein * 7 : 0;
                             const weeklyTargetProtein = weeklyAnalytics.target_protein * 7;
-                            const weeklyActualHydration = weeklyAnalytics.avg_hydration * 7;
+                            const weeklyActualHydration = hasAnalyticsData ? weeklyAnalytics.avg_hydration * 7 : 0;
                             const weeklyTargetHydration = weeklyAnalytics.target_hydration * 7;
-                            const weeklyActualSleep = weeklyAnalytics.avg_sleep * 7;
+                            const weeklyActualSleep = hasAnalyticsData ? weeklyAnalytics.avg_sleep * 7 : 0;
                             const weeklyTargetSleep = weeklyAnalytics.target_sleep * 7;
 
-                            const caloriesPercent = Math.min((weeklyActualCalories / weeklyTargetCalories) * 100, 120);
-                            const proteinPercent = Math.min((weeklyActualProtein / weeklyTargetProtein) * 100, 120);
-                            const hydrationPercent = Math.min((weeklyActualHydration / weeklyTargetHydration) * 100, 120);
-                            const sleepPercent = Math.min((weeklyActualSleep / weeklyTargetSleep) * 100, 120);
+                            const caloriesPercent = hasAnalyticsData ? Math.min((weeklyActualCalories / weeklyTargetCalories) * 100, 120) : 0;
+                            const proteinPercent = hasAnalyticsData ? Math.min((weeklyActualProtein / weeklyTargetProtein) * 100, 120) : 0;
+                            const hydrationPercent = hasAnalyticsData ? Math.min((weeklyActualHydration / weeklyTargetHydration) * 100, 120) : 0;
+                            const sleepPercent = hasAnalyticsData ? Math.min((weeklyActualSleep / weeklyTargetSleep) * 100, 120) : 0;
 
-                            // Find the highest percentage for proportional heights
-                            const maxPercent = Math.max(caloriesPercent, proteinPercent, hydrationPercent, sleepPercent, 100);
+                            // Find the highest percentage for proportional heights (minimum 20% for visual appeal when empty)
+                            const maxPercent = hasAnalyticsData ? Math.max(caloriesPercent, proteinPercent, hydrationPercent, sleepPercent, 100) : 20;
 
                             return (
                               <>
