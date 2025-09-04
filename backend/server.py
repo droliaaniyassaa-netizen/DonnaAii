@@ -447,12 +447,15 @@ async def handle_health_delete_command(session_id: str, health_result: HealthPro
         if delete_type == "last":
             # Find and delete the most recent health entry of any type for this session
             today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+            start_of_day = datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc).isoformat()
+            end_of_day = (datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)).isoformat()
+            
             recent_entry = await db.health_entries.find_one(
                 {
                     "session_id": session_id,
                     "datetime_utc": {
-                        "$gte": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc),
-                        "$lt": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)
+                        "$gte": start_of_day,
+                        "$lt": end_of_day
                     }
                 },
                 sort=[("datetime_utc", -1)]
