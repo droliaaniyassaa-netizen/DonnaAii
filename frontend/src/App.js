@@ -1816,6 +1816,13 @@ const App = () => {
                     <div className="week-summary-header">
                       <h2>Weekly Health Analysis</h2>
                       <p className="week-range">{weeklyAnalytics.week_start} to {weeklyAnalytics.week_end}</p>
+                      
+                      {/* Empty State Message */}
+                      {(!weeklyAnalytics.overall_expert || weeklyAnalytics.avg_calories === 0) && (
+                        <div className="empty-analytics-message">
+                          <p>Begin logging today. Each week, Donna runs your data through principles of advanced nutrition, sleep physiology, and performance medicine translating it into actionable patterns. So you can act early, optimize smarter, and see results that last.</p>
+                        </div>
+                      )}
                     </div>
 
                     {/* Weekly Performance Visual Summary */}
