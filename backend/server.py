@@ -412,33 +412,42 @@ async def chat_with_donna(request: ChatRequest):
         donna_response = ""
         created_event_id = None
         
-        # PRIORITY CHECK: Always check for event creation first, even if waiting for notes
-        created_event_id = await process_message_context(request.message, request.session_id)
+        # PRIORITY CHECK: Check for health messages first, then events
+        health_result = await process_health_message(request.message)
         
-        if created_event_id:
-            # New event detected - clear any waiting notes context and create event
-            if context:
-                await db.conversation_context.update_one(
-                    {"id": context["id"]},
-                    {"$set": {"waiting_for_notes": False}}
-                )
+        if health_result.detected and health_result.confidence > 0.6:
+            # Process health data first - this takes priority over event creation
+            await update_daily_health_stats(request.session_id, health_result)
+            donna_response = await generate_health_confirmation(health_result)
             
-            # Initialize Donna chat for event creation response
-            chat = LlmChat(
-                api_key=openai_api_key,
-                session_id=request.session_id,
-                system_message=DONNA_SYSTEM_MESSAGE
-            ).with_model("openai", "gpt-4o-mini")
+        else:
+            # Check for event creation if not a health message
+            created_event_id = await process_message_context(request.message, request.session_id)
             
-            user_text = request.message + "\n\n[CONTEXT: I just automatically created a calendar event from your message with default reminders (12 hours and 2 hours before). Acknowledge this briefly and naturally, then ask: 'Would you like any reminders or notes for this event?']"
-            user_msg = UserMessage(text=user_text)
-            
-            donna_response = await chat.send_message(user_msg)
-            
-            # Set up context for potential notes
-            await setup_event_notes_context(request.session_id, created_event_id)
-            
-        elif context and context.get("waiting_for_notes"):
+            if created_event_id:
+                # New event detected - clear any waiting notes context and create event
+                if context:
+                    await db.conversation_context.update_one(
+                        {"id": context["id"]},
+                        {"$set": {"waiting_for_notes": False}}
+                    )
+                
+                # Initialize Donna chat for event creation response
+                chat = LlmChat(
+                    api_key=openai_api_key,
+                    session_id=request.session_id,
+                    system_message=DONNA_SYSTEM_MESSAGE
+                ).with_model("openai", "gpt-4o-mini")
+                
+                user_text = request.message + "\n\n[CONTEXT: I just automatically created a calendar event from your message with default reminders (12 hours and 2 hours before). Acknowledge this briefly and naturally, then ask: 'Would you like any reminders or notes for this event?']"
+                user_msg = UserMessage(text=user_text)
+                
+                donna_response = await chat.send_message(user_msg)
+                
+                # Set up context for potential notes
+                await setup_event_notes_context(request.session_id, created_event_id)
+                
+            elif context and context.get("waiting_for_notes"):
             # Check if message contains scheduling keywords - if so, treat as new event not notes
             scheduling_keywords = [
                 'schedule', 'remind me', 'appointment', 'meeting', 'lunch', 'dinner', 
