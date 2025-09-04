@@ -402,6 +402,9 @@ frontend:
       - working: false
         agent: "main"
         comment: "FEATURE ADDED: Integrated chat-based health logging with frontend. Added loadDailyHealthStats() function to fetch daily health stats from new backend endpoint (/api/health/stats/default). Health stats automatically refresh after chat messages to show real-time updates from health logging. Ready for testing with chat messages like 'I had a glass of water', 'ate pasta for lunch', 'slept 8 hours'."
+      - working: false
+        agent: "main"
+        comment: "ENHANCEMENT ADDED: Added undo functionality with small, barely visible undo buttons next to each stat card. Users can now delete entries via chat ('delete last entry', 'undo hydration') or click small undo buttons that appear on hover. Gives users full control over their health data with real-time stat updates after deletions."
 
 metadata:
   created_by: "main_agent"
