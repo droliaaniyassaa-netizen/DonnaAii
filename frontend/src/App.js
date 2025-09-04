@@ -2133,33 +2133,33 @@ const App = () => {
                               {weeklyAnalytics.hydration_pattern && weeklyAnalytics.hydration_pattern.daily_values && (
                                 <div className="trend-chart">
                                   <svg width="100%" height="40" viewBox="0 0 280 40">
-                              {weeklyAnalytics.hydration_pattern.daily_values.map((value, index) => {
-                                const max = Math.max(...weeklyAnalytics.hydration_pattern.daily_values, weeklyAnalytics.target_hydration);
-                                const height = (value / max) * 30;
-                                const x = index * 40 + 20;
-                                const y = 35 - height;
-                                return (
-                                  <rect
-                                    key={index}
-                                    x={x - 15}
-                                    y={y}
-                                    width="30"
-                                    height={height}
-                                    fill="rgba(20, 184, 166, 0.7)"
-                                    rx="2"
-                                  />
-                                );
-                              })}
-                              {/* Target line */}
-                              <line
-                                x1="5"
-                                y1={35 - (weeklyAnalytics.target_hydration / Math.max(...weeklyAnalytics.hydration_pattern.daily_values, weeklyAnalytics.target_hydration)) * 30}
-                                x2="275"
-                                y2={35 - (weeklyAnalytics.target_hydration / Math.max(...weeklyAnalytics.hydration_pattern.daily_values, weeklyAnalytics.target_hydration)) * 30}
-                                stroke="rgba(20, 184, 166, 0.4)"
-                                strokeWidth="1"
-                                strokeDasharray="2,2"
-                              />
+                                    {weeklyAnalytics.hydration_pattern.daily_values.map((value, index) => {
+                                      const max = Math.max(...weeklyAnalytics.hydration_pattern.daily_values, weeklyAnalytics.target_hydration);
+                                      const height = (value / max) * 30;
+                                      const x = index * 40 + 20;
+                                      const y = 35 - height;
+                                      return (
+                                        <rect
+                                          key={index}
+                                          x={x - 15}
+                                          y={y}
+                                          width="30"
+                                          height={height}
+                                          fill="rgba(20, 184, 166, 0.7)"
+                                          rx="2"
+                                        />
+                                      );
+                                    })}
+                                    {/* Target line */}
+                                    <line
+                                      x1="5"
+                                      y1={35 - (weeklyAnalytics.target_hydration / Math.max(...weeklyAnalytics.hydration_pattern.daily_values, weeklyAnalytics.target_hydration)) * 30}
+                                      x2="275"
+                                      y2={35 - (weeklyAnalytics.target_hydration / Math.max(...weeklyAnalytics.hydration_pattern.daily_values, weeklyAnalytics.target_hydration)) * 30}
+                                      stroke="rgba(20, 184, 166, 0.4)"
+                                      strokeWidth="1"
+                                      strokeDasharray="2,2"
+                                    />
                                   </svg>
                                   <div className="trend-labels">
                                     <span className="trend-label">Mon</span>
