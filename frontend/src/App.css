@@ -3659,7 +3659,7 @@ body::before {
   box-shadow: none !important;
   border-radius: 0;
   padding: 0;
-  margin: 2rem 0;
+  margin: 0.5rem 0;
 }
 
 .action-plan-header {
