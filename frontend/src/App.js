@@ -2226,30 +2226,30 @@ const App = () => {
                                 strokeWidth="1"
                                 strokeDasharray="2,2"
                               />
-                            </svg>
-                            <div className="trend-labels">
-                              <span className="trend-label">Mon</span>
-                              <span className="trend-label">Tue</span>
-                              <span className="trend-label">Wed</span>
-                              <span className="trend-label">Thu</span>
-                              <span className="trend-label">Fri</span>
-                              <span className="trend-label">Sat</span>
-                              <span className="trend-label">Sun</span>
+                                  </svg>
+                                  <div className="trend-labels">
+                                    <span className="trend-label">Mon</span>
+                                    <span className="trend-label">Tue</span>
+                                    <span className="trend-label">Wed</span>
+                                    <span className="trend-label">Thu</span>
+                                    <span className="trend-label">Fri</span>
+                                    <span className="trend-label">Sat</span>
+                                    <span className="trend-label">Sun</span>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              <div className="expert-analysis">
+                                {hasAnalyticsData ? (
+                                  <>
+                                    <div className="expert-text">{weeklyAnalytics.sleep_expert}</div>
+                                    <div className="compact-insight">💡 {weeklyAnalytics.sleep_insight}</div>
+                                  </>
+                                ) : (
+                                  <div className="empty-analysis-placeholder"></div>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        )}
-                        
-                        <div className="expert-analysis">
-                          {hasAnalyticsData ? (
-                            <>
-                              <div className="expert-text">{weeklyAnalytics.sleep_expert}</div>
-                              <div className="compact-insight">💡 {weeklyAnalytics.sleep_insight}</div>
-                            </>
-                          ) : (
-                            <div className="empty-analysis-placeholder"></div>
-                          )}
-                        </div>
-                      </div>
 
                           </div>
 
