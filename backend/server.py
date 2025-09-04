@@ -873,6 +873,7 @@ async def create_health_entry(entry: HealthEntryCreate):
         type=entry.type,
         description=entry.description,
         value=entry.value,
+        session_id=entry.session_id or "default",
         datetime_utc=datetime_utc
     )
     await db.health_entries.insert_one(prepare_for_mongo(entry_obj.dict()))
