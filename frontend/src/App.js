@@ -1652,8 +1652,10 @@ const App = () => {
                     {healthStats.sleep > 0 && (
                       <button 
                         onClick={() => undoHealthEntry('sleep')}
-                        className="undo-button sleep"
+                        className={`undo-button sleep ${undoingEntry ? 'disabled' : ''}`}
                         title="Undo last sleep entry"
+                        disabled={undoingEntry}
+                        style={{ cursor: undoingEntry ? 'not-allowed' : 'pointer' }}
                       >
                         <Trash2 size={10} />
                       </button>
