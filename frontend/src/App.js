@@ -1907,7 +1907,7 @@ const App = () => {
                                     <div className="metric-label">
                                       <span className="metric-name">Protein</span>
                                       <span className="metric-values">
-                                        {Math.round(weeklyActualProtein)}g / {weeklyTargetProtein}g
+                                        {hasAnalyticsData ? `${Math.round(weeklyActualProtein)}g / ${weeklyTargetProtein}g` : `0g / ${weeklyTargetProtein}g`}
                                       </span>
                                     </div>
                                   </div>
