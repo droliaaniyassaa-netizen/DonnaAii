@@ -114,6 +114,7 @@ const App = () => {
     loadHealthGoals();
     loadHealthAnalytics();
     loadHealthTargets();
+    loadDailyHealthStats(); // Load chat-based health stats
     
     // Initialize default date/time for new entries
     const now = getCurrentInUserTimezone();
