@@ -1818,6 +1818,112 @@ const App = () => {
                       <p className="week-range">{weeklyAnalytics.week_start} to {weeklyAnalytics.week_end}</p>
                     </div>
 
+                    {/* Weekly Performance Visual Summary */}
+                    <div className="weekly-performance-chart">
+                      <div className="performance-chart-container">
+                        <h3 className="chart-title">Your Week vs Targets</h3>
+                        <div className="bars-container">
+                          
+                          {/* Calories Bar */}
+                          <div className="metric-bar-group">
+                            <div className="metric-bar-wrapper">
+                              <div className="metric-bar calories-bar">
+                                <div 
+                                  className="bar-fill calories-fill"
+                                  style={{
+                                    width: `${Math.min((weeklyAnalytics.avg_calories / weeklyAnalytics.target_calories) * 100, 100)}%`
+                                  }}
+                                ></div>
+                                <div 
+                                  className="target-line"
+                                  style={{ left: '100%' }}
+                                ></div>
+                              </div>
+                              <div className="metric-info">
+                                <span className="metric-name">Calories</span>
+                                <span className="metric-values">
+                                  {Math.round(weeklyAnalytics.avg_calories)} / {weeklyAnalytics.target_calories}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Protein Bar */}
+                          <div className="metric-bar-group">
+                            <div className="metric-bar-wrapper">
+                              <div className="metric-bar protein-bar">
+                                <div 
+                                  className="bar-fill protein-fill"
+                                  style={{
+                                    width: `${Math.min((weeklyAnalytics.avg_protein / weeklyAnalytics.target_protein) * 100, 100)}%`
+                                  }}
+                                ></div>
+                                <div 
+                                  className="target-line"
+                                  style={{ left: '100%' }}
+                                ></div>
+                              </div>
+                              <div className="metric-info">
+                                <span className="metric-name">Protein</span>
+                                <span className="metric-values">
+                                  {Math.round(weeklyAnalytics.avg_protein)}g / {weeklyAnalytics.target_protein}g
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Hydration Bar */}
+                          <div className="metric-bar-group">
+                            <div className="metric-bar-wrapper">
+                              <div className="metric-bar hydration-bar">
+                                <div 
+                                  className="bar-fill hydration-fill"
+                                  style={{
+                                    width: `${Math.min((weeklyAnalytics.avg_hydration / weeklyAnalytics.target_hydration) * 100, 100)}%`
+                                  }}
+                                ></div>
+                                <div 
+                                  className="target-line"
+                                  style={{ left: '100%' }}
+                                ></div>
+                              </div>
+                              <div className="metric-info">
+                                <span className="metric-name">Hydration</span>
+                                <span className="metric-values">
+                                  {Math.round(weeklyAnalytics.avg_hydration)}ml / {weeklyAnalytics.target_hydration}ml
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Sleep Bar */}
+                          <div className="metric-bar-group">
+                            <div className="metric-bar-wrapper">
+                              <div className="metric-bar sleep-bar">
+                                <div 
+                                  className="bar-fill sleep-fill"
+                                  style={{
+                                    width: `${Math.min((weeklyAnalytics.avg_sleep / weeklyAnalytics.target_sleep) * 100, 100)}%`
+                                  }}
+                                ></div>
+                                <div 
+                                  className="target-line"
+                                  style={{ left: '100%' }}
+                                ></div>
+                              </div>
+                              <div className="metric-info">
+                                <span className="metric-name">Sleep</span>
+                                <span className="metric-values">
+                                  {weeklyAnalytics.avg_sleep}h / {weeklyAnalytics.target_sleep}h
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Weekly Stat Cards Grid */}
                     <div className="weekly-stats-grid">
                       
