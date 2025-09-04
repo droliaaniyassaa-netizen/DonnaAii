@@ -2234,8 +2234,14 @@ const App = () => {
                         )}
                         
                         <div className="expert-analysis">
-                          <div className="expert-text">{weeklyAnalytics.sleep_expert}</div>
-                          <div className="compact-insight">💡 {weeklyAnalytics.sleep_insight}</div>
+                          {hasAnalyticsData ? (
+                            <>
+                              <div className="expert-text">{weeklyAnalytics.sleep_expert}</div>
+                              <div className="compact-insight">💡 {weeklyAnalytics.sleep_insight}</div>
+                            </>
+                          ) : (
+                            <div className="empty-analysis-placeholder"></div>
+                          )}
                         </div>
                       </div>
 
