@@ -1054,13 +1054,17 @@ async def undo_last_health_entry(session_id: str, entry_type: str):
     today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
     
     # Find the most recent health entry of this type for today and this session
+    # Note: datetime_utc is stored as ISO string, so we need to compare against strings
+    start_of_day = datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc).isoformat()
+    end_of_day = (datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)).isoformat()
+    
     recent_entry = await db.health_entries.find_one(
         {
             "type": entry_type,
             "session_id": session_id,
             "datetime_utc": {
-                "$gte": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc),
-                "$lt": datetime.strptime(today, '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1)
+                "$gte": start_of_day,
+                "$lt": end_of_day
             }
         },
         sort=[("datetime_utc", -1)]
