@@ -244,6 +244,13 @@ SLEEP PARSING:
 - "went to bed at 11, woke up at 7" = 8.0
 - Handle AM/PM and 24-hour formats
 
+DELETE PATTERNS:
+- "delete last entry" → delete_type: "last"
+- "undo hydration" → delete_type: "hydration"  
+- "remove last meal" → delete_type: "meal"
+- "undo sleep" → delete_type: "sleep"
+- "refresh stats" → delete_type: "last"
+
 IMPORTANT: Only return JSON. No additional text or explanations."""
 
 HEALTH_CONFIRMATION_SYSTEM_MESSAGE = """You are Donna Paulsen confirming health logging. Be encouraging but not excessive.
