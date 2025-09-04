@@ -1583,7 +1583,7 @@ const App = () => {
                     {healthStats.hydration > 0 && (
                       <button 
                         onClick={() => undoHealthEntry('hydration')}
-                        className="undo-button left"
+                        className="undo-button water"
                         title="Undo last hydration entry"
                       >
                         <Trash2 size={10} />
