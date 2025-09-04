@@ -388,6 +388,18 @@ frontend:
         agent: "main"
         comment: "✅ FIXED: Today box now correctly shows only ONE upcoming event instead of all today events, preserving the beloved functionality user specifically requested"
 
+  - task: "Frontend integration for chat-based health logging"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "FEATURE ADDED: Integrated chat-based health logging with frontend. Added loadDailyHealthStats() function to fetch daily health stats from new backend endpoint (/api/health/stats/default). Health stats automatically refresh after chat messages to show real-time updates from health logging. Ready for testing with chat messages like 'I had a glass of water', 'ate pasta for lunch', 'slept 8 hours'."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
