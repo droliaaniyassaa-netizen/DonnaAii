@@ -1822,103 +1822,147 @@ const App = () => {
                     <div className="weekly-performance-chart">
                       <div className="performance-chart-container">
                         <h3 className="chart-title">Your Week vs Targets</h3>
-                        <div className="bars-container">
+                        <div className="vertical-bars-container">
                           
-                          {/* Calories Bar */}
-                          <div className="metric-bar-group">
-                            <div className="metric-bar-wrapper">
-                              <div className="metric-bar calories-bar">
-                                <div 
-                                  className="bar-fill calories-fill"
-                                  style={{
-                                    width: `${Math.min((weeklyAnalytics.avg_calories / weeklyAnalytics.target_calories) * 100, 100)}%`
-                                  }}
-                                ></div>
-                                <div 
-                                  className="target-line"
-                                  style={{ left: '100%' }}
-                                ></div>
-                              </div>
-                              <div className="metric-info">
-                                <span className="metric-name">Calories</span>
-                                <span className="metric-values">
-                                  {Math.round(weeklyAnalytics.avg_calories)} / {weeklyAnalytics.target_calories}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
+                          {(() => {
+                            // Calculate weekly totals vs weekly targets
+                            const weeklyActualCalories = weeklyAnalytics.avg_calories * 7;
+                            const weeklyTargetCalories = weeklyAnalytics.target_calories * 7;
+                            const weeklyActualProtein = weeklyAnalytics.avg_protein * 7;
+                            const weeklyTargetProtein = weeklyAnalytics.target_protein * 7;
+                            const weeklyActualHydration = weeklyAnalytics.avg_hydration * 7;
+                            const weeklyTargetHydration = weeklyAnalytics.target_hydration * 7;
+                            const weeklyActualSleep = weeklyAnalytics.avg_sleep * 7;
+                            const weeklyTargetSleep = weeklyAnalytics.target_sleep * 7;
 
-                          {/* Protein Bar */}
-                          <div className="metric-bar-group">
-                            <div className="metric-bar-wrapper">
-                              <div className="metric-bar protein-bar">
-                                <div 
-                                  className="bar-fill protein-fill"
-                                  style={{
-                                    width: `${Math.min((weeklyAnalytics.avg_protein / weeklyAnalytics.target_protein) * 100, 100)}%`
-                                  }}
-                                ></div>
-                                <div 
-                                  className="target-line"
-                                  style={{ left: '100%' }}
-                                ></div>
-                              </div>
-                              <div className="metric-info">
-                                <span className="metric-name">Protein</span>
-                                <span className="metric-values">
-                                  {Math.round(weeklyAnalytics.avg_protein)}g / {weeklyAnalytics.target_protein}g
-                                </span>
-                              </div>
-                            </div>
-                          </div>
+                            const caloriesPercent = Math.min((weeklyActualCalories / weeklyTargetCalories) * 100, 120);
+                            const proteinPercent = Math.min((weeklyActualProtein / weeklyTargetProtein) * 100, 120);
+                            const hydrationPercent = Math.min((weeklyActualHydration / weeklyTargetHydration) * 100, 120);
+                            const sleepPercent = Math.min((weeklyActualSleep / weeklyTargetSleep) * 100, 120);
 
-                          {/* Hydration Bar */}
-                          <div className="metric-bar-group">
-                            <div className="metric-bar-wrapper">
-                              <div className="metric-bar hydration-bar">
-                                <div 
-                                  className="bar-fill hydration-fill"
-                                  style={{
-                                    width: `${Math.min((weeklyAnalytics.avg_hydration / weeklyAnalytics.target_hydration) * 100, 100)}%`
-                                  }}
-                                ></div>
-                                <div 
-                                  className="target-line"
-                                  style={{ left: '100%' }}
-                                ></div>
-                              </div>
-                              <div className="metric-info">
-                                <span className="metric-name">Hydration</span>
-                                <span className="metric-values">
-                                  {Math.round(weeklyAnalytics.avg_hydration)}ml / {weeklyAnalytics.target_hydration}ml
-                                </span>
-                              </div>
-                            </div>
-                          </div>
+                            // Find the highest percentage for proportional heights
+                            const maxPercent = Math.max(caloriesPercent, proteinPercent, hydrationPercent, sleepPercent, 100);
 
-                          {/* Sleep Bar */}
-                          <div className="metric-bar-group">
-                            <div className="metric-bar-wrapper">
-                              <div className="metric-bar sleep-bar">
-                                <div 
-                                  className="bar-fill sleep-fill"
-                                  style={{
-                                    width: `${Math.min((weeklyAnalytics.avg_sleep / weeklyAnalytics.target_sleep) * 100, 100)}%`
-                                  }}
-                                ></div>
-                                <div 
-                                  className="target-line"
-                                  style={{ left: '100%' }}
-                                ></div>
-                              </div>
-                              <div className="metric-info">
-                                <span className="metric-name">Sleep</span>
-                                <span className="metric-values">
-                                  {weeklyAnalytics.avg_sleep}h / {weeklyAnalytics.target_sleep}h
-                                </span>
-                              </div>
-                            </div>
-                          </div>
+                            return (
+                              <>
+                                {/* Calories Bar */}
+                                <div className="vertical-bar-group">
+                                  <div className="bar-icon calories-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                      <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H7C5.9 1 5 1.9 5 3V7H3V9H5V15C5 16.1 5.9 17 7 17H17C18.1 17 19 16.1 19 15V9H21ZM17 15H7V9H17V15Z" fill="currentColor"/>
+                                    </svg>
+                                  </div>
+                                  <div className="vertical-bar-wrapper">
+                                    <div className="percentage-label">{Math.round(caloriesPercent)}%</div>
+                                    <div className="vertical-bar calories-vertical">
+                                      <div 
+                                        className="bar-cylinder calories-cylinder"
+                                        style={{
+                                          height: `${(caloriesPercent / maxPercent) * 100}%`
+                                        }}
+                                      >
+                                        <div className="cylinder-top calories-top"></div>
+                                        <div className="cylinder-body calories-body"></div>
+                                      </div>
+                                    </div>
+                                    <div className="metric-label">
+                                      <span className="metric-name">Calories</span>
+                                      <span className="metric-values">
+                                        {Math.round(weeklyActualCalories).toLocaleString()} / {weeklyTargetCalories.toLocaleString()}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Protein Bar */}
+                                <div className="vertical-bar-group">
+                                  <div className="bar-icon protein-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                      <path d="M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C7.6 4 4 7.6 4 12S7.6 20 12 20 20 16.4 20 12 16.4 4 12 4M12 6C15.3 6 18 8.7 18 12S15.3 18 12 18 6 15.3 6 12 8.7 6 12 6M12 8C9.8 8 8 9.8 8 12S9.8 16 12 16 16 14.2 16 12 14.2 8 12 8Z" fill="currentColor"/>
+                                    </svg>
+                                  </div>
+                                  <div className="vertical-bar-wrapper">
+                                    <div className="percentage-label">{Math.round(proteinPercent)}%</div>
+                                    <div className="vertical-bar protein-vertical">
+                                      <div 
+                                        className="bar-cylinder protein-cylinder"
+                                        style={{
+                                          height: `${(proteinPercent / maxPercent) * 100}%`
+                                        }}
+                                      >
+                                        <div className="cylinder-top protein-top"></div>
+                                        <div className="cylinder-body protein-body"></div>
+                                      </div>
+                                    </div>
+                                    <div className="metric-label">
+                                      <span className="metric-name">Protein</span>
+                                      <span className="metric-values">
+                                        {Math.round(weeklyActualProtein)}g / {weeklyTargetProtein}g
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Hydration Bar */}
+                                <div className="vertical-bar-group">
+                                  <div className="bar-icon hydration-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                      <path d="M12,3.25C12,3.25 6,10 6,14C6,17.32 8.69,20 12,20A6,6 0 0,0 18,14C18,10 12,3.25 12,3.25M14.47,9.97L15.53,11.03L9.53,17.03L8.47,15.97L14.47,9.97Z" fill="currentColor"/>
+                                    </svg>
+                                  </div>
+                                  <div className="vertical-bar-wrapper">
+                                    <div className="percentage-label">{Math.round(hydrationPercent)}%</div>
+                                    <div className="vertical-bar hydration-vertical">
+                                      <div 
+                                        className="bar-cylinder hydration-cylinder"
+                                        style={{
+                                          height: `${(hydrationPercent / maxPercent) * 100}%`
+                                        }}
+                                      >
+                                        <div className="cylinder-top hydration-top"></div>
+                                        <div className="cylinder-body hydration-body"></div>
+                                      </div>
+                                    </div>
+                                    <div className="metric-label">
+                                      <span className="metric-name">Hydration</span>
+                                      <span className="metric-values">
+                                        {Math.round(weeklyActualHydration / 1000)}L / {Math.round(weeklyTargetHydration / 1000)}L
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Sleep Bar */}
+                                <div className="vertical-bar-group">
+                                  <div className="bar-icon sleep-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                      <path d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.4 6.35,17.41C9.37,20.43 14,20.54 17.33,17.97Z" fill="currentColor"/>
+                                    </svg>
+                                  </div>
+                                  <div className="vertical-bar-wrapper">
+                                    <div className="percentage-label">{Math.round(sleepPercent)}%</div>
+                                    <div className="vertical-bar sleep-vertical">
+                                      <div 
+                                        className="bar-cylinder sleep-cylinder"
+                                        style={{
+                                          height: `${(sleepPercent / maxPercent) * 100}%`
+                                        }}
+                                      >
+                                        <div className="cylinder-top sleep-top"></div>
+                                        <div className="cylinder-body sleep-body"></div>
+                                      </div>
+                                    </div>
+                                    <div className="metric-label">
+                                      <span className="metric-name">Sleep</span>
+                                      <span className="metric-values">
+                                        {Math.round(weeklyActualSleep)}h / {weeklyTargetSleep}h
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })()}
 
                         </div>
                       </div>
