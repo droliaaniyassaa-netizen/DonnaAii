@@ -166,6 +166,7 @@ const App = () => {
       // Refresh other tabs data if context might have changed
       loadEvents();
       loadHealthEntries();
+      loadDailyHealthStats(); // Refresh health stats from chat logging
       
     } catch (error) {
       console.error('Error sending message:', error);
