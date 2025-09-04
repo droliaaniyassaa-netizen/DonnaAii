@@ -98,6 +98,7 @@ class HealthEntry(BaseModel):
     type: str  # meal, hydration, sleep, exercise
     description: str
     value: Optional[str] = None
+    session_id: Optional[str] = "default"  # Add session_id for tracking
     datetime_utc: datetime  # Store complete datetime in UTC
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
