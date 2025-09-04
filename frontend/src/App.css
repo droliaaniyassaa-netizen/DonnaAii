@@ -4919,6 +4919,18 @@ body::before {
   color: rgba(248, 113, 113, 1);
 }
 
+.undo-button.disabled {
+  opacity: 0.2 !important;
+  pointer-events: none;
+  cursor: not-allowed !important;
+}
+
+.undo-button:disabled {
+  opacity: 0.2 !important;
+  pointer-events: none;
+  cursor: not-allowed !important;
+}
+
 /* Luxury Dashboard Logging Section */
 .health-logging-section {
   display: flex;
