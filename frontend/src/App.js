@@ -1497,19 +1497,31 @@ const App = () => {
             {activeHealthView === 'daily' && (
               <div className="daily-health-view">
                 
-            {/* Set Goal Section */}
-            <div className="health-goal-section">
-              <div className="goal-section-header">
-                <h2 className="goal-section-title">Personalize Your Health Goals</h2>
-                <p className="goal-section-subtitle">Set your weight and goals to get accurate daily targets</p>
+            {/* Set Goal Section - Only show when no data logged yet */}
+            {(healthStats.calories === 0 && healthStats.protein === 0 && healthStats.hydration === 0 && healthStats.sleep === 0) ? (
+              <div className="health-goal-section">
+                <div className="goal-section-header">
+                  <h2 className="goal-section-title">Personalize Your Health Goals</h2>
+                  <p className="goal-section-subtitle">Set your weight and goals to get accurate daily targets</p>
+                </div>
+                <Button 
+                  onClick={() => setShowGoalModal(true)}
+                  className="set-goal-btn"
+                >
+                  Set Goal
+                </Button>
               </div>
-              <Button 
-                onClick={() => setShowGoalModal(true)}
-                className="set-goal-btn"
-              >
-                Set Goal
-              </Button>
-            </div>
+            ) : (
+              /* Glassmorphic Set Goals Button - Shows after user starts logging */
+              <div className="glassmorphic-goals-button-container">
+                <button 
+                  onClick={() => setShowGoalModal(true)}
+                  className="glassmorphic-goals-button"
+                >
+                  Set Goals
+                </button>
+              </div>
+            )}
             
             {/* Sophisticated Circular Progress Stats */}
             <div className="health-stats-grid">
