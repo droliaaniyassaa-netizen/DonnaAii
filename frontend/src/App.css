@@ -4859,11 +4859,10 @@ body::before {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Undo Button - Outside Circle, Subtle Dark Red */
+/* Undo Button - OUTSIDE Circle, Subtle Dark Red */
 .undo-button {
   position: absolute;
   top: 10px;
-  right: -25px;
   background: rgba(127, 29, 29, 0.3);
   border: 1px solid rgba(127, 29, 29, 0.4);
   border-radius: 50%;
@@ -4877,6 +4876,16 @@ body::before {
   cursor: pointer;
   backdrop-filter: blur(10px);
   z-index: 10;
+}
+
+/* Left side positioning for calories and water */
+.undo-button.left {
+  left: -35px;
+}
+
+/* Right side positioning for protein and sleep */
+.undo-button.right {
+  right: -35px;
 }
 
 .undo-button:hover {
