@@ -1105,16 +1105,22 @@ const App = () => {
             
             {/* Donna's Liquid Consciousness */}
             <div className="consciousness-presence">
-              <div className={`liquid-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
-                {/* Flowing Liquid Streams */}
-                <div className="liquid-stream stream-1"></div>
-                <div className="liquid-stream stream-2"></div>
-                <div className="liquid-stream stream-3"></div>
-                <div className="liquid-stream stream-4"></div>
-                <div className="liquid-stream stream-5"></div>
-                <div className="liquid-stream stream-6"></div>
-                <div className="liquid-stream stream-7"></div>
-                <div className="liquid-stream stream-8"></div>
+              <div className={`donna-orb-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
+                {/* Overlapping Wavy Thread Lines forming Orb */}
+                <div className="consciousness-orb">
+                  <div className="thread-line thread-1"></div>
+                  <div className="thread-line thread-2"></div>
+                  <div className="thread-line thread-3"></div>
+                  <div className="thread-line thread-4"></div>
+                  <div className="thread-line thread-5"></div>
+                  <div className="thread-line thread-6"></div>
+                  <div className="thread-line thread-7"></div>
+                  <div className="thread-line thread-8"></div>
+                  <div className="thread-line thread-9"></div>
+                  <div className="thread-line thread-10"></div>
+                  <div className="thread-line thread-11"></div>
+                  <div className="thread-line thread-12"></div>
+                </div>
               </div>
               
               {/* Donna's Identity */}
