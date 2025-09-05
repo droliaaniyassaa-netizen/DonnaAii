@@ -536,17 +536,19 @@ body::before {
 
 /* Sample Career Goal Circles */
 .sample-goals-pills {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  margin: 1.5rem 0 2rem 0;
-  width: 100%;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  gap: 1.5rem !important;
+  margin: 1.5rem 0 2rem 0 !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
 }
 
 .sample-goal-pill {
-  width: 180px;
-  height: 180px;
+  width: 140px;
+  height: 140px;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.06) 0%,
     rgba(255, 255, 255, 0.02) 50%,
