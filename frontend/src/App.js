@@ -227,6 +227,23 @@ const App = () => {
         // Update input field with final transcript
         if (finalTranscript) {
           setInputMessage(prev => prev + finalTranscript);
+          console.log('Transcribed:', finalTranscript);
+        }
+
+        // Handle silence detection
+        if (finalTranscript || interimTranscript) {
+          // Clear existing silence timer
+          setSilenceTimer(prev => {
+            if (prev) clearTimeout(prev);
+            return null;
+          });
+          
+          // Start new silence timer - stop after 3 seconds of silence
+          const timer = setTimeout(() => {
+            console.log('3 seconds of silence detected, stopping recording');
+            recognitionInstance.stop();
+          }, 3000);
+          setSilenceTimer(timer);
         }
       };
 
