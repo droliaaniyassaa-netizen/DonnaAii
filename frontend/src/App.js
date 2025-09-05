@@ -1190,30 +1190,27 @@ const App = () => {
                 <div className="sample-goals-pills">
                   <button 
                     className="sample-goal-pill"
-                    onClick={async () => {
+                    onClick={() => {
                       setNewGoal({ goal: "Grow my online business to 10,000 paying customers" });
-                      setIsGeneratingPlan(true);
-                      await createCareerGoal("Grow my online business to 10,000 paying customers");
+                      setTimeout(() => createCareerGoal(), 100);
                     }}
                   >
                     Grow my online business to 10,000 paying customers
                   </button>
                   <button 
                     className="sample-goal-pill" 
-                    onClick={async () => {
+                    onClick={() => {
                       setNewGoal({ goal: "Land my first management role within 12 months" });
-                      setIsGeneratingPlan(true);
-                      await createCareerGoal("Land my first management role within 12 months");
+                      setTimeout(() => createCareerGoal(), 100);
                     }}
                   >
                     Land my first management role within 12 months
                   </button>
                   <button 
                     className="sample-goal-pill"
-                    onClick={async () => {
+                    onClick={() => {
                       setNewGoal({ goal: "As a fresh graduate, I want to secure interviews that lead to my first job" });
-                      setIsGeneratingPlan(true);
-                      await createCareerGoal("As a fresh graduate, I want to secure interviews that lead to my first job");
+                      setTimeout(() => createCareerGoal(), 100);
                     }}
                   >
                     As a fresh graduate, I want to secure interviews that lead to my first job
