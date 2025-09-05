@@ -538,11 +538,12 @@ body::before {
 .sample-goals-pills {
   display: flex !important;
   flex-direction: row !important;
-  justify-content: space-around !important;
+  justify-content: center !important;
   align-items: center !important;
   gap: 1.5rem !important;
-  margin: 1.5rem 0 2rem 10.75rem !important;
+  margin: 1.5rem auto 2rem auto !important;
   width: 100% !important;
+  max-width: 600px !important;
   flex-wrap: nowrap !important;
 }
 
