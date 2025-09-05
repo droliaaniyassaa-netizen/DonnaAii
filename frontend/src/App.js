@@ -1186,6 +1186,40 @@ const App = () => {
             {/* First Time User Experience Message */}
             {careerGoals.length === 0 && (
               <>
+                {/* Sample Career Goal Pills */}
+                <div className="sample-goals-pills">
+                  <button 
+                    className="sample-goal-pill"
+                    onClick={async () => {
+                      setNewGoal({ goal: "Grow my online business to 10,000 paying customers" });
+                      setIsGeneratingPlan(true);
+                      await createCareerGoal("Grow my online business to 10,000 paying customers");
+                    }}
+                  >
+                    Grow my online business to 10,000 paying customers
+                  </button>
+                  <button 
+                    className="sample-goal-pill" 
+                    onClick={async () => {
+                      setNewGoal({ goal: "Land my first management role within 12 months" });
+                      setIsGeneratingPlan(true);
+                      await createCareerGoal("Land my first management role within 12 months");
+                    }}
+                  >
+                    Land my first management role within 12 months
+                  </button>
+                  <button 
+                    className="sample-goal-pill"
+                    onClick={async () => {
+                      setNewGoal({ goal: "As a fresh graduate, I want to secure interviews that lead to my first job" });
+                      setIsGeneratingPlan(true);
+                      await createCareerGoal("As a fresh graduate, I want to secure interviews that lead to my first job");
+                    }}
+                  >
+                    As a fresh graduate, I want to secure interviews that lead to my first job
+                  </button>
+                </div>
+
                 {/* First Time Career Message */}
                 <div className="first-time-career-message">
                   <p>Enter your career goal. Donna will build a personalised strategy shaped by research in psychology and management, and informed by influential works on business growth, leadership, and innovation such as The Art of Strategy, Good to Great, and The Innovator's Dilemma. Alongside the plan, she will surface AI tools to accelerate your work, books to expand your thinking, and talks that sharpen judgment—resources aligned to your specific goal.</p>
