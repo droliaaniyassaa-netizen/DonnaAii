@@ -1099,77 +1099,131 @@ const App = () => {
           </TabsTrigger>
         </TabsList>
 
-        {/* Chat Tab */}
-        <TabsContent value="chat" className="chat-container">
-          <Card className="chat-card">
-            <CardHeader className="chat-header">
-              <CardTitle className="chat-title">
-                <MessageCircle className="header-icon" />
-                Chat with Donna
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="chat-content">
-              <div className="messages-container">
+        {/* Chat Tab - Donna's Consciousness Interface */}
+        <TabsContent value="chat" className="consciousness-container">
+          <div className="consciousness-interface">
+            
+            {/* Donna's Living Consciousness */}
+            <div className="consciousness-presence">
+              <div className={`consciousness-orb ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
+                {/* Complex Wave Structure */}
+                <svg className="consciousness-waves" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <radialGradient id="consciousnessGradient" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="rgba(168, 85, 247, 0.9)" />
+                      <stop offset="40%" stopColor="rgba(59, 130, 246, 0.8)" />
+                      <stop offset="70%" stopColor="rgba(139, 92, 246, 0.6)" />
+                      <stop offset="100%" stopColor="rgba(30, 64, 175, 0.3)" />
+                    </radialGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                      <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  
+                  {/* Core Consciousness */}
+                  <path className="wave-layer-1" d="M200,50 Q300,100 350,200 Q300,300 200,350 Q100,300 50,200 Q100,100 200,50 Z" 
+                        fill="url(#consciousnessGradient)" filter="url(#glow)" />
+                  
+                  {/* Secondary Wave Layers */}
+                  <path className="wave-layer-2" d="M200,80 Q280,120 320,200 Q280,280 200,320 Q120,280 80,200 Q120,120 200,80 Z" 
+                        fill="rgba(168, 85, 247, 0.4)" filter="url(#glow)" />
+                  
+                  <path className="wave-layer-3" d="M200,110 Q260,140 290,200 Q260,260 200,290 Q140,260 110,200 Q140,140 200,110 Z" 
+                        fill="rgba(59, 130, 246, 0.5)" filter="url(#glow)" />
+                  
+                  {/* Neural Pathway Lines */}
+                  <g className="neural-pathways">
+                    <path className="pathway-1" d="M150,150 Q200,170 250,150 Q270,200 250,250 Q200,230 150,250 Q130,200 150,150" 
+                          stroke="rgba(255, 255, 255, 0.3)" strokeWidth="1" fill="none" />
+                    <path className="pathway-2" d="M170,120 Q200,140 230,120 Q250,170 230,220 Q200,200 170,220 Q150,170 170,120" 
+                          stroke="rgba(168, 85, 247, 0.4)" strokeWidth="1" fill="none" />
+                  </g>
+                  
+                  {/* Floating Particles */}
+                  <circle className="particle-1" cx="180" cy="140" r="2" fill="rgba(255, 255, 255, 0.6)" />
+                  <circle className="particle-2" cx="220" cy="180" r="1.5" fill="rgba(168, 85, 247, 0.8)" />
+                  <circle className="particle-3" cx="160" cy="220" r="2.5" fill="rgba(59, 130, 246, 0.7)" />
+                  <circle className="particle-4" cx="240" cy="160" r="1" fill="rgba(255, 255, 255, 0.9)" />
+                </svg>
+              </div>
+              
+              {/* Donna's Identity */}
+              <div className="consciousness-identity">
+                <h1 className="consciousness-name">Donna</h1>
+                <p className="consciousness-greeting">
+                  {isLoading ? "Processing..." : isListening ? "I'm listening..." : "Hi, I'm Donna. How can I assist you today?"}
+                </p>
+              </div>
+            </div>
+
+            {/* Conversation Flow */}
+            <div className="conversation-flow">
+              <div className="messages-stream">
                 {messages.map((message, index) => (
-                  <div key={index} className={`message ${message.is_user ? 'user-message' : 'donna-message'}`}>
-                    <div className="message-content">
-                      <p>{message.message}</p>
-                      <span className="message-time">
-                        {new Date(message.timestamp).toLocaleTimeString()}
-                      </span>
+                  <div key={index} className={`consciousness-message ${message.is_user ? 'user-thought' : 'donna-thought'}`}>
+                    <div className="message-bubble">
+                      <div className="message-text">{message.message}</div>
+                      <div className="message-timestamp">
+                        {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
                     </div>
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="message donna-message">
-                    <div className="message-content loading">
-                      <p>Donna is thinking...</p>
+                  <div className="consciousness-message donna-thought">
+                    <div className="message-bubble thinking-bubble">
+                      <div className="thinking-animation">
+                        <span></span><span></span><span></span>
+                      </div>
+                      <div className="message-text">Donna is thinking...</div>
                     </div>
                   </div>
                 )}
                 <div ref={messagesEndRef} />
               </div>
-              
-              <div className="input-container">
+            </div>
+
+            {/* Neural Input Interface */}
+            <div className="neural-input-interface">
+              <div className="input-field-container">
                 <Textarea
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyDown={handleKeyPress}
-                  placeholder={isListening ? "Listening..." : "Ask Donna anything..."}
-                  className={`chat-input ${isListening ? 'listening' : ''}`}
-                  rows={2}
-                  disabled={false}
-                  style={{ 
-                    pointerEvents: 'auto',
-                    zIndex: 1000,
-                    position: 'relative'
-                  }}
+                  placeholder={isListening ? "I'm listening..." : "Share your thoughts with Donna..."}
+                  className={`neural-input ${isListening ? 'listening-state' : ''}`}
+                  rows={1}
+                  disabled={isLoading}
                 />
-                <div className="input-actions">
-                  <Button
-                    onClick={toggleVoiceRecording}
-                    variant={isVoiceRecording ? "destructive" : "outline"}
-                    size="sm"
-                    className={`voice-button ${isVoiceRecording ? 'recording' : ''}`}
-                  >
-                    {isVoiceRecording ? <MicOff /> : <Mic />}
-                  </Button>
-                  <Button 
-                    onClick={sendMessage} 
-                    disabled={false}
-                    className="send-button"
-                    style={{
-                      pointerEvents: 'auto',
-                      cursor: 'pointer',
-                      zIndex: 1001
-                    }}
-                  >
-                    <Send className="send-icon" />
-                  </Button>
-                </div>
+                <div className="input-glow-effect"></div>
               </div>
-            </CardContent>
-          </Card>
+              
+              <div className="consciousness-controls">
+                <Button
+                  onClick={toggleVoiceRecording}
+                  variant="ghost"
+                  size="sm"
+                  className={`consciousness-voice-btn ${isVoiceRecording ? 'recording-state' : ''}`}
+                >
+                  {isVoiceRecording ? <MicOff className="control-icon" /> : <Mic className="control-icon" />}
+                </Button>
+                <Button 
+                  onClick={sendMessage}
+                  disabled={isLoading || !inputMessage.trim()}
+                  variant="ghost"
+                  size="sm"
+                  className="consciousness-send-btn"
+                >
+                  <Send className="control-icon" />
+                </Button>
+              </div>
+            </div>
+
+          </div>
         </TabsContent>
 
         {/* Calendar Tab */}
