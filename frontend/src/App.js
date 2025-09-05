@@ -191,10 +191,125 @@ const App = () => {
     }
   };
 
-  // Voice recording (placeholder)
+  // Voice recording with Web Speech Recognition
+  const [recognition, setRecognition] = useState(null);
+  const [silenceTimer, setSilenceTimer] = useState(null);
+  const [isListening, setIsListening] = useState(false);
+
+  useEffect(() => {
+    // Initialize Speech Recognition
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognitionInstance = new SpeechRecognition();
+      
+      recognitionInstance.continuous = true;
+      recognitionInstance.interimResults = true;
+      recognitionInstance.lang = 'en-US';
+
+      recognitionInstance.onstart = () => {
+        setIsListening(true);
+        console.log('Voice recognition started');
+      };
+
+      recognitionInstance.onresult = (event) => {
+        let finalTranscript = '';
+        let interimTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript;
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        // Update input field with final transcript
+        if (finalTranscript) {
+          setMessage(prev => prev + finalTranscript);
+          
+          // Reset silence timer when speech is detected
+          if (silenceTimer) {
+            clearTimeout(silenceTimer);
+            setSilenceTimer(null);
+          }
+          
+          // Start new silence timer
+          const timer = setTimeout(() => {
+            stopVoiceRecording();
+          }, 3000); // 3 seconds of silence
+          setSilenceTimer(timer);
+        }
+      };
+
+      recognitionInstance.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        if (event.error === 'not-allowed') {
+          alert('Microphone access denied. Please enable microphone permissions for voice input.');
+        }
+        stopVoiceRecording();
+      };
+
+      recognitionInstance.onend = () => {
+        setIsListening(false);
+        if (isVoiceRecording) {
+          setIsVoiceRecording(false);
+        }
+      };
+
+      setRecognition(recognitionInstance);
+    } else {
+      console.warn('Speech Recognition not supported in this browser');
+    }
+
+    // Cleanup on unmount
+    return () => {
+      if (silenceTimer) {
+        clearTimeout(silenceTimer);
+      }
+    };
+  }, []);
+
+  const startVoiceRecording = () => {
+    if (!recognition) {
+      alert('Speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari.');
+      return;
+    }
+
+    try {
+      setIsVoiceRecording(true);
+      recognition.start();
+      
+      // Start initial silence timer
+      const timer = setTimeout(() => {
+        stopVoiceRecording();
+      }, 3000);
+      setSilenceTimer(timer);
+    } catch (error) {
+      console.error('Error starting speech recognition:', error);
+      setIsVoiceRecording(false);
+    }
+  };
+
+  const stopVoiceRecording = () => {
+    if (recognition && isVoiceRecording) {
+      recognition.stop();
+      setIsVoiceRecording(false);
+      setIsListening(false);
+      
+      if (silenceTimer) {
+        clearTimeout(silenceTimer);
+        setSilenceTimer(null);
+      }
+    }
+  };
+
   const toggleVoiceRecording = () => {
-    setIsVoiceRecording(!isVoiceRecording);
-    // TODO: Implement speech-to-text
+    if (isVoiceRecording) {
+      stopVoiceRecording();
+    } else {
+      startVoiceRecording();
+    }
   };
 
   // Calendar functions
