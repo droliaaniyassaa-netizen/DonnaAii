@@ -259,32 +259,30 @@ const App = () => {
     try {
       setIsVoiceRecording(true);
       recognition.start();
-      
-      // Start initial silence timer
-      const timer = setTimeout(() => {
-        stopVoiceRecording();
-      }, 3000);
-      setSilenceTimer(timer);
+      console.log('Starting voice recognition...');
     } catch (error) {
       console.error('Error starting speech recognition:', error);
       setIsVoiceRecording(false);
+      setIsListening(false);
     }
   };
 
   const stopVoiceRecording = () => {
-    if (recognition && isVoiceRecording) {
+    if (recognition) {
       recognition.stop();
-      setIsVoiceRecording(false);
-      setIsListening(false);
-      
-      if (silenceTimer) {
-        clearTimeout(silenceTimer);
-        setSilenceTimer(null);
-      }
+      console.log('Stopping voice recognition...');
+    }
+    setIsVoiceRecording(false);
+    setIsListening(false);
+    
+    if (silenceTimer) {
+      clearTimeout(silenceTimer);
+      setSilenceTimer(null);
     }
   };
 
   const toggleVoiceRecording = () => {
+    console.log('Voice toggle clicked, current state:', isVoiceRecording);
     if (isVoiceRecording) {
       stopVoiceRecording();
     } else {
