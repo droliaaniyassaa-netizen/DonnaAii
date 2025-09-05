@@ -550,6 +550,10 @@ body::before {
 .sample-goal-pill {
   width: 140px;
   height: 140px;
+  min-width: 140px;
+  min-height: 140px;
+  max-width: 140px;
+  max-height: 140px;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.06) 0%,
     rgba(255, 255, 255, 0.02) 50%,
