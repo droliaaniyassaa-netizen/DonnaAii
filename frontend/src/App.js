@@ -1148,7 +1148,7 @@ const App = () => {
                     onClick={toggleVoiceRecording}
                     variant={isVoiceRecording ? "destructive" : "outline"}
                     size="sm"
-                    className="voice-button"
+                    className={`voice-button ${isVoiceRecording ? 'recording' : ''}`}
                   >
                     {isVoiceRecording ? <MicOff /> : <Mic />}
                   </Button>
