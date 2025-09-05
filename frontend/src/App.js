@@ -227,18 +227,6 @@ const App = () => {
         // Update input field with final transcript
         if (finalTranscript) {
           setInputMessage(prev => prev + finalTranscript);
-          
-          // Reset silence timer when speech is detected
-          if (silenceTimer) {
-            clearTimeout(silenceTimer);
-            setSilenceTimer(null);
-          }
-          
-          // Start new silence timer
-          const timer = setTimeout(() => {
-            stopVoiceRecording();
-          }, 3000); // 3 seconds of silence
-          setSilenceTimer(timer);
         }
       };
 
@@ -247,27 +235,19 @@ const App = () => {
         if (event.error === 'not-allowed') {
           alert('Microphone access denied. Please enable microphone permissions for voice input.');
         }
-        stopVoiceRecording();
+        setIsVoiceRecording(false);
+        setIsListening(false);
       };
 
       recognitionInstance.onend = () => {
         setIsListening(false);
-        if (isVoiceRecording) {
-          setIsVoiceRecording(false);
-        }
+        setIsVoiceRecording(false);
       };
 
       setRecognition(recognitionInstance);
     } else {
       console.warn('Speech Recognition not supported in this browser');
     }
-
-    // Cleanup on unmount
-    return () => {
-      if (silenceTimer) {
-        clearTimeout(silenceTimer);
-      }
-    };
   }, []);
 
   const startVoiceRecording = () => {
