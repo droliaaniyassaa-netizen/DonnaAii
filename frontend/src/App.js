@@ -1363,15 +1363,13 @@ const App = () => {
 
             {/* Resource Cards Row - Both Sample and User Goals */}
             {(() => {
-              // Determine if this is first-time user (no goals and no input)
-              const isFirstTimeUser = careerGoals.length === 0 && !newGoal.goal.trim();
+              // Determine if this is first-time user (no goals generated yet)
+              const isFirstTimeUser = careerGoals.length === 0;
               
-              // Show empty resources for first-time users, sample data when typing, actual data when goals exist
+              // Show empty resources until they generate their first plan, then show actual data
               const resources = careerGoals.length > 0 
                 ? getCurrentResources() 
-                : isFirstTimeUser 
-                  ? { aiTools: [], books: [], talks: [] }
-                  : careerResourcesData.career_growth;
+                : { aiTools: [], books: [], talks: [] };
               
               return (
                 <div className="resource-cards-row">
