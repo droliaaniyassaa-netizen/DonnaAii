@@ -559,9 +559,9 @@ body::before {
   border-radius: 50%;
   color: rgba(255, 255, 255, 0.85);
   font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 400;
-  line-height: 1.3;
+  line-height: 1.2;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -570,13 +570,14 @@ body::before {
     0 8px 20px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 0 0 1px rgba(255, 255, 255, 0.02);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1.5rem;
-  word-wrap: break-word;
-  hyphens: auto;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 1rem !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
+  flex-shrink: 0 !important;
 }
 
 .sample-goal-pill::before {
