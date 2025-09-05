@@ -265,7 +265,14 @@ const App = () => {
     } else {
       console.warn('Speech Recognition not supported in this browser');
     }
-  }, []);
+
+    // Cleanup on unmount
+    return () => {
+      if (silenceTimer) {
+        clearTimeout(silenceTimer);
+      }
+    };
+  }, [silenceTimer]);
 
   const startVoiceRecording = () => {
     if (!recognition) {
