@@ -1363,24 +1363,38 @@ const App = () => {
 
             {/* Resource Cards Row - Both Sample and User Goals */}
             {(() => {
-              const resources = careerGoals.length > 0 ? getCurrentResources() : careerResourcesData.career_growth;
+              // Determine if this is first-time user (no goals and no input)
+              const isFirstTimeUser = careerGoals.length === 0 && !newGoal.goal.trim();
+              
+              // Show empty resources for first-time users, sample data when typing, actual data when goals exist
+              const resources = careerGoals.length > 0 
+                ? getCurrentResources() 
+                : isFirstTimeUser 
+                  ? { aiTools: [], books: [], talks: [] }
+                  : careerResourcesData.career_growth;
+              
               return (
                 <div className="resource-cards-row">
                   {/* AI Tools Card */}
                   <Card 
                     className={`resource-card ai-tools-card ${activeResourceCard === 'ai-tools' ? 'active' : ''}`}
-                    onClick={() => setActiveResourceCard('ai-tools')}
+                    onClick={() => !isFirstTimeUser && setActiveResourceCard('ai-tools')}
                   >
                     <CardHeader>
                       <CardTitle className="resource-title">
                         <Sparkles className="resource-icon" />
                         AI Tools
-                        {careerGoals.length === 0 && <span className="sample-badge-small">Sample</span>}
+                        {careerGoals.length === 0 && newGoal.goal.trim() && <span className="sample-badge-small">Sample</span>}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
                       <p className="resource-hint">
-                        {activeResourceCard === 'ai-tools' ? 'Click any tool to try it out' : 'Click to explore AI tools for your goals'}
+                        {isFirstTimeUser 
+                          ? 'AI tools will appear here to accelerate your work'
+                          : activeResourceCard === 'ai-tools' 
+                            ? 'Click any tool to try it out' 
+                            : 'Click to explore AI tools for your goals'
+                        }
                       </p>
                       <div className="resource-list">
                         {resources.aiTools.map((tool, index) => (
@@ -1403,18 +1417,23 @@ const App = () => {
                   {/* Books Card */}
                   <Card 
                     className={`resource-card books-card ${activeResourceCard === 'books' ? 'active' : ''}`}
-                    onClick={() => setActiveResourceCard('books')}
+                    onClick={() => !isFirstTimeUser && setActiveResourceCard('books')}
                   >
                     <CardHeader>
                       <CardTitle className="resource-title">
                         <Target className="resource-icon" />
                         Books
-                        {careerGoals.length === 0 && <span className="sample-badge-small">Sample</span>}
+                        {careerGoals.length === 0 && newGoal.goal.trim() && <span className="sample-badge-small">Sample</span>}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
                       <p className="resource-hint">
-                        {activeResourceCard === 'books' ? 'Curated for your specific goal' : 'Essential reading for your journey'}  
+                        {isFirstTimeUser 
+                          ? 'Books will appear here to expand your thinking'
+                          : activeResourceCard === 'books' 
+                            ? 'Curated for your specific goal' 
+                            : 'Essential reading for your journey'
+                        }  
                       </p>
                       <div className="resource-list">
                         {resources.books.map((book, index) => (
@@ -1427,18 +1446,23 @@ const App = () => {
                   {/* Talks/Videos Card */}
                   <Card 
                     className={`resource-card talks-card ${activeResourceCard === 'talks' ? 'active' : ''}`}
-                    onClick={() => setActiveResourceCard('talks')}
+                    onClick={() => !isFirstTimeUser && setActiveResourceCard('talks')}
                   >
                     <CardHeader>
                       <CardTitle className="resource-title">
                         <Calendar className="resource-icon" />
                         Talks & Videos
-                        {careerGoals.length === 0 && <span className="sample-badge-small">Sample</span>}
+                        {careerGoals.length === 0 && newGoal.goal.trim() && <span className="sample-badge-small">Sample</span>}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="resource-content">
                       <p className="resource-hint">
-                        {activeResourceCard === 'talks' ? 'Click any talk to watch on TED' : 'Inspiring talks to shift your perspective'}
+                        {isFirstTimeUser 
+                          ? 'Talks and videos will appear here to sharpen judgment'
+                          : activeResourceCard === 'talks' 
+                            ? 'Click any talk to watch on TED' 
+                            : 'Inspiring talks to shift your perspective'
+                        }
                       </p>
                       <div className="resource-list">
                         {resources.talks.map((talk, index) => (
@@ -1449,7 +1473,7 @@ const App = () => {
                             rel="noopener noreferrer"
                             className="resource-item clickable"
                             onClick={(e) => e.stopPropagation()}
-                            title="Watch on TED"
+                            title={talk.description}
                           >
                             {talk.title}
                           </a>
