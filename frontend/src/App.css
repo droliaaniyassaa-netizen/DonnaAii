@@ -541,7 +541,7 @@ body::before {
   justify-content: space-around !important;
   align-items: center !important;
   gap: 1.5rem !important;
-  margin: 1.5rem 0 2rem 0 !important;
+  margin: 1.5rem 0 2rem 2.25rem !important;
   width: 100% !important;
   flex-wrap: nowrap !important;
 }
