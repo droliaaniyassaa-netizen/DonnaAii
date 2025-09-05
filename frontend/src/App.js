@@ -1183,8 +1183,18 @@ const App = () => {
               </Card>
             </div>
 
-            {/* Sample Action Plan - First Time Experience */}
-            {careerGoals.length === 0 && (
+            {/* First Time User Experience Message */}
+            {careerGoals.length === 0 && !newGoal.goal.trim() && (
+              <>
+                {/* First Time Career Message */}
+                <div className="first-time-career-message">
+                  <p>Enter your career goal. Donna will build a personalised strategy shaped by research in psychology and management, and informed by influential works on business growth, leadership, and innovation such as The Art of Strategy, Good to Great, and The Innovator's Dilemma. Alongside the plan, she will surface AI tools to accelerate your work, books to expand your thinking, and talks that sharpen judgment—resources aligned to your specific goal.</p>
+                </div>
+              </>
+            )}
+
+            {/* Sample Action Plan - After user starts typing */}
+            {careerGoals.length === 0 && newGoal.goal.trim() && (
               <>
                 {/* Sample Plan Message */}
                 <div className="sample-plan-message">
