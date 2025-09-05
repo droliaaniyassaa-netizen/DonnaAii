@@ -1077,6 +1077,13 @@ const App = () => {
           {/* Upcoming Events View */}
           {activeCalendarView === 'upcoming' && (
             <>
+              {/* First Time Calendar User Message */}
+              {events.length === 0 && (
+                <div className="first-time-calendar-message">
+                  <p>Type your meeting, deadline, anniversary, or reminder in the chat—Donna does the rest. When your day is overbooked, she finds new slots and reschedules low-priority events. If you're packed with meetings, she'll remind you to carry a snack or make time for a meal. All reminders are set automatically. With Donna, your schedule takes care of itself. Just tell Donna in the chat.</p>
+                </div>
+              )}
+              
               {/* Upcoming Today Section */}
               <UpcomingToday events={events} onDelete={deleteEvent} />
               
