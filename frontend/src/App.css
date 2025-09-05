@@ -812,11 +812,11 @@ body::before {
 /* Individual thread styling with dark purples and subtle glow */
 .thread-line.thread-1 {
   background: linear-gradient(to top, 
-    rgba(67, 56, 202, 0.4),
-    rgba(88, 28, 135, 0.6),
-    rgba(67, 56, 202, 0.3)
+    rgba(67, 56, 202, 0.6),
+    rgba(88, 28, 135, 0.8),
+    rgba(67, 56, 202, 0.5)
   );
-  box-shadow: 0 0 6px rgba(67, 56, 202, 0.3);
+  box-shadow: 0 0 8px rgba(67, 56, 202, 0.4), 0 0 15px rgba(88, 28, 135, 0.2);
   transform: translate(-50%, -50%) rotate(0deg);
   animation: threadFloat1 12s ease-in-out infinite;
 }
