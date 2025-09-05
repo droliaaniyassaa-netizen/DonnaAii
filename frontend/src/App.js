@@ -226,7 +226,7 @@ const App = () => {
 
         // Update input field with final transcript
         if (finalTranscript) {
-          setMessage(prev => prev + finalTranscript);
+          setInputMessage(prev => prev + finalTranscript);
           
           // Reset silence timer when speech is detected
           if (silenceTimer) {
