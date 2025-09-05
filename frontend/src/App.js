@@ -1103,52 +1103,18 @@ const App = () => {
         <TabsContent value="chat" className="consciousness-container">
           <div className="consciousness-interface">
             
-            {/* Donna's Living Consciousness */}
+            {/* Donna's Liquid Consciousness */}
             <div className="consciousness-presence">
-              <div className={`consciousness-orb ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
-                {/* Complex Wave Structure */}
-                <svg className="consciousness-waves" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <radialGradient id="consciousnessGradient" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="rgba(168, 85, 247, 0.9)" />
-                      <stop offset="40%" stopColor="rgba(59, 130, 246, 0.8)" />
-                      <stop offset="70%" stopColor="rgba(139, 92, 246, 0.6)" />
-                      <stop offset="100%" stopColor="rgba(30, 64, 175, 0.3)" />
-                    </radialGradient>
-                    <filter id="glow">
-                      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-                      <feMerge> 
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  
-                  {/* Core Consciousness */}
-                  <path className="wave-layer-1" d="M200,50 Q300,100 350,200 Q300,300 200,350 Q100,300 50,200 Q100,100 200,50 Z" 
-                        fill="url(#consciousnessGradient)" filter="url(#glow)" />
-                  
-                  {/* Secondary Wave Layers */}
-                  <path className="wave-layer-2" d="M200,80 Q280,120 320,200 Q280,280 200,320 Q120,280 80,200 Q120,120 200,80 Z" 
-                        fill="rgba(168, 85, 247, 0.4)" filter="url(#glow)" />
-                  
-                  <path className="wave-layer-3" d="M200,110 Q260,140 290,200 Q260,260 200,290 Q140,260 110,200 Q140,140 200,110 Z" 
-                        fill="rgba(59, 130, 246, 0.5)" filter="url(#glow)" />
-                  
-                  {/* Neural Pathway Lines */}
-                  <g className="neural-pathways">
-                    <path className="pathway-1" d="M150,150 Q200,170 250,150 Q270,200 250,250 Q200,230 150,250 Q130,200 150,150" 
-                          stroke="rgba(255, 255, 255, 0.3)" strokeWidth="1" fill="none" />
-                    <path className="pathway-2" d="M170,120 Q200,140 230,120 Q250,170 230,220 Q200,200 170,220 Q150,170 170,120" 
-                          stroke="rgba(168, 85, 247, 0.4)" strokeWidth="1" fill="none" />
-                  </g>
-                  
-                  {/* Floating Particles */}
-                  <circle className="particle-1" cx="180" cy="140" r="2" fill="rgba(255, 255, 255, 0.6)" />
-                  <circle className="particle-2" cx="220" cy="180" r="1.5" fill="rgba(168, 85, 247, 0.8)" />
-                  <circle className="particle-3" cx="160" cy="220" r="2.5" fill="rgba(59, 130, 246, 0.7)" />
-                  <circle className="particle-4" cx="240" cy="160" r="1" fill="rgba(255, 255, 255, 0.9)" />
-                </svg>
+              <div className={`liquid-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
+                {/* Flowing Liquid Streams */}
+                <div className="liquid-stream stream-1"></div>
+                <div className="liquid-stream stream-2"></div>
+                <div className="liquid-stream stream-3"></div>
+                <div className="liquid-stream stream-4"></div>
+                <div className="liquid-stream stream-5"></div>
+                <div className="liquid-stream stream-6"></div>
+                <div className="liquid-stream stream-7"></div>
+                <div className="liquid-stream stream-8"></div>
               </div>
               
               {/* Donna's Identity */}
