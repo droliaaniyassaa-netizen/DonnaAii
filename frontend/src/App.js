@@ -1133,8 +1133,8 @@ const App = () => {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyDown={handleKeyPress}
-                  placeholder="Ask Donna anything..."
-                  className="chat-input"
+                  placeholder={isListening ? "Listening..." : "Ask Donna anything..."}
+                  className={`chat-input ${isListening ? 'listening' : ''}`}
                   rows={2}
                   disabled={false}
                   style={{ 
