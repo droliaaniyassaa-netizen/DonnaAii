@@ -1157,34 +1157,84 @@ const App = () => {
                       </filter>
                     </defs>
 
-                    {/* Main Organic Shape */}
+                    {/* Base Layer - Deepest shadow */}
                     <g filter="url(#organicBulge)">
-                      <path d="M400 100 
-                               C550 120, 680 200, 700 350
-                               C720 500, 650 650, 500 680
-                               C400 700, 300 680, 200 650
-                               C100 500, 80 350, 100 200
-                               C120 150, 250 80, 400 100 Z" 
+                      <path d="M400 110 
+                               C560 130, 690 210, 710 360
+                               C730 510, 660 660, 510 690
+                               C410 710, 310 690, 210 660
+                               C110 510, 90 360, 110 210
+                               C130 160, 260 90, 400 110 Z" 
                             fill="url(#deepBlueCore)" 
-                            filter="url(#softGlow)"/>
+                            opacity="0.8"/>
                     </g>
 
-                    {/* Organic Edge Enhancement */}
-                    <path d="M400 120 
-                             C530 140, 660 210, 680 350
-                             C700 480, 640 630, 500 660
-                             C410 680, 320 660, 220 630
-                             C120 480, 100 350, 120 210
-                             C140 160, 270 100, 400 120 Z" 
+                    {/* Mid Layer - Main volume */}
+                    <g filter="url(#organicBulge)">
+                      <path d="M400 120 
+                               C540 140, 670 220, 690 360
+                               C710 490, 650 640, 500 670
+                               C410 690, 320 670, 220 640
+                               C120 490, 100 360, 120 220
+                               C140 170, 270 100, 400 120 Z" 
+                            fill="url(#deepBlueCore)" 
+                            filter="url(#softGlow)"
+                            opacity="0.9"/>
+                    </g>
+
+                    {/* Surface Layer - Top highlight */}
+                    <g filter="url(#organicBulge)">
+                      <path d="M400 130 
+                               C520 150, 650 230, 670 360
+                               C690 480, 640 620, 490 650
+                               C410 670, 330 650, 230 620
+                               C130 480, 110 360, 130 230
+                               C150 180, 280 110, 400 130 Z" 
+                            fill="url(#deepBlueCore)" 
+                            opacity="0.95"/>
+                    </g>
+
+                    {/* Rim Lighting - 3D edge highlights */}
+                    <path d="M400 135 
+                             C515 155, 645 235, 665 360
+                             C685 475, 635 615, 485 645
+                             C415 665, 335 645, 235 615
+                             C135 475, 115 360, 135 235
+                             C155 185, 285 115, 400 135 Z" 
                           fill="none" 
                           stroke="url(#organicEdge)" 
-                          strokeWidth="3" 
-                          opacity="0.6">
+                          strokeWidth="2" 
+                          opacity="0.8">
                       <animate attributeName="stroke-width" 
-                               values="3;5;3" 
-                               dur="12s" 
+                               values="2;4;2" 
+                               dur="10s" 
+                               repeatCount="indefinite"/>
+                      <animate attributeName="opacity" 
+                               values="0.8;0.4;0.8" 
+                               dur="8s" 
                                repeatCount="indefinite"/>
                     </path>
+
+                    {/* Internal highlights - 3D surface reflections */}
+                    <ellipse cx="380" cy="280" rx="40" ry="25" 
+                             fill="url(#organicEdge)" 
+                             opacity="0.3" 
+                             transform="rotate(-15 380 280)">
+                      <animate attributeName="opacity" 
+                               values="0.3;0.6;0.3" 
+                               dur="7s" 
+                               repeatCount="indefinite"/>
+                    </ellipse>
+                    
+                    <ellipse cx="450" cy="420" rx="25" ry="15" 
+                             fill="url(#organicEdge)" 
+                             opacity="0.25" 
+                             transform="rotate(25 450 420)">
+                      <animate attributeName="opacity" 
+                               values="0.25;0.5;0.25" 
+                               dur="9s" 
+                               repeatCount="indefinite"/>
+                    </ellipse>
 
                     {/* Intricate Dot Patterns - Following Organic Curves */}
                     <g fill="url(#dotGrad)" opacity="0.8">
