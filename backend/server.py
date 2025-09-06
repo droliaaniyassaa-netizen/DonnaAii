@@ -896,9 +896,9 @@ async def chat_with_donna(request: ChatRequest):
                     
                     # Set up context for potential notes
                     await setup_event_notes_context(request.session_id, created_event_id)
-                elif context and context.get("waiting_for_notes"):
-                    # Check if message contains scheduling keywords - if so, treat as new event not notes
-                    scheduling_keywords = [
+            elif context and context.get("waiting_for_notes"):
+                # Check if message contains scheduling keywords - if so, treat as new event not notes
+                scheduling_keywords = [
                     'schedule', 'remind me', 'appointment', 'meeting', 'lunch', 'dinner', 
                     'breakfast', 'i have', 'birthday', 'call', 'visit', 'gym', 'workout',
                     'tomorrow', 'today', 'next week', 'am', 'pm', 'at '
