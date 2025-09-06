@@ -1437,17 +1437,50 @@ const App = () => {
 
 
 
+  // Show loading screen while checking auth
+  if (authLoading) {
+    return (
+      <div className="auth-loading-screen">
+        <div className="auth-loading-content">
+          <div className="loading-spinner"></div>
+          <h2>Loading Donna...</h2>
+          <p>Preparing your personalized AI assistant</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="app-container">
-      {/* Floating Settings Button */}
-      <Button 
-        variant="ghost" 
-        size="sm" 
-        className="floating-settings-button"
-        onClick={() => setShowSettings(true)}
-      >
-        <Settings className="settings-icon" />
-      </Button>
+      {/* Authentication Modal */}
+      <AuthModal 
+        open={showAuthModal} 
+        onClose={() => setShowAuthModal(false)}
+        onAuthSuccess={handleAuthSuccess}
+      />
+
+      {/* Only show app content if authenticated */}
+      {!isAuthenticated ? (
+        <div className="unauthenticated-view">
+          <div className="auth-prompt">
+            <h1>Welcome to Donna</h1>
+            <p>Please sign in to access your personalized AI assistant</p>
+            <Button onClick={() => setShowAuthModal(true)} className="auth-prompt-button">
+              Sign In
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* Floating Settings Button */}
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="floating-settings-button"
+            onClick={() => setShowSettings(true)}
+          >
+            <Settings className="settings-icon" />
+          </Button>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="main-tabs">
         <TabsList className="tabs-list">
