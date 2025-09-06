@@ -1264,8 +1264,8 @@ async def update_event(event_id: str, update_data: CalendarEventUpdate, user_ses
     return CalendarEvent(**updated_event)
 
 @api_router.delete("/calendar/events/{event_id}")
-async def delete_event(event_id: str):
-    result = await db.calendar_events.delete_one({"id": event_id})
+async def delete_event(event_id: str, user_session_id: str = Depends(get_user_session_id)):
+    result = await db.calendar_events.delete_one({"id": event_id, "session_id": user_session_id})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Event not found")
     return {"message": "Event deleted successfully"}
