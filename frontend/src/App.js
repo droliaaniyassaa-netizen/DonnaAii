@@ -314,6 +314,45 @@ const App = () => {
     }
   };
 
+  // Function to process gift messages and make links clickable
+  const processGiftMessage = (message) => {
+    // Check if this is a gift suggestion message
+    if (message.includes('Gift ideas') && message.includes('amazon.')) {
+      // Split the message into lines
+      const lines = message.split('\n');
+      const processedLines = lines.map((line, index) => {
+        // Check if line contains gift suggestion with "→" format
+        if (line.includes('→') && line.includes('amazon.')) {
+          const parts = line.split('→');
+          if (parts.length === 2) {
+            const giftName = parts[0].trim();
+            const amazonUrl = parts[1].trim();
+            
+            return (
+              <div key={index} className="gift-suggestion-line">
+                <a 
+                  href={amazonUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="gift-link"
+                >
+                  {giftName}
+                </a>
+              </div>
+            );
+          }
+        }
+        // Regular line - just return as text
+        return <div key={index}>{line}</div>;
+      });
+      
+      return <div className="gift-message">{processedLines}</div>;
+    }
+    
+    // For non-gift messages, just return as text
+    return message;
+  };
+
   // Calendar functions
   const loadEvents = async () => {
     try {
