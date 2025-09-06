@@ -1803,25 +1803,25 @@ body::before {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-.tab-trigger:nth-child(1):hover {
+.tab-trigger[value="chat"]:hover {
   /* Chat - Brighter Blue */
   color: rgba(220, 240, 255, 0.9);
   text-shadow: 0 0 12px rgba(220, 240, 255, 0.5);
 }
 
-.tab-trigger:nth-child(2):hover {
+.tab-trigger[value="health"]:hover {
   /* Health - Brighter Green-Blue */
   color: rgba(220, 255, 245, 0.9);
   text-shadow: 0 0 12px rgba(220, 255, 245, 0.5);
 }
 
-.tab-trigger:nth-child(3):hover {
+.tab-trigger[value="career"]:hover {
   /* Career - Brighter Purple-Blue */
   color: rgba(235, 220, 255, 0.9);
   text-shadow: 0 0 12px rgba(235, 220, 255, 0.5);
 }
 
-.tab-trigger:nth-child(4):hover {
+.tab-trigger[value="calendar"]:hover {
   /* Calendar - Brighter Amber-Blue */
   color: rgba(255, 235, 220, 0.9);
   text-shadow: 0 0 12px rgba(255, 235, 220, 0.5);
