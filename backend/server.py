@@ -845,7 +845,32 @@ async def chat_with_donna(request: ChatRequest):
                 await update_daily_health_stats(request.session_id, health_result)
                 donna_response = await generate_health_confirmation(health_result)
             
-        elif context and context.get("waiting_for_notes"):
+        else:
+            # Check for birthday/anniversary gift flow if not a health message
+            gift_result = await process_gift_message(request.message)
+            
+            if gift_result.detected and gift_result.confidence > 0.7:
+                # Process gift flow - create calendar event with special reminders
+                amazon_region = get_user_timezone_region(request.session_id)
+                created_event_id = await create_gift_event_with_reminders(request.session_id, gift_result)
+                
+                if created_event_id:
+                    # Generate gift response with suggestions - this takes priority
+                    donna_response = await generate_gift_response(gift_result, amazon_region)
+                    
+                    # Clear any waiting notes context for gift events
+                    if context:
+                        await db.conversation_context.update_one(
+                            {"id": context["id"]},
+                            {"$set": {"waiting_for_notes": False}}
+                        )
+                    
+                    # Set up context for potential notes
+                    await setup_event_notes_context(request.session_id, created_event_id)
+                else:
+                    donna_response = f"I've noted {gift_result.event_title} for {gift_result.date}. Let me know if you'd like gift suggestions!"
+            
+            elif context and context.get("waiting_for_notes"):
                 # Check if message contains scheduling keywords - if so, treat as new event not notes
                 scheduling_keywords = [
                     'schedule', 'remind me', 'appointment', 'meeting', 'lunch', 'dinner', 
