@@ -1101,7 +1101,7 @@ const App = () => {
 
         {/* Chat Tab - Donna's Consciousness Interface */}
         <TabsContent value="chat" className="consciousness-container">
-          <div className="first-time-interface">
+          <div className="consciousness-interface">
             
             {/* Donna's Organic Blue Consciousness */}
             <div className="first-time-orb-section">
