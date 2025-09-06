@@ -1099,12 +1099,12 @@ const App = () => {
           </TabsTrigger>
         </TabsList>
 
-        {/* Chat Tab - Donna's Consciousness Interface */}
-        <TabsContent value="chat" className="consciousness-container">
-          <div className="consciousness-interface">
+        {/* Chat Tab - Donna's First Time User Interface */}
+        <TabsContent value="chat" className="first-time-consciousness">
+          <div className="first-time-interface">
             
             {/* Donna's Organic Blue Consciousness */}
-            <div className="consciousness-presence">
+            <div className="first-time-orb-section">
               <div className={`donna-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
                 <div className="organic-orb-container">
                   <svg className="organic-orb-svg" viewBox="0 0 800 800" aria-hidden="true">
