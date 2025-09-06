@@ -704,9 +704,11 @@ const App = () => {
   };
 
   const logSleepFromTimes = () => {
-    if (!sleepTime || !wakeTime) return;
+    // Use defaults if times are missing or incomplete
+    const defaultSleepTime = sleepTime || '23:00'; // 11:00 PM default
+    const defaultWakeTime = wakeTime || '07:00';   // 7:00 AM default
     
-    const hours = calculateSleepHours(sleepTime, wakeTime);
+    const hours = calculateSleepHours(defaultSleepTime, defaultWakeTime);
     if (hours > 0) {
       setHealthStats(prev => ({
         ...prev,
