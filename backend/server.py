@@ -846,8 +846,23 @@ async def chat_with_donna(request: ChatRequest):
                 donna_response = await generate_health_confirmation(health_result)
             
         else:
-            # Check for event creation if not a health message
-            created_event_id = await process_message_context(request.message, request.session_id)
+            # Check for birthday/anniversary gift flow if not a health message
+            gift_result = await process_gift_message(request.message)
+            
+            if gift_result.detected and gift_result.confidence > 0.7:
+                # Process gift flow - create calendar event with special reminders
+                amazon_region = get_user_timezone_region(request.session_id)
+                created_event_id = await create_gift_event_with_reminders(request.session_id, gift_result)
+                
+                if created_event_id:
+                    # Generate gift response with suggestions
+                    donna_response = await generate_gift_response(gift_result, amazon_region)
+                else:
+                    donna_response = f"I've noted {gift_result.event_title} for {gift_result.date}. Let me know if you'd like gift suggestions!"
+            
+            else:
+                # Check for regular event creation if not a gift message
+                created_event_id = await process_message_context(request.message, request.session_id)
             
             if created_event_id:
                 # New event detected - clear any waiting notes context and create event
