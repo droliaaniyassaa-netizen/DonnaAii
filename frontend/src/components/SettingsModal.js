@@ -134,6 +134,31 @@ const SettingsModal = ({
       return '';
     }
   };
+
+  const handleNotificationToggle = async () => {
+    try {
+      setLoading(true);
+      
+      if (notificationsEnabled) {
+        // Disable notifications
+        await unsubscribeUserFromPush();
+        setNotificationsEnabled(false);
+      } else {
+        // Enable notifications
+        const success = await subscribeUserToPush();
+        if (success) {
+          setNotificationsEnabled(true);
+        } else {
+          alert('Failed to enable notifications. Please check your browser permissions.');
+        }
+      }
+    } catch (error) {
+      console.error('Failed to toggle notifications:', error);
+      alert('Failed to toggle notifications. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
   
   return (
     <Dialog open={open} onOpenChange={onClose}>
