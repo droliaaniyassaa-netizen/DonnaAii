@@ -704,21 +704,35 @@ const App = () => {
   };
 
   const logSleepFromTimes = () => {
-    // Use defaults if times are missing or incomplete
-    const defaultSleepTime = sleepTime || '23:00'; // 11:00 PM default
-    const defaultWakeTime = wakeTime || '07:00';   // 7:00 AM default
+    // Use smart defaults based on current inputs and AM/PM
+    let finalSleepTime = sleepTime;
+    let finalWakeTime = wakeTime;
     
-    const hours = calculateSleepHours(defaultSleepTime, defaultWakeTime);
-    if (hours > 0) {
-      setHealthStats(prev => ({
-        ...prev,
-        sleep: hours
-      }));
-      setSleepTime('');
-      setWakeTime('');
-      setSleepAmPm('PM');
-      setWakeAmPm('AM');
+    // If no sleep time provided, use sensible default
+    if (!sleepTime) {
+      finalSleepTime = sleepAmPm === 'PM' ? '23:00' : '11:00'; // 11 PM or 11 AM
     }
+    
+    // If no wake time provided, use sensible default
+    if (!wakeTime) {
+      finalWakeTime = wakeAmPm === 'AM' ? '07:00' : '19:00'; // 7 AM or 7 PM
+    }
+    
+    const hours = calculateSleepHours(finalSleepTime, finalWakeTime);
+    
+    // Always log sleep even if calculation seems off - user knows best
+    const finalHours = hours > 0 && hours <= 16 ? hours : 8; // Default to 8 hours if calculation is weird
+    
+    setHealthStats(prev => ({
+      ...prev,
+      sleep: finalHours
+    }));
+    
+    // Clear inputs after logging
+    setSleepTime('');
+    setWakeTime('');
+    setSleepAmPm('PM');
+    setWakeAmPm('AM');
   };
 
   // Simple estimation functions (can be enhanced with AI)
