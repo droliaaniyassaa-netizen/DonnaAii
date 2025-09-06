@@ -1380,19 +1380,19 @@ const App = () => {
               <div className="donna-example-circles">
                 <div 
                   className="donna-example-circle"
-                  onClick={() => setInputMessage("Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym")}
+                  onClick={() => autoSendExample("Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym")}
                 >
                   "Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym"
                 </div>
                 <div 
                   className="donna-example-circle"
-                  onClick={() => setInputMessage("I ate a bowl of pasta with chicken for lunch")}
+                  onClick={() => autoSendExample("I ate a bowl of pasta with chicken for lunch")}
                 >
                   "I ate a bowl of pasta with chicken for lunch"
                 </div>
                 <div 
                   className="donna-example-circle"
-                  onClick={() => setInputMessage("My mom's birthday is coming up")}
+                  onClick={() => autoSendExample("My mom's birthday is coming up")}
                 >
                   "My mom's birthday is coming up"
                 </div>
