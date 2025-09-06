@@ -1133,7 +1133,7 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
                     donna_response = await chat.send_message(user_msg)
                     
                     # Set up context for potential notes
-                    await setup_event_notes_context(request.session_id, created_event_id)
+                    await setup_event_notes_context(user_session_id, created_event_id)
                 else:
                     # Normal conversation flow - no event created, not waiting for notes
                     chat = LlmChat(
