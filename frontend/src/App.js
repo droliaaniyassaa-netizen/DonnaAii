@@ -131,7 +131,16 @@ const App = () => {
   const loadChatHistory = async () => {
     try {
       const response = await axios.get(`${API}/chat/history/default`);
-      setMessages(response.data);
+      setMessages(response.data || []);
+      
+      // Auto-scroll to bottom if messages exist (for returning users)
+      if (response.data && response.data.length > 0) {
+        setTimeout(() => {
+          if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
     } catch (error) {
       console.error('Error loading chat history:', error);
     }
