@@ -1104,7 +1104,7 @@ const App = () => {
           <div className="consciousness-interface">
             
             {/* Donna's Organic Blue Consciousness */}
-            <div className="first-time-orb-section">
+            <div className="consciousness-presence">
               <div className={`donna-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
                 <div className="organic-orb-container">
                   <svg className="organic-orb-svg" viewBox="0 0 800 800" aria-hidden="true">
