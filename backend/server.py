@@ -621,6 +621,56 @@ async def handle_health_delete_command(session_id: str, health_result: HealthPro
         return "I didn't catch that. Try 'delete last entry' or 'undo hydration'."
 
 # =====================================
+# WEB PUSH NOTIFICATION MODELS
+# =====================================
+
+class PushSubscription(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str
+    endpoint: str
+    p256dh_key: str
+    auth_key: str
+    user_agent: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class PushSubscriptionCreate(BaseModel):
+    session_id: str
+    endpoint: str
+    p256dh_key: str
+    auth_key: str
+    user_agent: Optional[str] = None
+
+class NotificationPayload(BaseModel):
+    title: str
+    body: str
+    icon: Optional[str] = "/favicon.ico"
+    badge: Optional[str] = "/favicon.ico"
+    url: Optional[str] = "/"
+    type: Optional[str] = "general"  # "reminder", "health", "general"
+    actions: Optional[List[Dict[str, str]]] = None
+
+class ScheduledNotification(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str
+    event_id: Optional[str] = None  # Related calendar event
+    title: str
+    body: str
+    scheduled_time: datetime
+    notification_type: str  # "reminder", "health_report", "general"
+    sent: bool = False
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    sent_at: Optional[datetime] = None
+
+class ScheduledNotificationCreate(BaseModel):
+    session_id: str
+    event_id: Optional[str] = None
+    title: str
+    body: str
+    scheduled_time: datetime
+    notification_type: str = "reminder"
+
+# =====================================
 # BIRTHDAY & ANNIVERSARY GIFT FLOW
 # =====================================
 
