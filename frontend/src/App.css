@@ -1760,26 +1760,26 @@ body::before {
   text-shadow: 0 0 8px rgba(200, 220, 255, 0.3);
 }
 
-/* Individual Tab Colors - Very Subtle Variations */
-.tab-trigger:nth-child(1) {
+/* Individual Tab Title Colors - Very Subtle Variations */
+.tab-trigger[value="chat"] {
   /* Chat - Soft Blue */
   color: rgba(200, 225, 255, 0.7);
   text-shadow: 0 0 8px rgba(200, 225, 255, 0.3);
 }
 
-.tab-trigger:nth-child(2) {
+.tab-trigger[value="health"] {
   /* Health - Soft Green-Blue */
   color: rgba(200, 255, 230, 0.7);
   text-shadow: 0 0 8px rgba(200, 255, 230, 0.3);
 }
 
-.tab-trigger:nth-child(3) {
+.tab-trigger[value="career"] {
   /* Career - Soft Purple-Blue */
   color: rgba(220, 200, 255, 0.7);
   text-shadow: 0 0 8px rgba(220, 200, 255, 0.3);
 }
 
-.tab-trigger:nth-child(4) {
+.tab-trigger[value="calendar"] {
   /* Calendar - Soft Amber-Blue */
   color: rgba(255, 220, 200, 0.7);
   text-shadow: 0 0 8px rgba(255, 220, 200, 0.3);
