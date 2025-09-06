@@ -108,7 +108,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authLoading, setAuthLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(false); // Don't show loading initially
   
   // Refs
   const messagesEndRef = useRef(null);
