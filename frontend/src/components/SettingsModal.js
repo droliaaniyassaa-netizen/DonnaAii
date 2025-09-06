@@ -17,7 +17,14 @@ import {
   COMMON_TIMEZONES 
 } from '../utils/timezone';
 
-const SettingsModal = ({ open, onClose }) => {
+const SettingsModal = ({ 
+  open, 
+  onClose, 
+  notificationsEnabled, 
+  setNotificationsEnabled,
+  subscribeUserToPush,
+  unsubscribeUserFromPush 
+}) => {
   const [selectedTimezone, setSelectedTimezone] = useState(getUserTimezone());
   const [searchQuery, setSearchQuery] = useState('');
   const [timezoneOpen, setTimezoneOpen] = useState(false);
