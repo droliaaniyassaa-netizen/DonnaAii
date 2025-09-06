@@ -1099,8 +1099,8 @@ const App = () => {
           </TabsTrigger>
         </TabsList>
 
-        {/* Chat Tab - Donna's First Time User Interface */}
-        <TabsContent value="chat" className="first-time-consciousness">
+        {/* Chat Tab - Donna's Consciousness Interface */}
+        <TabsContent value="chat" className="consciousness-container">
           <div className="first-time-interface">
             
             {/* Donna's Organic Blue Consciousness */}
