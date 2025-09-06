@@ -1433,33 +1433,49 @@ const App = () => {
 
 
 
-  // Auth callback state management
-  const [showProfilePage, setShowProfilePage] = useState(false);
+  // Auth callback handling - check immediately before any redirects
+  const [authCallbackData, setAuthCallbackData] = useState(null);
   
-  // Check for auth callback on load
+  // Check for auth callback IMMEDIATELY on component mount
   useEffect(() => {
-    const checkAuthCallback = () => {
-      const fragment = window.location.hash;
-      const urlParams = new URLSearchParams(window.location.search);
-      const isProfilePage = urlParams.get('page') === 'profile';
-      const hasSessionId = fragment.includes('session_id');
-      
-      console.log('Auth callback check - fragment:', fragment, 'isProfilePage:', isProfilePage, 'hasSessionId:', hasSessionId);
-      
-      if (isProfilePage || hasSessionId) {
-        setShowProfilePage(true);
-        console.log('Setting showProfilePage to true');
-      }
-    };
+    // Capture URL data immediately before any redirects
+    const currentUrl = window.location.href;
+    const urlParams = new URLSearchParams(window.location.search);
+    const fragment = window.location.hash;
     
-    checkAuthCallback();
-  }, []);
-  
-  // If showing profile page, render ProfilePage component
-  if (showProfilePage) {
-    console.log('Rendering ProfilePage component');
-    return <ProfilePage onAuthComplete={handleAuthSuccess} onLogout={handleLogout} />;
-  }
+    console.log('IMMEDIATE URL CHECK:', currentUrl);
+    console.log('Search params:', urlParams.toString());
+    console.log('Fragment:', fragment);
+    
+    // Check for session_id in fragment (Emergent auth callback)
+    if (fragment.includes('session_id=')) {
+      const params = new URLSearchParams(fragment.substring(1));
+      const sessionId = params.get('session_id');
+      
+      if (sessionId) {
+        console.log('Found session_id in fragment:', sessionId);
+        setAuthCallbackData({ sessionId });
+        
+        // Clear the URL fragment immediately
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return; // Don't continue with regular auth check
+      }
+    }
+    
+    // Check for profile page parameter
+    if (urlParams.get('page') === 'profile') {
+      console.log('Found profile page parameter');
+      setAuthCallbackData({ profilePage: true });
+      
+      // Clear the URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return;
+    }
+    
+    // If no callback data, proceed with normal auth check
+    checkAuthStatus();
+    
+  }, []); // Empty dependency array - run only once on mount
 
   // Show loading screen while checking auth
   if (authLoading) {
