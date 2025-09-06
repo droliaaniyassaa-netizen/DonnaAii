@@ -1330,6 +1330,7 @@ const App = () => {
                 </p>
               </div>
             </div>
+            )}
 
             {/* Conversation Flow */}
             {messages.length > 0 && (
