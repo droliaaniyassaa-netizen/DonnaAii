@@ -1074,7 +1074,7 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
                         )
                     
                     # Set up context for potential notes
-                    await setup_event_notes_context(request.session_id, created_event_id)
+                    await setup_event_notes_context(user_session_id, created_event_id)
                 else:
                     donna_response = f"I've noted {gift_result.event_title} for {gift_result.date}. Let me know if you'd like gift suggestions!"
             
