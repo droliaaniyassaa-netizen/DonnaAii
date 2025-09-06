@@ -2374,17 +2374,17 @@ body::before {
 /* Calendar Sub-tabs - Slightly smaller for mobile */
 .calendar-sub-tabs {
   display: flex;
-  gap: 0.4rem; /* Slightly reduced from 0.5rem */
-  margin-bottom: 1.2rem; /* Slightly reduced from 1.5rem */
+  gap: 0.4rem;
+  margin: 1rem 0 1.2rem 0; /* Added top margin */
   justify-content: center;
-  padding: 0.2rem; /* Slightly reduced from 0.25rem */
+  padding: 0.2rem;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.02) 0%,
     rgba(255, 255, 255, 0.005) 50%,
     rgba(255, 255, 255, 0.001) 100%
   );
   backdrop-filter: blur(20px);
-  border-radius: 10px; /* Slightly reduced from 12px */
+  border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
