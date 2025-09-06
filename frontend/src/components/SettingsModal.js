@@ -6,7 +6,7 @@ import { Label } from './ui/label';
 import { Badge } from './ui/badge';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { Check, ChevronsUpDown, Search, Clock, Globe, Calendar } from 'lucide-react';
+import { Check, ChevronsUpDown, Search, Clock, Globe, Calendar, MessageCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { 
   getUserTimezone, 
