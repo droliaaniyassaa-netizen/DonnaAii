@@ -3,10 +3,16 @@
 import asyncio
 import os
 import json
+from pathlib import Path
+from dotenv import load_dotenv
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 async def test_gift_detection_llm():
     """Test the LLM gift detection directly"""
+    
+    # Load environment variables
+    ROOT_DIR = Path(__file__).parent / 'backend'
+    load_dotenv(ROOT_DIR / '.env')
     
     # Get API key from environment
     openai_api_key = os.environ.get('OPENAI_API_KEY')
