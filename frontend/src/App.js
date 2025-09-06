@@ -124,6 +124,7 @@ const App = () => {
     loadHealthTargets();
     loadDailyHealthStats(); // Load chat-based health stats
     loadWeeklyAnalytics(); // Load weekly analytics
+    initializeNotifications();
     
     // Initialize default date/time for new entries
     const now = getCurrentInUserTimezone();
@@ -131,6 +132,72 @@ const App = () => {
     setNewEvent(prev => ({ ...prev, date, time: time || '10:00', category: 'personal' }));
     setNewHealthEntry(prev => ({ ...prev, date, time: time || '12:00' }));
   }, []);
+
+  // Initialize notification service worker
+  const initializeNotifications = async () => {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      try {
+        const registration = await navigator.serviceWorker.register('/sw.js');
+        console.log('Service Worker registered:', registration);
+        
+        // Check current permission status
+        const permission = await Notification.requestPermission();
+        setNotificationPermission(permission);
+        setNotificationsEnabled(permission === 'granted');
+        
+        // Check if user has been asked before (from localStorage)
+        const hasAsked = localStorage.getItem('donna-notification-asked') === 'true';
+        setHasAskedPermission(hasAsked);
+        
+      } catch (error) {
+        console.error('Service Worker registration failed:', error);
+      }
+    }
+  };
+
+  // Request notification permission after first reminder
+  const requestNotificationPermission = async () => {
+    if (!hasAskedPermission && notificationPermission === 'default') {
+      const permission = await Notification.requestPermission();
+      setNotificationPermission(permission);
+      setNotificationsEnabled(permission === 'granted');
+      setHasAskedPermission(true);
+      localStorage.setItem('donna-notification-asked', 'true');
+      
+      if (permission === 'granted') {
+        // Show test notification
+        new Notification('Donna Notifications Enabled! 🔔', {
+          body: 'You\'ll now receive reminders and health reports on your phone.',
+          icon: '/favicon.ico'
+        });
+      }
+    }
+  };
+
+  // Send notification (for calendar and health)
+  const sendNotification = async (title, body, type = 'general') => {
+    if (notificationsEnabled && 'serviceWorker' in navigator) {
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        if (registration && registration.active) {
+          // Send via service worker for better reliability
+          registration.active.postMessage({
+            type: 'SHOW_NOTIFICATION',
+            payload: { title, body, type }
+          });
+        } else {
+          // Fallback to direct notification
+          new Notification(title, {
+            body: body,
+            icon: '/favicon.ico',
+            requireInteraction: true
+          });
+        }
+      } catch (error) {
+        console.error('Failed to send notification:', error);
+      }
+    }
+  };
 
   // Chat functions
   const loadChatHistory = async () => {
