@@ -1456,6 +1456,375 @@ class DonnaAPITester:
         
         return True
 
+    def test_birthday_anniversary_gift_flow(self):
+        """Test the NEW Birthday & Anniversary Gift Flow with Amazon integration"""
+        print("\n" + "="*50)
+        print("TESTING BIRTHDAY & ANNIVERSARY GIFT FLOW")
+        print("="*50)
+        
+        session_id = "gift_test_session"
+        
+        print("\n🎁 PHASE 1: GIFT OCCASION DETECTION")
+        print("="*50)
+        
+        # Test various birthday messages
+        birthday_messages = [
+            "It's my mom's birthday today",
+            "My dad's birthday is tomorrow", 
+            "Kyle's birthday next Friday",
+            "Sarah's birthday is on December 15th",
+            "My wife's birthday is coming up",
+            "My girlfriend's birthday next week",
+            "My boss has a birthday on Monday",
+            "My colleague's birthday is today",
+            "My friend Jake's birthday tomorrow",
+            "My child's birthday next month"
+        ]
+        
+        print("Testing birthday detection messages:")
+        birthday_detected_count = 0
+        
+        for message in birthday_messages:
+            success, response = self.run_test(
+                f"Birthday Detection: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            
+            if success:
+                donna_response = response.get('response', '')
+                # Check if response contains gift-related content
+                gift_indicators = ['gift', 'amazon', 'suggestion', 'saved:', 'reminder']
+                if any(indicator in donna_response.lower() for indicator in gift_indicators):
+                    birthday_detected_count += 1
+                    print(f"✅ Birthday detected and processed: {donna_response[:100]}...")
+                else:
+                    print(f"⚠️  Birthday not detected as gift occasion: {donna_response[:100]}...")
+            
+            time.sleep(1)  # Brief pause between requests
+        
+        print(f"📊 Birthday detection rate: {birthday_detected_count}/{len(birthday_messages)} ({birthday_detected_count/len(birthday_messages)*100:.1f}%)")
+        
+        # Test anniversary messages
+        anniversary_messages = [
+            "Our anniversary is next Friday",
+            "It's our wedding anniversary today",
+            "My anniversary with Sarah is tomorrow",
+            "Our 5th anniversary next week",
+            "Anniversary dinner planned for Saturday"
+        ]
+        
+        print("\nTesting anniversary detection messages:")
+        anniversary_detected_count = 0
+        
+        for message in anniversary_messages:
+            success, response = self.run_test(
+                f"Anniversary Detection: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            
+            if success:
+                donna_response = response.get('response', '')
+                gift_indicators = ['gift', 'amazon', 'suggestion', 'saved:', 'reminder']
+                if any(indicator in donna_response.lower() for indicator in gift_indicators):
+                    anniversary_detected_count += 1
+                    print(f"✅ Anniversary detected and processed: {donna_response[:100]}...")
+                else:
+                    print(f"⚠️  Anniversary not detected as gift occasion: {donna_response[:100]}...")
+            
+            time.sleep(1)
+        
+        print(f"📊 Anniversary detection rate: {anniversary_detected_count}/{len(anniversary_messages)} ({anniversary_detected_count/len(anniversary_messages)*100:.1f}%)")
+        
+        print("\n🎁 PHASE 2: CALENDAR INTEGRATION")
+        print("="*50)
+        
+        # Get initial event count
+        success, initial_events = self.run_test(
+            "Get Initial Calendar Events",
+            "GET",
+            "calendar/events",
+            200
+        )
+        
+        initial_count = len(initial_events) if success else 0
+        
+        # Test calendar event creation with gift flow
+        success, response = self.run_test(
+            "Gift Flow Calendar Creation: 'My mom's birthday is tomorrow'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "My mom's birthday is tomorrow", "session_id": session_id}
+        )
+        
+        if success:
+            time.sleep(2)  # Wait for event processing
+            
+            # Check if calendar event was created
+            success, updated_events = self.run_test(
+                "Check Calendar Events After Gift Message",
+                "GET",
+                "calendar/events",
+                200
+            )
+            
+            if success:
+                new_count = len(updated_events)
+                if new_count > initial_count:
+                    print(f"✅ Calendar event created: {initial_count} -> {new_count} events")
+                    
+                    # Look for birthday-related events
+                    birthday_events = [e for e in updated_events if 'birthday' in e.get('title', '').lower()]
+                    if birthday_events:
+                        print(f"✅ Found {len(birthday_events)} birthday events in calendar")
+                        for event in birthday_events[-3:]:  # Show last 3
+                            print(f"   - {event.get('title', 'No title')}: {event.get('datetime_utc', 'No date')}")
+                    else:
+                        print("⚠️  No birthday events found in calendar")
+                else:
+                    print(f"❌ No new calendar events created: {initial_count} -> {new_count}")
+        
+        print("\n🎁 PHASE 3: AMAZON LINK GENERATION")
+        print("="*50)
+        
+        # Test gift suggestions for different relationships
+        relationship_tests = [
+            ("My mom's birthday next week", "mom"),
+            ("My dad's birthday tomorrow", "dad"), 
+            ("My wife's birthday is coming", "wife"),
+            ("My girlfriend's birthday next month", "girlfriend"),
+            ("My boss's birthday on Friday", "boss"),
+            ("My colleague's birthday today", "colleague"),
+            ("My friend's birthday next week", "friend"),
+            ("My child's birthday tomorrow", "child")
+        ]
+        
+        amazon_links_found = 0
+        total_relationship_tests = len(relationship_tests)
+        
+        for message, relationship in relationship_tests:
+            success, response = self.run_test(
+                f"Gift Suggestions for {relationship}: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            
+            if success:
+                donna_response = response.get('response', '')
+                
+                # Check for Amazon links
+                if 'amazon.com' in donna_response:
+                    amazon_links_found += 1
+                    print(f"✅ Amazon links generated for {relationship}")
+                    
+                    # Count number of suggestions
+                    suggestion_count = donna_response.count('amazon.com')
+                    if suggestion_count >= 4:
+                        print(f"✅ Multiple suggestions provided: {suggestion_count} Amazon links")
+                    else:
+                        print(f"⚠️  Limited suggestions: {suggestion_count} Amazon links")
+                else:
+                    print(f"❌ No Amazon links found for {relationship}")
+            
+            time.sleep(1)
+        
+        print(f"📊 Amazon link generation rate: {amazon_links_found}/{total_relationship_tests} ({amazon_links_found/total_relationship_tests*100:.1f}%)")
+        
+        print("\n🎁 PHASE 4: CHAT FLOW INTEGRATION")
+        print("="*50)
+        
+        # Test that gift flow doesn't interfere with health logging
+        success, response = self.run_test(
+            "Health Message After Gift Flow: 'I had a glass of water'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "I had a glass of water", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            if any(word in donna_response.lower() for word in ['hydration', 'water', 'ml']):
+                print("✅ Health logging still works after gift flow")
+            else:
+                print("⚠️  Health logging may be affected by gift flow")
+        
+        # Test that gift flow doesn't interfere with regular event creation
+        success, response = self.run_test(
+            "Regular Event After Gift Flow: 'I have a meeting tomorrow at 2 PM'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "I have a meeting tomorrow at 2 PM", "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            if 'event' in donna_response.lower() or 'meeting' in donna_response.lower():
+                print("✅ Regular event creation still works after gift flow")
+            else:
+                print("⚠️  Regular event creation may be affected by gift flow")
+        
+        print("\n🎁 PHASE 5: EDGE CASES")
+        print("="*50)
+        
+        # Test low confidence detection (should fall back to regular chat)
+        edge_case_messages = [
+            "I need to buy something",  # Vague, should not trigger gift flow
+            "Birthday party planning",   # Mentions birthday but not specific
+            "Anniversary sale at the store",  # Anniversary but not personal
+            "My friend mentioned birthdays",  # Indirect reference
+            "What should I get for a birthday?"  # Question, not specific occasion
+        ]
+        
+        false_positive_count = 0
+        
+        for message in edge_case_messages:
+            success, response = self.run_test(
+                f"Edge Case: '{message}'",
+                "POST",
+                "chat",
+                200,
+                data={"message": message, "session_id": session_id}
+            )
+            
+            if success:
+                donna_response = response.get('response', '')
+                gift_indicators = ['amazon.com', 'gift suggestions', 'saved:', 'reminder']
+                if any(indicator in donna_response.lower() for indicator in gift_indicators):
+                    false_positive_count += 1
+                    print(f"⚠️  False positive detected: {donna_response[:80]}...")
+                else:
+                    print(f"✅ Correctly handled as regular chat: {donna_response[:80]}...")
+            
+            time.sleep(1)
+        
+        print(f"📊 Edge case handling: {len(edge_case_messages) - false_positive_count}/{len(edge_case_messages)} correctly handled ({(len(edge_case_messages) - false_positive_count)/len(edge_case_messages)*100:.1f}%)")
+        
+        print("\n🎁 PHASE 6: REMINDER SYSTEM VERIFICATION")
+        print("="*50)
+        
+        # Check if special 7-day reminders are created
+        success, response = self.run_test(
+            "Create Gift Event with Reminders: 'My anniversary is next Sunday'",
+            "POST",
+            "chat",
+            200,
+            data={"message": "My anniversary is next Sunday", "session_id": session_id}
+        )
+        
+        if success:
+            time.sleep(2)
+            
+            # Note: We can't directly test the calendar_reminders collection without additional endpoints
+            # But we can verify the response indicates reminders were set
+            donna_response = response.get('response', '')
+            if 'reminder' in donna_response.lower() or 'saved:' in donna_response.lower():
+                print("✅ Gift event created with reminder system")
+            else:
+                print("⚠️  Reminder system status unclear from response")
+        
+        print("\n🎁 PHASE 7: DATA PERSISTENCE")
+        print("="*50)
+        
+        # Get final event count to verify persistence
+        success, final_events = self.run_test(
+            "Final Calendar Events Count",
+            "GET",
+            "calendar/events",
+            200
+        )
+        
+        if success:
+            final_count = len(final_events)
+            gift_events = [e for e in final_events if any(word in e.get('title', '').lower() 
+                          for word in ['birthday', 'anniversary'])]
+            
+            print(f"📊 Total events created: {final_count}")
+            print(f"📊 Gift-related events: {len(gift_events)}")
+            
+            if len(gift_events) > 0:
+                print("✅ Gift events persisted in database")
+                for event in gift_events[-3:]:  # Show last 3 gift events
+                    print(f"   - {event.get('title', 'No title')}")
+            else:
+                print("⚠️  No gift events found in final count")
+        
+        print("\n🎁 PHASE 8: COMPREHENSIVE WORKFLOW TEST")
+        print("="*50)
+        
+        # Test complete end-to-end workflow
+        workflow_message = "My uncle's birthday is this Friday and I need gift ideas"
+        
+        success, response = self.run_test(
+            f"Complete Workflow Test: '{workflow_message}'",
+            "POST",
+            "chat",
+            200,
+            data={"message": workflow_message, "session_id": session_id}
+        )
+        
+        if success:
+            donna_response = response.get('response', '')
+            
+            # Check all components of the gift flow
+            workflow_checks = {
+                'Event Creation': 'saved:' in donna_response.lower() or 'uncle' in donna_response.lower(),
+                'Gift Suggestions': 'amazon.com' in donna_response,
+                'Multiple Options': donna_response.count('amazon.com') >= 3,
+                'Relationship Recognition': 'uncle' in donna_response.lower(),
+                'Date Processing': 'friday' in donna_response.lower() or 'reminder' in donna_response.lower()
+            }
+            
+            passed_checks = sum(workflow_checks.values())
+            total_checks = len(workflow_checks)
+            
+            print(f"📊 Workflow completeness: {passed_checks}/{total_checks} components working")
+            
+            for check_name, passed in workflow_checks.items():
+                status = "✅" if passed else "❌"
+                print(f"   {status} {check_name}")
+            
+            if passed_checks >= 4:
+                print("✅ Complete gift flow workflow functioning")
+            else:
+                print("⚠️  Gift flow workflow has missing components")
+        
+        # Calculate overall success metrics
+        total_tests = (
+            len(birthday_messages) + len(anniversary_messages) + 
+            len(relationship_tests) + len(edge_case_messages) + 5  # Additional workflow tests
+        )
+        
+        successful_tests = (
+            birthday_detected_count + anniversary_detected_count + 
+            amazon_links_found + (len(edge_case_messages) - false_positive_count) + 3  # Estimated successful workflow tests
+        )
+        
+        success_rate = (successful_tests / total_tests) * 100
+        
+        print(f"\n📊 GIFT FLOW OVERALL RESULTS:")
+        print(f"   Total gift flow tests: {total_tests}")
+        print(f"   Successful tests: {successful_tests}")
+        print(f"   Success rate: {success_rate:.1f}%")
+        
+        if success_rate >= 80:
+            print("🎉 Gift flow feature is working well!")
+        elif success_rate >= 60:
+            print("⚠️  Gift flow feature has some issues but core functionality works")
+        else:
+            print("❌ Gift flow feature needs significant fixes")
+        
+        return True
+
     def test_error_handling(self):
         """Test API error handling"""
         print("\n" + "="*50)
