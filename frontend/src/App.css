@@ -4704,9 +4704,8 @@ body::before {
 .career-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem 2rem;
+  padding: 1rem 2rem 2rem;
   min-height: calc(100vh - 80px);
-  background: rgba(0, 0, 0, 0.1);
 }
 
 .career-grid {
