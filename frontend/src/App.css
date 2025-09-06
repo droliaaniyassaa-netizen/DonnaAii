@@ -1883,11 +1883,14 @@ body::before {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 1rem;
+  padding: 1.5rem;
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
+  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
   /* ENSURE CONTAINER ALLOWS INTERACTION */
   pointer-events: auto !important;
   position: relative !important;
