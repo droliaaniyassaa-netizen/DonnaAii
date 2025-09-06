@@ -37,7 +37,7 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
         <div className="auth-content">
           <div className="auth-description">
             <p>Your personal AI assistant for health, career, and calendar management.</p>
-            <p>Sign in to access your personalized data and get started.</p>
+            <p><strong>For Donna to remember your chats and schedule your events, please sign in or create an account.</strong></p>
           </div>
 
           <div className="auth-methods">
