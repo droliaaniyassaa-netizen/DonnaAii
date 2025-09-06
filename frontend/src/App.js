@@ -342,15 +342,16 @@ const App = () => {
             );
           }
         }
-        // Regular line - just return as text
-        return <div key={index}>{line}</div>;
-      });
+        // Regular line - just return as text (but skip empty lines)
+        if (line.trim() === '') return null;
+        return <div key={index} className="message-line">{line}</div>;
+      }).filter(Boolean); // Remove null entries
       
       return <div className="gift-message">{processedLines}</div>;
     }
     
     // For non-gift messages, just return as text
-    return message;
+    return <div className="regular-message">{message}</div>;
   };
 
   // Calendar functions
