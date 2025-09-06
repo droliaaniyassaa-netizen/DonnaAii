@@ -223,6 +223,7 @@ const App = () => {
       // Refresh other tabs data if context might have changed
       await loadEvents();
       await loadChatHistory();
+      await loadDailyHealthStats();
       
     } catch (error) {
       console.error('Error sending example message:', error);
