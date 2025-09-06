@@ -926,13 +926,14 @@ body::before {
   }
 }
 
-/* First Time Identity */
-.first-time-identity {
+/* Donna's Identity */
+.consciousness-identity {
+  position: relative;
   text-align: center;
   z-index: 2;
 }
 
-.first-time-name {
+.consciousness-name {
   font-family: 'Cormorant Garamond', serif;
   font-size: 3rem;
   font-weight: 400;
@@ -942,7 +943,7 @@ body::before {
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
 }
 
-.first-time-greeting {
+.consciousness-greeting {
   font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.7);
