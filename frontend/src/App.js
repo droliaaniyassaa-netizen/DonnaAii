@@ -701,6 +701,9 @@ const App = () => {
   const createEvent = async () => {
     if (!newEvent.title || !newEvent.date || !newEvent.time) return;
     
+    // Check authentication before creating event
+    if (!requireAuthForAction('create event')) return;
+    
     try {
       // Convert local date/time to UTC
       const utcDateTime = handleDSTTransition(newEvent.date, newEvent.time);
