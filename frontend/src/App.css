@@ -1805,26 +1805,26 @@ body::before {
 
 .tab-trigger[value="chat"]:hover {
   /* Chat - Brighter Blue */
-  color: rgba(220, 240, 255, 0.9);
-  text-shadow: 0 0 12px rgba(220, 240, 255, 0.5);
+  color: rgba(200, 230, 255, 1);
+  text-shadow: 0 0 15px rgba(200, 230, 255, 0.6);
 }
 
 .tab-trigger[value="health"]:hover {
   /* Health - Brighter Green-Blue */
-  color: rgba(220, 255, 245, 0.9);
-  text-shadow: 0 0 12px rgba(220, 255, 245, 0.5);
+  color: rgba(200, 255, 230, 1);
+  text-shadow: 0 0 15px rgba(200, 255, 230, 0.6);
 }
 
 .tab-trigger[value="career"]:hover {
   /* Career - Brighter Purple-Blue */
-  color: rgba(235, 220, 255, 0.9);
-  text-shadow: 0 0 12px rgba(235, 220, 255, 0.5);
+  color: rgba(230, 200, 255, 1);
+  text-shadow: 0 0 15px rgba(230, 200, 255, 0.6);
 }
 
 .tab-trigger[value="calendar"]:hover {
   /* Calendar - Brighter Amber-Blue */
-  color: rgba(255, 235, 220, 0.9);
-  text-shadow: 0 0 12px rgba(255, 235, 220, 0.5);
+  color: rgba(255, 230, 200, 1);
+  text-shadow: 0 0 15px rgba(255, 230, 200, 0.6);
 }
 
 .tab-trigger:hover::before {
