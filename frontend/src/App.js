@@ -344,7 +344,7 @@ const App = () => {
       console.log('Not authenticated:', error.response?.status);
       setUser(null);
       setIsAuthenticated(false);
-      setShowAuthModal(true);
+      // Don't show auth modal automatically - let users browse first
     } finally {
       setAuthLoading(false);
     }
