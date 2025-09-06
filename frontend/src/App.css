@@ -745,13 +745,14 @@ body::before {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 2rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  gap: 3rem;
+  justify-content: flex-start;
+  min-height: calc(100vh - 80px); /* Account for tabs */
+  gap: 1.5rem;
+  padding-top: 2rem;
 }
 
 /* First Time Orb Section */
