@@ -928,6 +928,14 @@ async def chat_with_donna(request: ChatRequest):
                     await setup_event_notes_context(request.session_id, created_event_id)
                 else:
                     # Normal conversation flow - no event created, not waiting for notes
+                    chat = LlmChat(
+                        api_key=openai_api_key,
+                        session_id=request.session_id,
+                        system_message=DONNA_SYSTEM_MESSAGE
+                    ).with_model("openai", "gpt-4o-mini")
+                    
+                    user_msg = UserMessage(text=request.message)
+                    donna_response = await chat.send_message(user_msg)
                 chat = LlmChat(
                     api_key=openai_api_key,
                     session_id=request.session_id,
