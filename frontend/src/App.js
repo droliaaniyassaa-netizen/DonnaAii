@@ -1152,11 +1152,12 @@ const App = () => {
         <TabsContent value="chat" className="consciousness-container">
           <div className="consciousness-interface">
             
-            {/* Donna's Organic Blue Consciousness */}
-            <div className="consciousness-presence">
-              <div className={`donna-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
-                <div className="organic-orb-container">
-                  <svg className="organic-orb-svg" viewBox="0 0 800 800" aria-hidden="true">
+            {/* Donna's Organic Blue Consciousness - Only show for first-time users */}
+            {messages.length === 0 && (
+              <div className="consciousness-presence">
+                <div className={`donna-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
+                  <div className="organic-orb-container">
+                    <svg className="organic-orb-svg" viewBox="0 0 800 800" aria-hidden="true">
                     <defs>
                       {/* Deep Blue Core Gradient */}
                       <radialGradient id="deepBlueCore" cx="50%" cy="45%" r="70%">
