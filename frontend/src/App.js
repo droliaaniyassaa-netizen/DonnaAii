@@ -123,7 +123,6 @@ const App = () => {
 
   // Check authentication on app load
   useEffect(() => {
-    checkAuthStatus();
     initializeNotifications();
     
     // Initialize default date/time for new entries
