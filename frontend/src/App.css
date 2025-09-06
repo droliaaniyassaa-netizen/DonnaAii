@@ -1899,13 +1899,15 @@ body::before {
 
 .chat-input {
   resize: none;
-  border-radius: 12px;
+  border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.75rem 1rem;
-  font-size: 0.9rem;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  min-height: 60px;
   background: rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
   color: #ffffff;
+  width: 100%;
   /* ENSURE INPUT IS CLICKABLE */
   pointer-events: auto !important;
   position: relative !important;
