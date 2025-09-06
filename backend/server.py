@@ -1519,6 +1519,87 @@ async def get_scheduled_notifications(session_id: str):
     ).sort("scheduled_time", 1).to_list(100)
     return [ScheduledNotification(**notif) for notif in notifications]
 
+# =====================================
+# AUTHENTICATION ENDPOINTS
+# =====================================
+
+@api_router.post("/auth/session", response_model=AuthResponse)
+async def authenticate_with_emergent(request: Request, response: Response):
+    """Authenticate user with Emergent session ID"""
+    try:
+        data = await request.json()
+        emergent_session_id = data.get("emergent_session_id")
+        
+        if not emergent_session_id:
+            raise HTTPException(status_code=400, detail="emergent_session_id is required")
+        
+        # Verify session with Emergent
+        emergent_data = await verify_emergent_session(emergent_session_id)
+        if not emergent_data:
+            raise HTTPException(status_code=401, detail="Invalid session")
+        
+        # Get or create user
+        user = await get_or_create_user(emergent_data)
+        
+        # Create user session
+        session = await create_user_session(
+            user, 
+            emergent_session_id, 
+            emergent_data["session_token"]
+        )
+        
+        # Set secure HttpOnly cookie
+        response.set_cookie(
+            key="session_token",
+            value=session.session_token,
+            httponly=True,
+            secure=True,
+            samesite="none",
+            max_age=7 * 24 * 60 * 60,  # 7 days
+            path="/"
+        )
+        
+        return AuthResponse(
+            user=user,
+            session_token=session.session_token,
+            message="Authentication successful"
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Auth error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Authentication failed")
+
+@api_router.get("/auth/me", response_model=User)
+async def get_current_user_info(current_user: User = Depends(require_auth)):
+    """Get current authenticated user information"""
+    return current_user
+
+@api_router.post("/auth/logout")
+async def logout(request: Request, response: Response, current_user: User = Depends(require_auth)):
+    """Logout user and invalidate session"""
+    try:
+        # Get session token
+        session_token = request.cookies.get("session_token")
+        
+        if session_token:
+            # Remove session from database
+            await db.user_sessions.delete_one({"session_token": session_token})
+        
+        # Clear cookie
+        response.delete_cookie(
+            key="session_token",
+            path="/",
+            samesite="none"
+        )
+        
+        return {"message": "Logout successful"}
+        
+    except Exception as e:
+        logging.error(f"Logout error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Logout failed")
+
 # Career endpoints
 @api_router.post("/career/goals", response_model=CareerGoal)
 async def create_career_goal(goal: CareerGoalCreate):
