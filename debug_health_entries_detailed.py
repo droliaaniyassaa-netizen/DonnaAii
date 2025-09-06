@@ -8,7 +8,7 @@ import json
 from datetime import datetime, timezone
 
 def debug_health_entries():
-    base_url = "https://donna-assistant-3.preview.emergentagent.com/api"
+    base_url = "https://donna-companion.preview.emergentagent.com/api"
     session_id = "debug_session_detailed"
     
     print("🔍 Debugging health entries with session_id...")

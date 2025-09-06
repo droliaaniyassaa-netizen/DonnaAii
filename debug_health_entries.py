@@ -7,7 +7,7 @@ import requests
 import json
 
 def check_health_entries():
-    base_url = "https://donna-assistant-3.preview.emergentagent.com/api"
+    base_url = "https://donna-companion.preview.emergentagent.com/api"
     
     print("🔍 Checking health entries storage...")
     

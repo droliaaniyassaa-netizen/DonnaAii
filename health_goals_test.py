@@ -10,7 +10,7 @@ import sys
 from datetime import datetime, timezone, timedelta
 
 class HealthGoalsAPITester:
-    def __init__(self, base_url="https://donna-assistant-3.preview.emergentagent.com"):
+    def __init__(self, base_url="https://donna-companion.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
