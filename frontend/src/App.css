@@ -1804,27 +1804,27 @@ body::before {
 }
 
 .tab-trigger:nth-child(1):hover {
-  /* Chat - Brighter Blue */
-  color: rgba(200, 230, 255, 1) !important;
-  text-shadow: 0 0 15px rgba(200, 230, 255, 0.6) !important;
+  /* Chat - Brilliant Sapphire */
+  color: rgba(160, 200, 255, 1) !important;
+  text-shadow: 0 0 20px rgba(120, 170, 255, 0.7) !important;
 }
 
 .tab-trigger:nth-child(2):hover {
-  /* Calendar - Brighter Amber-Blue */
-  color: rgba(255, 230, 200, 1) !important;
-  text-shadow: 0 0 15px rgba(255, 230, 200, 0.6) !important;
+  /* Calendar - Radiant Gold */
+  color: rgba(255, 200, 140, 1) !important;
+  text-shadow: 0 0 20px rgba(255, 180, 100, 0.7) !important;
 }
 
 .tab-trigger:nth-child(3):hover {
-  /* Career - Brighter Purple-Blue */
-  color: rgba(230, 200, 255, 1) !important;
-  text-shadow: 0 0 15px rgba(230, 200, 255, 0.6) !important;
+  /* Career - Majestic Purple */
+  color: rgba(200, 160, 255, 1) !important;
+  text-shadow: 0 0 20px rgba(180, 120, 255, 0.7) !important;
 }
 
 .tab-trigger:nth-child(4):hover {
-  /* Health - Brighter Green-Blue */
-  color: rgba(200, 255, 230, 1) !important;
-  text-shadow: 0 0 15px rgba(200, 255, 230, 0.6) !important;
+  /* Health - Luxurious Emerald */
+  color: rgba(160, 255, 200, 1) !important;
+  text-shadow: 0 0 20px rgba(120, 255, 170, 0.7) !important;
 }
 
 .tab-trigger:hover::before {
