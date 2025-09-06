@@ -198,6 +198,7 @@ class CalendarEvent(BaseModel):
     datetime_utc: datetime  # Store complete datetime in UTC
     category: Optional[str] = "personal"  # Default category
     reminder: bool = True
+    session_id: str  # User session ID for data isolation
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class CalendarEventCreate(BaseModel):
