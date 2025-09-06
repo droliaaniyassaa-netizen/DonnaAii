@@ -41,6 +41,125 @@ VAPID_CLAIMS = {
     "sub": "mailto:donna@emergent.ai"
 }
 
+# =====================================
+# AUTHENTICATION SYSTEM
+# =====================================
+
+# Security scheme for JWT
+security = HTTPBearer(auto_error=False)
+
+# Emergent Auth API endpoint
+EMERGENT_AUTH_API = "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
+
+async def verify_emergent_session(session_id: str) -> Optional[Dict]:
+    """Verify session with Emergent auth API"""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                EMERGENT_AUTH_API,
+                headers={"X-Session-ID": session_id}
+            )
+            if response.status_code == 200:
+                return response.json()
+            return None
+    except Exception as e:
+        logging.error(f"Error verifying Emergent session: {str(e)}")
+        return None
+
+async def get_or_create_user(emergent_data: Dict) -> User:
+    """Get existing user or create new one from Emergent auth data"""
+    try:
+        # Check if user already exists
+        existing_user = await db.users.find_one({"email": emergent_data["email"]})
+        
+        if existing_user:
+            return User(**existing_user)
+        
+        # Create new user
+        new_user = User(
+            email=emergent_data["email"],
+            name=emergent_data["name"],
+            picture=emergent_data.get("picture"),
+            emergent_user_id=emergent_data["id"]
+        )
+        
+        await db.users.insert_one(prepare_for_mongo(new_user.dict()))
+        logging.info(f"Created new user: {new_user.email}")
+        return new_user
+        
+    except Exception as e:
+        logging.error(f"Error creating user: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error creating user")
+
+async def create_user_session(user: User, emergent_session_id: str, emergent_token: str) -> UserSession:
+    """Create a new user session"""
+    try:
+        # Create session with 7-day expiry
+        session = UserSession(
+            user_id=user.id,
+            session_token=emergent_token,
+            emergent_session_id=emergent_session_id,
+            expires_at=datetime.now(timezone.utc) + timedelta(days=7)
+        )
+        
+        await db.user_sessions.insert_one(prepare_for_mongo(session.dict()))
+        logging.info(f"Created session for user: {user.email}")
+        return session
+        
+    except Exception as e:
+        logging.error(f"Error creating session: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error creating session")
+
+async def get_current_user(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)) -> Optional[User]:
+    """Get current authenticated user from session token"""
+    try:
+        # Try to get token from cookie first (HttpOnly)
+        session_token = request.cookies.get("session_token")
+        
+        # Fallback to Authorization header
+        if not session_token and credentials:
+            session_token = credentials.credentials
+        
+        if not session_token:
+            return None
+        
+        # Find active session
+        session = await db.user_sessions.find_one({
+            "session_token": session_token,
+            "expires_at": {"$gt": datetime.now(timezone.utc)}
+        })
+        
+        if not session:
+            return None
+        
+        # Get user
+        user = await db.users.find_one({"id": session["user_id"]})
+        if not user:
+            return None
+        
+        return User(**user)
+        
+    except Exception as e:
+        logging.error(f"Error getting current user: {str(e)}")
+        return None
+
+async def require_auth(current_user: User = Depends(get_current_user)) -> User:
+    """Dependency to require authentication"""
+    if not current_user:
+        raise HTTPException(
+            status_code=401, 
+            detail="Authentication required",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    return current_user
+
+# For backward compatibility with existing "default" session
+async def get_user_session_id(current_user: User = Depends(get_current_user)) -> str:
+    """Get user session ID, fallback to 'default' for backward compatibility"""
+    if current_user:
+        return current_user.id
+    return "default"
+
 # Donna's personality system message
 DONNA_SYSTEM_MESSAGE = """You are Donna, the smartest most tech-forward AI assistant. You are confident, intelligent, slightly witty, and caring. Like Donna Paulsen from Suits, you are smart but never overcomplicated. You are capable but never intimidating. Users should feel like you 'get them,' anticipate their needs, and make life smoother. You help with scheduling, career planning, and health tracking. Always be predictive and trustworthy in your responses. Keep your responses concise but helpful.
 
