@@ -1556,7 +1556,6 @@ const App = () => {
       />
 
       {/* Always show app content, but protect specific features */}
-        <>
           {/* Floating Settings Button */}
           <Button 
             variant="ghost" 
