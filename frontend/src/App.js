@@ -1406,6 +1406,9 @@ const App = () => {
   const createHealthEntry = async () => {
     if (!newHealthEntry.description || !newHealthEntry.date) return;
     
+    // Check authentication before creating health entry
+    if (!requireAuthForAction('log health data')) return;
+    
     try {
       // Convert local date/time to UTC
       const time = newHealthEntry.time || '12:00';
