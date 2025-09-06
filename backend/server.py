@@ -1197,9 +1197,9 @@ async def create_event(event: CalendarEventCreate, user_session_id: str = Depend
     return event_obj
 
 @api_router.get("/calendar/events", response_model=List[CalendarEvent])
-async def get_events():
-    # Fetch events and sort by datetime_utc in ascending order (earliest first)
-    events = await db.calendar_events.find().sort("datetime_utc", 1).to_list(100)
+async def get_events(user_session_id: str = Depends(get_user_session_id)):
+    # Fetch user's events and sort by datetime_utc in ascending order (earliest first)
+    events = await db.calendar_events.find({"session_id": user_session_id}).sort("datetime_utc", 1).to_list(100)
     result = []
     
     for event in events:
