@@ -783,10 +783,10 @@ body::before {
 .organic-orb-svg {
   width: min(70vw, 450px);
   height: min(70vw, 450px);
-  /* Deep blue glow with subtle purple accents */
-  filter: drop-shadow(0 0 40px rgba(0, 102, 255, 0.4))
-          drop-shadow(0 0 80px rgba(74, 0, 224, 0.2))
-          drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3));
+  /* Much darker blue glow with subtle purple accents */
+  filter: drop-shadow(0 0 40px rgba(0, 26, 77, 0.6))
+          drop-shadow(0 0 80px rgba(45, 0, 112, 0.3))
+          drop-shadow(0 20px 60px rgba(0, 0, 0, 0.4));
   display: block;
 }
 
@@ -800,15 +800,15 @@ body::before {
 }
 
 .donna-consciousness.thinking .organic-orb-svg {
-  filter: drop-shadow(0 0 50px rgba(255, 0, 128, 0.5))
-          drop-shadow(0 0 100px rgba(74, 0, 224, 0.3))
-          drop-shadow(0 25px 70px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 0 50px rgba(255, 0, 128, 0.6))
+          drop-shadow(0 0 100px rgba(45, 0, 112, 0.4))
+          drop-shadow(0 25px 70px rgba(0, 0, 0, 0.5));
 }
 
 .donna-consciousness.listening .organic-orb-svg {
-  filter: drop-shadow(0 0 45px rgba(0, 170, 255, 0.6))
-          drop-shadow(0 0 90px rgba(0, 102, 255, 0.3))
-          drop-shadow(0 22px 65px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 0 45px rgba(0, 51, 128, 0.7))
+          drop-shadow(0 0 90px rgba(0, 26, 77, 0.4))
+          drop-shadow(0 22px 65px rgba(0, 0, 0, 0.45));
 }
 
 /* Accessibility: respect reduced-motion */
