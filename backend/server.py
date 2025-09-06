@@ -681,6 +681,32 @@ class ScheduledNotificationCreate(BaseModel):
     notification_type: str = "reminder"
 
 # =====================================
+# USER AUTHENTICATION MODELS
+# =====================================
+
+class User(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    email: str
+    name: str
+    picture: Optional[str] = None
+    emergent_user_id: str  # ID from Emergent auth system
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class UserSession(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    session_token: str
+    emergent_session_id: str
+    expires_at: datetime
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class AuthResponse(BaseModel):
+    user: User
+    session_token: str
+    message: str
+
+# =====================================
 # BIRTHDAY & ANNIVERSARY GIFT FLOW
 # =====================================
 
