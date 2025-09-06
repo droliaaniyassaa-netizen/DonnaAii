@@ -1774,9 +1774,10 @@ body::before {
 }
 
 .tab-trigger:hover {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(220, 235, 255, 0.9);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 0 12px rgba(220, 235, 255, 0.5);
 }
 
 .tab-trigger:hover::before {
