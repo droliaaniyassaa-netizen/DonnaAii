@@ -31,6 +31,13 @@ api_router = APIRouter(prefix="/api")
 # Initialize OpenAI API key
 openai_api_key = os.environ.get('OPENAI_API_KEY')
 
+# VAPID keys for Web Push Notifications (generate if not set for demo)
+VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY', 'BArN-vYkz0YyLAd4vHqYvDH71LVa2CpGNKOXU_o7nkQRLiRjGz8qE8GCF5eiNECWpXLqKoNqmRQQwC_qzUWsjJI')
+VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY', 'BLE9JpGPNVxQFb6M-8ZEGzZF4T8rrh4qD0bXK7u2LsI-OyZi8V1CJV8RJZP8xL4vGKv1mL9T8G5kP4YrNb2HGmU')
+VAPID_CLAIMS = {
+    "sub": "mailto:donna@emergent.ai"
+}
+
 # Donna's personality system message
 DONNA_SYSTEM_MESSAGE = """You are Donna, the smartest most tech-forward AI assistant. You are confident, intelligent, slightly witty, and caring. Like Donna Paulsen from Suits, you are smart but never overcomplicated. You are capable but never intimidating. Users should feel like you 'get them,' anticipate their needs, and make life smoother. You help with scheduling, career planning, and health tracking. Always be predictive and trustworthy in your responses. Keep your responses concise but helpful.
 
