@@ -1429,21 +1429,30 @@ const App = () => {
 
 
 
-  // Simple routing - check if we're on profile page (query parameter routing)
-  const [currentRoute, setCurrentRoute] = useState(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = urlParams.get('page') || 'main';
-    const fragment = window.location.hash;
-    console.log('Initial route - page:', page, 'fragment:', fragment);
-    return page;
-  });
+  // Auth callback state management
+  const [showProfilePage, setShowProfilePage] = useState(false);
   
-  // Check for auth callback (session_id in hash)
-  const isAuthCallback = window.location.hash.includes('session_id');
-  console.log('Is auth callback:', isAuthCallback, 'Current route:', currentRoute);
+  // Check for auth callback on load
+  useEffect(() => {
+    const checkAuthCallback = () => {
+      const fragment = window.location.hash;
+      const urlParams = new URLSearchParams(window.location.search);
+      const isProfilePage = urlParams.get('page') === 'profile';
+      const hasSessionId = fragment.includes('session_id');
+      
+      console.log('Auth callback check - fragment:', fragment, 'isProfilePage:', isProfilePage, 'hasSessionId:', hasSessionId);
+      
+      if (isProfilePage || hasSessionId) {
+        setShowProfilePage(true);
+        console.log('Setting showProfilePage to true');
+      }
+    };
+    
+    checkAuthCallback();
+  }, []);
   
-  // If on profile page or auth callback, show ProfilePage component
-  if (currentRoute === 'profile' || isAuthCallback) {
+  // If showing profile page, render ProfilePage component
+  if (showProfilePage) {
     console.log('Rendering ProfilePage component');
     return <ProfilePage onAuthComplete={handleAuthSuccess} onLogout={handleLogout} />;
   }
