@@ -2316,6 +2316,7 @@ def main():
         tester.test_chat_based_health_logging,  # Basic chat-based health logging tests
         tester.test_enhanced_health_undo_delete_functionality,  # NEW: Enhanced undo/delete functionality
         tester.test_birthday_anniversary_gift_flow,  # NEW: Birthday & Anniversary Gift Flow testing
+        tester.test_web_push_notifications,  # NEW: Web Push Notification System testing
         tester.test_smart_suggestions_telemetry,
         tester.test_user_settings,
         tester.test_error_handling
