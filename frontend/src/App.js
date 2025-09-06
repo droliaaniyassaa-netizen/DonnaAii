@@ -1327,7 +1327,7 @@ const App = () => {
                   {messages.map((message, index) => (
                     <div key={index} className={`consciousness-message ${message.is_user ? 'user-thought' : 'donna-thought'}`}>
                       <div className="message-bubble">
-                        <div className="message-text">{message.message}</div>
+                        <div className="message-text">{processGiftMessage(message.message)}</div>
                         <div className="message-timestamp">
                           {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
