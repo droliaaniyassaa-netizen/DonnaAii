@@ -316,6 +316,15 @@ const App = () => {
     return window.btoa(binary);
   };
 
+  // Helper function to check auth before actions
+  const requireAuthForAction = (actionName) => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return false;
+    }
+    return true;
+  };
+
   // Authentication functions
   const checkAuthStatus = async () => {
     try {
