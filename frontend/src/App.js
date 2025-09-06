@@ -1477,6 +1477,46 @@ const App = () => {
     
   }, []); // Empty dependency array - run only once on mount
 
+  // Process auth callback data when it's available
+  useEffect(() => {
+    if (authCallbackData?.sessionId) {
+      console.log('Processing auth callback with session ID:', authCallbackData.sessionId);
+      handleEmergentAuthCallback(authCallbackData.sessionId);
+    } else if (authCallbackData?.profilePage) {
+      console.log('Showing profile page');
+      // For now, just show auth modal - in real implementation this would be the profile setup
+      setShowAuthModal(true);
+    }
+  }, [authCallbackData]);
+
+  // Handle Emergent auth callback
+  const handleEmergentAuthCallback = async (sessionId) => {
+    try {
+      setAuthLoading(true);
+      console.log('Authenticating with backend using session ID:', sessionId);
+
+      // Authenticate with backend using Emergent session ID
+      const response = await axios.post(`${API}/auth/session`, {
+        emergent_session_id: sessionId
+      });
+
+      if (response.data && response.data.user) {
+        console.log('Authentication successful:', response.data.user);
+        handleAuthSuccess(response.data.user, response.data.session_token);
+      } else {
+        throw new Error('Invalid auth response');
+      }
+
+    } catch (error) {
+      console.error('Auth callback error:', error);
+      alert('Authentication failed. Please try signing in again.');
+      setShowAuthModal(true);
+    } finally {
+      setAuthLoading(false);
+      setAuthCallbackData(null); // Clear callback data
+    }
+  };
+
   // Show loading screen while checking auth
   if (authLoading) {
     return (
