@@ -1234,7 +1234,7 @@ async def get_events(user_session_id: str = Depends(get_user_session_id)):
     return result
 
 @api_router.put("/calendar/events/{event_id}", response_model=CalendarEvent)
-async def update_event(event_id: str, update_data: CalendarEventUpdate):
+async def update_event(event_id: str, update_data: CalendarEventUpdate, user_session_id: str = Depends(get_user_session_id)):
     # Build update document
     update_fields = {}
     if update_data.title is not None:
