@@ -1281,8 +1281,8 @@ const App = () => {
               </div>
             </div>
 
-            {/* First Time Chat Input */}
-            <div className="first-time-chat-section">
+            {/* Input Container */}
+            <div className="input-container">
               {/* Clean First Time Input */}
               <div className="first-time-input-container">
                 <div className="first-time-input-wrapper">
