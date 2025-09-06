@@ -160,16 +160,23 @@ const App = () => {
     if (!hasAskedPermission && notificationPermission === 'default') {
       const permission = await Notification.requestPermission();
       setNotificationPermission(permission);
-      setNotificationsEnabled(permission === 'granted');
       setHasAskedPermission(true);
       localStorage.setItem('donna-notification-asked', 'true');
       
       if (permission === 'granted') {
-        // Show test notification
-        new Notification('Donna Notifications Enabled! 🔔', {
-          body: 'You\'ll now receive reminders and health reports on your phone.',
-          icon: '/favicon.ico'
-        });
+        // Subscribe to push notifications
+        const subscriptionSuccess = await subscribeUserToPush();
+        setNotificationsEnabled(subscriptionSuccess);
+        
+        if (subscriptionSuccess) {
+          // Show test notification
+          new Notification('Donna Notifications Enabled! 🔔', {
+            body: 'You\'ll now receive reminders and health reports on your phone.',
+            icon: '/favicon.ico'
+          });
+        }
+      } else {
+        setNotificationsEnabled(false);
       }
     }
   };
