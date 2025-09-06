@@ -1760,16 +1760,17 @@ body::before {
   text-shadow: 0 0 8px rgba(200, 220, 255, 0.3);
 }
 
-/* Tab Title - Clean Sophisticated Glow */
+/* Tab Title - Strong Visible Glow */
 .tab-trigger:nth-child(1),
 .tab-trigger:nth-child(2), 
 .tab-trigger:nth-child(3),
 .tab-trigger:nth-child(4) {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   text-shadow: 
-    0 0 8px rgba(255, 255, 255, 0.2),
-    0 0 20px rgba(255, 255, 255, 0.1),
-    0 1px 3px rgba(255, 255, 255, 0.15) !important;
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(255, 255, 255, 0.4),
+    0 0 30px rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(255, 255, 255, 0.2) !important;
 }
 
 .tab-trigger::before {
