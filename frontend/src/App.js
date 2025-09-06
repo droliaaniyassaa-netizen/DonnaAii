@@ -1152,8 +1152,8 @@ const App = () => {
         <TabsContent value="chat" className="consciousness-container">
           <div className="consciousness-interface">
             
-            {/* Donna's Organic Blue Consciousness - Only show for first-time users */}
-            {messages.length === 0 && (
+            {/* Donna's Organic Blue Consciousness - Temporarily showing for testing */}
+            {true && (
               <div className="consciousness-presence">
                 <div className={`donna-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
                   <div className="organic-orb-container">
