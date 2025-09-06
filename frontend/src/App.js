@@ -1283,36 +1283,32 @@ const App = () => {
 
             {/* Input Container */}
             <div className="input-container">
-              {/* Clean First Time Input */}
-              <div className="first-time-input-container">
-                <div className="first-time-input-wrapper">
-                  <textarea
-                    className={`first-time-input ${isListening ? 'listening' : ''}`}
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder={isListening ? "I'm listening..." : "I'm listening..."}
-                    rows="1"
-                    disabled={isLoading}
-                  />
-                  <div className="first-time-actions">
-                    <button
-                      className={`first-time-voice-btn ${isVoiceRecording ? 'recording' : ''}`}
-                      onClick={toggleVoiceRecording}
-                      disabled={isLoading}
-                      title={isVoiceRecording ? 'Stop Recording' : 'Start Voice Recording'}
-                    >
-                      {isVoiceRecording ? <MicOff size={20} /> : <Mic size={20} />}
-                    </button>
-                    <button
-                      className="first-time-send-btn"
-                      onClick={sendMessage}
-                      disabled={isLoading || !inputMessage.trim()}
-                    >
-                      <Send size={20} />
-                    </button>
-                  </div>
-                </div>
+              <textarea
+                className={`chat-input ${isListening ? 'listening' : ''}`}
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Share your thoughts with Donna..."
+                rows="1"
+                disabled={isLoading}
+              />
+              <div className="input-actions">
+                <button
+                  className={`voice-button ${isVoiceRecording ? 'recording' : ''}`}
+                  onClick={toggleVoiceRecording}
+                  disabled={isLoading}
+                  title={isVoiceRecording ? 'Stop Recording' : 'Start Voice Recording'}
+                >
+                  {isVoiceRecording ? <MicOff size={16} /> : <Mic size={16} />}
+                </button>
+                <button
+                  className="send-button"
+                  onClick={sendMessage}
+                  disabled={isLoading || !inputMessage.trim()}
+                >
+                  <Send className="send-icon" size={16} />
+                  {isLoading ? 'Thinking...' : 'Send'}
+                </button>
               </div>
             </div>
 
