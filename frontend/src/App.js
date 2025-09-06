@@ -199,6 +199,85 @@ const App = () => {
     }
   };
 
+  // Subscribe user to push notifications
+  const subscribeUserToPush = async () => {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      
+      // Get VAPID public key from backend
+      const vapidResponse = await axios.get(`${API}/notifications/vapid-public-key`);
+      const vapidPublicKey = vapidResponse.data.publicKey;
+      
+      // Subscribe to push notifications
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+      });
+      
+      // Send subscription to backend
+      await axios.post(`${API}/notifications/subscription`, {
+        session_id: 'default',
+        endpoint: subscription.endpoint,
+        p256dh_key: arrayBufferToBase64(subscription.keys.p256dh),
+        auth_key: arrayBufferToBase64(subscription.keys.auth),
+        user_agent: navigator.userAgent
+      });
+      
+      console.log('Push subscription successful');
+      return true;
+      
+    } catch (error) {
+      console.error('Failed to subscribe to push notifications:', error);
+      return false;
+    }
+  };
+
+  // Unsubscribe user from push notifications
+  const unsubscribeUserFromPush = async () => {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+      
+      if (subscription) {
+        await subscription.unsubscribe();
+        
+        // Remove subscription from backend
+        await axios.delete(`${API}/notifications/subscription/default`);
+        
+        console.log('Push unsubscription successful');
+      }
+      
+      return true;
+      
+    } catch (error) {
+      console.error('Failed to unsubscribe from push notifications:', error);
+      return false;
+    }
+  };
+
+  // Helper functions for converting data formats
+  const urlBase64ToUint8Array = (base64String) => {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+      .replace(/-/g, '+')
+      .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  };
+
+  const arrayBufferToBase64 = (buffer) => {
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+  };
+
   // Chat functions
   const loadChatHistory = async () => {
     try {
