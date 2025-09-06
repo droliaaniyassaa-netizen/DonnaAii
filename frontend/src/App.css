@@ -919,6 +919,48 @@ body::before {
   }
 }
 
+/* Gift Suggestion Styling */
+.gift-message {
+  line-height: 1.6;
+}
+
+.gift-suggestion-line {
+  margin: 0.5rem 0;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid rgba(0, 170, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.gift-suggestion-line:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-left-color: rgba(0, 170, 255, 0.8);
+  transform: translateX(2px);
+}
+
+.gift-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.gift-link:hover {
+  color: rgba(0, 170, 255, 1);
+  text-decoration: underline;
+}
+
+.gift-link:visited {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.gift-link:visited:hover {
+  color: rgba(0, 170, 255, 0.8);
+}
+
 /* Accessibility: respect reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .orb-svg animate {
