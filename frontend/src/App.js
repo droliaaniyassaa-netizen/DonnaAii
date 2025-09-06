@@ -2861,7 +2861,11 @@ const App = () => {
       {/* Settings Modal */}
       <SettingsModal 
         open={showSettings} 
-        onClose={() => setShowSettings(false)} 
+        onClose={() => setShowSettings(false)}
+        notificationsEnabled={notificationsEnabled}
+        setNotificationsEnabled={setNotificationsEnabled}
+        subscribeUserToPush={subscribeUserToPush}
+        unsubscribeUserFromPush={unsubscribeUserFromPush}
       />
 
       {/* Goal Setting Modal */}
