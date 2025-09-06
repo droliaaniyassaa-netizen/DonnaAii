@@ -1283,31 +1283,6 @@ const App = () => {
 
             {/* First Time Chat Input */}
             <div className="first-time-chat-section">
-              <div className="messages-stream">
-                {messages.map((message, index) => (
-                  <div key={index} className={`consciousness-message ${message.is_user ? 'user-thought' : 'donna-thought'}`}>
-                    <div className="message-bubble">
-                      <div className="message-text">{message.message}</div>
-                      <div className="message-timestamp">
-                        {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {isLoading && (
-                  <div className="consciousness-message donna-thought">
-                    <div className="message-bubble thinking-bubble">
-                      <div className="thinking-animation">
-                        <span></span><span></span><span></span>
-                      </div>
-                      <div className="message-text">Donna is thinking...</div>
-                    </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
-            </div>
-
               {/* Clean First Time Input */}
               <div className="first-time-input-container">
                 <div className="first-time-input-wrapper">
@@ -1339,6 +1314,7 @@ const App = () => {
                   </div>
                 </div>
               </div>
+            </div>
 
           </div>
         </TabsContent>
