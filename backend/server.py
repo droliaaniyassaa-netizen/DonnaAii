@@ -611,6 +611,198 @@ async def handle_health_delete_command(session_id: str, health_result: HealthPro
         logging.error(f"Error handling delete command: {str(e)}")
         return "I didn't catch that. Try 'delete last entry' or 'undo hydration'."
 
+# =====================================
+# BIRTHDAY & ANNIVERSARY GIFT FLOW
+# =====================================
+
+class GiftFlowResult(BaseModel):
+    detected: bool
+    occasion: Optional[str] = None  # "birthday" or "anniversary"
+    relationship: Optional[str] = None  # "mom", "wife", "boss", etc.
+    date: Optional[str] = None  # Parsed date
+    confidence: float = 0.0
+    event_title: Optional[str] = None
+
+async def process_gift_message(message: str) -> GiftFlowResult:
+    """Detect birthday/anniversary occasions and extract relationship/date info"""
+    try:
+        chat = LlmChat(
+            api_key=openai_api_key,
+            session_id="gift_detection",
+            system_message="""You are a gift occasion detector. Analyze messages for birthday or anniversary mentions.
+
+Extract these details:
+- occasion: "birthday" or "anniversary" 
+- relationship: mom/mother/momma, dad/father/daddy/papa, wife, girlfriend, boss, colleague, friend, child/kid, uncle, aunt, or any proper name
+- date: parse relative dates like "next Friday", "tomorrow", "12 Oct" to YYYY-MM-DD format
+
+Return JSON only:
+{
+  "detected": true/false,
+  "occasion": "birthday|anniversary|null", 
+  "relationship": "relationship_or_name",
+  "date": "YYYY-MM-DD",
+  "confidence": 0.0-1.0,
+  "event_title": "Mom's Birthday" 
+}
+
+Examples:
+"It's my mom's birthday" → {"detected": true, "occasion": "birthday", "relationship": "mom", "date": "2025-09-06", "confidence": 0.9, "event_title": "Mom's Birthday"}
+"Our anniversary next Friday" → {"detected": true, "occasion": "anniversary", "relationship": "partner", "date": "2025-09-13", "confidence": 0.8, "event_title": "Anniversary"}
+"Kyle's birthday tomorrow" → {"detected": true, "occasion": "birthday", "relationship": "Kyle", "date": "2025-09-07", "confidence": 0.9, "event_title": "Kyle's Birthday"}"""
+        ).with_model("openai", "gpt-4o-mini")
+        
+        user_msg = UserMessage(text=f"Analyze this message: {message}")
+        response = await chat.send_message(user_msg)
+        
+        # Parse JSON response
+        import json
+        result_dict = json.loads(response.strip())
+        return GiftFlowResult(**result_dict)
+        
+    except Exception as e:
+        logging.error(f"Gift detection error: {str(e)}")
+        return GiftFlowResult(detected=False, confidence=0.0)
+
+def get_user_timezone_region(session_id: str) -> str:
+    """Get Amazon region based on user timezone (simplified for now)"""
+    # For now, return default amazon.com
+    # In production, this would check user settings or timezone
+    return "amazon.com"
+
+def generate_gift_suggestions(occasion: str, relationship: str, amazon_region: str) -> List[Dict[str, str]]:
+    """Generate 4-5 gift suggestions with Amazon search URLs"""
+    
+    # Gift library based on relationship and occasion
+    gift_suggestions = {
+        "mom": [
+            {"name": "Engraved locket with photo insert", "description": "A timeless keepsake she'll treasure forever", "url": f"https://{amazon_region}/s?k=engraved+locket+with+photo"},
+            {"name": "Personalized recipe journal", "description": "For all her family favorites and new discoveries", "url": f"https://{amazon_region}/s?k=personalized+recipe+journal+gift"},
+            {"name": "Custom photo cushion", "description": "Turn a cherished memory into daily comfort", "url": f"https://{amazon_region}/s?k=custom+photo+cushion+gift+mom"},
+            {"name": "Spa gift set with her name", "description": "Self-care made personal and luxurious", "url": f"https://{amazon_region}/s?k=personalized+spa+gift+set"}
+        ],
+        "dad": [
+            {"name": "Engraved whiskey glasses set", "description": "For the dad who appreciates the finer things", "url": f"https://{amazon_region}/s?k=engraved+whiskey+glasses+dad"},
+            {"name": "Personalized grilling tool set", "description": "Make him the king of backyard barbecues", "url": f"https://{amazon_region}/s?k=personalized+grilling+tools+dad"},
+            {"name": "Custom photo wallet", "description": "Keep family close, even in his pocket", "url": f"https://{amazon_region}/s?k=custom+photo+wallet+dad"},
+            {"name": "Engraved watch or cufflinks", "description": "Timeless elegance with a personal touch", "url": f"https://{amazon_region}/s?k=engraved+watch+dad+gift"}
+        ],
+        "wife": [
+            {"name": "Star map of your first date", "description": "The night sky when your story began", "url": f"https://{amazon_region}/s?k=personalized+star+map+print+anniversary"},
+            {"name": "Soundwave art of your wedding song", "description": "Your special song turned into beautiful art", "url": f"https://{amazon_region}/s?k=soundwave+art+custom+song"},
+            {"name": "Coordinates jewelry of where you met", "description": "Wear the place where love began", "url": f"https://{amazon_region}/s?k=coordinates+engraved+necklace"},
+            {"name": "Custom photo book of memories", "description": "Your love story captured in pages", "url": f"https://{amazon_region}/s?k=custom+photo+book+anniversary"}
+        ],
+        "girlfriend": [
+            {"name": "Personalized jewelry with initials", "description": "Something beautiful that's uniquely hers", "url": f"https://{amazon_region}/s?k=personalized+initial+necklace+girlfriend"},
+            {"name": "Custom playlist vinyl record", "description": "Your songs together, made tangible", "url": f"https://{amazon_region}/s?k=custom+playlist+vinyl+record"},
+            {"name": "Photo collage canvas", "description": "All your best moments in one beautiful piece", "url": f"https://{amazon_region}/s?k=custom+photo+collage+canvas"},
+            {"name": "Couples experience box", "description": "Create new memories together", "url": f"https://{amazon_region}/s?k=couples+date+night+experience+box"}
+        ],
+        "boss": [
+            {"name": "Engraved premium pen set", "description": "Professional elegance for important signatures", "url": f"https://{amazon_region}/s?k=engraved+pen+set+boss+gift"},
+            {"name": "Personalized desk nameplate", "description": "A sophisticated addition to their office", "url": f"https://{amazon_region}/s?k=custom+desk+name+plate+office"},
+            {"name": "Leather portfolio with initials", "description": "Professional style with a personal touch", "url": f"https://{amazon_region}/s?k=personalized+leather+portfolio+with+initials"},
+            {"name": "Executive desk organizer", "description": "Help them stay organized in style", "url": f"https://{amazon_region}/s?k=executive+desk+organizer+personalized"}
+        ],
+        "colleague": [
+            {"name": "Personalized coffee mug", "description": "Make their daily coffee break special", "url": f"https://{amazon_region}/s?k=personalized+coffee+mug+colleague"},
+            {"name": "Desk plant with custom pot", "description": "Brighten their workspace naturally", "url": f"https://{amazon_region}/s?k=desk+plant+custom+pot+office"},
+            {"name": "Professional notebook set", "description": "For the colleague who loves to stay organized", "url": f"https://{amazon_region}/s?k=professional+notebook+set+personalized"},
+            {"name": "Desktop stress relief items", "description": "Help them unwind during busy days", "url": f"https://{amazon_region}/s?k=desk+stress+relief+fidget+gifts"}
+        ],
+        "friend": [
+            {"name": "Spotify plaque with your favorite song", "description": "Turn your friendship anthem into art", "url": f"https://{amazon_region}/s?k=spotify+plaque+custom+song"},
+            {"name": "Open when letters box", "description": "Friendship support for any occasion", "url": f"https://{amazon_region}/s?k=open+when+letters+box+gift"},
+            {"name": "Custom inside-joke t-shirt", "description": "Only you two will get it, and that's perfect", "url": f"https://{amazon_region}/s?k=custom+text+tshirt+funny"},
+            {"name": "Friendship photo frame set", "description": "Display all your best memories together", "url": f"https://{amazon_region}/s?k=friendship+photo+frame+set+custom"}
+        ],
+        "child": [
+            {"name": "Personalized storybook with their name", "description": "They're the hero of their own adventure", "url": f"https://{amazon_region}/s?k=personalized+storybook+with+child+name"},
+            {"name": "Custom LEGO-style portrait", "description": "Turn their photo into buildable art", "url": f"https://{amazon_region}/s?k=custom+lego+portrait+photo"},
+            {"name": "Name-engraved water bottle", "description": "Keep them hydrated with personal style", "url": f"https://{amazon_region}/s?k=personalized+kids+water+bottle+name"},
+            {"name": "Custom growth chart", "description": "Track their journey as they grow", "url": f"https://{amazon_region}/s?k=personalized+growth+chart+kids"}
+        ]
+    }
+    
+    # Default gifts for relationships not in the library
+    default_gifts = [
+        {"name": "Personalized photo frame", "description": "A thoughtful way to display precious memories", "url": f"https://{amazon_region}/s?k=personalized+photo+frame+gift"},
+        {"name": "Custom coffee mug", "description": "Start their day with a personal touch", "url": f"https://{amazon_region}/s?k=custom+coffee+mug+personalized"},
+        {"name": "Engraved keychain", "description": "A small gift with big sentimental value", "url": f"https://{amazon_region}/s?k=engraved+keychain+personalized"},
+        {"name": "Gift card to their favorite store", "description": "Let them choose something they'll truly love", "url": f"https://{amazon_region}/s?k=gift+card+popular+stores"}
+    ]
+    
+    # Get relationship-specific gifts or use defaults
+    relationship_lower = relationship.lower()
+    
+    # Map common variations
+    if relationship_lower in ["mother", "momma", "mama"]:
+        relationship_lower = "mom"
+    elif relationship_lower in ["father", "daddy", "papa"]:
+        relationship_lower = "dad"
+    elif relationship_lower in ["kid"]:
+        relationship_lower = "child"
+    
+    return gift_suggestions.get(relationship_lower, default_gifts)
+
+async def create_gift_event_with_reminders(session_id: str, gift_result: GiftFlowResult) -> str:
+    """Create calendar event for gift occasion with special 7-day reminder"""
+    try:
+        # Parse the date and create event
+        event_date = datetime.strptime(gift_result.date, '%Y-%m-%d').replace(tzinfo=timezone.utc)
+        
+        # Create the event
+        event_obj = CalendarEvent(
+            title=gift_result.event_title,
+            description=f"Gift suggestions shared in chat on {datetime.now(timezone.utc).strftime('%Y-%m-%d')}.",
+            datetime_utc=event_date,
+            category="personal",
+            reminder=True  # This will add the default 12h and 2h reminders
+        )
+        
+        result = await db.calendar_events.insert_one(prepare_for_mongo(event_obj.dict()))
+        event_id = result.inserted_id
+        
+        # Add special 7-day reminder for gift events
+        seven_day_reminder = CalendarReminder(
+            event_id=str(event_id),
+            reminder_datetime=event_date - timedelta(days=7, hours=-10),  # 7 days before at 10 AM
+            session_id=session_id,
+            message=f"Gift reminder: {gift_result.event_title} is in 7 days"
+        )
+        
+        await db.calendar_reminders.insert_one(prepare_for_mongo(seven_day_reminder.dict()))
+        
+        return str(event_id)
+        
+    except Exception as e:
+        logging.error(f"Error creating gift event: {str(e)}")
+        return None
+
+async def generate_gift_response(gift_result: GiftFlowResult, amazon_region: str) -> str:
+    """Generate Donna's response with gift suggestions and calendar confirmation"""
+    try:
+        # Get gift suggestions
+        suggestions = generate_gift_suggestions(gift_result.occasion, gift_result.relationship, amazon_region)
+        
+        # Format the response
+        response = f"Saved: {gift_result.event_title} on {gift_result.date} with reminders.\n\n"
+        response += f"Gift ideas ({amazon_region}):\n"
+        
+        for i, gift in enumerate(suggestions[:4], 1):  # Limit to 4 suggestions
+            response += f"{i}. {gift['name']} → {gift['url']}\n   {gift['description']}\n\n"
+        
+        # Add unknown relationship handling
+        if gift_result.relationship and not gift_result.relationship.lower() in ["mom", "dad", "wife", "girlfriend", "boss", "colleague", "friend", "child"]:
+            response += f"For better gift suggestions, can you tell me more about {gift_result.relationship}? Like their age or your relationship?"
+        
+        return response.strip()
+        
+    except Exception as e:
+        logging.error(f"Error generating gift response: {str(e)}")
+        return f"Saved: {gift_result.event_title} on {gift_result.date}. Let me know if you'd like gift suggestions!"
+
 # Chat endpoints
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat_with_donna(request: ChatRequest):
