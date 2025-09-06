@@ -1273,7 +1273,7 @@ const App = () => {
               </div>
               
               {/* Donna's Identity */}
-              <div className="first-time-identity">
+              <div className="consciousness-identity">
                 <h1 className="first-time-name">Donna</h1>
                 <p className="first-time-greeting">
                   {isLoading ? "Processing..." : isListening ? "I'm listening..." : "Hi, I'm Donna. How can I assist you today?"}
