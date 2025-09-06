@@ -819,32 +819,30 @@ body::before {
   }
 }
 
-/* Donna's Identity */
-.consciousness-identity {
+/* First Time Identity */
+.first-time-identity {
   text-align: center;
-  position: relative;
   z-index: 2;
 }
 
-.consciousness-name {
+.first-time-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 3rem;
-  font-weight: 300;
+  font-size: 4rem;
+  font-weight: 400;
   color: #ffffff;
-  margin: 0 0 1rem 0;
-  text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-  letter-spacing: 0.1em;
-  animation: nameGlow 4s ease-in-out infinite;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
 }
 
-.consciousness-greeting {
+.first-time-greeting {
   font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  letter-spacing: 0.02em;
-  transition: all 0.3s ease;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
 }
 
 /* ==================================================
