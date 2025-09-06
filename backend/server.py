@@ -936,14 +936,6 @@ async def chat_with_donna(request: ChatRequest):
                     
                     user_msg = UserMessage(text=request.message)
                     donna_response = await chat.send_message(user_msg)
-                chat = LlmChat(
-                    api_key=openai_api_key,
-                    session_id=request.session_id,
-                    system_message=DONNA_SYSTEM_MESSAGE
-                ).with_model("openai", "gpt-4o-mini")
-                
-                user_msg = UserMessage(text=request.message)
-                donna_response = await chat.send_message(user_msg)
         
         # Store Donna's response
         donna_message = ChatMessage(
