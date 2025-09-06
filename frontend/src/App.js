@@ -140,10 +140,17 @@ const App = () => {
         const registration = await navigator.serviceWorker.register('/sw.js');
         console.log('Service Worker registered:', registration);
         
-        // Check current permission status
-        const permission = await Notification.requestPermission();
+        // Check current permission status (don't request, just check)
+        const permission = Notification.permission;
         setNotificationPermission(permission);
-        setNotificationsEnabled(permission === 'granted');
+        
+        // Check if user has existing subscription
+        if (permission === 'granted') {
+          const existingSubscription = await registration.pushManager.getSubscription();
+          setNotificationsEnabled(!!existingSubscription);
+        } else {
+          setNotificationsEnabled(false);
+        }
         
         // Check if user has been asked before (from localStorage)
         const hasAsked = localStorage.getItem('donna-notification-asked') === 'true';
