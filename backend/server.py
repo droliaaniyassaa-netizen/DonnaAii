@@ -1247,9 +1247,9 @@ async def update_event(event_id: str, update_data: CalendarEventUpdate, user_ses
     if not update_fields:
         raise HTTPException(status_code=400, detail="No fields to update")
     
-    # Update event in database
+    # Update event in database (only user's own events)
     result = await db.calendar_events.update_one(
-        {"id": event_id},
+        {"id": event_id, "session_id": user_session_id},
         {"$set": update_fields}
     )
     
@@ -1257,7 +1257,7 @@ async def update_event(event_id: str, update_data: CalendarEventUpdate, user_ses
         raise HTTPException(status_code=404, detail="Event not found")
     
     # Return updated event
-    updated_event = await db.calendar_events.find_one({"id": event_id})
+    updated_event = await db.calendar_events.find_one({"id": event_id, "session_id": user_session_id})
     if not updated_event:
         raise HTTPException(status_code=404, detail="Event not found after update")
     
