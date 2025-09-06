@@ -724,250 +724,88 @@ body::before {
   }
 }
 
-/* ==================================================
-   DONNA'S CONSCIOUSNESS INTERFACE - THE AWAKENING
-   ================================================== */
+/* ==========================================
+   DONNA'S CONSCIOUSNESS INTERFACE
+   ========================================== */
 
-/* Consciousness Container - The Pure Void */
+/* Consciousness Container */
 .consciousness-container {
-  background: #000000;
+  background: #000000; /* Pure black background */
   min-height: 100vh;
+  padding: 0;
+  margin: 0;
   position: relative;
   overflow: hidden;
 }
 
-.consciousness-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: transparent;
-  pointer-events: none;
-}
-
+/* Consciousness Interface Layout */
 .consciousness-interface {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   position: relative;
   z-index: 1;
 }
 
-/* ==================================================
-   DONNA'S LIVING PRESENCE - THE CONSCIOUSNESS ORB
-   ================================================== */
-
+/* Donna's Presence Area */
 .consciousness-presence {
+  position: relative;
+  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 2rem 2rem;
-  position: relative;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
-/* Donna's Orb Consciousness Visual */
-.donna-orb-consciousness {
-  position: absolute;
-  width: 250px;
-  height: 250px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Consciousness Orb Container */
-.consciousness-orb {
-  position: relative;
+/* Donna's Consciousness Container */
+.donna-consciousness {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  /* Enhanced subtle outer glow for the orb */
-  box-shadow: 
-    0 0 50px rgba(88, 28, 135, 0.3),
-    0 0 100px rgba(124, 58, 237, 0.15),
-    0 0 150px rgba(79, 70, 229, 0.08),
-    inset 0 0 80px rgba(79, 70, 229, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Thread Lines - Wavy overlapping lines forming the orb */
-.thread-line {
-  position: absolute;
-  width: 3px;
-  height: 100px;
-  border-radius: 1.5px;
-  top: 50%;
-  left: 50%;
-  transform-origin: center bottom;
-  opacity: 0.7;
-  
-  /* Create subtle wavy effect */
-  background-size: 100% 20px;
-  background-repeat: repeat-y;
-  
-  /* Add subtle wave distortion */
-  filter: blur(0.5px);
+/* Layout & background that makes the glow sing */
+.donna-orb-hero {
+  display: grid;
+  place-items: center;
+  background: transparent; /* inherit from black background */
+  padding: 36px 16px;
 }
 
-/* Individual thread styling with dark purples and subtle glow */
-.thread-line.thread-1 {
-  background: linear-gradient(to top, 
-    rgba(67, 56, 202, 0.6),
-    rgba(88, 28, 135, 0.8),
-    rgba(67, 56, 202, 0.5)
-  );
-  box-shadow: 0 0 8px rgba(67, 56, 202, 0.4), 0 0 15px rgba(88, 28, 135, 0.2);
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation: threadFloat1 12s ease-in-out infinite;
+.orb-wrap {
+  width: min(84vw, 540px);
+  aspect-ratio: 1/1;
 }
 
-.thread-line.thread-2 {
-  background: linear-gradient(to top, 
-    rgba(79, 70, 229, 0.7),
-    rgba(91, 33, 182, 0.9),
-    rgba(79, 70, 229, 0.6)
-  );
-  box-shadow: 0 0 8px rgba(79, 70, 229, 0.4), 0 0 15px rgba(91, 33, 182, 0.2);
-  transform: translate(-50%, -50%) rotate(30deg);
-  animation: threadFloat2 14s ease-in-out infinite;
+.orb-svg {
+  width: 100%;
+  height: 100%;
+  /* subtle scene glow (no haze) */
+  filter: drop-shadow(0 18px 48px rgba(105,0,255,.35))
+          drop-shadow(0 0 140px rgba(25,120,255,.20));
+  display: block;
 }
 
-.thread-line.thread-3 {
-  background: linear-gradient(to top, 
-    rgba(88, 28, 135, 0.6),
-    rgba(124, 58, 237, 0.8),
-    rgba(88, 28, 135, 0.5)
-  );
-  box-shadow: 0 0 8px rgba(88, 28, 135, 0.4), 0 0 15px rgba(124, 58, 237, 0.2);
-  transform: translate(-50%, -50%) rotate(60deg);
-  animation: threadFloat3 11s ease-in-out infinite;
+/* Dynamic States for Animation Control */
+.donna-consciousness.thinking .orb-svg animate {
+  animation-duration: 0.5s; /* Much faster for thinking state */
 }
 
-.thread-line.thread-4 {
-  background: linear-gradient(to top, 
-    rgba(91, 33, 182, 0.7),
-    rgba(139, 92, 246, 0.9),
-    rgba(91, 33, 182, 0.6)
-  );
-  box-shadow: 0 0 8px rgba(91, 33, 182, 0.4), 0 0 15px rgba(139, 92, 246, 0.2);
-  transform: translate(-50%, -50%) rotate(90deg);
-  animation: threadFloat4 13s ease-in-out infinite;
+.donna-consciousness.listening .orb-svg animate {
+  animation-duration: 0.7s; /* Slightly faster for listening state */
 }
 
-.thread-line.thread-5 {
-  background: linear-gradient(to top, 
-    rgba(124, 58, 237, 0.4),
-    rgba(147, 51, 234, 0.6),
-    rgba(124, 58, 237, 0.3)
-  );
-  box-shadow: 0 0 6px rgba(124, 58, 237, 0.3);
-  transform: translate(-50%, -50%) rotate(120deg);
-  animation: threadFloat5 10s ease-in-out infinite;
-}
-
-.thread-line.thread-6 {
-  background: linear-gradient(to top, 
-    rgba(139, 92, 246, 0.5),
-    rgba(168, 85, 247, 0.7),
-    rgba(139, 92, 246, 0.4)
-  );
-  box-shadow: 0 0 6px rgba(139, 92, 246, 0.3);
-  transform: translate(-50%, -50%) rotate(150deg);
-  animation: threadFloat6 15s ease-in-out infinite;
-}
-
-.thread-line.thread-7 {
-  background: linear-gradient(to top, 
-    rgba(147, 51, 234, 0.4),
-    rgba(99, 102, 241, 0.6),
-    rgba(147, 51, 234, 0.3)
-  );
-  box-shadow: 0 0 6px rgba(147, 51, 234, 0.3);
-  transform: translate(-50%, -50%) rotate(180deg);
-  animation: threadFloat7 12.5s ease-in-out infinite;
-}
-
-.thread-line.thread-8 {
-  background: linear-gradient(to top, 
-    rgba(168, 85, 247, 0.5),
-    rgba(124, 58, 237, 0.7),
-    rgba(168, 85, 247, 0.4)
-  );
-  box-shadow: 0 0 6px rgba(168, 85, 247, 0.3);
-  transform: translate(-50%, -50%) rotate(210deg);
-  animation: threadFloat8 9s ease-in-out infinite;
-}
-
-.thread-line.thread-9 {
-  background: linear-gradient(to top, 
-    rgba(99, 102, 241, 0.4),
-    rgba(79, 70, 229, 0.6),
-    rgba(99, 102, 241, 0.3)
-  );
-  box-shadow: 0 0 6px rgba(99, 102, 241, 0.3);
-  transform: translate(-50%, -50%) rotate(240deg);
-  animation: threadFloat9 11.5s ease-in-out infinite;
-}
-
-.thread-line.thread-10 {
-  background: linear-gradient(to top, 
-    rgba(79, 70, 229, 0.5),
-    rgba(67, 56, 202, 0.7),
-    rgba(79, 70, 229, 0.4)
-  );
-  box-shadow: 0 0 6px rgba(79, 70, 229, 0.3);
-  transform: translate(-50%, -50%) rotate(270deg);
-  animation: threadFloat10 13.5s ease-in-out infinite;
-}
-
-.thread-line.thread-11 {
-  background: linear-gradient(to top, 
-    rgba(67, 56, 202, 0.4),
-    rgba(88, 28, 135, 0.6),
-    rgba(67, 56, 202, 0.3)
-  );
-  box-shadow: 0 0 6px rgba(67, 56, 202, 0.3);
-  transform: translate(-50%, -50%) rotate(300deg);
-  animation: threadFloat11 10.5s ease-in-out infinite;
-}
-
-.thread-line.thread-12 {
-  background: linear-gradient(to top, 
-    rgba(88, 28, 135, 0.5),
-    rgba(91, 33, 182, 0.7),
-    rgba(88, 28, 135, 0.4)
-  );
-  box-shadow: 0 0 6px rgba(88, 28, 135, 0.3);
-  transform: translate(-50%, -50%) rotate(330deg);
-  animation: threadFloat12 14.5s ease-in-out infinite;
-}
-
-/* Dynamic States - Subtle changes for interactivity */
-.donna-orb-consciousness.listening .thread-line {
-  opacity: 0.8;
-  animation-duration: 8s;
-  box-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
-}
-
-.donna-orb-consciousness.thinking .thread-line {
-  opacity: 0.9;
-  animation-duration: 6s;
-  box-shadow: 0 0 12px rgba(124, 58, 237, 0.5);
-}
-
-.donna-orb-consciousness.listening .consciousness-orb {
-  box-shadow: 
-    0 0 50px rgba(88, 28, 135, 0.3),
-    0 0 100px rgba(124, 58, 237, 0.15),
-    inset 0 0 80px rgba(79, 70, 229, 0.08);
-}
-
-.donna-orb-consciousness.thinking .consciousness-orb {
-  box-shadow: 
-    0 0 60px rgba(88, 28, 135, 0.4),
-    0 0 120px rgba(124, 58, 237, 0.2),
-    inset 0 0 100px rgba(79, 70, 229, 0.1);
+/* Accessibility: respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .orb-svg animate {
+    display: none !important;
+  }
 }
 
 /* Donna's Identity */
