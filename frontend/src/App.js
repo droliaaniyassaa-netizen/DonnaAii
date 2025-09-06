@@ -1274,8 +1274,8 @@ const App = () => {
               
               {/* Donna's Identity */}
               <div className="consciousness-identity">
-                <h1 className="first-time-name">Donna</h1>
-                <p className="first-time-greeting">
+                <h1 className="consciousness-name">Donna</h1>
+                <p className="consciousness-greeting">
                   {isLoading ? "Processing..." : isListening ? "I'm listening..." : "Hi, I'm Donna. How can I assist you today?"}
                 </p>
               </div>
