@@ -1331,24 +1331,24 @@ const App = () => {
               </div>
 
               {/* Example Action Circles - Only for first-time users */}
-              <div className="sample-goals-pills">
+              <div className="donna-example-circles">
                 <div 
-                  className="sample-goal-pill"
+                  className="donna-example-circle"
                   onClick={() => setInputMessage("Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym")}
                 >
-                  🗓️ Smart Scheduling
+                  "Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym"
                 </div>
                 <div 
-                  className="sample-goal-pill"
+                  className="donna-example-circle"
                   onClick={() => setInputMessage("I ate a bowl of pasta with chicken for lunch")}
                 >
-                  🍝 Health Tracking
+                  "I ate a bowl of pasta with chicken for lunch"
                 </div>
                 <div 
-                  className="sample-goal-pill"
+                  className="donna-example-circle"
                   onClick={() => setInputMessage("My mom's birthday is coming up")}
                 >
-                  🎁 Gift Planning
+                  "My mom's birthday is coming up"
                 </div>
               </div>
             </div>
