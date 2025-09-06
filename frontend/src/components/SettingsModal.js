@@ -304,6 +304,45 @@ const SettingsModal = ({ open, onClose }) => {
               </div>
             </div>
           </div>
+
+          {/* Notifications Section */}
+          <div className="setting-section">
+            <Label className="setting-label">
+              <MessageCircle className="label-icon" />
+              Push Notifications
+            </Label>
+            
+            <div className="notification-settings-info">
+              <p className="notification-description">
+                Get phone notifications for calendar reminders and health reports. Enable to receive notifications even when Donna is closed.
+              </p>
+              
+              <div className="notification-toggle">
+                <div 
+                  className={`notification-option ${notificationsEnabled ? 'enabled' : 'disabled'}`}
+                  onClick={handleNotificationToggle}
+                >
+                  <div className="option-header">
+                    <span className="option-title">
+                      {notificationsEnabled ? '🔔 Enabled' : '🔕 Disabled'}
+                    </span>
+                    <Badge 
+                      variant={notificationsEnabled ? 'default' : 'outline'} 
+                      className="notification-badge"
+                    >
+                      {notificationsEnabled ? 'Active' : 'Inactive'}
+                    </Badge>
+                  </div>
+                  <p className="option-description">
+                    {notificationsEnabled 
+                      ? 'You\'ll receive notifications for reminders and health reports'
+                      : 'Click to enable push notifications for better reminders'
+                    }
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
           
           {/* Action Buttons */}
           <div className="settings-actions">
