@@ -1761,28 +1761,28 @@ body::before {
 }
 
 /* Individual Tab Title Colors - Subtle but Visible Variations */
-.tab-trigger[value="chat"] {
+.tab-trigger:nth-child(1) {
   /* Chat - Soft Blue */
-  color: rgba(180, 210, 255, 0.85);
-  text-shadow: 0 0 12px rgba(180, 210, 255, 0.4);
+  color: rgba(180, 210, 255, 0.85) !important;
+  text-shadow: 0 0 12px rgba(180, 210, 255, 0.4) !important;
 }
 
-.tab-trigger[value="health"] {
-  /* Health - Soft Green-Blue */
-  color: rgba(180, 255, 210, 0.85);
-  text-shadow: 0 0 12px rgba(180, 255, 210, 0.4);
-}
-
-.tab-trigger[value="career"] {
-  /* Career - Soft Purple-Blue */
-  color: rgba(210, 180, 255, 0.85);
-  text-shadow: 0 0 12px rgba(210, 180, 255, 0.4);
-}
-
-.tab-trigger[value="calendar"] {
+.tab-trigger:nth-child(2) {
   /* Calendar - Soft Amber-Blue */
-  color: rgba(255, 210, 180, 0.85);
-  text-shadow: 0 0 12px rgba(255, 210, 180, 0.4);
+  color: rgba(255, 210, 180, 0.85) !important;
+  text-shadow: 0 0 12px rgba(255, 210, 180, 0.4) !important;
+}
+
+.tab-trigger:nth-child(3) {
+  /* Career - Soft Purple-Blue */
+  color: rgba(210, 180, 255, 0.85) !important;
+  text-shadow: 0 0 12px rgba(210, 180, 255, 0.4) !important;
+}
+
+.tab-trigger:nth-child(4) {
+  /* Health - Soft Green-Blue */
+  color: rgba(180, 255, 210, 0.85) !important;
+  text-shadow: 0 0 12px rgba(180, 255, 210, 0.4) !important;
 }
 
 .tab-trigger::before {
