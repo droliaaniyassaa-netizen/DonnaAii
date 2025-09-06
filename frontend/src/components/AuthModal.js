@@ -10,8 +10,8 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
     setIsLoading(true);
     
     try {
-      // Get current app URL for redirect (using hash-based routing)
-      const redirectUrl = window.location.origin + '/#profile';
+      // Get current app URL for redirect (using query parameter routing)
+      const redirectUrl = window.location.origin + '/?page=profile';
       
       // Redirect to Emergent auth with our redirect URL
       const authUrl = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
