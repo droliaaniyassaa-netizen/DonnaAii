@@ -1308,41 +1308,37 @@ const App = () => {
               </div>
             </div>
 
-            {/* Neural Input Interface */}
-            <div className="neural-input-interface">
-              <div className="input-field-container">
-                <Textarea
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyDown={handleKeyPress}
-                  placeholder={isListening ? "I'm listening..." : "Share your thoughts with Donna..."}
-                  className={`neural-input ${isListening ? 'listening-state' : ''}`}
-                  rows={1}
-                  disabled={isLoading}
-                />
-                <div className="input-glow-effect"></div>
+              {/* Clean First Time Input */}
+              <div className="first-time-input-container">
+                <div className="first-time-input-wrapper">
+                  <textarea
+                    className={`first-time-input ${isListening ? 'listening' : ''}`}
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder={isListening ? "I'm listening..." : "I'm listening..."}
+                    rows="1"
+                    disabled={isLoading}
+                  />
+                  <div className="first-time-actions">
+                    <button
+                      className={`first-time-voice-btn ${isVoiceRecording ? 'recording' : ''}`}
+                      onClick={toggleVoiceRecording}
+                      disabled={isLoading}
+                      title={isVoiceRecording ? 'Stop Recording' : 'Start Voice Recording'}
+                    >
+                      {isVoiceRecording ? <MicOff size={20} /> : <Mic size={20} />}
+                    </button>
+                    <button
+                      className="first-time-send-btn"
+                      onClick={sendMessage}
+                      disabled={isLoading || !inputMessage.trim()}
+                    >
+                      <Send size={20} />
+                    </button>
+                  </div>
+                </div>
               </div>
-              
-              <div className="consciousness-controls">
-                <Button
-                  onClick={toggleVoiceRecording}
-                  variant="ghost"
-                  size="sm"
-                  className={`consciousness-voice-btn ${isVoiceRecording ? 'recording-state' : ''}`}
-                >
-                  {isVoiceRecording ? <MicOff className="control-icon" /> : <Mic className="control-icon" />}
-                </Button>
-                <Button 
-                  onClick={sendMessage}
-                  disabled={isLoading || !inputMessage.trim()}
-                  variant="ghost"
-                  size="sm"
-                  className="consciousness-send-btn"
-                >
-                  <Send className="control-icon" />
-                </Button>
-              </div>
-            </div>
 
           </div>
         </TabsContent>
