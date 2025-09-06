@@ -300,6 +300,58 @@ const App = () => {
     return window.btoa(binary);
   };
 
+  // Authentication functions
+  const checkAuthStatus = async () => {
+    try {
+      setAuthLoading(true);
+      const response = await axios.get(`${API}/auth/me`);
+      
+      if (response.data) {
+        setUser(response.data);
+        setIsAuthenticated(true);
+        setShowAuthModal(false);
+      } else {
+        setUser(null);
+        setIsAuthenticated(false);
+        setShowAuthModal(true);
+      }
+    } catch (error) {
+      console.log('Not authenticated:', error.response?.status);
+      setUser(null);
+      setIsAuthenticated(false);
+      setShowAuthModal(true);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleAuthSuccess = (userData, sessionToken) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+    setShowAuthModal(false);
+    
+    // Reload app data for the authenticated user
+    loadAppData();
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API}/auth/logout`);
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setUser(null);
+      setIsAuthenticated(false);
+      setShowAuthModal(true);
+      
+      // Clear app data
+      setMessages([]);
+      setEvents([]);
+      setCareerGoals([]);
+      setHealthStats({ calories: 0, protein: 0, hydration: 0, sleep: 0 });
+    }
+  };
+
   // Chat functions
   const loadChatHistory = async () => {
     try {
