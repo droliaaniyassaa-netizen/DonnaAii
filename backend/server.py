@@ -1159,8 +1159,9 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
         raise HTTPException(status_code=500, detail=f"Chat error: {str(e)}")
 
 @api_router.get("/chat/history/{session_id}", response_model=List[ChatMessage])
-async def get_chat_history(session_id: str):
-    messages = await db.chat_messages.find({"session_id": session_id}).sort("timestamp", 1).to_list(100)
+async def get_chat_history(session_id: str, user_session_id: str = Depends(get_user_session_id)):
+    # Use authenticated user's session_id, ignore path parameter for security
+    messages = await db.chat_messages.find({"session_id": user_session_id}).sort("timestamp", 1).to_list(100)
     return [ChatMessage(**msg) for msg in messages]
 
 # Calendar endpoints
