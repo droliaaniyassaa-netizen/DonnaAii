@@ -728,37 +728,38 @@ body::before {
    DONNA'S CONSCIOUSNESS INTERFACE
    ========================================== */
 
-/* Consciousness Container */
-.consciousness-container {
+/* First Time User Interface */
+.first-time-consciousness {
   background: #000000; /* Pure black background */
   min-height: 100vh;
   padding: 0;
   margin: 0;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Consciousness Interface Layout */
-.consciousness-interface {
-  max-width: 900px;
+.first-time-interface {
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 1;
-}
-
-/* Donna's Presence Area */
-.consciousness-presence {
-  position: relative;
-  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
+  min-height: 100vh;
+  gap: 3rem;
+}
+
+/* First Time Orb Section */
+.first-time-orb-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
 /* Donna's Consciousness Container */
