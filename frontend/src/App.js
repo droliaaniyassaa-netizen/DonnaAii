@@ -1429,6 +1429,14 @@ const App = () => {
 
 
 
+  // Simple routing - check if we're on profile page
+  const isProfilePage = window.location.pathname === '/profile';
+  
+  // If on profile page, show ProfilePage component
+  if (isProfilePage) {
+    return <ProfilePage onAuthComplete={handleAuthSuccess} onLogout={handleLogout} />;
+  }
+
   // Show loading screen while checking auth
   if (authLoading) {
     return (
