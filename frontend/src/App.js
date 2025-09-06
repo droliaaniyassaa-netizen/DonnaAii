@@ -1430,20 +1430,30 @@ const App = () => {
 
 
   // Simple routing - check if we're on profile page (hash-based routing)
-  const [currentRoute, setCurrentRoute] = useState(window.location.hash.replace('#', '') || 'main');
+  const [currentRoute, setCurrentRoute] = useState(() => {
+    const hash = window.location.hash.replace('#', '') || 'main';
+    console.log('Initial route:', hash);
+    return hash;
+  });
   
   // Listen for hash changes
   useEffect(() => {
     const handleHashChange = () => {
-      setCurrentRoute(window.location.hash.replace('#', '') || 'main');
+      const hash = window.location.hash.replace('#', '') || 'main';
+      console.log('Hash changed to:', hash);
+      setCurrentRoute(hash);
     };
     
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
   
+  // Debug logging
+  console.log('Current route:', currentRoute, 'Hash:', window.location.hash);
+  
   // If on profile page, show ProfilePage component
   if (currentRoute === 'profile' || window.location.hash.includes('session_id')) {
+    console.log('Rendering ProfilePage component');
     return <ProfilePage onAuthComplete={handleAuthSuccess} onLogout={handleLogout} />;
   }
 
