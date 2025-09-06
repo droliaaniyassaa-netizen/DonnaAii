@@ -855,37 +855,47 @@ async def chat_with_donna(request: ChatRequest):
                 created_event_id = await create_gift_event_with_reminders(request.session_id, gift_result)
                 
                 if created_event_id:
-                    # Generate gift response with suggestions
+                    # Generate gift response with suggestions - this takes priority
                     donna_response = await generate_gift_response(gift_result, amazon_region)
+                    
+                    # Clear any waiting notes context for gift events
+                    if context:
+                        await db.conversation_context.update_one(
+                            {"id": context["id"]},
+                            {"$set": {"waiting_for_notes": False}}
+                        )
+                    
+                    # Set up context for potential notes
+                    await setup_event_notes_context(request.session_id, created_event_id)
                 else:
                     donna_response = f"I've noted {gift_result.event_title} for {gift_result.date}. Let me know if you'd like gift suggestions!"
             
             else:
                 # Check for regular event creation if not a gift message
                 created_event_id = await process_message_context(request.message, request.session_id)
-            
-            if created_event_id:
-                # New event detected - clear any waiting notes context and create event
-                if context:
-                    await db.conversation_context.update_one(
-                        {"id": context["id"]},
-                        {"$set": {"waiting_for_notes": False}}
-                    )
                 
-                # Initialize Donna chat for event creation response
-                chat = LlmChat(
-                    api_key=openai_api_key,
-                    session_id=request.session_id,
-                    system_message=DONNA_SYSTEM_MESSAGE
-                ).with_model("openai", "gpt-4o-mini")
-                
-                user_text = request.message + "\n\n[CONTEXT: I just automatically created a calendar event from your message with default reminders (12 hours and 2 hours before). Acknowledge this briefly and naturally, then ask: 'Would you like any reminders or notes for this event?']"
-                user_msg = UserMessage(text=user_text)
-                
-                donna_response = await chat.send_message(user_msg)
-                
-                # Set up context for potential notes
-                await setup_event_notes_context(request.session_id, created_event_id)
+                if created_event_id:
+                    # New event detected - clear any waiting notes context and create event
+                    if context:
+                        await db.conversation_context.update_one(
+                            {"id": context["id"]},
+                            {"$set": {"waiting_for_notes": False}}
+                        )
+                    
+                    # Initialize Donna chat for event creation response
+                    chat = LlmChat(
+                        api_key=openai_api_key,
+                        session_id=request.session_id,
+                        system_message=DONNA_SYSTEM_MESSAGE
+                    ).with_model("openai", "gpt-4o-mini")
+                    
+                    user_text = request.message + "\n\n[CONTEXT: I just automatically created a calendar event from your message with default reminders (12 hours and 2 hours before). Acknowledge this briefly and naturally, then ask: 'Would you like any reminders or notes for this event?']"
+                    user_msg = UserMessage(text=user_text)
+                    
+                    donna_response = await chat.send_message(user_msg)
+                    
+                    # Set up context for potential notes
+                    await setup_event_notes_context(request.session_id, created_event_id)
                 
             elif context and context.get("waiting_for_notes"):
                 # Check if message contains scheduling keywords - if so, treat as new event not notes
