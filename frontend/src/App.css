@@ -919,27 +919,26 @@ body::before {
   }
 }
 
-/* Donna Example Circles - 3D Glassmorphic */
+/* Donna Example Cards - Responsive 3D Glassmorphic Rectangles */
 .donna-example-circles {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 1.5rem;
+  align-items: stretch;
+  gap: 1rem;
   margin: 2rem auto;
   width: 100%;
-  max-width: 900px;
-  flex-wrap: nowrap;
+  max-width: 800px;
+  flex-wrap: wrap;
+  padding: 0 1rem;
 }
 
 .donna-example-circle {
-  width: 180px;
-  min-width: 180px;
-  max-width: 180px;
-  height: 180px;
-  min-height: 180px;
-  max-height: 180px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 250px;
+  min-height: 120px;
   
-  /* Ultra 3D Glassmorphic Effect */
+  /* Ultra 3D Glassmorphic Rectangle */
   background: linear-gradient(145deg,
     rgba(255, 255, 255, 0.12) 0%,
     rgba(255, 255, 255, 0.04) 30%,
@@ -947,40 +946,40 @@ body::before {
     rgba(255, 255, 255, 0.08) 100%
   );
   backdrop-filter: blur(25px);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px; /* Soft edges */
   
   /* Advanced 3D Shadow System */
   box-shadow: 
     /* Outer glow */
-    0 0 40px rgba(255, 255, 255, 0.05),
+    0 0 30px rgba(255, 255, 255, 0.04),
     /* Main shadow */
-    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 15px 40px rgba(0, 0, 0, 0.3),
     /* Mid shadow */
-    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 8px 20px rgba(0, 0, 0, 0.2),
     /* Inner highlight */
-    inset 0 2px 4px rgba(255, 255, 255, 0.15),
+    inset 0 1px 3px rgba(255, 255, 255, 0.15),
     /* Inner depth */
-    inset 0 -2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 -1px 6px rgba(0, 0, 0, 0.08),
     /* Rim light */
-    inset 0 0 2px rgba(255, 255, 255, 0.2);
+    inset 0 0 1px rgba(255, 255, 255, 0.1);
   
   /* Typography & Layout */
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.85);
   font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 400;
-  line-height: 1.3;
+  line-height: 1.4;
   text-align: center;
-  padding: 1.5rem;
+  padding: 1.5rem 1rem;
   
   /* Interaction */
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   
-  /* Perfect Circle Display */
+  /* Flex Display */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -989,36 +988,65 @@ body::before {
 .donna-example-circle:hover {
   /* Enhanced 3D on hover */
   background: linear-gradient(145deg,
-    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.15) 0%,
     rgba(255, 255, 255, 0.06) 30%,
     rgba(255, 255, 255, 0.03) 60%,
-    rgba(255, 255, 255, 0.12) 100%
+    rgba(255, 255, 255, 0.1) 100%
   );
   
   /* Elevated shadow system */
   box-shadow: 
-    0 0 50px rgba(255, 255, 255, 0.08),
-    0 25px 80px rgba(0, 0, 0, 0.5),
-    0 15px 40px rgba(0, 0, 0, 0.4),
-    inset 0 3px 6px rgba(255, 255, 255, 0.2),
-    inset 0 -3px 12px rgba(0, 0, 0, 0.15),
-    inset 0 0 3px rgba(255, 255, 255, 0.25);
+    0 0 40px rgba(255, 255, 255, 0.06),
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 12px 25px rgba(0, 0, 0, 0.25),
+    inset 0 2px 4px rgba(255, 255, 255, 0.18),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 0 2px rgba(255, 255, 255, 0.15);
   
   /* Subtle lift */
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(-2px) scale(1.01);
   
   /* Brighter text */
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .donna-example-circle:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(0) scale(0.98);
   box-shadow: 
-    0 0 30px rgba(255, 255, 255, 0.06),
-    0 15px 40px rgba(0, 0, 0, 0.4),
-    0 8px 20px rgba(0, 0, 0, 0.3),
-    inset 0 2px 4px rgba(255, 255, 255, 0.1),
-    inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+    0 0 20px rgba(255, 255, 255, 0.04),
+    0 10px 25px rgba(0, 0, 0, 0.3),
+    0 5px 15px rgba(0, 0, 0, 0.2),
+    inset 0 1px 3px rgba(255, 255, 255, 0.1),
+    inset 0 -1px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .donna-example-circles {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.5rem auto;
+  }
+  
+  .donna-example-circle {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 80px;
+    font-size: 0.8rem;
+    padding: 1rem 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .donna-example-circles {
+    padding: 0 0.5rem;
+  }
+  
+  .donna-example-circle {
+    font-size: 0.75rem;
+    padding: 0.875rem 0.5rem;
+    min-height: 70px;
+  }
 }
 
 /* Gift Suggestion Styling */
