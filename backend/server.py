@@ -901,7 +901,33 @@ async def chat_with_donna(request: ChatRequest):
                         {"$set": {"waiting_for_notes": False}}
                     )
             else:
-                # Normal conversation flow - no event created, not waiting for notes
+                # Check for regular event creation if not a gift message
+                created_event_id = await process_message_context(request.message, request.session_id)
+                
+                if created_event_id:
+                    # New event detected - clear any waiting notes context and create event
+                    if context:
+                        await db.conversation_context.update_one(
+                            {"id": context["id"]},
+                            {"$set": {"waiting_for_notes": False}}
+                        )
+                    
+                    # Initialize Donna chat for event creation response
+                    chat = LlmChat(
+                        api_key=openai_api_key,
+                        session_id=request.session_id,
+                        system_message=DONNA_SYSTEM_MESSAGE
+                    ).with_model("openai", "gpt-4o-mini")
+                    
+                    user_text = request.message + "\n\n[CONTEXT: I just automatically created a calendar event from your message with default reminders (12 hours and 2 hours before). Acknowledge this briefly and naturally, then ask: 'Would you like any reminders or notes for this event?']"
+                    user_msg = UserMessage(text=user_text)
+                    
+                    donna_response = await chat.send_message(user_msg)
+                    
+                    # Set up context for potential notes
+                    await setup_event_notes_context(request.session_id, created_event_id)
+                else:
+                    # Normal conversation flow - no event created, not waiting for notes
                 chat = LlmChat(
                     api_key=openai_api_key,
                     session_id=request.session_id,
