@@ -1112,25 +1112,25 @@ const App = () => {
                       {/* Deep Blue Core Gradient */}
                       <radialGradient id="deepBlueCore" cx="50%" cy="45%" r="70%">
                         <stop offset="0%" stopColor="#FF0080" stopOpacity="0.8"/>  {/* Purple heartbeat center */}
-                        <stop offset="25%" stopColor="#4A00E0" stopOpacity="0.9"/> {/* Deep purple */}
-                        <stop offset="60%" stopColor="#0066FF" stopOpacity="0.7"/> {/* Electric blue */}
-                        <stop offset="85%" stopColor="#001F5C" stopOpacity="0.4"/> {/* Deep navy */}
+                        <stop offset="25%" stopColor="#2D0070" stopOpacity="0.9"/> {/* Much deeper purple */}
+                        <stop offset="60%" stopColor="#001A4D" stopOpacity="0.7"/> {/* Deep midnight blue */}
+                        <stop offset="85%" stopColor="#000D26" stopOpacity="0.4"/> {/* Very deep navy */}
                         <stop offset="100%" stopColor="#000000" stopOpacity="0"/>   {/* Fade to black */}
                       </radialGradient>
 
                       {/* Organic Edge Gradient */}
                       <radialGradient id="organicEdge" cx="50%" cy="50%" r="65%">
                         <stop offset="0%" stopColor="transparent"/>
-                        <stop offset="70%" stopColor="#0066FF" stopOpacity="0.3"/>
-                        <stop offset="85%" stopColor="#00AAFF" stopOpacity="0.6"/>
-                        <stop offset="100%" stopColor="#0099FF" stopOpacity="0.8"/>
+                        <stop offset="70%" stopColor="#001A4D" stopOpacity="0.3"/>
+                        <stop offset="85%" stopColor="#002966" stopOpacity="0.6"/>
+                        <stop offset="100%" stopColor="#003380" stopOpacity="0.8"/>
                       </radialGradient>
 
                       {/* Dot Pattern Gradient */}
                       <linearGradient id="dotGrad" x1="30%" y1="20%" x2="80%" y2="90%">
-                        <stop offset="0%" stopColor="#00AAFF" stopOpacity="0.9"/>
-                        <stop offset="40%" stopColor="#0066FF" stopOpacity="0.7"/>
-                        <stop offset="80%" stopColor="#4A00E0" stopOpacity="0.5"/>
+                        <stop offset="0%" stopColor="#003380" stopOpacity="0.9"/>
+                        <stop offset="40%" stopColor="#001A4D" stopOpacity="0.7"/>
+                        <stop offset="80%" stopColor="#2D0070" stopOpacity="0.5"/>
                         <stop offset="100%" stopColor="#FF0080" stopOpacity="0.6"/>
                       </linearGradient>
 
