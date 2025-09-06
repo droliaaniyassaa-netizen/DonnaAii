@@ -403,6 +403,9 @@ const App = () => {
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
     
+    // Check authentication before sending message
+    if (!requireAuthForAction('send message')) return;
+    
     setIsLoading(true);
     
     try {
