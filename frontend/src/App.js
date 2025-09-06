@@ -1537,18 +1537,7 @@ const App = () => {
         onAuthSuccess={handleAuthSuccess}
       />
 
-      {/* Only show app content if authenticated */}
-      {!isAuthenticated ? (
-        <div className="unauthenticated-view">
-          <div className="auth-prompt">
-            <h1>Welcome to Donna</h1>
-            <p>Please sign in to access your personalized AI assistant</p>
-            <Button onClick={() => setShowAuthModal(true)} className="auth-prompt-button">
-              Sign In
-            </Button>
-          </div>
-        </div>
-      ) : (
+      {/* Always show app content, but protect specific features */}
         <>
           {/* Floating Settings Button */}
           <Button 
