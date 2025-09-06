@@ -80,6 +80,15 @@ class CalendarEventUpdate(BaseModel):
     description: Optional[str] = None
     category: Optional[str] = None
 
+class CalendarReminder(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    event_id: str
+    reminder_datetime: datetime
+    session_id: str
+    message: str
+    sent: bool = False
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
 class CareerGoal(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     goal: str
