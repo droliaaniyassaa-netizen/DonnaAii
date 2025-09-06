@@ -1033,7 +1033,19 @@ async def create_event(event: CalendarEventCreate):
         category=event.category or "personal",
         reminder=event.reminder
     )
-    await db.calendar_events.insert_one(prepare_for_mongo(event_obj.dict()))
+    result = await db.calendar_events.insert_one(prepare_for_mongo(event_obj.dict()))
+    event_id = str(result.inserted_id)
+    
+    # Schedule push notification reminders if reminders are enabled
+    if event.reminder:
+        await schedule_event_reminders(
+            session_id="default",  # Using default session for frontend events
+            event_id=event_id,
+            event_title=event.title,
+            event_datetime=datetime_utc,
+            is_gift_event=False
+        )
+    
     return event_obj
 
 @api_router.get("/calendar/events", response_model=List[CalendarEvent])
