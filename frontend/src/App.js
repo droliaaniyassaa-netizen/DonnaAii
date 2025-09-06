@@ -536,6 +536,14 @@ const App = () => {
       await axios.post(`${API}/calendar/events`, eventData);
       setNewEvent({ title: '', description: '', date: '', time: '', category: 'personal' });
       loadEvents();
+      
+      // Request notification permission after first event with reminder
+      if (eventData.reminder && !hasAskedPermission) {
+        setTimeout(() => {
+          requestNotificationPermission();
+        }, 1000); // Small delay for better UX
+      }
+      
     } catch (error) {
       console.error('Error creating event:', error);
       alert('Error creating event. Please try again.');
