@@ -1109,6 +1109,140 @@ async def delete_event(event_id: str):
     return {"message": "Event deleted successfully"}
 
 # =====================================
+# NOTIFICATION HELPER FUNCTIONS  
+# =====================================
+
+async def send_notification_to_session(session_id: str, title: str, body: str, notification_type: str = "general", url: str = "/"):
+    """Helper function to send notification to a specific session"""
+    try:
+        subscription = await db.push_subscriptions.find_one({"session_id": session_id})
+        if not subscription:
+            logging.info(f"No push subscription found for session {session_id}")
+            return False
+        
+        notification_data = {
+            "title": title,
+            "body": body,
+            "icon": "/favicon.ico",
+            "badge": "/favicon.ico",
+            "url": url,
+            "type": notification_type
+        }
+        
+        webpush(
+            subscription_info={
+                "endpoint": subscription["endpoint"],
+                "keys": {
+                    "p256dh": subscription["p256dh_key"],
+                    "auth": subscription["auth_key"]
+                }
+            },
+            data=json.dumps(notification_data),
+            vapid_private_key=VAPID_PRIVATE_KEY,
+            vapid_claims=VAPID_CLAIMS
+        )
+        
+        logging.info(f"Notification sent to session {session_id}: {title}")
+        return True
+        
+    except WebPushException as e:
+        logging.error(f"Web push failed for session {session_id}: {str(e)}")
+        # If subscription is invalid, remove it
+        if e.response and e.response.status_code in [404, 410]:
+            await db.push_subscriptions.delete_one({"session_id": session_id})
+        return False
+    except Exception as e:
+        logging.error(f"Notification error for session {session_id}: {str(e)}")
+        return False
+
+async def schedule_event_reminders(session_id: str, event_id: str, event_title: str, event_datetime: datetime, is_gift_event: bool = False):
+    """Schedule push notifications for calendar event reminders"""
+    try:
+        # Standard reminders: 12 hours and 2 hours before
+        reminders = [
+            {
+                "hours_before": 12,
+                "title": "📅 Upcoming Event Reminder",
+                "body": f"Don't forget: {event_title} in 12 hours"
+            },
+            {
+                "hours_before": 2,
+                "title": "⏰ Event Starting Soon",
+                "body": f"{event_title} starts in 2 hours"
+            }
+        ]
+        
+        # Add special 7-day reminder for gift events
+        if is_gift_event:
+            reminders.insert(0, {
+                "hours_before": 168,  # 7 days = 168 hours
+                "title": "🎁 Gift Planning Reminder",
+                "body": f"Gift occasion coming up: {event_title} in 7 days. Time to prepare!"
+            })
+        
+        # Schedule each reminder
+        for reminder in reminders:
+            reminder_time = event_datetime - timedelta(hours=reminder["hours_before"])
+            
+            # Only schedule future reminders
+            if reminder_time > datetime.now(timezone.utc):
+                scheduled_notification = ScheduledNotification(
+                    session_id=session_id,
+                    event_id=event_id,
+                    title=reminder["title"],
+                    body=reminder["body"],
+                    scheduled_time=reminder_time,
+                    notification_type="reminder"
+                )
+                
+                await db.scheduled_notifications.insert_one(prepare_for_mongo(scheduled_notification.dict()))
+                logging.info(f"Scheduled reminder for {event_title} at {reminder_time}")
+        
+        return True
+        
+    except Exception as e:
+        logging.error(f"Error scheduling reminders: {str(e)}")
+        return False
+
+async def send_due_notifications():
+    """Background task to send due notifications (call this periodically)"""
+    try:
+        current_time = datetime.now(timezone.utc)
+        
+        # Find notifications that are due
+        due_notifications = await db.scheduled_notifications.find({
+            "scheduled_time": {"$lte": current_time},
+            "sent": False
+        }).to_list(100)
+        
+        for notification in due_notifications:
+            success = await send_notification_to_session(
+                notification["session_id"],
+                notification["title"],
+                notification["body"],
+                notification["notification_type"]
+            )
+            
+            # Mark as sent
+            await db.scheduled_notifications.update_one(
+                {"id": notification["id"]},
+                {
+                    "$set": {
+                        "sent": True,
+                        "sent_at": current_time
+                    }
+                }
+            )
+            
+            logging.info(f"Processed notification {notification['id']}: {'sent' if success else 'failed'}")
+        
+        return len(due_notifications)
+        
+    except Exception as e:
+        logging.error(f"Error sending due notifications: {str(e)}")
+        return 0
+
+# =====================================
 # NOTIFICATION ENDPOINTS
 # =====================================
 
