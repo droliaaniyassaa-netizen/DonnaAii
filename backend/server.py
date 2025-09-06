@@ -1108,6 +1108,123 @@ async def delete_event(event_id: str):
         raise HTTPException(status_code=404, detail="Event not found")
     return {"message": "Event deleted successfully"}
 
+# =====================================
+# NOTIFICATION ENDPOINTS
+# =====================================
+
+@api_router.post("/notifications/subscription", response_model=PushSubscription)
+async def create_push_subscription(subscription: PushSubscriptionCreate):
+    """Store a push subscription for a user session"""
+    try:
+        # Check if subscription already exists for this session
+        existing = await db.push_subscriptions.find_one({"session_id": subscription.session_id})
+        
+        if existing:
+            # Update existing subscription
+            update_data = {
+                "endpoint": subscription.endpoint,
+                "p256dh_key": subscription.p256dh_key,
+                "auth_key": subscription.auth_key,
+                "user_agent": subscription.user_agent,
+                "updated_at": datetime.now(timezone.utc)
+            }
+            await db.push_subscriptions.update_one(
+                {"session_id": subscription.session_id},
+                {"$set": update_data}
+            )
+            
+            # Return updated subscription
+            updated = await db.push_subscriptions.find_one({"session_id": subscription.session_id})
+            return PushSubscription(**updated)
+        else:
+            # Create new subscription
+            subscription_obj = PushSubscription(**subscription.dict())
+            await db.push_subscriptions.insert_one(prepare_for_mongo(subscription_obj.dict()))
+            return subscription_obj
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to store subscription: {str(e)}")
+
+@api_router.delete("/notifications/subscription/{session_id}")
+async def delete_push_subscription(session_id: str):
+    """Remove push subscription for a user session"""
+    result = await db.push_subscriptions.delete_one({"session_id": session_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Subscription not found")
+    return {"message": "Subscription deleted successfully"}
+
+@api_router.get("/notifications/vapid-public-key")
+async def get_vapid_public_key():
+    """Get VAPID public key for client-side subscription"""
+    return {"publicKey": VAPID_PUBLIC_KEY}
+
+@api_router.post("/notifications/send")
+async def send_push_notification(payload: NotificationPayload, session_id: str):
+    """Send push notification to a specific user session"""
+    try:
+        # Get user's push subscription
+        subscription = await db.push_subscriptions.find_one({"session_id": session_id})
+        if not subscription:
+            raise HTTPException(status_code=404, detail="No push subscription found for this session")
+        
+        # Prepare notification data
+        notification_data = {
+            "title": payload.title,
+            "body": payload.body,
+            "icon": payload.icon,
+            "badge": payload.badge,
+            "url": payload.url,
+            "type": payload.type
+        }
+        
+        # Send push notification
+        try:
+            webpush(
+                subscription_info={
+                    "endpoint": subscription["endpoint"],
+                    "keys": {
+                        "p256dh": subscription["p256dh_key"],
+                        "auth": subscription["auth_key"]
+                    }
+                },
+                data=json.dumps(notification_data),
+                vapid_private_key=VAPID_PRIVATE_KEY,
+                vapid_claims=VAPID_CLAIMS
+            )
+            
+            return {"message": "Notification sent successfully"}
+            
+        except WebPushException as e:
+            logging.error(f"Web push failed: {str(e)}")
+            # If subscription is invalid, remove it
+            if e.response and e.response.status_code in [404, 410]:
+                await db.push_subscriptions.delete_one({"session_id": session_id})
+            raise HTTPException(status_code=400, detail=f"Failed to send notification: {str(e)}")
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Notification send error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to send notification: {str(e)}")
+
+@api_router.post("/notifications/schedule", response_model=ScheduledNotification)
+async def schedule_notification(notification: ScheduledNotificationCreate):
+    """Schedule a future notification"""
+    try:
+        scheduled_notification = ScheduledNotification(**notification.dict())
+        await db.scheduled_notifications.insert_one(prepare_for_mongo(scheduled_notification.dict()))
+        return scheduled_notification
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to schedule notification: {str(e)}")
+
+@api_router.get("/notifications/scheduled/{session_id}")
+async def get_scheduled_notifications(session_id: str):
+    """Get all scheduled notifications for a session"""
+    notifications = await db.scheduled_notifications.find(
+        {"session_id": session_id, "sent": False}
+    ).sort("scheduled_time", 1).to_list(100)
+    return [ScheduledNotification(**notif) for notif in notifications]
+
 # Career endpoints
 @api_router.post("/career/goals", response_model=CareerGoal)
 async def create_career_goal(goal: CareerGoalCreate):
