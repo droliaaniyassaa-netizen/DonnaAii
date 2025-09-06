@@ -412,7 +412,6 @@ const App = () => {
       // Send message to Donna with context about event creation
       const response = await axios.post(`${API}/chat`, {
         message: inputMessage,
-        session_id: 'default',
         event_created: eventCreated // Let Donna know if an event was created
       });
       
