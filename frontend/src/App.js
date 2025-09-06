@@ -1942,6 +1942,7 @@ const App = () => {
                   )}
                 </div>
               </div>
+            </>
           )}
 
           {/* Monthly View */}
