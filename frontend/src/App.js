@@ -105,6 +105,12 @@ const App = () => {
   const [activeHealthView, setActiveHealthView] = useState('daily'); // New state for health sub-tabs
   const [showSettings, setShowSettings] = useState(false);
   
+  // Authentication state
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+  
   // Refs
   const messagesEndRef = useRef(null);
 
