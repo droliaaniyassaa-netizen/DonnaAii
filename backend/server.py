@@ -1059,8 +1059,8 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
             
             if gift_result.detected and gift_result.confidence > 0.7:
                 # Process gift flow - create calendar event with special reminders
-                amazon_region = get_user_timezone_region(request.session_id)
-                created_event_id = await create_gift_event_with_reminders(request.session_id, gift_result)
+                amazon_region = get_user_timezone_region(user_session_id)
+                created_event_id = await create_gift_event_with_reminders(user_session_id, gift_result)
                 
                 if created_event_id:
                     # Generate gift response with suggestions - this takes priority
