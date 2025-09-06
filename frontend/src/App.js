@@ -1329,6 +1329,28 @@ const App = () => {
                   {isLoading ? "Processing..." : isListening ? "I'm listening..." : "Hi, I'm Donna. How can I assist you today?"}
                 </p>
               </div>
+
+              {/* Example Action Circles - Only for first-time users */}
+              <div className="sample-goals-pills">
+                <div 
+                  className="sample-goal-pill"
+                  onClick={() => setInputMessage("Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym")}
+                >
+                  🗓️ Smart Scheduling
+                </div>
+                <div 
+                  className="sample-goal-pill"
+                  onClick={() => setInputMessage("I ate a bowl of pasta with chicken for lunch")}
+                >
+                  🍝 Health Tracking
+                </div>
+                <div 
+                  className="sample-goal-pill"
+                  onClick={() => setInputMessage("My mom's birthday is coming up")}
+                >
+                  🎁 Gift Planning
+                </div>
+              </div>
             </div>
             )}
 
