@@ -373,7 +373,7 @@ const App = () => {
   // Chat functions
   const loadChatHistory = async () => {
     try {
-      const response = await axios.get(`${API}/chat/history/default`);
+      const response = await axios.get(`${API}/chat/history`);
       setMessages(response.data || []);
       
       // Auto-scroll to bottom if messages exist (for returning users)
