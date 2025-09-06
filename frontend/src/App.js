@@ -1273,16 +1273,16 @@ const App = () => {
               </div>
               
               {/* Donna's Identity */}
-              <div className="consciousness-identity">
-                <h1 className="consciousness-name">Donna</h1>
-                <p className="consciousness-greeting">
+              <div className="first-time-identity">
+                <h1 className="first-time-name">Donna</h1>
+                <p className="first-time-greeting">
                   {isLoading ? "Processing..." : isListening ? "I'm listening..." : "Hi, I'm Donna. How can I assist you today?"}
                 </p>
               </div>
             </div>
 
-            {/* Conversation Flow */}
-            <div className="conversation-flow">
+            {/* First Time Chat Input */}
+            <div className="first-time-chat-section">
               <div className="messages-stream">
                 {messages.map((message, index) => (
                   <div key={index} className={`consciousness-message ${message.is_user ? 'user-thought' : 'donna-thought'}`}>
