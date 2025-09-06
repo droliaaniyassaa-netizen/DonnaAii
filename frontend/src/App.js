@@ -1525,8 +1525,8 @@ const App = () => {
 
     } catch (error) {
       console.error('Auth callback error:', error);
-      alert('Authentication failed. Please try signing in again.');
-      setShowAuthModal(true);
+      alert('Authentication failed. Please try signing in from the app.');
+      // Don't force show auth modal - let user trigger it naturally
     } finally {
       setAuthLoading(false);
       setAuthCallbackData(null); // Clear callback data
