@@ -1281,6 +1281,35 @@ const App = () => {
               </div>
             </div>
 
+            {/* Conversation Flow */}
+            {messages.length > 0 && (
+              <div className="conversation-flow">
+                <div className="messages-stream">
+                  {messages.map((message, index) => (
+                    <div key={index} className={`consciousness-message ${message.is_user ? 'user-thought' : 'donna-thought'}`}>
+                      <div className="message-bubble">
+                        <div className="message-text">{message.message}</div>
+                        <div className="message-timestamp">
+                          {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {isLoading && (
+                    <div className="consciousness-message donna-thought">
+                      <div className="message-bubble thinking-bubble">
+                        <div className="thinking-animation">
+                          <span></span><span></span><span></span>
+                        </div>
+                        <div className="message-text">Donna is thinking...</div>
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+              </div>
+            )}
+
             {/* Input Container */}
             <div className="input-container">
               <textarea
