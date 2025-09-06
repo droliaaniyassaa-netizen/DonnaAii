@@ -4713,6 +4713,7 @@ body::before {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 2rem;
+  margin-top: 1rem;
 }
 
 .goals-list {
