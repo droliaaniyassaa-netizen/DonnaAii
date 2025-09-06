@@ -1790,40 +1790,15 @@ body::before {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-.tab-trigger:nth-child(1):hover {
-  /* Chat - Refined Steel Blue with Enhanced Glow */
-  color: rgba(200, 210, 230, 0.95) !important;
-  text-shadow: 
-    0 0 15px rgba(180, 195, 220, 0.5),
-    0 0 30px rgba(200, 210, 230, 0.2),
-    0 2px 4px rgba(255, 255, 255, 0.15) !important;
-}
-
-.tab-trigger:nth-child(2):hover {
-  /* Calendar - Elegant Champagne with Enhanced Glow */
-  color: rgba(230, 220, 200, 0.95) !important;
-  text-shadow: 
-    0 0 15px rgba(220, 205, 180, 0.5),
-    0 0 30px rgba(230, 220, 200, 0.2),
-    0 2px 4px rgba(255, 255, 255, 0.15) !important;
-}
-
-.tab-trigger:nth-child(3):hover {
-  /* Career - Sophisticated Plum with Enhanced Glow */
-  color: rgba(220, 200, 230, 0.95) !important;
-  text-shadow: 
-    0 0 15px rgba(205, 185, 215, 0.5),
-    0 0 30px rgba(220, 200, 230, 0.2),
-    0 2px 4px rgba(255, 255, 255, 0.15) !important;
-}
-
+.tab-trigger:nth-child(1):hover,
+.tab-trigger:nth-child(2):hover,
+.tab-trigger:nth-child(3):hover,
 .tab-trigger:nth-child(4):hover {
-  /* Health - Refined Sage with Enhanced Glow */
-  color: rgba(200, 230, 210, 0.95) !important;
+  color: rgba(255, 255, 255, 1) !important;
   text-shadow: 
-    0 0 15px rgba(185, 215, 195, 0.5),
-    0 0 30px rgba(200, 230, 210, 0.2),
-    0 2px 4px rgba(255, 255, 255, 0.15) !important;
+    0 0 12px rgba(255, 255, 255, 0.4),
+    0 0 25px rgba(255, 255, 255, 0.2),
+    0 2px 4px rgba(255, 255, 255, 0.2) !important;
 }
 
 .tab-trigger:hover::before {
