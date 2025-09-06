@@ -1803,28 +1803,28 @@ body::before {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-.tab-trigger[value="chat"]:hover {
+.tab-trigger:nth-child(1):hover {
   /* Chat - Brighter Blue */
-  color: rgba(200, 230, 255, 1);
-  text-shadow: 0 0 15px rgba(200, 230, 255, 0.6);
+  color: rgba(200, 230, 255, 1) !important;
+  text-shadow: 0 0 15px rgba(200, 230, 255, 0.6) !important;
 }
 
-.tab-trigger[value="health"]:hover {
-  /* Health - Brighter Green-Blue */
-  color: rgba(200, 255, 230, 1);
-  text-shadow: 0 0 15px rgba(200, 255, 230, 0.6);
-}
-
-.tab-trigger[value="career"]:hover {
-  /* Career - Brighter Purple-Blue */
-  color: rgba(230, 200, 255, 1);
-  text-shadow: 0 0 15px rgba(230, 200, 255, 0.6);
-}
-
-.tab-trigger[value="calendar"]:hover {
+.tab-trigger:nth-child(2):hover {
   /* Calendar - Brighter Amber-Blue */
-  color: rgba(255, 230, 200, 1);
-  text-shadow: 0 0 15px rgba(255, 230, 200, 0.6);
+  color: rgba(255, 230, 200, 1) !important;
+  text-shadow: 0 0 15px rgba(255, 230, 200, 0.6) !important;
+}
+
+.tab-trigger:nth-child(3):hover {
+  /* Career - Brighter Purple-Blue */
+  color: rgba(230, 200, 255, 1) !important;
+  text-shadow: 0 0 15px rgba(230, 200, 255, 0.6) !important;
+}
+
+.tab-trigger:nth-child(4):hover {
+  /* Health - Brighter Green-Blue */
+  color: rgba(200, 255, 230, 1) !important;
+  text-shadow: 0 0 15px rgba(200, 255, 230, 0.6) !important;
 }
 
 .tab-trigger:hover::before {
