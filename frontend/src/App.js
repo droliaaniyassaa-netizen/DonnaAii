@@ -191,6 +191,52 @@ const App = () => {
     }
   };
 
+  // Auto-send function for example cards
+  const autoSendExample = async (exampleText) => {
+    if (isLoading) return;
+    
+    setIsLoading(true);
+
+    try {
+      // Add user message immediately
+      const userMessage = {
+        message: exampleText,
+        is_user: true,
+        timestamp: new Date().toISOString()
+      };
+      setMessages(prev => [...prev, userMessage]);
+
+      // Send to backend
+      const response = await axios.post(`${API}/chat`, {
+        message: exampleText,
+        session_id: 'default'
+      });
+      
+      // Add Donna's response
+      const donnaMessage = {
+        message: response.data.response,
+        is_user: false,
+        timestamp: new Date().toISOString()
+      };
+      setMessages(prev => [...prev, donnaMessage]);
+      
+      // Refresh other tabs data if context might have changed
+      await loadEvents();
+      await loadChatHistory();
+      
+    } catch (error) {
+      console.error('Error sending example message:', error);
+      const errorMessage = {
+        message: "I'm having trouble connecting right now. Please try again.",
+        is_user: false,
+        timestamp: new Date().toISOString()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
 
   const handleKeyPress = (e) => {
