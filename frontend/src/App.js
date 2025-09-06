@@ -1103,10 +1103,123 @@ const App = () => {
         <TabsContent value="chat" className="consciousness-container">
           <div className="consciousness-interface">
             
-            {/* Donna's Consciousness Orb - Placeholder */}
+            {/* Donna's Organic Blue Consciousness */}
             <div className="consciousness-presence">
               <div className={`donna-consciousness ${isLoading ? 'thinking' : isListening ? 'listening' : 'idle'}`}>
-                {/* Orb will be implemented here */}
+                <div className="organic-orb-container">
+                  <svg className="organic-orb-svg" viewBox="0 0 800 800" aria-hidden="true">
+                    <defs>
+                      {/* Deep Blue Core Gradient */}
+                      <radialGradient id="deepBlueCore" cx="50%" cy="45%" r="70%">
+                        <stop offset="0%" stopColor="#FF0080" stopOpacity="0.8"/>  {/* Purple heartbeat center */}
+                        <stop offset="25%" stopColor="#4A00E0" stopOpacity="0.9"/> {/* Deep purple */}
+                        <stop offset="60%" stopColor="#0066FF" stopOpacity="0.7"/> {/* Electric blue */}
+                        <stop offset="85%" stopColor="#001F5C" stopOpacity="0.4"/> {/* Deep navy */}
+                        <stop offset="100%" stopColor="#000000" stopOpacity="0"/>   {/* Fade to black */}
+                      </radialGradient>
+
+                      {/* Organic Edge Gradient */}
+                      <radialGradient id="organicEdge" cx="50%" cy="50%" r="65%">
+                        <stop offset="0%" stopColor="transparent"/>
+                        <stop offset="70%" stopColor="#0066FF" stopOpacity="0.3"/>
+                        <stop offset="85%" stopColor="#00AAFF" stopOpacity="0.6"/>
+                        <stop offset="100%" stopColor="#0099FF" stopOpacity="0.8"/>
+                      </radialGradient>
+
+                      {/* Dot Pattern Gradient */}
+                      <linearGradient id="dotGrad" x1="30%" y1="20%" x2="80%" y2="90%">
+                        <stop offset="0%" stopColor="#00AAFF" stopOpacity="0.9"/>
+                        <stop offset="40%" stopColor="#0066FF" stopOpacity="0.7"/>
+                        <stop offset="80%" stopColor="#4A00E0" stopOpacity="0.5"/>
+                        <stop offset="100%" stopColor="#FF0080" stopOpacity="0.6"/>
+                      </linearGradient>
+
+                      {/* 3D Bulge Filter */}
+                      <filter id="organicBulge" x="-50%" y="-50%" width="200%" height="200%">
+                        <feTurbulence type="fractalNoise" 
+                                      baseFrequency="0.008 0.012" 
+                                      numOctaves="3" 
+                                      seed="42">
+                          <animate attributeName="baseFrequency"
+                                   values="0.008 0.012; 0.011 0.008; 0.008 0.012"
+                                   dur="18s" repeatCount="indefinite"/>
+                        </feTurbulence>
+                        <feDisplacementMap in="SourceGraphic" scale="35"/>
+                      </filter>
+
+                      {/* Subtle Glow */}
+                      <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="15" result="coloredBlur"/>
+                        <feMerge>
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    {/* Main Organic Shape */}
+                    <g filter="url(#organicBulge)">
+                      <path d="M400 100 
+                               C550 120, 680 200, 700 350
+                               C720 500, 650 650, 500 680
+                               C400 700, 300 680, 200 650
+                               C100 500, 80 350, 100 200
+                               C120 150, 250 80, 400 100 Z" 
+                            fill="url(#deepBlueCore)" 
+                            filter="url(#softGlow)"/>
+                    </g>
+
+                    {/* Organic Edge Enhancement */}
+                    <path d="M400 120 
+                             C530 140, 660 210, 680 350
+                             C700 480, 640 630, 500 660
+                             C410 680, 320 660, 220 630
+                             C120 480, 100 350, 120 210
+                             C140 160, 270 100, 400 120 Z" 
+                          fill="none" 
+                          stroke="url(#organicEdge)" 
+                          strokeWidth="3" 
+                          opacity="0.6">
+                      <animate attributeName="stroke-width" 
+                               values="3;5;3" 
+                               dur="12s" 
+                               repeatCount="indefinite"/>
+                    </path>
+
+                    {/* Intricate Dot Patterns - Following Organic Curves */}
+                    <g fill="url(#dotGrad)" opacity="0.8">
+                      {/* Inner curve dots */}
+                      <circle cx="400" cy="250" r="1.5"><animate attributeName="opacity" values="0.8;0.3;0.8" dur="8s" repeatCount="indefinite"/></circle>
+                      <circle cx="420" cy="280" r="1"><animate attributeName="opacity" values="0.6;0.9;0.6" dur="9s" repeatCount="indefinite"/></circle>
+                      <circle cx="380" cy="300" r="1.2"><animate attributeName="opacity" values="0.7;0.4;0.7" dur="7s" repeatCount="indefinite"/></circle>
+                      <circle cx="450" cy="320" r="0.8"><animate attributeName="opacity" values="0.5;0.8;0.5" dur="10s" repeatCount="indefinite"/></circle>
+                      <circle cx="350" cy="350" r="1.3"><animate attributeName="opacity" values="0.8;0.2;0.8" dur="11s" repeatCount="indefinite"/></circle>
+                      
+                      {/* Mid-layer dots */}
+                      <circle cx="300" cy="200" r="1.1"><animate attributeName="opacity" values="0.6;0.9;0.6" dur="13s" repeatCount="indefinite"/></circle>
+                      <circle cx="500" cy="230" r="0.9"><animate attributeName="opacity" values="0.7;0.3;0.7" dur="6s" repeatCount="indefinite"/></circle>
+                      <circle cx="280" cy="400" r="1.4"><animate attributeName="opacity" values="0.8;0.5;0.8" dur="14s" repeatCount="indefinite"/></circle>
+                      <circle cx="520" cy="420" r="1"><animate attributeName="opacity" values="0.5;0.8;0.5" dur="9s" repeatCount="indefinite"/></circle>
+                      <circle cx="200" cy="300" r="1.2"><animate attributeName="opacity" values="0.7;0.4;0.7" dur="12s" repeatCount="indefinite"/></circle>
+                      
+                      {/* Outer edge dots */}
+                      <circle cx="150" cy="250" r="0.8"><animate attributeName="opacity" values="0.4;0.7;0.4" dur="15s" repeatCount="indefinite"/></circle>
+                      <circle cx="650" cy="280" r="1"><animate attributeName="opacity" values="0.6;0.3;0.6" dur="8s" repeatCount="indefinite"/></circle>
+                      <circle cx="180" cy="500" r="1.1"><animate attributeName="opacity" values="0.8;0.4;0.8" dur="10s" repeatCount="indefinite"/></circle>
+                      <circle cx="620" cy="520" r="0.9"><animate attributeName="opacity" values="0.5;0.9;0.5" dur="11s" repeatCount="indefinite"/></circle>
+                      
+                      {/* Purple heartbeat accents */}
+                      <circle cx="400" cy="350" r="2" fill="#FF0080" opacity="0.6">
+                        <animate attributeName="r" values="2;3.5;2" dur="4s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4s" repeatCount="indefinite"/>
+                      </circle>
+                      <circle cx="380" cy="380" r="1.5" fill="#FF0080" opacity="0.4">
+                        <animate attributeName="r" values="1.5;2.8;1.5" dur="5s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="5s" repeatCount="indefinite"/>
+                      </circle>
+                    </g>
+                  </svg>
+                </div>
               </div>
               
               {/* Donna's Identity */}
