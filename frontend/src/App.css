@@ -4661,7 +4661,7 @@ body::before {
   margin: 0 auto;
   padding: 0 2rem 2rem;
   min-height: calc(100vh - 80px);
-  background: #000000;
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .health-grid {
