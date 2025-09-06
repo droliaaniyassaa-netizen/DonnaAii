@@ -1123,7 +1123,7 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
                     # Initialize Donna chat for event creation response
                     chat = LlmChat(
                         api_key=openai_api_key,
-                        session_id=request.session_id,
+                        session_id=user_session_id,
                         system_message=DONNA_SYSTEM_MESSAGE
                     ).with_model("openai", "gpt-4o-mini")
                     
