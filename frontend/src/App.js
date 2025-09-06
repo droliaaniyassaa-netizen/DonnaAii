@@ -38,6 +38,14 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const App = () => {
+  // Simple routing - check if we're on profile page
+  const isProfilePage = window.location.pathname === '/profile';
+  
+  // If on profile page, show ProfilePage component
+  if (isProfilePage) {
+    return <ProfilePage onAuthComplete={handleAuthSuccess} onLogout={handleLogout} />;
+  }
+  
   // Chat state
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
