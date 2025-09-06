@@ -779,12 +779,12 @@ body::before {
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 2rem;
+  padding: 0.5rem;
 }
 
 .organic-orb-svg {
-  width: min(70vw, 450px);
-  height: min(70vw, 450px);
+  width: min(50vw, 320px);
+  height: min(50vw, 320px);
   /* Much darker blue glow with subtle purple accents */
   filter: drop-shadow(0 0 40px rgba(0, 26, 77, 0.6))
           drop-shadow(0 0 80px rgba(45, 0, 112, 0.3))
