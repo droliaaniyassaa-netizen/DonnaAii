@@ -1100,7 +1100,7 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
                     return await chat_with_donna(request, user_session_id)
                 else:
                     # User is responding with notes for previous event
-                    await handle_event_notes_response(request.message, context, request.session_id)
+                    await handle_event_notes_response(request.message, context, user_session_id)
                     donna_response = "Perfect! I've added those notes to your event. You're all set!"
                     
                     # Clear the context
