@@ -1429,11 +1429,21 @@ const App = () => {
 
 
 
-  // Simple routing - check if we're on profile page
-  const isProfilePage = window.location.pathname === '/profile';
+  // Simple routing - check if we're on profile page (hash-based routing)
+  const [currentRoute, setCurrentRoute] = useState(window.location.hash.replace('#', '') || 'main');
+  
+  // Listen for hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      setCurrentRoute(window.location.hash.replace('#', '') || 'main');
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
   
   // If on profile page, show ProfilePage component
-  if (isProfilePage) {
+  if (currentRoute === 'profile' || window.location.hash.includes('session_id')) {
     return <ProfilePage onAuthComplete={handleAuthSuccess} onLogout={handleLogout} />;
   }
 
