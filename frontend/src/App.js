@@ -121,17 +121,9 @@ const App = () => {
 
   useEffect(scrollToBottom, [messages]);
 
-  // Load initial data
+  // Check authentication on app load
   useEffect(() => {
-    loadChatHistory();
-    loadEvents();
-    loadCareerGoals();
-    loadHealthEntries();
-    loadHealthGoals();
-    loadHealthAnalytics();
-    loadHealthTargets();
-    loadDailyHealthStats(); // Load chat-based health stats
-    loadWeeklyAnalytics(); // Load weekly analytics
+    checkAuthStatus();
     initializeNotifications();
     
     // Initialize default date/time for new entries
