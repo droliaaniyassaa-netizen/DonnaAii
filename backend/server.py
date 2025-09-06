@@ -1028,7 +1028,7 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
         user_message = ChatMessage(
             message=request.message,
             is_user=True,
-            session_id=request.session_id
+            session_id=user_session_id
         )
         await db.chat_messages.insert_one(prepare_for_mongo(user_message.dict()))
         
