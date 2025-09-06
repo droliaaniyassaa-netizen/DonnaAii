@@ -133,6 +133,32 @@ const App = () => {
     setNewHealthEntry(prev => ({ ...prev, date, time: time || '12:00' }));
   }, []);
 
+  // Load app data when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadAppData();
+    }
+  }, [isAuthenticated]);
+
+  // Function to load all app data for authenticated user
+  const loadAppData = async () => {
+    try {
+      await Promise.all([
+        loadChatHistory(),
+        loadEvents(),
+        loadCareerGoals(),
+        loadHealthEntries(),
+        loadHealthGoals(),
+        loadHealthAnalytics(),
+        loadHealthTargets(),
+        loadDailyHealthStats(),
+        loadWeeklyAnalytics()
+      ]);
+    } catch (error) {
+      console.error('Error loading app data:', error);
+    }
+  };
+
   // Initialize notification service worker
   const initializeNotifications = async () => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
