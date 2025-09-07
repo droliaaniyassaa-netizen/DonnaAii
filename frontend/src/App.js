@@ -1402,6 +1402,22 @@ const App = () => {
         onAuthSuccess={handleAuthSuccess}
       />
 
+      {/* Sign In Required Banner - Show when not authenticated and modal is closed */}
+      {!isAuthenticated && !showAuthModal && (
+        <div className="signin-required-banner">
+          <div className="signin-banner-content">
+            <span className="signin-banner-text">Sign in required to use Donna</span>
+            <Button 
+              onClick={() => setShowAuthModal(true)}
+              className="signin-banner-button"
+              size="sm"
+            >
+              Sign In
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Always show app content, but protect specific features */}
       
       {/* Login Indicator - Subtle and classy above header nav */}
