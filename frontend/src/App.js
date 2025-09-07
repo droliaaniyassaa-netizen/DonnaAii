@@ -1754,10 +1754,16 @@ const App = () => {
                 <div className="events-grid">
                   {events
                     .filter(event => {
-                      // Show all non-today events, plus today events that aren't the next upcoming one
-                      if (!isEventToday(event)) return true;
+                      const now = new Date();
+                      const eventDate = new Date(event.datetime_utc);
+                      const next24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
                       
-                      // For today's events, show them if they're not the next upcoming event
+                      // Only show events within the next 24 hours (no past events)
+                      return eventDate >= now && eventDate <= next24Hours;
+                    })
+                    .sort((a, b) => new Date(a.datetime_utc) - new Date(b.datetime_utc)) // Sort soonest first
+                    .filter(event => {
+                      // Exclude the event that's already shown in Today section
                       const todayEvents = events.filter(e => isEventToday(e));
                       const nextEvent = todayEvents
                         .filter(e => new Date(e.datetime_utc) >= new Date())
