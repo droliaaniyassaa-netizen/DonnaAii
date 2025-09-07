@@ -36,14 +36,13 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
     setIsLoading(true);
     
     try {
-      // Validate form data
-      if (!formData.username || !formData.email || !formData.password) {
+      // Validate form data (simplified - just email + password)
+      if (!formData.email || !formData.password) {
         console.log('❌ Validation failed - missing fields:', { 
-          username: !!formData.username, 
           email: !!formData.email, 
           password: !!formData.password 
         });
-        alert('Please fill in all fields.');
+        alert('Please fill in both email and password.');
         return;
       }
       
