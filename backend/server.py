@@ -2813,7 +2813,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_origins=[
         "http://localhost:3000",
-        "https://auth-ui-center.preview.emergentagent.com"
+        "https://donna-ai-assist.preview.emergentagent.com"
     ],
     allow_methods=["*"],
     allow_headers=["*"],

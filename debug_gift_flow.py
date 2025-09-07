@@ -7,7 +7,7 @@ import time
 def test_gift_detection():
     """Debug the gift detection specifically"""
     
-    base_url = "https://auth-ui-center.preview.emergentagent.com"
+    base_url = "https://donna-ai-assist.preview.emergentagent.com"
     api_url = f"{base_url}/api"
     
     # Test a very clear birthday message
@@ -60,7 +60,7 @@ def test_gift_detection():
 def test_multiple_messages():
     """Test multiple gift messages to see patterns"""
     
-    base_url = "https://auth-ui-center.preview.emergentagent.com"
+    base_url = "https://donna-ai-assist.preview.emergentagent.com"
     api_url = f"{base_url}/api"
     
     messages = [
