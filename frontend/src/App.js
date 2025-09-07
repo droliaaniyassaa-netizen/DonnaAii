@@ -1437,7 +1437,7 @@ const App = () => {
         <Settings className="settings-icon" />
       </Button>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="main-tabs">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className={`main-tabs ${!isAuthenticated ? 'app-disabled' : ''}`}>
         <TabsList className="tabs-list">
           <TabsTrigger value="chat" className="tab-trigger">
             <MessageCircle className="tab-icon" />
