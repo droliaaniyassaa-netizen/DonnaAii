@@ -1212,7 +1212,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
         donna_message = ChatMessage(
             message=donna_response,
             is_user=False,
-            session_id=user_session_id
+            session_id=current_user.id
         )
         await db.chat_messages.insert_one(prepare_for_mongo(donna_message.dict()))
         
