@@ -172,8 +172,10 @@ const App = () => {
         console.log('User not authenticated - browse mode active');
         setIsAuthenticated(false);
         setUser(null);
+        setShowAuthModal(true); // CRITICAL FIX: Show auth modal for unauthenticated users
       } else {
         console.error('Auth check error:', error);
+        setShowAuthModal(true); // Show auth modal for any auth errors
       }
     } finally {
       setAuthLoading(false);
