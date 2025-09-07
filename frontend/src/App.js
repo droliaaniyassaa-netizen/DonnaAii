@@ -1613,19 +1613,19 @@ const App = () => {
                   className="donna-example-circle"
                   onClick={() => autoSendExample("Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym")}
                 >
-                  "Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym"
+                  Schedule a meeting with Ethan tomorrow at 6pm, make sure I have time for gym
                 </div>
                 <div 
                   className="donna-example-circle"
                   onClick={() => autoSendExample("I ate a bowl of pasta with chicken for lunch")}
                 >
-                  "I ate a bowl of pasta with chicken for lunch"
+                  I ate a bowl of pasta with chicken for lunch
                 </div>
                 <div 
                   className="donna-example-circle"
                   onClick={() => autoSendExample("My mom's birthday is coming up")}
                 >
-                  "My mom's birthday is coming up"
+                  My mom's birthday is coming up
                 </div>
               </div>
             </div>
