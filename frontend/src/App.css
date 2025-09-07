@@ -3548,6 +3548,26 @@ body::before {
   backdrop-filter: blur(10px) !important;
   font-weight: 500 !important;
   padding: 0.5rem 1.5rem !important;
+/* Disable app when not authenticated */
+.app-disabled {
+  pointer-events: none;
+  opacity: 0.4;
+  filter: blur(1px);
+  transition: all 0.3s ease;
+}
+
+.app-disabled::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 500;
+  pointer-events: all;
+  cursor: not-allowed;
+}
   border-radius: 8px !important;
   transition: all 0.2s ease !important;
 }
