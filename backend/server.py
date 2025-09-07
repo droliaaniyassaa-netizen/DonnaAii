@@ -1201,7 +1201,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
                         # Normal conversation flow - no event created, not waiting for notes
                         chat = LlmChat(
                             api_key=openai_api_key,
-                            session_id=user_session_id,
+                            session_id=current_user.id,
                             system_message=DONNA_SYSTEM_MESSAGE
                         ).with_model("openai", "gpt-4o-mini")
                         
