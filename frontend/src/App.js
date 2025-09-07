@@ -189,7 +189,6 @@ const App = () => {
     setEvents([]);
     setCareerGoals([]);
     setHealthStats({ calories: 0, protein: 0, hydration: 0, sleep: 0 });
-    setMessageCount(0);
     
     // Clear any localStorage preview data
     localStorage.removeItem('donna_preview_messages');
