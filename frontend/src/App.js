@@ -1188,7 +1188,7 @@ const App = () => {
           console.log(`🔄 Performing daily reset: ${statsDate} → ${today} (${currentHour}:00)`);
           
           // Trigger reset API
-          await axios.post(`${API}/health/stats/reset/default`);
+          await axios.post(`${API}/health/stats/reset/${sessionId}`);
           console.log('✅ Daily health stats reset completed');
           
           return true; // Reset was performed
