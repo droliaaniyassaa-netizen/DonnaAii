@@ -2079,7 +2079,7 @@ body::before {
   padding: 1.5rem;
   width: 100%;
   max-width: 700px;
-  margin: 0 auto;
+  margin: -10px auto 0 auto; /* Move up by 2.5mm (≈10px) */
   /* ENSURE CONTAINER ALLOWS INTERACTION */
   pointer-events: auto !important;
   position: relative !important;
