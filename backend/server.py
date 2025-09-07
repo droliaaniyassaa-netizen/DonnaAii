@@ -1886,7 +1886,7 @@ Create a strategic 5-step action plan that's specific to this exact goal. Focus 
         raise HTTPException(status_code=500, detail=f"Failed to create career goal: {str(e)}")
 
 @api_router.get("/career/goals", response_model=List[CareerGoal])
-async def get_career_goals():
+async def get_career_goals(current_user: User = Depends(require_auth)):
     goals = await db.career_goals.find().sort("created_at", -1).to_list(100)
     return [CareerGoal(**goal) for goal in goals]
 
