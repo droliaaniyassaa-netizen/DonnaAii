@@ -527,6 +527,7 @@ test_plan:
   completed_focus:
     - "Web Push Notification System Implementation"
     - "Web Push Notification Frontend Integration"
+    - "Manual Authentication System with username/password registration and login"
 
 agent_communication:
   - agent: "main"
