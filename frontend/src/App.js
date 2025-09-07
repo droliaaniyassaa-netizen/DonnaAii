@@ -406,8 +406,11 @@ const App = () => {
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
     
-    // Check authentication before sending message
-    if (!requireAuthForAction('send message')) return;
+    // Increment message count
+    setMessageCount(prev => prev + 1);
+    
+    // Check if we should show auth after 3 messages
+    if (!checkAuthAfterMessages()) return;
     
     setIsLoading(true);
     
