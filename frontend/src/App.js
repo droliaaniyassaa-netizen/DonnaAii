@@ -167,10 +167,14 @@ const App = () => {
         setShowAuthModal(true);
       }
     } catch (error) {
-      console.log('Not authenticated:', error.response?.status);
-      setUser(null);
-      setIsAuthenticated(false);
-      // Don't show auth modal automatically - let users browse first
+      // 401 is expected for unauthenticated users - browse mode active
+      if (error.response?.status === 401) {
+        console.log('User not authenticated - browse mode active');
+        setIsAuthenticated(false);
+        setUser(null);
+      } else {
+        console.error('Auth check error:', error);
+      }
     } finally {
       setAuthLoading(false);
     }
