@@ -238,12 +238,6 @@ const App = () => {
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
     
-    // Increment message count
-    setMessageCount(prev => prev + 1);
-    
-    // Check if we should show auth after 3 messages
-    if (!checkAuthAfterMessages()) return;
-    
     setIsLoading(true);
     
     try {
