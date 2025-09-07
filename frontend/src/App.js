@@ -337,6 +337,25 @@ const App = () => {
     return true;
   };
 
+  // Helper function to get user initials for login indicator
+  const getUserInitials = (user) => {
+    if (!user) return '';
+    
+    if (user.name) {
+      const names = user.name.split(' ');
+      if (names.length >= 2) {
+        return (names[0][0] + names[1][0]).toUpperCase();
+      }
+      return names[0][0].toUpperCase();
+    }
+    
+    if (user.email) {
+      return user.email[0].toUpperCase();
+    }
+    
+    return 'U'; // fallback
+  };
+
   // Authentication functions
   const checkAuthStatus = async () => {
     try {
