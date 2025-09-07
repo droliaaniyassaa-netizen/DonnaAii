@@ -61,10 +61,6 @@ const App = () => {
     sleep: 7.5
   });
 
-  // Notification states
-  const [notificationPermission, setNotificationPermission] = useState('default');
-  const [hasAskedPermission, setHasAskedPermission] = useState(false);
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [healthTargets, setHealthTargets] = useState({
     calories: 2200,
     protein: 120,
