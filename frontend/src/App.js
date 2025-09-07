@@ -316,9 +316,12 @@ const App = () => {
     return window.btoa(binary);
   };
 
-  // Helper function to check auth before actions
-  const requireAuthForAction = (actionName) => {
-    if (!isAuthenticated) {
+  // Track message count for auth timing
+  const [messageCount, setMessageCount] = useState(0);
+
+  // Helper function to check auth after 3 messages
+  const checkAuthAfterMessages = () => {
+    if (!isAuthenticated && messageCount >= 2) { // Show after 3rd message (0,1,2)
       setShowAuthModal(true);
       return false;
     }
