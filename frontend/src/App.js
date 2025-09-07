@@ -1170,8 +1170,9 @@ const App = () => {
       // Get current local time
       const currentHour = now.getHours();
       
-      // First, get existing stats to check the date
-      const response = await axios.get(`${API}/health/stats/default`);
+      // First, get existing stats to check the date  
+      const sessionId = user?.id || 'default';
+      const response = await axios.get(`${API}/health/stats/${sessionId}`);
       const existingStats = response.data;
       
       if (existingStats && existingStats.date) {
