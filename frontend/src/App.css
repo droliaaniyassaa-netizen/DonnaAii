@@ -800,8 +800,9 @@ body::before {
 }
 
 .donna-consciousness.thinking .organic-orb-svg {
-  filter: drop-shadow(0 0 50px rgba(255, 0, 128, 0.6))
-          drop-shadow(0 0 100px rgba(45, 0, 112, 0.4))
+  /* Removed jarring red light - keep beautiful blue orb */
+  filter: drop-shadow(0 0 50px rgba(0, 170, 255, 0.6))
+          drop-shadow(0 0 100px rgba(45, 112, 255, 0.4))
           drop-shadow(0 25px 70px rgba(0, 0, 0, 0.5));
 }
 
