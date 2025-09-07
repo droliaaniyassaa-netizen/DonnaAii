@@ -1639,13 +1639,8 @@ async def logout(request: Request, response: Response, current_user: User = Depe
 
 @api_router.post("/auth/register", response_model=AuthResponse)
 async def register_manual_user(user_data: UserRegister, response: Response):
-    """Register a new user with username and password"""
+    """Register a new user with email and password"""
     try:
-        # Check if username already exists
-        existing_user = await db.users.find_one({"username": user_data.username})
-        if existing_user:
-            raise HTTPException(status_code=400, detail="Username already exists")
-        
         # Check if email already exists
         existing_email = await db.users.find_one({"email": user_data.email})
         if existing_email:
@@ -1654,11 +1649,14 @@ async def register_manual_user(user_data: UserRegister, response: Response):
         # Hash password
         password_hash = hash_password(user_data.password)
         
+        # Generate username from email (use email prefix as display name)
+        email_username = user_data.email.split('@')[0]
+        
         # Create new user
         user = User(
             email=user_data.email,
-            name=user_data.username,  # Use username as display name initially
-            username=user_data.username,
+            name=email_username,  # Use email prefix as display name
+            username=None,  # No username for email-based auth
             auth_provider="manual",
             password_hash=password_hash,
             emergent_user_id=None
@@ -1711,16 +1709,16 @@ async def register_manual_user(user_data: UserRegister, response: Response):
 
 @api_router.post("/auth/login", response_model=AuthResponse) 
 async def login_manual_user(user_data: UserLogin, response: Response):
-    """Login user with username and password"""
+    """Login user with email and password"""
     try:
-        # Find user by username
-        user_doc = await db.users.find_one({"username": user_data.username, "auth_provider": "manual"})
+        # Find user by email
+        user_doc = await db.users.find_one({"email": user_data.email, "auth_provider": "manual"})
         if not user_doc:
-            raise HTTPException(status_code=401, detail="Invalid username or password")
+            raise HTTPException(status_code=401, detail="Invalid email or password")
         
         # Verify password
         if not verify_password(user_data.password, user_doc["password_hash"]):
-            raise HTTPException(status_code=401, detail="Invalid username or password")
+            raise HTTPException(status_code=401, detail="Invalid email or password")
         
         # Create user object (without password hash)
         user_doc.pop('password_hash', None)
