@@ -2831,6 +2831,7 @@ def main():
     
     # Run all test suites
     test_suites = [
+        tester.test_manual_authentication_system,  # NEW: Manual Authentication System testing
         tester.test_chat_functionality,
         tester.test_context_processing,
         tester.test_calendar_crud,
