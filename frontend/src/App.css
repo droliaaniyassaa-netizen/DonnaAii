@@ -2189,18 +2189,31 @@ body::before {
 }
 
 .send-button {
-  background: linear-gradient(135deg, rgba(120, 119, 198, 0.8), rgba(120, 119, 198, 0.6));
-  border: 1px solid rgba(120, 119, 198, 0.3);
-  border-radius: 12px;
-  padding: 0.5rem 1.5rem;
-  color: white;
-  font-weight: 500;
+  /* Remove clunky purple block - clean floating icon */
+  border: none;
+  background: transparent;
+  padding: 8px;
+  color: rgba(255, 255, 255, 0.8);
+  
+  /* Subtle magical glow around the arrow icon (matching voice toggle) */
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) 
+          drop-shadow(0 0 4px rgba(135, 206, 250, 0.2));
+  
   transition: all 0.3s ease;
+  cursor: pointer;
+  
   /* ENSURE BUTTON IS CLICKABLE */
   pointer-events: auto !important;
-  cursor: pointer !important;
   z-index: 1001 !important;
   position: relative !important;
+}
+
+.send-button:hover {
+  color: rgba(255, 255, 255, 0.95);
+  
+  /* Enhanced glow on hover (matching voice toggle) */
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)) 
+          drop-shadow(0 0 6px rgba(135, 206, 250, 0.3));
 }
 
 .send-button:hover:not(:disabled) {
