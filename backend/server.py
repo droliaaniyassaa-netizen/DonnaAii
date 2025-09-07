@@ -1071,7 +1071,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
         
         # Check if we're waiting for notes from a previous event creation
         context = await db.conversation_context.find_one(
-            {"session_id": user_session_id, "waiting_for_notes": True}
+            {"session_id": current_user.id, "waiting_for_notes": True}
         )
         
         donna_response = ""
