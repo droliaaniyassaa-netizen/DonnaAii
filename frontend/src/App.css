@@ -2030,8 +2030,8 @@ body::before {
   align-items: flex-end;
   gap: 0.5rem;
   margin-bottom: 1rem;
-  /* Use more horizontal space */
-  padding: 0 1rem;
+  /* Minimal edge padding - maximize horizontal space */
+  padding: 0 0.5rem;
 }
 
 .user-message {
@@ -2043,7 +2043,7 @@ body::before {
 }
 
 .message-content {
-  max-width: 75%; /* Increased from 70% to use more space */
+  max-width: 85%; /* Increased from 75% to use even more space */
   padding: 1rem 1.25rem;
   border-radius: 18px;
   position: relative;
