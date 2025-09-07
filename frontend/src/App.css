@@ -2090,9 +2090,9 @@ body::before {
   resize: none;
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 1rem 1.25rem;
+  padding: 0.75rem 1.25rem; /* Reduced vertical padding */
   font-size: 1rem;
-  min-height: 60px;
+  min-height: 45px; /* Reduced from 60px to 45px */
   
   /* 3D Glassmorphic Effects */
   background: linear-gradient(145deg,
