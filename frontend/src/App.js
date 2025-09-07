@@ -1781,8 +1781,13 @@ const App = () => {
                       />
                     ))}
                   {events.filter(event => {
-                    // Count events that would be shown (same logic as above)
-                    if (!isEventToday(event)) return true;
+                    const now = new Date();
+                    const eventDate = new Date(event.datetime_utc);
+                    const next24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+                    
+                    // Count events within next 24 hours (excluding Today section event)
+                    if (eventDate < now || eventDate > next24Hours) return false;
+                    
                     const todayEvents = events.filter(e => isEventToday(e));
                     const nextEvent = todayEvents
                       .filter(e => new Date(e.datetime_utc) >= new Date())
