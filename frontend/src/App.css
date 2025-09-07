@@ -2128,9 +2128,32 @@ body::before {
 }
 
 .chat-input:focus {
-  border-color: rgba(120, 119, 198, 0.5);
-  box-shadow: 0 0 0 3px rgba(120, 119, 198, 0.1);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  
+  /* Enhanced Liquid Glass Effect */
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.06) 30%,
+    rgba(255, 255, 255, 0.03) 60%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(30px); /* Increased from 20px */
+  
+  /* Sophisticated Glass Focus Shadows */
+  box-shadow: 
+    /* Enhanced outer glow */
+    0 0 25px rgba(255, 255, 255, 0.04),
+    /* Deeper main shadow */
+    0 12px 35px rgba(0, 0, 0, 0.25),
+    /* Enhanced mid shadow */
+    0 6px 18px rgba(0, 0, 0, 0.18),
+    /* Brighter inner highlight */
+    inset 0 1px 3px rgba(255, 255, 255, 0.15),
+    /* Deeper inner depth */
+    inset 0 -1px 4px rgba(0, 0, 0, 0.08),
+    /* Enhanced rim light */
+    inset 0 0 2px rgba(255, 255, 255, 0.12);
+  
   outline: none;
 }
 
