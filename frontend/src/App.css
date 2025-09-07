@@ -8636,10 +8636,21 @@ body::before {
   margin-bottom: 2rem;
 }
 
-.auth-description p {
-  color: rgba(255, 255, 255, 0.7);
+.auth-main-message {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.auth-sub-message {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
   line-height: 1.5;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
+  text-align: center;
 }
 
 .auth-methods {
