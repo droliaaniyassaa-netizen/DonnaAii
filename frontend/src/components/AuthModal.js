@@ -9,7 +9,6 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
   const [authMode, setAuthMode] = useState('google'); // 'google' or 'manual'
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: ''
   });
