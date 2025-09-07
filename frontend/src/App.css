@@ -2164,13 +2164,28 @@ body::before {
 }
 
 .voice-button {
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Remove shabby circle - clean floating icon */
+  border: none;
+  background: transparent;
+  padding: 8px;
+  width: auto;
+  height: auto;
   color: rgba(255, 255, 255, 0.8);
+  
+  /* Subtle magical glow around the icon */
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) 
+          drop-shadow(0 0 4px rgba(135, 206, 250, 0.2));
+  
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.voice-button:hover {
+  color: rgba(255, 255, 255, 0.95);
+  
+  /* Enhanced glow on hover */
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)) 
+          drop-shadow(0 0 6px rgba(135, 206, 250, 0.3));
 }
 
 .send-button {
