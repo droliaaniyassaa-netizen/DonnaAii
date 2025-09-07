@@ -44,7 +44,7 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
       
       // Call backend register endpoint
       const API = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
-      const response = await fetch(`${API}/auth/register`, {
+      const response = await fetch(`${API}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
