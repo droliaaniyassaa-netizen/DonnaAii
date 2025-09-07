@@ -276,8 +276,6 @@ const App = () => {
       const response = await axios.post(`${API}/chat`, {
         message: inputMessage,
         event_created: eventCreated // Let Donna know if an event was created
-      }, {
-        withCredentials: true // Include authentication cookies
       });
       
       // Add Donna's response to chat
