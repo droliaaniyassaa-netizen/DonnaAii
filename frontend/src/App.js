@@ -1415,13 +1415,13 @@ const App = () => {
             <Calendar className="tab-icon" />
             Calendar
           </TabsTrigger>
-          <TabsTrigger value="career" className="tab-trigger">
-            <Target className="tab-icon" />
-            Career
-          </TabsTrigger>
           <TabsTrigger value="health" className="tab-trigger">
             <Heart className="tab-icon" />
             Health
+          </TabsTrigger>
+          <TabsTrigger value="career" className="tab-trigger">
+            <Target className="tab-icon" />
+            Career
           </TabsTrigger>
         </TabsList>
 
