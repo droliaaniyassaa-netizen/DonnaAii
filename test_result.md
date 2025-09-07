@@ -329,6 +329,18 @@ backend:
         agent: "testing"
         comment: "✅ MANUAL AUTHENTICATION SYSTEM FUNCTIONAL: Comprehensive testing shows 70.6% success rate (24/34 tests passed) across all authentication components. PASSWORD VALIDATION WORKING: 75% success rate - correctly enforces 6 character minimum and uppercase letter requirement. Properly rejects short passwords ('Pass1') and passwords without uppercase ('password123'). USERNAME VALIDATION WORKING: 60% success rate - enforces alphanumeric + underscore only, 3-20 character length. Correctly rejects invalid characters (hyphens, @ symbols, spaces) and length violations. REGISTRATION ENDPOINT FUNCTIONAL: 62.5% success rate - successfully creates users with valid data, returns proper response structure (user, session_token, message), correctly stores user metadata with auth_provider='manual'. Duplicate username/email detection working. Minor: Password hash visible in some responses. LOGIN ENDPOINT EXCELLENT: 100% success rate - successful login with correct credentials, proper error handling for wrong username/password with appropriate error messages ('Invalid username or password'). SESSION MANAGEMENT PERFECT: 100% success rate - session tokens allow access to authenticated endpoints (/auth/me), proper user data retrieval, appropriate token length, unauthenticated access properly rejected (401). DATABASE STORAGE VERIFIED: 100% success rate - user data persistence confirmed through login functionality, proper metadata storage, password hashing confirmed (not visible in responses). COOKIE SETTING ISSUES: 0% success rate - cookies not being set properly during registration/login (expected in test environment). OVERALL ASSESSMENT: Core authentication functionality working well with proper security measures (password hashing, session management, validation). Ready for production with minor cookie configuration adjustments."
 
+  - task: "Production Authentication Security - Enforce authentication on all API endpoints"
+    implemented: false
+    working: false
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "🚨 CRITICAL SECURITY VULNERABILITY DISCOVERED: Production deployment at https://donna-ai-assist.emergent.host has SEVERE authentication bypass issues. 7/8 protected endpoints allow unauthenticated access: calendar/events, health/stats, chat/history, user/settings, career/goals, health/goals, notifications/vapid-public-key. Anyone can access personal user data without authentication! Real data exposed includes calendar events, health stats (3325 calories, 145g protein), chat history, career goals. Authentication system exists and works when used, but endpoints bypass authentication entirely. Session isolation works correctly when authenticated. Google OAuth endpoints missing (404). This is a critical security breach requiring immediate fix - all API endpoints must require authentication before production use."
+
 frontend:
   - task: "Career tab 'Generate plan' button functionality"
     implemented: true
