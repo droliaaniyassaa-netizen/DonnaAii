@@ -1646,6 +1646,131 @@ async def logout(request: Request, response: Response, current_user: User = Depe
         logging.error(f"Logout error: {str(e)}")
         raise HTTPException(status_code=500, detail="Logout failed")
 
+@api_router.post("/auth/register", response_model=AuthResponse)
+async def register_manual_user(user_data: UserRegister, response: Response):
+    """Register a new user with username and password"""
+    try:
+        # Check if username already exists
+        existing_user = await db.users.find_one({"username": user_data.username})
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Username already exists")
+        
+        # Check if email already exists
+        existing_email = await db.users.find_one({"email": user_data.email})
+        if existing_email:
+            raise HTTPException(status_code=400, detail="Email already exists")
+        
+        # Hash password
+        password_hash = hash_password(user_data.password)
+        
+        # Create new user
+        user = User(
+            email=user_data.email,
+            name=user_data.username,  # Use username as display name initially
+            username=user_data.username,
+            auth_provider="manual",
+            password_hash=password_hash,
+            emergent_user_id=None
+        )
+        
+        # Store user in database
+        user_dict = user.dict()
+        await db.users.insert_one(user_dict)
+        
+        # Generate session token and create session
+        session_token = secrets.token_urlsafe(32)
+        session = UserSession(
+            user_id=user.id,
+            session_token=session_token,
+            emergent_session_id="",  # Empty for manual auth
+            expires_at=datetime.now(timezone.utc) + timedelta(days=7)
+        )
+        
+        # Store session
+        session_dict = session.dict()
+        await db.user_sessions.insert_one(session_dict)
+        
+        # Set secure HttpOnly cookie
+        response.set_cookie(
+            key="session_token",
+            value=session_token,
+            httponly=True,
+            secure=True,
+            samesite="none",
+            max_age=7 * 24 * 60 * 60,  # 7 days
+            path="/"
+        )
+        
+        # Remove password hash from response
+        user_response = user.dict()
+        user_response.pop('password_hash', None)
+        user_clean = User(**user_response)
+        
+        return AuthResponse(
+            user=user_clean,
+            session_token=session_token,
+            message="Registration successful"
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Registration error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Registration failed")
+
+@api_router.post("/auth/login", response_model=AuthResponse) 
+async def login_manual_user(user_data: UserLogin, response: Response):
+    """Login user with username and password"""
+    try:
+        # Find user by username
+        user_doc = await db.users.find_one({"username": user_data.username, "auth_provider": "manual"})
+        if not user_doc:
+            raise HTTPException(status_code=401, detail="Invalid username or password")
+        
+        # Verify password
+        if not verify_password(user_data.password, user_doc["password_hash"]):
+            raise HTTPException(status_code=401, detail="Invalid username or password")
+        
+        # Create user object (without password hash)
+        user_doc.pop('password_hash', None)
+        user = User(**user_doc)
+        
+        # Generate new session token
+        session_token = secrets.token_urlsafe(32)
+        session = UserSession(
+            user_id=user.id,
+            session_token=session_token,
+            emergent_session_id="",  # Empty for manual auth
+            expires_at=datetime.now(timezone.utc) + timedelta(days=7)
+        )
+        
+        # Store session
+        session_dict = session.dict()
+        await db.user_sessions.insert_one(session_dict)
+        
+        # Set secure HttpOnly cookie
+        response.set_cookie(
+            key="session_token",
+            value=session_token,
+            httponly=True,
+            secure=True,
+            samesite="none",
+            max_age=7 * 24 * 60 * 60,  # 7 days
+            path="/"
+        )
+        
+        return AuthResponse(
+            user=user,
+            session_token=session_token,
+            message="Login successful"
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Login error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Login failed")
+
 # Career endpoints
 @api_router.post("/career/goals", response_model=CareerGoal)
 async def create_career_goal(goal: CareerGoalCreate):
