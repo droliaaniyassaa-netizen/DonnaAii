@@ -1059,7 +1059,7 @@ async def generate_gift_response(gift_result: GiftFlowResult, amazon_region: str
 
 # Chat endpoints
 @api_router.post("/chat", response_model=ChatResponse)
-async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(get_user_session_id)):
+async def chat_with_donna(request: ChatRequest, current_user: User = Depends(require_auth)):
     try:
         # Store user message
         user_message = ChatMessage(
