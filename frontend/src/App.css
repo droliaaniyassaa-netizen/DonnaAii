@@ -3498,6 +3498,8 @@ body::before {
   border-radius: 20px !important;
   box-shadow: 
     0 35px 80px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
 
 /* Sign In Required Banner */
 .signin-required-banner {
