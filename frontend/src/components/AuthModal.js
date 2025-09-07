@@ -41,88 +41,23 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
               I'd love to remember your plans and progress but without an account I'll forget once this chat ends.
             </p>
             <p className="auth-sub-message">
-              Sign in with Google or a quick username and password, it only takes a moment, and I'll keep tracking your health, saving your goals and managing your schedule always ready to pick up where you left off.
+              Sign in with Google and I'll keep tracking your health, saving your goals and managing your schedule always ready to pick up where you left off.
             </p>
           </div>
 
           <div className="auth-methods">
-            {/* Auth method selector */}
-            <div className="auth-method-selector">
+            {/* Google Auth - Primary and Only Option */}
+            <div className="auth-method-content">
               <Button
-                onClick={() => setAuthMode('google')}
-                variant={authMode === 'google' ? 'default' : 'outline'}
-                className={`method-selector ${authMode === 'google' ? 'active' : ''}`}
+                onClick={handleGoogleAuth}
+                disabled={isLoading}
+                className="auth-button primary"
               >
                 <Mail className="button-icon" />
-                Google
+                {isLoading ? 'Signing in...' : 'Continue with Google'}
               </Button>
-              <Button
-                onClick={() => setAuthMode('manual')}
-                variant={authMode === 'manual' ? 'default' : 'outline'}
-                className={`method-selector ${authMode === 'manual' ? 'active' : ''}`}
-              >
-                <User className="button-icon" />
-                Email
-              </Button>
+              <p className="auth-method-note">Quick and secure</p>
             </div>
-
-            {/* Google Auth */}
-            {authMode === 'google' && (
-              <div className="auth-method-content">
-                <Button
-                  onClick={handleEmergentLogin}
-                  disabled={isLoading}
-                  className="auth-button primary"
-                >
-                  <Mail className="button-icon" />
-                  {isLoading ? 'Signing in...' : 'Continue with Google'}
-                </Button>
-                <p className="auth-method-note">Quick and secure</p>
-              </div>
-            )}
-
-            {/* Manual Auth */}
-            {authMode === 'manual' && (
-              <div className="auth-method-content">
-                <div className="manual-auth-form">
-                  <div className="form-group">
-                    <Input
-                      type="email"
-                      placeholder="Your email"
-                      value={formData.email}
-                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      className="auth-input"
-                    />
-                  </div>
-                  <div className="form-group password-group">
-                    <Input
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="Create a password"
-                      value={formData.password}
-                      onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                      className="auth-input password-input"
-                    />
-                    <Button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="password-toggle"
-                      variant="ghost"
-                    >
-                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                    </Button>
-                  </div>
-                  <Button
-                    onClick={handleManualSignup}
-                    disabled={isLoading || !formData.email || !formData.password}
-                    className="auth-button primary"
-                  >
-                    <User className="button-icon" />
-                    {isLoading ? 'Creating account...' : 'Create Account'}
-                  </Button>
-                </div>
-                <p className="auth-method-note">Takes 30 seconds</p>
-              </div>
-            )}
           </div>
         </div>
       </DialogContent>
