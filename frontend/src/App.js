@@ -357,7 +357,6 @@ const App = () => {
     setUser(userData);
     setIsAuthenticated(true);
     setShowAuthModal(false);
-    setShowProfilePage(false);
     
     // Clear URL parameters
     window.history.replaceState({}, document.title, window.location.pathname);
