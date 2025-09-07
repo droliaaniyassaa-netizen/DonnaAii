@@ -1251,7 +1251,7 @@ async def create_event(event: CalendarEventCreate, current_user: User = Depends(
     # Schedule push notification reminders if reminders are enabled
     if event.reminder:
         await schedule_event_reminders(
-            session_id=user_session_id,
+            session_id=current_user.id,
             event_id=event_id,
             event_title=event.title,
             event_datetime=datetime_utc,
