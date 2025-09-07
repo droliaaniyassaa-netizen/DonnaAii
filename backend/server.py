@@ -1216,7 +1216,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
         )
         await db.chat_messages.insert_one(prepare_for_mongo(donna_message.dict()))
         
-        return ChatResponse(response=donna_response, session_id=user_session_id)
+        return ChatResponse(response=donna_response, session_id=current_user.id)
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Chat error: {str(e)}")
