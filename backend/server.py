@@ -2818,7 +2818,8 @@ app.add_middleware(
     allow_credentials=True,
     allow_origins=[
         "http://localhost:3000",
-        "https://donna-ai-assist.preview.emergentagent.com"
+        "https://donna-ai-assist.preview.emergentagent.com",
+        "https://donna-ai-assist.emergent.host"
     ],
     allow_methods=["*"],
     allow_headers=["*"],
