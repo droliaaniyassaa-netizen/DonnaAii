@@ -1134,7 +1134,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
                     )
                     
                     # Process as new event (recursive call to handle properly)
-                    return await chat_with_donna(request, user_session_id)
+                    return await chat_with_donna(request, current_user)
                 else:
                     # User is responding with notes for previous event
                     await handle_event_notes_response(request.message, context, user_session_id)
