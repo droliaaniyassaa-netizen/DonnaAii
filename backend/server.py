@@ -719,17 +719,8 @@ class AuthResponse(BaseModel):
 
 # Manual Authentication Models
 class UserRegister(BaseModel):
-    username: str
     email: str
     password: str
-    
-    @validator('username')
-    def validate_username(cls, v):
-        if not re.match(r'^[a-zA-Z0-9_]+$', v):
-            raise ValueError('Username can only contain letters, numbers, and underscores')
-        if len(v) < 3 or len(v) > 20:
-            raise ValueError('Username must be between 3 and 20 characters')
-        return v
     
     @validator('password')
     def validate_password(cls, v):
@@ -740,7 +731,7 @@ class UserRegister(BaseModel):
         return v
 
 class UserLogin(BaseModel):
-    username: str
+    email: str  # Changed from username to email
     password: str
 
 # =====================================
