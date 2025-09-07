@@ -525,22 +525,8 @@ const App = () => {
       const response = await axios.get(`${API}/api/calendar/events?session_id=${sessionId}`);
       const allEvents = response.data;
       
-      // Filter out past events for upcoming display  
-      const now = getCurrentInUserTimezone();
-      const upcomingEvents = allEvents.filter(event => {
-        try {
-          const eventDateTime = parseISO(event.datetime_utc);
-          
-          // Show all future events and today's events (more lenient filtering)
-          const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-          return eventDateTime >= todayStart;
-        } catch (error) {
-          console.warn('Error parsing event date:', error);
-          return false;
-        }
-      });
-      
-      setEvents(upcomingEvents);
+      // DEBUG: Show ALL events without any filtering
+      setEvents(allEvents);
     } catch (error) {
       console.error('Error loading events:', error);
     }
