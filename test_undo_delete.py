@@ -11,7 +11,7 @@ import time
 from datetime import datetime, timezone
 
 class HealthUndoDeleteTester:
-    def __init__(self, base_url="https://donna-companion.preview.emergentagent.com"):
+    def __init__(self, base_url="https://auth-ui-center.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
