@@ -37,10 +37,7 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
         <div className="auth-content">
           <div className="auth-description">
             <p className="auth-main-message">
-              I'd love to remember your plans and progress but without an account I'll forget once this chat ends.
-            </p>
-            <p className="auth-sub-message">
-              Sign in with Google and I'll keep tracking your health, saving your goals and managing your schedule always ready to pick up where you left off.
+              Sign in with Google once and your schedule, progress, and goals stay synced. Ready for you to pick up right where you left off.
             </p>
           </div>
 
