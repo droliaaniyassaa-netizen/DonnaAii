@@ -19,11 +19,7 @@ import {
 
 const SettingsModal = ({ 
   open, 
-  onClose, 
-  notificationsEnabled, 
-  setNotificationsEnabled,
-  subscribeUserToPush,
-  unsubscribeUserFromPush 
+  onClose
 }) => {
   const [selectedTimezone, setSelectedTimezone] = useState(getUserTimezone());
   const [searchQuery, setSearchQuery] = useState('');
