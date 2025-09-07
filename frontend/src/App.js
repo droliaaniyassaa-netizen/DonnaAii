@@ -1394,7 +1394,7 @@ const App = () => {
   }
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${!isAuthenticated && !showAuthModal ? 'app-with-banner' : ''}`}>
       {/* Authentication Modal */}
       <AuthModal 
         open={showAuthModal} 
