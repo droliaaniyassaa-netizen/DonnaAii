@@ -1311,7 +1311,7 @@ async def update_event(event_id: str, update_data: CalendarEventUpdate, current_
     
     # Update event in database (only user's own events)
     result = await db.calendar_events.update_one(
-        {"id": event_id, "session_id": user_session_id},
+        {"id": event_id, "session_id": current_user.id},
         {"$set": update_fields}
     )
     
