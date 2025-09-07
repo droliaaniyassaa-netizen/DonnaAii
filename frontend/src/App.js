@@ -36,6 +36,9 @@ import axios from 'axios';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Configure axios to include credentials with all requests
+axios.defaults.withCredentials = true;
+
 const App = () => {
   // Chat state
   const [messages, setMessages] = useState([]);
