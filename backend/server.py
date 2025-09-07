@@ -2058,7 +2058,7 @@ async def delete_health_targets(session_id: str):
 
 # Daily Health Stats endpoints (for chat-based health logging)
 @api_router.get("/health/stats/{session_id}", response_model=DailyHealthStats)
-async def get_daily_health_stats(session_id: str):
+async def get_daily_health_stats(session_id: str, current_user: User = Depends(require_auth)):
     """Get today's health stats for a session"""
     today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
     stats = await db.daily_health_stats.find_one({
