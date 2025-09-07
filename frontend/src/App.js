@@ -525,20 +525,14 @@ const App = () => {
       const response = await axios.get(`${API}/api/calendar/events?session_id=${sessionId}`);
       const allEvents = response.data;
       
-      // Filter out past events for upcoming display (hide 2024 dates and past events)
+      // Filter out past events for upcoming display  
       const now = getCurrentInUserTimezone();
       const upcomingEvents = allEvents.filter(event => {
         try {
           const eventDateTime = parseISO(event.datetime_utc);
-          const currentYear = now.getFullYear();
           
-          // Hide events from previous years (like 2024) and past events
-          if (eventDateTime.getFullYear() < currentYear) {
-            return false;
-          }
-          
-          // Show future events (including today's events that haven't passed)
-          return eventDateTime >= now || isToday(eventDateTime);
+          // Show all future events (regardless of year) and today's events
+          return eventDateTime >= startOfDay(now) || isToday(eventDateTime);
         } catch (error) {
           console.warn('Error parsing event date:', error);
           return false;
