@@ -9022,3 +9022,47 @@ body::before {
   border-color: rgba(255, 255, 255, 0.2);
   color: rgba(255, 255, 255, 0.9);
 }
+
+/* Login Indicator - Subtle and classy */
+.login-indicator {
+  position: fixed;
+  top: 1rem;
+  right: 4.5rem; /* Right of settings button */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(15, 15, 25, 0.9), rgba(25, 25, 35, 0.8));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  cursor: default;
+  transition: all 0.2s ease;
+}
+
+.login-indicator:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile adjustments for login indicator */
+@media (max-width: 768px) {
+  .login-indicator {
+    top: 0.75rem;
+    right: 3.5rem;
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+}
