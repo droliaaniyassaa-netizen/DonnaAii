@@ -1223,7 +1223,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
 
 @api_router.get("/chat/history", response_model=List[ChatMessage])
 async def get_chat_history(current_user: User = Depends(require_auth)):
-    messages = await db.chat_messages.find({"session_id": user_session_id}).sort("timestamp", 1).to_list(100)
+    messages = await db.chat_messages.find({"session_id": current_user.id}).sort("timestamp", 1).to_list(100)
     return [ChatMessage(**msg) for msg in messages]
 
 # Calendar endpoints
