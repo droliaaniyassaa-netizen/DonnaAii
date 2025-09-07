@@ -1243,7 +1243,7 @@ async def create_event(event: CalendarEventCreate, current_user: User = Depends(
         datetime_utc=datetime_utc,
         category=event.category or "personal",
         reminder=event.reminder,
-        session_id=user_session_id
+        session_id=current_user.id
     )
     result = await db.calendar_events.insert_one(prepare_for_mongo(event_obj.dict()))
     event_id = str(result.inserted_id)
