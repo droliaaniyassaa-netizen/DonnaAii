@@ -536,12 +536,13 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Production Authentication Security - Enforce authentication on all API endpoints"
     - "Birthday & Anniversary Gift Flow with Amazon integration"
     - "Health Goal progress tracking and stat card integration"
   stuck_tasks: 
     - "Health Goal progress tracking and stat card integration"
   test_all: false
-  test_priority: "high_first"
+  test_priority: "critical_first"
   completed_focus:
     - "Web Push Notification System Implementation"
     - "Web Push Notification Frontend Integration"
