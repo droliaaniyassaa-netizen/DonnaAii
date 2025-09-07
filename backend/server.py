@@ -1170,7 +1170,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
                     donna_response = await chat.send_message(user_msg)
                     
                     # Set up context for potential notes
-                    await setup_event_notes_context(user_session_id, created_event_id)
+                    await setup_event_notes_context(current_user.id, created_event_id)
                 else:
                     # Check if this is a simple yes/no response to a previous question
                     message_lower = request.message.lower().strip()
