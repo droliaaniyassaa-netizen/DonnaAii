@@ -118,8 +118,6 @@ const App = () => {
 
   // Check authentication on app load
   useEffect(() => {
-    initializeNotifications();
-    
     // Initialize default date/time for new entries
     const now = getCurrentInUserTimezone();
     const { date, time } = splitUTCDateTime(now);
