@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
-import { User, Mail, Lock } from 'lucide-react';
+import { Input } from './ui/input';
+import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 const AuthModal = ({ open, onClose, onAuthSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
