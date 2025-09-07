@@ -1391,7 +1391,7 @@ const App = () => {
       {/* Login Indicator - Subtle and classy above header nav */}
       {isAuthenticated && user && (
         <div className="login-indicator" title={user.name || user.email || 'Authenticated User'}>
-          {getUserInitials(user)}
+          {user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : (user.email ? user.email[0].toUpperCase() : 'U')}
         </div>
       )}
 
