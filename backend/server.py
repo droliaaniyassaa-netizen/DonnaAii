@@ -1011,7 +1011,8 @@ async def create_gift_event_with_reminders(session_id: str, gift_result: GiftFlo
             description=f"Gift suggestions shared in chat on {datetime.now(timezone.utc).strftime('%Y-%m-%d')}.",
             datetime_utc=event_date,
             category="personal",
-            reminder=True  # This will add the default 12h and 2h reminders
+            reminder=True,  # This will add the default 12h and 2h reminders
+            session_id=session_id  # CRITICAL FIX: Add missing session_id
         )
         
         result = await db.calendar_events.insert_one(prepare_for_mongo(event_obj.dict()))
