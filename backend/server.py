@@ -1087,7 +1087,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
                 donna_response = await handle_health_delete_command(current_user.id, health_result)
             else:
                 # Normal health logging
-                await update_daily_health_stats(user_session_id, health_result)
+                await update_daily_health_stats(current_user.id, health_result)
                 donna_response = await generate_health_confirmation(health_result)
             
         else:
