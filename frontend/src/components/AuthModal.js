@@ -147,15 +147,6 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
                 <div className="manual-auth-form">
                   <div className="form-group">
                     <Input
-                      type="text"
-                      placeholder="Choose a username"
-                      value={formData.username}
-                      onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
-                      className="auth-input"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <Input
                       type="email"
                       placeholder="Your email"
                       value={formData.email}
@@ -182,7 +173,7 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
                   </div>
                   <Button
                     onClick={handleManualSignup}
-                    disabled={isLoading || !formData.username || !formData.email || !formData.password}
+                    disabled={isLoading || !formData.email || !formData.password}
                     className="auth-button primary"
                   >
                     <User className="button-icon" />
