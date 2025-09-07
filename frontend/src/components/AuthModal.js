@@ -7,7 +7,7 @@ import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 const AuthModal = ({ open, onClose, onAuthSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleEmergentLogin = () => {
+  const handleGoogleAuth = () => {
     setIsLoading(true);
     
     try {
@@ -21,60 +21,6 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
     } catch (error) {
       console.error('Login error:', error);
       alert('Login failed. Please try again.');
-      setIsLoading(false);
-    }
-  };
-
-  const handleManualSignup = async () => {
-    console.log('🔍 Starting manual signup...', formData);
-    setIsLoading(true);
-    
-    try {
-      // Validate form data (simplified - just email + password)
-      if (!formData.email || !formData.password) {
-        console.log('❌ Validation failed - missing fields:', { 
-          email: !!formData.email, 
-          password: !!formData.password 
-        });
-        alert('Please fill in both email and password.');
-        return;
-      }
-      
-      console.log('✅ Validation passed, making API call...');
-      
-      // Call backend register endpoint
-      const API = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
-      console.log('🔍 API URL:', API);
-      
-      const response = await fetch(`${API}/api/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Important for cookies
-        body: JSON.stringify(formData),
-      });
-      
-      console.log('🔍 Response status:', response.status);
-      
-      const data = await response.json();
-      console.log('🔍 Response data:', data);
-      
-      if (!response.ok) {
-        // Handle specific error messages
-        throw new Error(data.detail || 'Registration failed');
-      }
-      
-      console.log('✅ Registration successful! Calling onAuthSuccess...');
-      
-      // Success! Call the auth success handler
-      onAuthSuccess(data.user, data.session_token);
-      
-    } catch (error) {
-      console.error('❌ Signup error:', error);
-      alert(error.message || 'Signup failed. Please try again.');
-    } finally {
-      console.log('🔍 Setting loading to false...');
       setIsLoading(false);
     }
   };
