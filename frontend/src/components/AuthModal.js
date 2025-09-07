@@ -122,7 +122,7 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
                 className={`method-selector ${authMode === 'manual' ? 'active' : ''}`}
               >
                 <User className="button-icon" />
-                Username
+                Email
               </Button>
             </div>
 
