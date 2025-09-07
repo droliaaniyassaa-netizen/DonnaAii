@@ -2089,12 +2089,36 @@ body::before {
 .chat-input {
   resize: none;
   border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 1rem 1.25rem;
   font-size: 1rem;
   min-height: 60px;
-  background: rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  
+  /* 3D Glassmorphic Effects */
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 30%,
+    rgba(255, 255, 255, 0.01) 60%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(20px);
+  
+  /* Advanced 3D Shadow System */
+  box-shadow: 
+    /* Outer subtle glow */
+    0 0 20px rgba(255, 255, 255, 0.02),
+    /* Main depth shadow */
+    0 8px 25px rgba(0, 0, 0, 0.2),
+    /* Mid shadow for depth */
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    /* Inner highlight */
+    inset 0 1px 2px rgba(255, 255, 255, 0.1),
+    /* Inner depth */
+    inset 0 -1px 3px rgba(0, 0, 0, 0.05),
+    /* Rim light */
+    inset 0 0 1px rgba(255, 255, 255, 0.08);
+  
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: #ffffff;
   width: 100%;
   /* ENSURE INPUT IS CLICKABLE */
