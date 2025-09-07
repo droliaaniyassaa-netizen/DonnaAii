@@ -1164,7 +1164,7 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
                         system_message=DONNA_SYSTEM_MESSAGE
                     ).with_model("openai", "gpt-4o-mini")
                     
-                    user_text = request.message + "\n\n[CONTEXT: I just automatically created a calendar event from your message with default reminders (12 hours and 2 hours before). Confirm this briefly and naturally - be proactive and confident, not asking permission. Example: 'Great! I've created your meeting for tomorrow at 7 PM with reminders set 12 hours and 2 hours before.']"
+                    user_text = request.message + f"\n\n[CRITICAL INSTRUCTION: I have ALREADY automatically created the calendar event with reminders. DO NOT ask 'Would you like any reminders or notes?' - the event is ALREADY created and configured. Instead, say something like: 'Perfect! I've created your meeting for tomorrow at 7 PM with reminders set for 12 hours and 2 hours before. You're all set!' BE CONFIDENT AND DEFINITIVE, NOT ASKING PERMISSION.]"
                     user_msg = UserMessage(text=user_text)
                     
                     donna_response = await chat.send_message(user_msg)
