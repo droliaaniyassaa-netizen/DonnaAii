@@ -32,6 +32,24 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
     }
   };
 
+  const handleManualSignup = async () => {
+    setIsLoading(true);
+    
+    try {
+      // TODO: Implement manual signup with backend
+      console.log('Manual signup:', formData);
+      
+      // For now, show coming soon message
+      alert('Manual signup coming soon! Please use Google sign-in for now.');
+      
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert('Signup failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="auth-modal">
