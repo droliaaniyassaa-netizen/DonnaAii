@@ -1600,15 +1600,23 @@ const App = () => {
       />
 
       {/* Always show app content, but protect specific features */}
-          {/* Floating Settings Button */}
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="floating-settings-button"
-            onClick={() => setShowSettings(true)}
-          >
-            <Settings className="settings-icon" />
-          </Button>
+      
+      {/* Login Indicator - Subtle and classy above header nav */}
+      {isAuthenticated && user && (
+        <div className="login-indicator" title={user.name || user.email || 'Authenticated User'}>
+          {getUserInitials(user)}
+        </div>
+      )}
+
+      {/* Floating Settings Button */}
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        className="floating-settings-button"
+        onClick={() => setShowSettings(true)}
+      >
+        <Settings className="settings-icon" />
+      </Button>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="main-tabs">
         <TabsList className="tabs-list">
