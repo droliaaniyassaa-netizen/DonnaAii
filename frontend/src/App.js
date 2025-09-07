@@ -534,7 +534,10 @@ const App = () => {
     if (!newEvent.title || !newEvent.date || !newEvent.time) return;
     
     // Check authentication before creating event
-    if (!requireAuthForAction('create event')) return;
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
     
     try {
       // Convert local date/time to UTC
