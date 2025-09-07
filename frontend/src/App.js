@@ -1242,7 +1242,10 @@ const App = () => {
     if (!newHealthEntry.description || !newHealthEntry.date) return;
     
     // Check authentication before creating health entry
-    if (!requireAuthForAction('log health data')) return;
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
     
     try {
       // Convert local date/time to UTC
