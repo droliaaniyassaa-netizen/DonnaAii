@@ -151,35 +151,6 @@ const App = () => {
     }
   };
 
-  // Initialize notification service worker
-  const initializeNotifications = async () => {
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-      try {
-        const registration = await navigator.serviceWorker.register('/sw.js');
-        console.log('Service Worker registered:', registration);
-        
-        // Check current permission status (don't request, just check)
-        const permission = Notification.permission;
-        setNotificationPermission(permission);
-        
-        // Check if user has existing subscription
-        if (permission === 'granted') {
-          const existingSubscription = await registration.pushManager.getSubscription();
-          setNotificationsEnabled(!!existingSubscription);
-        } else {
-          setNotificationsEnabled(false);
-        }
-        
-        // Check if user has been asked before (from localStorage)
-        const hasAsked = localStorage.getItem('donna-notification-asked') === 'true';
-        setHasAskedPermission(hasAsked);
-        
-      } catch (error) {
-        console.error('Service Worker registration failed:', error);
-      }
-    }
-  };
-
   // Request notification permission after first reminder
   const requestNotificationPermission = async () => {
     if (!hasAskedPermission && notificationPermission === 'default') {
