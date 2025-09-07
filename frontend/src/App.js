@@ -245,6 +245,14 @@ const App = () => {
     setIsLoading(true);
     
     try {
+      // Add user message to chat immediately
+      const userMessage = {
+        message: inputMessage,
+        is_user: true,
+        timestamp: new Date().toISOString()
+      };
+      setMessages(prev => [...prev, userMessage]);
+      
       // Check if message looks like an event for better context to Donna
       let eventCreated = false;
       const isEvent = isEventMessage(inputMessage);
@@ -265,8 +273,17 @@ const App = () => {
         event_created: eventCreated // Let Donna know if an event was created
       });
       
+      // Add Donna's response to chat
+      if (response.data && response.data.response) {
+        const donnaMessage = {
+          message: response.data.response,
+          is_user: false,
+          timestamp: new Date().toISOString()
+        };
+        setMessages(prev => [...prev, donnaMessage]);
+      }
+      
       setInputMessage('');
-      // Note: No need to reload chat history since response will come via the API
       
       // Refresh other tabs data if context might have changed
       loadEvents();
