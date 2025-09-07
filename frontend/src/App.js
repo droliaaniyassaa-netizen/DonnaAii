@@ -522,7 +522,7 @@ const App = () => {
   const loadEvents = async () => {
     try {
       const sessionId = user?.id || 'default';
-      const response = await axios.get(`${API}/api/calendar/events?session_id=${sessionId}`);
+      const response = await axios.get(`${API}/calendar/events?session_id=${sessionId}`);
       const allEvents = response.data;
       
       console.log('DEBUG: API response:', response.data);
