@@ -36,6 +36,8 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
     setIsLoading(true);
     
     try {
+      console.log('🔍 Starting manual signup...', formData);
+      
       // Validate form data
       if (!formData.username || !formData.email || !formData.password) {
         alert('Please fill in all fields.');
@@ -44,6 +46,8 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
       
       // Call backend register endpoint
       const API = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
+      console.log('🔍 API URL:', API);
+      
       const response = await fetch(`${API}/api/auth/register`, {
         method: 'POST',
         headers: {
@@ -53,20 +57,26 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
         body: JSON.stringify(formData),
       });
       
+      console.log('🔍 Response status:', response.status);
+      
       const data = await response.json();
+      console.log('🔍 Response data:', data);
       
       if (!response.ok) {
         // Handle specific error messages
         throw new Error(data.detail || 'Registration failed');
       }
       
+      console.log('✅ Registration successful! Calling onAuthSuccess...');
+      
       // Success! Call the auth success handler
       onAuthSuccess(data.user, data.session_token);
       
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error('❌ Signup error:', error);
       alert(error.message || 'Signup failed. Please try again.');
     } finally {
+      console.log('🔍 Setting loading to false...');
       setIsLoading(false);
     }
   };
