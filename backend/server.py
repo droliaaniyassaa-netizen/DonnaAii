@@ -1927,7 +1927,7 @@ async def create_health_entry(entry: HealthEntryCreate):
     return entry_obj
 
 @api_router.get("/health/entries", response_model=List[HealthEntry])
-async def get_health_entries():
+async def get_health_entries(current_user: User = Depends(require_auth)):
     entries = await db.health_entries.find().to_list(100)
     result = []
     
