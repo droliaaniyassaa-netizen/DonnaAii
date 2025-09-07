@@ -33,16 +33,22 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
   };
 
   const handleManualSignup = async () => {
+    console.log('🔍 Starting manual signup...', formData);
     setIsLoading(true);
     
     try {
-      console.log('🔍 Starting manual signup...', formData);
-      
       // Validate form data
       if (!formData.username || !formData.email || !formData.password) {
+        console.log('❌ Validation failed - missing fields:', { 
+          username: !!formData.username, 
+          email: !!formData.email, 
+          password: !!formData.password 
+        });
         alert('Please fill in all fields.');
         return;
       }
+      
+      console.log('✅ Validation passed, making API call...');
       
       // Call backend register endpoint
       const API = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
