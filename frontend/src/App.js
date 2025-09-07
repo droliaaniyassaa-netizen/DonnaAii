@@ -328,6 +328,15 @@ const App = () => {
     return true;
   };
 
+  // Helper function to require authentication for actions
+  const requireAuthForAction = (actionName) => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return false;
+    }
+    return true;
+  };
+
   // Authentication functions
   const checkAuthStatus = async () => {
     try {
