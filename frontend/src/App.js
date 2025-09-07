@@ -321,8 +321,9 @@ const App = () => {
 
       // Send to backend
       const response = await axios.post(`${API}/chat`, {
-        message: exampleText,
-        session_id: 'default'
+        message: exampleText
+      }, {
+        withCredentials: true // Include authentication cookies
       });
       
       // Add Donna's response
