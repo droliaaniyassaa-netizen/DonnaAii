@@ -696,8 +696,11 @@ class User(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     email: str
     name: str
+    username: Optional[str] = None  # For manual auth users
     picture: Optional[str] = None
-    emergent_user_id: str  # ID from Emergent auth system
+    auth_provider: str = "google"  # "google" or "manual"
+    password_hash: Optional[str] = None  # For manual auth users
+    emergent_user_id: Optional[str] = None  # ID from Emergent auth system (None for manual)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
