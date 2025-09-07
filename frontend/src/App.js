@@ -1666,7 +1666,7 @@ const App = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Share your thoughts with Donna..."
+                placeholder="I'm listening..."
                 rows="1"
                 disabled={isLoading}
               />
