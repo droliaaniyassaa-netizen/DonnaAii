@@ -1179,7 +1179,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
                     if is_simple_response:
                         # Get recent chat history to understand context
                         recent_messages = await db.chat_messages.find(
-                            {"session_id": user_session_id}
+                            {"session_id": current_user.id}
                         ).sort("timestamp", -1).limit(3).to_list(length=3)
                         
                         recent_context = ""
