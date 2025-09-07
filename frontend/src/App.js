@@ -1208,7 +1208,8 @@ const App = () => {
       await checkAndPerformDailyReset();
       
       // Load current stats (fresh if reset occurred)
-      const response = await axios.get(`${API}/health/stats/default`);
+      const sessionId = user?.id || 'default';
+      const response = await axios.get(`${API}/health/stats/${sessionId}`);
       if (response.data) {
         setHealthStats({
           calories: response.data.calories || 0,
