@@ -1319,7 +1319,7 @@ async def update_event(event_id: str, update_data: CalendarEventUpdate, current_
         raise HTTPException(status_code=404, detail="Event not found")
     
     # Return updated event
-    updated_event = await db.calendar_events.find_one({"id": event_id, "session_id": user_session_id})
+    updated_event = await db.calendar_events.find_one({"id": event_id, "session_id": current_user.id})
     if not updated_event:
         raise HTTPException(status_code=404, detail="Event not found after update")
     
