@@ -1147,7 +1147,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
                     )
             else:
                 # Check for regular event creation if not a gift message
-                created_event_id = await process_message_context(request.message, user_session_id)
+                created_event_id = await process_message_context(request.message, current_user.id)
                 
                 if created_event_id:
                     # New event detected - clear any waiting notes context and create event
