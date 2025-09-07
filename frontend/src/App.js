@@ -531,8 +531,9 @@ const App = () => {
         try {
           const eventDateTime = parseISO(event.datetime_utc);
           
-          // Show all future events (regardless of year) and today's events
-          return eventDateTime >= startOfDay(now) || isToday(eventDateTime);
+          // Show all future events and today's events (more lenient filtering)
+          const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          return eventDateTime >= todayStart;
         } catch (error) {
           console.warn('Error parsing event date:', error);
           return false;
