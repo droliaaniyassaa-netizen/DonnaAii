@@ -266,7 +266,7 @@ const App = () => {
       });
       
       setInputMessage('');
-      await loadChatHistory(); // Reload to get latest messages
+      // Note: No need to reload chat history since response will come via the API
       
       // Refresh other tabs data if context might have changed
       loadEvents();
