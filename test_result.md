@@ -534,6 +534,7 @@ test_plan:
     - "Web Push Notification System Implementation"
     - "Web Push Notification Frontend Integration"
     - "Manual Authentication System with username/password registration and login"
+    - "Calendar event CRUD operations (Create, Read, Update, Delete)"
 
 agent_communication:
   - agent: "main"
