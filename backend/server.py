@@ -1084,7 +1084,7 @@ async def chat_with_donna(request: ChatRequest, current_user: User = Depends(req
             # Process health data first - this takes priority over event creation
             if health_result.message_type == "delete":
                 # Handle delete/undo commands
-                donna_response = await handle_health_delete_command(user_session_id, health_result)
+                donna_response = await handle_health_delete_command(current_user.id, health_result)
             else:
                 # Normal health logging
                 await update_daily_health_stats(user_session_id, health_result)
