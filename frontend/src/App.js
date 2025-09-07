@@ -1685,7 +1685,6 @@ const App = () => {
                   disabled={isLoading || !inputMessage.trim()}
                 >
                   <Send className="send-icon" size={16} />
-                  {isLoading ? 'Thinking...' : 'Send'}
                 </button>
               </div>
             </div>
