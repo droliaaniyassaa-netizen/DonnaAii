@@ -521,7 +521,8 @@ const App = () => {
   // Calendar functions
   const loadEvents = async () => {
     try {
-      const response = await axios.get(`${API}/calendar/events`);
+      const sessionId = user?.id || 'default';
+      const response = await axios.get(`${API}/api/calendar/events?session_id=${sessionId}`);
       const allEvents = response.data;
       
       // Filter out past events for upcoming display (hide 2024 dates and past events)
