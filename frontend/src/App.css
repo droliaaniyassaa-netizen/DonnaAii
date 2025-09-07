@@ -928,7 +928,7 @@ body::before {
   margin: 2rem auto;
   width: 100%;
   max-width: 800px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Keep horizontal on all screen sizes */
   padding: 0 1rem;
 }
 
