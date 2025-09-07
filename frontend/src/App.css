@@ -1704,6 +1704,7 @@ body::before {
 /* Tabs - Sophisticated Glassmorphic Design */
 .main-tabs {
   width: 100%;
+  padding-bottom: 6rem; /* Add space for fixed navigation bar */
 }
 
 .tabs-list {
