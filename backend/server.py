@@ -2564,7 +2564,8 @@ async def process_message_context(message: str, session_id: str):
                 description=message,  # Store original message as description initially
                 category=category,
                 datetime_utc=event_date,
-                reminder=True
+                reminder=True,
+                session_id=session_id  # CRITICAL FIX: Add missing session_id
             )
             
             result = await db.calendar_events.insert_one(prepare_for_mongo(event.dict()))
