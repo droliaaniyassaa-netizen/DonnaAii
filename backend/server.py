@@ -1228,7 +1228,7 @@ async def get_chat_history(current_user: User = Depends(require_auth)):
 
 # Calendar endpoints
 @api_router.post("/calendar/events", response_model=CalendarEvent)
-async def create_event(event: CalendarEventCreate, user_session_id: str = Depends(get_user_session_id)):
+async def create_event(event: CalendarEventCreate, current_user: User = Depends(require_auth)):
     # Parse UTC datetime from frontend
     try:
         datetime_utc = datetime.fromisoformat(event.datetime_utc.replace('Z', '+00:00'))
