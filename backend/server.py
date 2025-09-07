@@ -1172,15 +1172,41 @@ async def chat_with_donna(request: ChatRequest, user_session_id: str = Depends(g
                     # Set up context for potential notes
                     await setup_event_notes_context(user_session_id, created_event_id)
                 else:
-                    # Normal conversation flow - no event created, not waiting for notes
-                    chat = LlmChat(
-                        api_key=openai_api_key,
-                        session_id=user_session_id,
-                        system_message=DONNA_SYSTEM_MESSAGE
-                    ).with_model("openai", "gpt-4o-mini")
+                    # Check if this is a simple yes/no response to a previous question
+                    message_lower = request.message.lower().strip()
+                    is_simple_response = message_lower in ['yes', 'yeah', 'yep', 'sure', 'ok', 'okay', 'no', 'nope', 'no thanks']
                     
-                    user_msg = UserMessage(text=request.message)
-                    donna_response = await chat.send_message(user_msg)
+                    if is_simple_response:
+                        # Get recent chat history to understand context
+                        recent_messages = await db.chat_messages.find(
+                            {"session_id": user_session_id}
+                        ).sort("timestamp", -1).limit(3).to_list(length=3)
+                        
+                        recent_context = ""
+                        for msg in reversed(recent_messages):  # Reverse to get chronological order
+                            role = "User" if msg["is_user"] else "Donna"
+                            recent_context += f"{role}: {msg['message']}\n"
+                        
+                        # Normal conversation flow with recent context for better continuity
+                        chat = LlmChat(
+                            api_key=openai_api_key,
+                            session_id=user_session_id,
+                            system_message=DONNA_SYSTEM_MESSAGE
+                        ).with_model("openai", "gpt-4o-mini")
+                        
+                        user_text = f"[RECENT CONVERSATION CONTEXT for continuity:\n{recent_context}]\n\nUser's current response: {request.message}\n\n[INSTRUCTION: The user is responding to your previous message. Understand the context and respond appropriately, maintaining conversation continuity.]"
+                        user_msg = UserMessage(text=user_text)
+                        donna_response = await chat.send_message(user_msg)
+                    else:
+                        # Normal conversation flow - no event created, not waiting for notes
+                        chat = LlmChat(
+                            api_key=openai_api_key,
+                            session_id=user_session_id,
+                            system_message=DONNA_SYSTEM_MESSAGE
+                        ).with_model("openai", "gpt-4o-mini")
+                        
+                        user_msg = UserMessage(text=request.message)
+                        donna_response = await chat.send_message(user_msg)
         
         # Store Donna's response
         donna_message = ChatMessage(
