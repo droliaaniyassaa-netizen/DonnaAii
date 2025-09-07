@@ -1327,6 +1327,14 @@ const App = () => {
     // If no callback data, proceed with normal auth check
     checkAuthStatus();
     
+    // FORCE IMMEDIATE LOAD OF EVENTS FOR DEBUGGING
+    console.log('🔍 FORCING IMMEDIATE EVENT LOAD');  
+    loadEvents();
+    
+    // Load other data too
+    loadHealthEntries();
+    loadDailyHealthStats();
+    
   }, []); // Empty dependency array - run only once on mount
 
   // Process auth callback data when it's available
