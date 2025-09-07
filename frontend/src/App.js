@@ -362,7 +362,18 @@ const App = () => {
     // Clear URL parameters
     window.history.replaceState({}, document.title, window.location.pathname);
     
-    // Reload app data for the authenticated user
+    // SECURITY: Clear any preview/unauthenticated data before loading user's data
+    setMessages([]);
+    setEvents([]);
+    setCareerGoals([]);
+    setHealthStats({ calories: 0, protein: 0, hydration: 0, sleep: 0 });
+    setMessageCount(0);
+    
+    // Clear any localStorage preview data
+    localStorage.removeItem('donna_preview_messages');
+    localStorage.removeItem('donna_preview_data');
+    
+    // Reload app data for the authenticated user (fresh start)
     loadAppData();
   };
 
