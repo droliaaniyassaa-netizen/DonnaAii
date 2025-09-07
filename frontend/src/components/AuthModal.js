@@ -36,15 +36,36 @@ const AuthModal = ({ open, onClose, onAuthSuccess }) => {
     setIsLoading(true);
     
     try {
-      // TODO: Implement manual signup with backend
-      console.log('Manual signup:', formData);
+      // Validate form data
+      if (!formData.username || !formData.email || !formData.password) {
+        alert('Please fill in all fields.');
+        return;
+      }
       
-      // For now, show coming soon message
-      alert('Manual signup coming soon! Please use Google sign-in for now.');
+      // Call backend register endpoint
+      const API = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${API}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Important for cookies
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        // Handle specific error messages
+        throw new Error(data.detail || 'Registration failed');
+      }
+      
+      // Success! Call the auth success handler
+      onAuthSuccess(data.user, data.session_token);
       
     } catch (error) {
       console.error('Signup error:', error);
-      alert('Signup failed. Please try again.');
+      alert(error.message || 'Signup failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
