@@ -3579,7 +3579,7 @@ body::before {
 }
 
 /* Adjust app content when banner is shown */
-.app-container:has(.signin-required-banner) .main-tabs {
+.signin-required-banner + * .main-tabs {
   padding-top: 4rem;
 }
 
