@@ -1966,7 +1966,7 @@ async def create_health_goal(goal: HealthGoalCreate):
     return goal_obj
 
 @api_router.get("/health/goals", response_model=List[HealthGoal])
-async def get_health_goals():
+async def get_health_goals(current_user: User = Depends(require_auth)):
     goals = await db.health_goals.find().sort("created_at", -1).to_list(100)
     return [HealthGoal(**goal) for goal in goals]
 
