@@ -6,6 +6,13 @@ import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 const AuthModal = ({ open, onClose, onAuthSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [authMode, setAuthMode] = useState('google'); // 'google' or 'manual'
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
 
   const handleEmergentLogin = () => {
     setIsLoading(true);
