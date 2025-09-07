@@ -525,6 +525,9 @@ const App = () => {
       const response = await axios.get(`${API}/api/calendar/events?session_id=${sessionId}`);
       const allEvents = response.data;
       
+      console.log('DEBUG: API response:', response.data);
+      console.log('DEBUG: Events count:', allEvents.length);
+      
       // DEBUG: Show ALL events without any filtering
       setEvents(allEvents);
     } catch (error) {
